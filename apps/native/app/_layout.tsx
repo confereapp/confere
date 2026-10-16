@@ -1,13 +1,17 @@
 import "@/global.css";
 
 import {
-  InstrumentSans_400Regular,
-  InstrumentSans_500Medium,
-  InstrumentSans_600SemiBold,
+  DMMono_400Regular,
+  DMMono_500Medium,
+} from "@expo-google-fonts/dm-mono";
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
   useFonts,
-} from "@expo-google-fonts/instrument-sans";
+} from "@expo-google-fonts/inter";
 import { QueryClientProvider } from "@tanstack/react-query";
-
 import { Stack } from "expo-router";
 import { HeroUINativeProvider } from "heroui-native";
 import { useEffect, useState } from "react";
@@ -15,42 +19,44 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { Splash } from "@/components/splash";
 import { AppThemeProvider } from "@/contexts/app-theme-context";
-import { authClient } from "@/lib/auth-client";
-
 import { queryClient } from "@/utils/trpc";
 
-// Keeps the branded splash readable instead of flashing by on fast starts.
-const SPLASH_MIN_MS = 1200;
+const SPLASH_MIN_MS = 1000;
 
 export const unstable_settings = {
-  initialRouteName: "(drawer)",
+  initialRouteName: "(tabs)",
 };
 
-function StackLayout({ isSignedIn }: { isSignedIn: boolean }) {
+function StackLayout() {
   return (
-    <Stack screenOptions={{}}>
-      <Stack.Protected guard={isSignedIn}>
-        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modal"
-          options={{ title: "Modal", presentation: "modal" }}
-        />
-      </Stack.Protected>
-      <Stack.Protected guard={!isSignedIn}>
-        <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="sign-up" options={{ title: "Criar conta" }} />
-      </Stack.Protected>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(auth)/onboarding" />
+      <Stack.Screen name="(auth)/login" />
+      <Stack.Screen name="(auth)/sign-up" />
+      <Stack.Screen name="(auth)/forgot-password" />
+      <Stack.Screen name="projects/new" />
+      <Stack.Screen name="projects/review" />
+      <Stack.Screen name="projects/details" />
+      <Stack.Screen name="projects/submission" />
+      <Stack.Screen name="projects/check-review" />
+      <Stack.Screen name="projects/checking" />
+      <Stack.Screen name="projects/result" />
+      <Stack.Screen name="projects/requirement-detail" />
+      <Stack.Screen name="settings" />
     </Stack>
   );
 }
 
 export default function Layout() {
   const [fontsLoaded, fontsError] = useFonts({
-    InstrumentSans_400Regular,
-    InstrumentSans_500Medium,
-    InstrumentSans_600SemiBold,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    DMMono_400Regular,
+    DMMono_500Medium,
   });
-  const { data: session, isPending } = authClient.useSession();
   const [minTimeElapsed, setMinTimeElapsed] = useState(false);
 
   useEffect(() => {
@@ -58,8 +64,7 @@ export default function Layout() {
     return () => clearTimeout(timer);
   }, []);
 
-  // A font failure must not trap the user on the splash.
-  const isReady = (fontsLoaded || !!fontsError) && !isPending && minTimeElapsed;
+  const isReady = (fontsLoaded || !!fontsError) && minTimeElapsed;
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -67,7 +72,7 @@ export default function Layout() {
         <KeyboardProvider>
           <AppThemeProvider>
             <HeroUINativeProvider>
-              <StackLayout isSignedIn={!!session} />
+              <StackLayout />
               <Splash fontsLoaded={fontsLoaded} hidden={isReady} />
             </HeroUINativeProvider>
           </AppThemeProvider>

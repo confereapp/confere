@@ -81,7 +81,10 @@ export class S3Bucket extends Bucket<GetObjectCommandOutput> {
       new PutObjectCommand({
         Bucket: this.bucket,
         Key: input.key,
-        Body: input.body,
+        Body:
+          input.body instanceof ArrayBuffer
+            ? new Uint8Array(input.body)
+            : input.body,
         ContentType: input.contentType,
         Metadata: input.metadata,
       }),

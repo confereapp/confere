@@ -17,7 +17,9 @@ export function createAuth() {
     trustedOrigins: [
       env.CORS_ORIGIN,
       "confere://",
+      "confere://*",
       "exp://",
+      "exp://*",
       "http://localhost:8081",
     ],
     emailAndPassword: {
