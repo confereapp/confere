@@ -258,3 +258,9 @@ Checkpoint do passo 10.000: SHA-256
 O próximo ciclo deve reproduzir os lotes efetivos de textos longos e trabalhar
 seleção de evidências e separação entre requisitos. Aumentar passos neste mesmo
 corpus não substitui corrigir essa diferença entre treino e uso pela API.
+
+## Continuação com lotes efetivos
+
+A [etapa seguinte](API_BATCH_TRAINING.md) treinou rótulos locais a partir
+do loteador real, mediu a consolidação em documentos anotados e repetiu os
+controles da API. Os candidatos continuam experimentais.

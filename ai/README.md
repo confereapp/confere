@@ -168,3 +168,7 @@ O [ciclo intensivo posterior](INTENSIVE_TRAINING.md) registra 10.000 passos,
 avaliação dos checkpoints e as falhas ainda pendentes antes de promover pesos. Dados privados, ambientes, checkpoints
 e execuções não entram no Git. Commits sem `Co-Authored-By`; PRs sem `Generated with`.
 Merge na `main` fica para a integração revisada.
+
+A [etapa com lotes efetivos da API](API_BATCH_TRAINING.md) registra o currículo
+anotado por intervalos, avaliação de documentos completos e as falhas que ainda
+impedem promover os novos pesos.

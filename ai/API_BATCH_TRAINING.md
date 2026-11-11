@@ -99,12 +99,122 @@ caffeinate -i ai/.venv/bin/python -m confere_ai.instruct \
 Pastas de saída devem ser novas. Preparação e avaliações gerativas ficam fora
 do limite de tempo do laço. A menor loss não implica melhor qualidade conjunta.
 
-## Avaliação planejada
+## Avaliação
 
-Serão separados os 120 casos documentais antigos, os 86 lotes novos e os 75
+Foram separados os 120 casos documentais antigos, os 86 lotes novos e os 75
 turnos de conversa. Os 18 documentos completos permitem avaliar 36 requisitos
 pela consolidação real, incluindo cobertura contígua e citações literais.
-Os controles conhecidos da API também serão executados com inferência real.
+Os controles conhecidos da API também foram executados com inferência real.
 
-Nenhum checkpoint será promovido somente por concluir o treino ou reduzir loss.
-Os resultados semânticos continuam pendentes durante a execução.
+Nenhum checkpoint foi promovido. Os dois candidatos reprovaram os critérios
+conjuntos e os controles críticos da API permanecem com falhas.
+
+
+## Resultado do treino
+
+O laço completou 8.000 passos em 806,26 segundos (13 min 26 s), processando
+32.000 exposições e 1.346.535 tokens supervisionados, incluindo repetições.
+Foram 20.796 exposições documentais, com 1.142.866 tokens-alvo, e 11.204 de
+conversa, com 203.669 tokens-alvo. O limite de 20 minutos não foi atingido.
+
+A memória do driver observada no laço chegou a 3,04 GB; os tensores ativos,
+a aproximadamente 346 MB; o RSS do processo, a 870 MB. São contadores distintos,
+sem soma direta como RAM física total. A execução não foi interrompida.
+
+A menor loss selecionou o passo 2.000. O passo final 8.000 também foi avaliado,
+com a mesma coorte e o mesmo caminho de inferência. A referência foi novamente
+executada com a geração MPS agrupada, preservando a comparação pareada.
+
+| Coorte | Referência | Passo 2.000 | Passo 8.000 |
+| --- | ---: | ---: | ---: |
+| Documentos antigos, status e evidências completos | 106/120 | 113/120 | 104/120 |
+| Novos lotes da API, status e evidências completos | 23/86 | 61/86 | 63/86 |
+| Conversa, igualdade exata com histórico gerado | 68/75 | 69/75 | 65/75 |
+
+No passo 2.000, todos os 206 casos documentais tiveram formato/referências válidos,
+mas houve nove falsos atendimentos: um nos casos antigos e oito nos lotes novos.
+O passo 8.000 também teve 206/206 de formato/referências válidos e dez falsos
+atendimentos, um antigo e nove novos. Integridade estrutural não comprovou suporte
+semântico das propostas.
+
+O passo 2.000 não teve quedas por família de conversa ante a referência, mas
+continua abaixo do mínimo em algumas famílias. O passo 8.000 caiu em saudação,
+elogio e negação informais. Mais passos não resultaram no melhor candidato conjunto.
+
+## Documentos completos
+
+`evaluate_api_projects.py` carrega os pesos e executa inferência real em
+`review_extracted`, reconstruindo os lotes para cada requisito. Confere hashes,
+intervalos contíguos, citações literais e a correspondência entre as chamadas
+locais e os alvos anotados. Não usa os rótulos para produzir respostas do modelo.
+
+| Medida nos 18 documentos / 36 requisitos | Referência | Passo 2.000 | Passo 8.000 |
+| --- | ---: | ---: | ---: |
+| Status, conflito e validade corretos por requisito | 5/36 | 12/36 | 14/36 |
+| Requisitos com todas as saídas válidas | 24/36 | 36/36 | 36/36 |
+| Falsos atendimentos consolidados | 1 | 2 | 3 |
+| Chamadas locais com status/evidências exatos | 23/86 | 61/86 | 63/86 |
+| Documentos com todos os status/flags corretos | 0/18 | 1/18 | 1/18 |
+
+A última linha mede status e flags de todos os requisitos com respostas válidas;
+não exige que toda seleção local de evidência esteja correta. Essa seleção é
+medida separadamente na linha de chamadas locais. Uma conclusão consolidada
+pode coincidir com o rótulo apesar de erros em consultas intermediárias.
+
+Os documentos completos são as fontes dos novos lotes de validação. Os resultados
+não são uma avaliação independente: exercitam a consolidação do mesmo material
+por outra medida. Ambos os checkpoints continuam confundindo assuntos diferentes.
+
+Para repetir a auditoria em um novo arquivo de saída:
+
+```sh
+ai/.venv/bin/python ai/scripts/evaluate_api_projects.py \
+  --checkpoint ai/runs/api-batches-2026-11-11/best.pt \
+  --cases ai/data/private/api-batches-2026-11-11/validation-projects.json \
+  --output ai/runs/api-batches-2026-11-11/nova-auditoria.json
+```
+
+## Controles reais da API
+
+Os dois checkpoints passaram integralmente em cinco de sete casos autorais,
+totalizando oito requisitos. Os resultados foram iguais nesse recorte:
+
+- Afirmação, negação, conflito curto nas duas ordens e mera menção: corretos.
+- Texto com testes presentes e backup ausente: os dois requisitos receberam
+  insuficiência com conflitos indevidos, em vez de atendimento e não atendimento.
+- Conflito em texto longo: retornou atendimento sem conflito, apesar de processar
+  todo o texto em quatro lotes. A evidência negativa final não foi selecionada.
+
+Esses dois problemas não foram resolvidos por esta etapa. Não houve promoção
+para o chat nem alteração persistente da configuração da API. Todas as propostas
+continuam experimentais e exigindo revisão humana; nenhuma submissão foi aprovada
+ou persistida por estes testes.
+
+Os 136 testes Python e seis TypeScript passaram, incluindo teste no MPS e
+ponte HTTP com subprocesso Python real. O teste HTTP usa sessão sintética e não
+exercita login real, rede ou banco. Testes de software não aprovam a semântica.
+
+## Rastreabilidade
+
+Checkpoint do passo 2.000: SHA-256
+`b7da213ff2645f7277bea58ab0c0a50fa89bf427f2d4274ec4f0cbd9b8742168`.
+Checkpoint do passo 8.000: SHA-256
+`70e59305b0fecfb1c303cb7de24e9f228917414c505f7fabf415d8d0a97a4844`.
+
+- [Contadores e configuração do treino](../output/ai/api-batches-training-2026-11-11.json).
+- [Avaliação local do passo 2.000](../output/ai/api-batches-best-2026-11-11.json).
+- [Avaliação local do passo 8.000](../output/ai/api-batches-last-2026-11-11.json).
+- [Documentos completos, referência](../output/ai/api-batches-projects-reference-2026-11-11.json).
+- [Documentos completos, passo 2.000](../output/ai/api-batches-projects-best-2026-11-11.json).
+- [Documentos completos, passo 8.000](../output/ai/api-batches-projects-last-2026-11-11.json).
+- [API, passo 2.000](../output/ai/api-batches-api-best-2026-11-11.json).
+- [API, passo 8.000](../output/ai/api-batches-api-last-2026-11-11.json).
+
+O relatório automático está em `output/pdf/training/api-batches-2026-11-11.pdf`.
+Pesos, corpus, respostas completas das consultas e traces dos documentos ficam
+em `ai/runs/api-batches-2026-11-11/` e `ai/data/private/api-batches-2026-11-11/`,
+ignorados pelo Git. Os resumos versionados preservam hashes e os resultados.
+
+O próximo diagnóstico deve isolar a ligação entre o requisito e cada afirmação,
+e o efeito da granularidade/contexto das unidades. Repetir somente mais passos
+neste corpus não demonstrou resolver essas falhas.
