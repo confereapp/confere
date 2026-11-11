@@ -163,6 +163,8 @@ novos e rótulos revisados, separados por projeto e preferencialmente por enunci
 
 O primeiro ciclo de `ai/primeiro-modelo` foi integrado à `main`. O ciclo atual
 está em `ai/treinamento-integracao-api`; veja [treinos e resultados](MULTIPLE_EVIDENCE.md)
-e o [ciclo de evidências difíceis com replay de conversa](EVIDENCE_ROBUSTNESS.md). Dados privados, ambientes, checkpoints
+e o [ciclo de evidências difíceis com replay de conversa](EVIDENCE_ROBUSTNESS.md).
+O [ciclo intensivo posterior](INTENSIVE_TRAINING.md) registra 10.000 passos,
+avaliação dos checkpoints e as falhas ainda pendentes antes de promover pesos. Dados privados, ambientes, checkpoints
 e execuções não entram no Git. Commits sem `Co-Authored-By`; PRs sem `Generated with`.
 Merge na `main` fica para a integração revisada.

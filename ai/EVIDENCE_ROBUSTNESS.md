@@ -122,3 +122,9 @@ Dados e pesos permanecem locais, ignorados pelo Git. Resultados rastreáveis:
 O próximo diagnóstico deve separar falhas de seleção de ponteiros das falhas
 de polaridade e consolidação, mantendo replay de conversa e avaliação por
 família. Mais passos ou menor loss, isoladamente, não justificam promoção.
+
+## Continuação intensiva
+
+O [ciclo intensivo](INTENSIVE_TRAINING.md) ampliou o corpus e completou
+10.000 passos. Registra a correção de memória, os dois checkpoints avaliados
+e as limitações ainda observadas na API.
