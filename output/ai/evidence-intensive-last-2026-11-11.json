@@ -1,0 +1,424 @@
+{
+  "profiles": {
+    "previous_multiple_evidence": {
+      "total": 24,
+      "before": 23,
+      "after": 24,
+      "valid": 24,
+      "status": 24,
+      "pointers": 24,
+      "false_positive": 0
+    },
+    "single_positive": {
+      "total": 12,
+      "before": 10,
+      "after": 11,
+      "valid": 12,
+      "status": 11,
+      "pointers": 11,
+      "false_positive": 0
+    },
+    "single_negative": {
+      "total": 12,
+      "before": 11,
+      "after": 10,
+      "valid": 11,
+      "status": 11,
+      "pointers": 10,
+      "false_positive": 0
+    },
+    "mention_only": {
+      "total": 12,
+      "before": 12,
+      "after": 11,
+      "valid": 12,
+      "status": 11,
+      "pointers": 11,
+      "false_positive": 0
+    },
+    "multiple_positive": {
+      "total": 12,
+      "before": 6,
+      "after": 10,
+      "valid": 12,
+      "status": 10,
+      "pointers": 10,
+      "false_positive": 0
+    },
+    "multiple_negative": {
+      "total": 12,
+      "before": 6,
+      "after": 9,
+      "valid": 12,
+      "status": 11,
+      "pointers": 9,
+      "false_positive": 0
+    },
+    "split_conflict": {
+      "total": 12,
+      "before": 3,
+      "after": 9,
+      "valid": 12,
+      "status": 12,
+      "pointers": 9,
+      "false_positive": 0
+    },
+    "shared_conflict": {
+      "total": 12,
+      "before": 3,
+      "after": 11,
+      "valid": 12,
+      "status": 12,
+      "pointers": 11,
+      "false_positive": 0
+    },
+    "other_topic": {
+      "total": 12,
+      "before": 7,
+      "after": 8,
+      "valid": 12,
+      "status": 8,
+      "pointers": 8,
+      "false_positive": 0
+    }
+  },
+  "conversations": {
+    "conversation_repair": {
+      "total": 2,
+      "before": 2,
+      "after": 2
+    },
+    "conversation_definition": {
+      "total": 4,
+      "before": 3,
+      "after": 3
+    },
+    "conversation_capability": {
+      "total": 3,
+      "before": 3,
+      "after": 3
+    },
+    "conversation_memory": {
+      "total": 3,
+      "before": 3,
+      "after": 3
+    },
+    "conversation_repeat": {
+      "total": 4,
+      "before": 4,
+      "after": 4
+    },
+    "conversation_clarify": {
+      "total": 3,
+      "before": 3,
+      "after": 3
+    },
+    "conversation_wellbeing": {
+      "total": 2,
+      "before": 1,
+      "after": 2
+    },
+    "conversation_composed": {
+      "total": 2,
+      "before": 2,
+      "after": 2
+    },
+    "conversation_misunderstanding": {
+      "total": 1,
+      "before": 1,
+      "after": 1
+    },
+    "conversation_closure": {
+      "total": 1,
+      "before": 1,
+      "after": 1
+    },
+    "conversation_flow_greeting": {
+      "total": 2,
+      "before": 2,
+      "after": 2
+    },
+    "conversation_flow_acknowledgement": {
+      "total": 2,
+      "before": 2,
+      "after": 2
+    },
+    "conversation_flow_identity": {
+      "total": 3,
+      "before": 3,
+      "after": 3
+    },
+    "conversation_flow_negation": {
+      "total": 3,
+      "before": 3,
+      "after": 3
+    },
+    "conversation_flow_switch": {
+      "total": 3,
+      "before": 3,
+      "after": 3
+    },
+    "conversation_flow_closure": {
+      "total": 2,
+      "before": 2,
+      "after": 2
+    },
+    "conversation_flow_state": {
+      "total": 4,
+      "before": 4,
+      "after": 4
+    },
+    "conversation_flow_topic": {
+      "total": 4,
+      "before": 3,
+      "after": 3
+    },
+    "conversation_flow_repair": {
+      "total": 1,
+      "before": 1,
+      "after": 1
+    },
+    "conversation_insufficient": {
+      "total": 1,
+      "before": 1,
+      "after": 1
+    },
+    "conversation_identity": {
+      "total": 1,
+      "before": 1,
+      "after": 1
+    },
+    "conversation_slang_hello": {
+      "total": 3,
+      "before": 1,
+      "after": 1
+    },
+    "conversation_slang_identity": {
+      "total": 3,
+      "before": 3,
+      "after": 3
+    },
+    "conversation_slang_function": {
+      "total": 3,
+      "before": 3,
+      "after": 3
+    },
+    "conversation_slang_scope": {
+      "total": 3,
+      "before": 3,
+      "after": 3
+    },
+    "conversation_slang_praise": {
+      "total": 3,
+      "before": 3,
+      "after": 2
+    },
+    "conversation_slang_negation": {
+      "total": 3,
+      "before": 1,
+      "after": 2
+    },
+    "conversation_social_context": {
+      "total": 1,
+      "before": 1,
+      "after": 1
+    },
+    "conversation_social": {
+      "total": 1,
+      "before": 1,
+      "after": 1
+    },
+    "conversation_guidance": {
+      "total": 4,
+      "before": 1,
+      "after": 1
+    }
+  },
+  "acceptance": {
+    "passed": false,
+    "objectives": {
+      "conversation": {
+        "passed": false,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            3,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            3,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            3,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            1,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            2,
+            3
+          ],
+          "conversation_slang_negation": [
+            2,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            1,
+            4
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 80% em cada família, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      },
+      "documents": {
+        "passed": false,
+        "profiles": {
+          "previous_multiple_evidence": [
+            24,
+            24
+          ],
+          "single_positive": [
+            11,
+            12
+          ],
+          "single_negative": [
+            10,
+            12
+          ],
+          "mention_only": [
+            11,
+            12
+          ],
+          "multiple_positive": [
+            10,
+            12
+          ],
+          "multiple_negative": [
+            9,
+            12
+          ],
+          "split_conflict": [
+            9,
+            12
+          ],
+          "shared_conflict": [
+            11,
+            12
+          ],
+          "other_topic": [
+            8,
+            12
+          ]
+        },
+        "description": "Piloto documental: 100% de formato/referências válidos e ao menos 90% de status e evidências corretos em cada perfil.",
+        "scope": "Templates sintéticos; não comprova confiabilidade geral."
+      }
+    },
+    "description": "Objetivos separados: cada critério deve passar; nenhuma média entre conversa e documentos.",
+    "scope": "Templates controlados; não valida conversa aberta ou projetos reais."
+  },
+  "conversation_regression_pass": false,
+  "controlled_gate_pass": false,
+  "adopted": false,
+  "test_examples_used": 0,
+  "note": "Validação sintética de desenvolvimento. Nenhuma promoção automática, mesmo se o critério controlado passar.",
+  "dataset_sha256": "7b3ca6a5bc3236b49391839465d5b9960523f1df939708a8d1fb713cead3ebee",
+  "checkpoint_sha256": "b2bea76668ae20c34f033cea2d31f0bcc98c54c210660f39719e526f25682361",
+  "selected_step": 10000,
+  "context_size": 1024,
+  "response_tokens": 256
+}

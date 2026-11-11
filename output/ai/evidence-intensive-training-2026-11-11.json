@@ -1,0 +1,66 @@
+{
+  "run": "ai/runs/evidence-intensive-bucketed-2026-11-11",
+  "dataset_sha256": "7b3ca6a5bc3236b49391839465d5b9960523f1df939708a8d1fb713cead3ebee",
+  "source_checkpoint": "ai/runs/evidence-robustness-2026-11-11/best.pt",
+  "source_sha256": "77fbc2da64323c59bd27263768c6d10e09f73910d60e46f1108ce436e530395e",
+  "settings": {
+    "objective": "conversation",
+    "seed": 42,
+    "batch_size": 8,
+    "learning_rate": 2e-05,
+    "generation_budget": 256,
+    "human_fraction": 0.0,
+    "human_sampling_policy": "homogeneous_batches",
+    "public_fraction": 0.0,
+    "document_fraction": 0.65,
+    "grounding_schema": 2
+  },
+  "mps_batch_padding_multiple": 128,
+  "launch_environment": {
+    "PYTORCH_MPS_HIGH_WATERMARK_RATIO": "0.65",
+    "PYTORCH_MPS_LOW_WATERMARK_RATIO": "0.5"
+  },
+  "validation_examples": 195,
+  "test_examples_used": 0,
+  "summary": {
+    "start_step": 0,
+    "final_step": 10000,
+    "stop_reason": "steps",
+    "elapsed_seconds": 996.6890357499999,
+    "tokens_processed": 4025963,
+    "initial": {
+      "step": 0,
+      "train_loss": 0.07018326427126176,
+      "validation_loss": 0.02114778494046469,
+      "elapsed_seconds": 1.2635746659999967,
+      "mps_allocated_bytes": 47308800,
+      "mps_driver_allocated_bytes": 10944036864
+    },
+    "final": {
+      "step": 10000,
+      "train_loss": 0.006350253887981114,
+      "validation_loss": 0.012262617116438815,
+      "elapsed_seconds": 996.4280052080001,
+      "mps_allocated_bytes": 542468096,
+      "mps_driver_allocated_bytes": 11523440640
+    },
+    "human_examples_processed": 0,
+    "human_tokens_processed": 0,
+    "public_examples_processed": 0,
+    "public_tokens_processed": 0,
+    "document_examples_processed": 51936,
+    "document_tokens_processed": 3511230,
+    "mps_allocated_bytes_max_observed": 691232768,
+    "mps_driver_allocated_bytes_max_observed": 11716378624,
+    "process_peak_rss_bytes": 1636352000
+  },
+  "best_checkpoint": {
+    "step": 7000,
+    "sha256": "082b4e1f7c2a84c1599f1377c1675a3aa741ed302e339816d9a3ef68ba50cde9"
+  },
+  "last_checkpoint": {
+    "step": 10000,
+    "sha256": "b2bea76668ae20c34f033cea2d31f0bcc98c54c210660f39719e526f25682361"
+  },
+  "adopted": false
+}
