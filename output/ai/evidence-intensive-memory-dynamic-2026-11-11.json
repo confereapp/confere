@@ -1,0 +1,199 @@
+{
+  "mode": "dynamic",
+  "batch_size": 8,
+  "stop_reason": "memory_guard",
+  "elapsed_seconds": 4.866582999999999,
+  "unique_lengths": [
+    176,
+    180,
+    183,
+    187,
+    204,
+    218,
+    220,
+    235,
+    293,
+    402,
+    404,
+    415,
+    418,
+    426,
+    436,
+    464,
+    472,
+    490,
+    495,
+    500,
+    511,
+    520,
+    538,
+    553,
+    578,
+    580,
+    619
+  ],
+  "measurements": [
+    {
+      "step": 1,
+      "length": 176,
+      "allocated": 335565056,
+      "driver": 474431488
+    },
+    {
+      "step": 2,
+      "length": 511,
+      "allocated": 324695296,
+      "driver": 2795225088
+    },
+    {
+      "step": 3,
+      "length": 578,
+      "allocated": 324227840,
+      "driver": 2968420352
+    },
+    {
+      "step": 4,
+      "length": 415,
+      "allocated": 327063808,
+      "driver": 3034038272
+    },
+    {
+      "step": 5,
+      "length": 495,
+      "allocated": 324229376,
+      "driver": 3119235072
+    },
+    {
+      "step": 6,
+      "length": 500,
+      "allocated": 324229376,
+      "driver": 3205742592
+    },
+    {
+      "step": 7,
+      "length": 180,
+      "allocated": 335411456,
+      "driver": 3227975680
+    },
+    {
+      "step": 8,
+      "length": 464,
+      "allocated": 327063808,
+      "driver": 3305291776
+    },
+    {
+      "step": 9,
+      "length": 553,
+      "allocated": 324228864,
+      "driver": 3406299136
+    },
+    {
+      "step": 10,
+      "length": 436,
+      "allocated": 327063808,
+      "driver": 3476815872
+    },
+    {
+      "step": 11,
+      "length": 293,
+      "allocated": 327569152,
+      "driver": 3517284352
+    },
+    {
+      "step": 12,
+      "length": 426,
+      "allocated": 327063808,
+      "driver": 3585441792
+    },
+    {
+      "step": 13,
+      "length": 204,
+      "allocated": 327569152,
+      "driver": 3619520512
+    },
+    {
+      "step": 14,
+      "length": 538,
+      "allocated": 324228864,
+      "driver": 3716349952
+    },
+    {
+      "step": 15,
+      "length": 418,
+      "allocated": 327063808,
+      "driver": 3782656000
+    },
+    {
+      "step": 16,
+      "length": 472,
+      "allocated": 326551808,
+      "driver": 3861954560
+    },
+    {
+      "step": 17,
+      "length": 490,
+      "allocated": 324229376,
+      "driver": 3945971712
+    },
+    {
+      "step": 18,
+      "length": 218,
+      "allocated": 327569152,
+      "driver": 3984228352
+    },
+    {
+      "step": 19,
+      "length": 187,
+      "allocated": 335411456,
+      "driver": 4007428096
+    },
+    {
+      "step": 20,
+      "length": 235,
+      "allocated": 327569152,
+      "driver": 4050452480
+    },
+    {
+      "step": 21,
+      "length": 183,
+      "allocated": 335411456,
+      "driver": 4073095168
+    },
+    {
+      "step": 22,
+      "length": 220,
+      "allocated": 327569152,
+      "driver": 4101193728
+    },
+    {
+      "step": 23,
+      "length": 404,
+      "allocated": 327063808,
+      "driver": 4164288512
+    },
+    {
+      "step": 24,
+      "length": 580,
+      "allocated": 324227840,
+      "driver": 5346754560
+    },
+    {
+      "step": 25,
+      "length": 402,
+      "allocated": 327063808,
+      "driver": 5359058944
+    },
+    {
+      "step": 26,
+      "length": 520,
+      "allocated": 324228864,
+      "driver": 5450940416
+    },
+    {
+      "step": 27,
+      "length": 619,
+      "allocated": 324227840,
+      "driver": 6720651264
+    }
+  ]
+}

@@ -1,0 +1,591 @@
+{
+  "mode": "bucketed",
+  "batch_size": 8,
+  "stop_reason": "steps",
+  "elapsed_seconds": 9.604211458,
+  "unique_lengths": [
+    128,
+    256,
+    384,
+    512,
+    640
+  ],
+  "measurements": [
+    {
+      "step": 1,
+      "length": 256,
+      "allocated": 421764352,
+      "driver": 1330757632
+    },
+    {
+      "step": 2,
+      "length": 512,
+      "allocated": 412435200,
+      "driver": 2544500736
+    },
+    {
+      "step": 3,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3824975872
+    },
+    {
+      "step": 4,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3824975872
+    },
+    {
+      "step": 5,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3824975872
+    },
+    {
+      "step": 6,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3824975872
+    },
+    {
+      "step": 7,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3824975872
+    },
+    {
+      "step": 8,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3824975872
+    },
+    {
+      "step": 9,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3824975872
+    },
+    {
+      "step": 10,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3824975872
+    },
+    {
+      "step": 11,
+      "length": 384,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 12,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 13,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 14,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3884711936
+    },
+    {
+      "step": 15,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 16,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 17,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 18,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 19,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 20,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 21,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 22,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 23,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 24,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3884711936
+    },
+    {
+      "step": 25,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 26,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3884711936
+    },
+    {
+      "step": 27,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3884711936
+    },
+    {
+      "step": 28,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 29,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 30,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 31,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3884711936
+    },
+    {
+      "step": 32,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 33,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3884711936
+    },
+    {
+      "step": 34,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3884711936
+    },
+    {
+      "step": 35,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3884711936
+    },
+    {
+      "step": 36,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 37,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 38,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3884711936
+    },
+    {
+      "step": 39,
+      "length": 384,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 40,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 41,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3884711936
+    },
+    {
+      "step": 42,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 43,
+      "length": 384,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 44,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3884711936
+    },
+    {
+      "step": 45,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 46,
+      "length": 384,
+      "allocated": 411779840,
+      "driver": 3884711936
+    },
+    {
+      "step": 47,
+      "length": 128,
+      "allocated": 458992384,
+      "driver": 3900227584
+    },
+    {
+      "step": 48,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 49,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 50,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 51,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 52,
+      "length": 128,
+      "allocated": 458992384,
+      "driver": 3900227584
+    },
+    {
+      "step": 53,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3900227584
+    },
+    {
+      "step": 54,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 55,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3900227584
+    },
+    {
+      "step": 56,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 57,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 58,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 59,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 60,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 61,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 62,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 63,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 64,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 65,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 66,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3900227584
+    },
+    {
+      "step": 67,
+      "length": 384,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 68,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 69,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 70,
+      "length": 384,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 71,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3900227584
+    },
+    {
+      "step": 72,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 73,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 74,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 75,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 76,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 77,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 78,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3900227584
+    },
+    {
+      "step": 79,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 80,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 81,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 82,
+      "length": 384,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 83,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 84,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 85,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 86,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 87,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 88,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 89,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 90,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 91,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 92,
+      "length": 384,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 93,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 94,
+      "length": 256,
+      "allocated": 446726912,
+      "driver": 3900227584
+    },
+    {
+      "step": 95,
+      "length": 512,
+      "allocated": 411779840,
+      "driver": 3900227584
+    },
+    {
+      "step": 96,
+      "length": 640,
+      "allocated": 411677440,
+      "driver": 3900227584
+    }
+  ]
+}

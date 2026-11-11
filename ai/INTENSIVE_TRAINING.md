@@ -45,19 +45,21 @@ longos, com 741 tokens. É uma medição curta, sem promessa de velocidade const
 | 8 | 45,9 | 3,75 GB |
 | 12 | 49,9 | 5,12 GB |
 
-Foi escolhido o lote 12. As memórias foram consultadas após cada passo; não são
+O benchmark curto levou à escolha inicial do lote 12; o ensaio prolongado
+abaixo invalidou essa escolha para o loteamento variável anterior. As memórias foram consultadas após cada passo; não são
 picos contínuos, nem representam todo o consumo de RAM do sistema.
 O [benchmark em JSON](../output/ai/evidence-intensive-benchmark-2026-11-11.json)
 preserva os números e o hash do corpus.
 
-Execução `ai/runs/evidence-intensive-2026-11-11/`, inicializada de
+A execução inicial `ai/runs/evidence-intensive-2026-11-11/` falhou por memória.
+A execução corrigida é `ai/runs/evidence-intensive-bucketed-2026-11-11/`, inicializada de
 `evidence-robustness-2026-11-11/best.pt`, SHA-256
 `77fbc2da64323c59bd27263768c6d10e09f73910d60e46f1108ce436e530395e`.
 
-- MPS, lote 12, taxa `0.00002`, seed 42.
-- Até 6.000 passos ou 1.800 segundos no laço, o que ocorrer primeiro.
+- MPS, lote 8, taxa `0.00002`, seed 42.
+- Até 10.000 passos ou 1.800 segundos no laço, o que ocorrer primeiro.
 - 65% de probabilidade de lotes documentais e 35% de replay de conversa.
-- Loss de validação e checkpoints `last.pt`/`best.pt` a cada 500 passos e ao final.
+- Loss de validação e checkpoints `last.pt`/`best.pt` a cada 250 passos e ao final.
 - Pesos das execuções anteriores preservados; nenhum peso entra no Git.
 - `caffeinate -i` acompanha somente o processo de treinamento, evitando suspensão
   por inatividade enquanto ele roda, sem mudar configurações persistentes.
@@ -76,11 +78,13 @@ ai/.venv/bin/python ai/scripts/prepare_evidence_intensive.py \
   --source ai/data/private/evidence-robustness-2026-11-11/examples.jsonl \
   --replay-source ai/data/private/document-long-contrasts-v2-2026-11-04/examples.jsonl \
   --checkpoint ai/runs/evidence-robustness-2026-11-11/best.pt
+PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.65 \
+PYTORCH_MPS_LOW_WATERMARK_RATIO=0.5 \
 caffeinate -i ai/.venv/bin/python -m confere_ai.instruct \
   --data ai/data/private/meu-intensivo/examples.jsonl \
   --init-from ai/runs/evidence-robustness-2026-11-11/best.pt \
-  --run-dir ai/runs/meu-intensivo --steps 6000 --batch-size 12 \
-  --learning-rate 0.00002 --eval-every 500 --response-tokens 256 \
+  --run-dir ai/runs/meu-intensivo --steps 10000 --batch-size 8 \
+  --learning-rate 0.00002 --eval-every 250 --response-tokens 256 \
   --evaluation-context 1024 --document-fraction 0.65 --device mps --max-seconds 1800
 ai/.venv/bin/python ai/scripts/evaluate_evidence_robustness.py \
   ai/runs/meu-intensivo --output ai/runs/meu-intensivo/audit.json
@@ -95,3 +99,50 @@ conflito na mesma unidade serão conferidos separadamente na API real.
 
 Resultados de qualidade ainda pendentes durante a execução; nenhum candidato
 é promovido apenas por mais passos ou menor loss.
+
+
+## Falha inicial e correção de memória
+
+A primeira execução terminou por falta de memória no MPS. A mensagem registrou
+8,59 GiB em tensores, 21,61 GiB em outras alocações e limite de 30,19 GiB.
+Somente o checkpoint do passo zero havia sido preservado; o número de atualizações
+executadas depois dele é desconhecido. A execução foi marcada como interrompida,
+sem atribuir a ela resultados de treino ou qualidade que não foram salvos.
+
+O benchmark inicial repetia poucos passos com o mesmo comprimento. O treino real
+variava o comprimento máximo a cada lote. Um teste isolado dos mesmos exemplos
+confirmou a associação entre muitos comprimentos distintos e o crescimento de
+memória no backend. O [relato upstream de SDPA com comprimentos variáveis](https://github.com/pytorch/pytorch/issues/152550)
+foi uma pista para esse diagnóstico, não substitui a medição local.
+
+- Lote 8 com comprimentos livres: atingiu a proteção local de 6,5 GB após
+  27 atualizações e 27 comprimentos distintos.
+- Agrupamento em faixas de 128 tokens: completou 96 atualizações com cinco
+  comprimentos e consumo estável do driver.
+- A implementação corrigida completou 512 atualizações nos mesmos lotes, com
+  cerca de 3,88 GB no driver e cinco comprimentos. O ensaio usou limite de
+  memória equivalente a metade do recomendado pelo dispositivo.
+
+A correção fica no loteador compartilhado: no MPS, com contexto informado,
+completa a dimensão até a próxima faixa de 128, limitada à janela do modelo.
+Não corta tokens. Posições extras usam PAD e rótulo ignorado pela loss.
+Os testes comparam prefixos, alvos, loss e gradientes; CPU mantém o loteamento
+anterior. Os três treinadores e a avaliação de loss passam o contexto explícito.
+Código da correção: commit `a34c345`.
+
+A nova execução usa limite alto `0.65` e baixo `0.5`, restritos ao processo,
+seguindo as [definições oficiais do MPS no PyTorch 2.8](https://docs.pytorch.org/docs/2.8/mps_environment_variables.html).
+O limite não foi desativado. As métricas agora registram tanto alocações de
+Tensores como memória do driver após a avaliação; esta última inclui reservas
+que o contador de tensores não mostra.
+
+Registros locais preservados:
+
+- [Teste com comprimentos livres](../output/ai/evidence-intensive-memory-dynamic-2026-11-11.json).
+- [Controle com faixas de comprimento](../output/ai/evidence-intensive-memory-bucketed-2026-11-11.json).
+- [Ensaio da implementação corrigida](../output/ai/evidence-intensive-memory-patched-2026-11-11.json).
+- `ai/runs/evidence-intensive-2026-11-11/failure.json` e `last.pt`.
+- `ai/runs/evidence-intensive-2026-11-11/memory-probe.py`, com o código do ensaio.
+
+Os 132 testes Python passaram após a correção. A execução intensiva corrigida
+continua sujeita à avaliação de qualidade ao final.
