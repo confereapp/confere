@@ -10,17 +10,17 @@ RESPONSE_TOKENS = 64
 MAX_UNITS = 4
 
 
-def input_ids(requirement, units, tokenizer):
-    return [tokenizer.BOS] + tokenizer.encode(prompt_for(requirement, units)) + [tokenizer.SEP]
+def input_ids(requirement, units, tokenizer, schema_version=1):
+    return [tokenizer.BOS] + tokenizer.encode(prompt_for(requirement, units, schema_version)) + [tokenizer.SEP]
 
 
-def batches_for(documents, requirement, tokenizer, context_size):
+def batches_for(documents, requirement, tokenizer, context_size, schema_version=1, response_tokens=RESPONSE_TOKENS):
     """Divide por caracteres Unicode; cada intervalo preserva literalmente a fonte."""
     batches = []; parts = []
 
     def fits(texts):
         units = [dict(id=f"page:{i+1}", text=text) for i, text in enumerate(texts)]
-        return len(input_ids(requirement, units, tokenizer)) + RESPONSE_TOKENS <= context_size
+        return len(input_ids(requirement, units, tokenizer, schema_version)) + response_tokens <= context_size
 
     if not fits([""]):
         raise ValueError("O requisito excede o contexto disponível.")
@@ -59,7 +59,7 @@ def batches_for(documents, requirement, tokenizer, context_size):
     return batches
 
 
-def review_extracted(documents, requirements, tokenizer, context_size, predict):
+def review_extracted(documents, requirements, tokenizer, context_size, predict, schema_version=1, response_tokens=RESPONSE_TOKENS):
     if not documents or not requirements or any(not isinstance(r, str) or not r.strip() for r in requirements):
         raise ValueError("Informe arquivos e pelo menos um requisito não vazio.")
     if len({d["sha256"] for d in documents}) != len(documents):
@@ -67,7 +67,7 @@ def review_extracted(documents, requirements, tokenizer, context_size, predict):
     if not any(u["text"].strip(" |") for d in documents for u in d["units"]):
         raise ValueError("Nenhum texto utilizável foi extraído dos arquivos.")
     # Planejar todos os requisitos antes da primeira inferência evita trabalho parcial oculto.
-    plans = [batches_for(documents, r, tokenizer, context_size) for r in requirements]
+    plans = [batches_for(documents, r, tokenizer, context_size, schema_version, response_tokens) for r in requirements]
     missing = [dict(document_id=f"doc:{i}", unit=u["id"]) for i,d in enumerate(documents,1)
                for u in d["units"] if not u["text"].strip(" |")]
     results = []
@@ -75,8 +75,8 @@ def review_extracted(documents, requirements, tokenizer, context_size, predict):
         calls = []; evidence = []; statuses = set(); valid = True
         for index, parts in enumerate(batches, 1):
             aliases = [dict(id=f"page:{i+1}", text=p["text"]) for i,p in enumerate(parts)]
-            ids = input_ids(requirement, aliases, tokenizer)
-            if len(ids)+RESPONSE_TOKENS > context_size:
+            ids = input_ids(requirement, aliases, tokenizer, schema_version)
+            if len(ids)+response_tokens > context_size:
                 raise ValueError("O lote planejado excede o contexto; conferência interrompida.")
             raw = predict(ids)
             resolved = resolve(raw, "batch", aliases)
@@ -88,7 +88,9 @@ def review_extracted(documents, requirements, tokenizer, context_size, predict):
             mapping = [dict(alias=a["id"], **{k:v for k,v in p.items() if k!="text"}) for a,p in zip(aliases,parts)]
             for quote in resolved["result"]["evidence"]:
                 part = parts[[a["id"] for a in aliases].index(quote["unit"])]
-                evidence.append(dict(**{k:v for k,v in part.items() if k!="text"}, quote=part["text"], model_status=status))
+                evidence_status = quote.get("model_status", status)
+                statuses.add(evidence_status)
+                evidence.append(dict(**{k:v for k,v in part.items() if k!="text"}, quote=part["text"], model_status=evidence_status))
             calls.append(dict(batch=index, input_tokens=len(ids), raw_model_output=raw,
                               valid_format=resolved["valid_format"], reference_valid=resolved["reference_valid"],
                               proposed_status=status, sources=mapping))
@@ -101,7 +103,7 @@ def review_extracted(documents, requirements, tokenizer, context_size, predict):
                                           text_characters=sum(len(u["text"]) for d in documents for u in d["units"] if u["text"].strip(" |")),
                                           processed_characters=sum(p["char_end"]-p["char_start"] for batch in batches for p in batch),
                                           batches=len(batches), units_without_text=missing)))
-    return dict(schema_version=1, experimental=True, offset_unit="unicode_codepoints",
+    return dict(schema_version=schema_version, experimental=True, offset_unit="unicode_codepoints",
                 scope_note="Propostas restritas ao texto extraído. Referência válida não garante suporte semântico; imagens e demais conteúdos não extraídos exigem revisão.",
                 sources=[dict(id=f"doc:{i}", name=d["name"], sha256=d["sha256"], format=d["format"],
                               warnings=d["warnings"], units=[dict(id=u["id"],characters=len(u["text"])) for u in d["units"]])
@@ -109,12 +111,15 @@ def review_extracted(documents, requirements, tokenizer, context_size, predict):
 
 
 def review_files(paths, requirements, checkpoint_path, device="auto"):
+    return review_documents([extract_document(path) for path in paths], requirements, checkpoint_path, device)
+
+
+def review_documents(documents, requirements, checkpoint_path, device="auto"):
     import torch
     from .model import GPT, GPTConfig
     from .tokenizer import ByteBPE
     from .train import choose_device
 
-    documents = [extract_document(path) for path in paths]
     payload = Path(checkpoint_path).read_bytes()
     checkpoint_hash = hashlib.sha256(payload).hexdigest()
     checkpoint = torch.load(BytesIO(payload), map_location="cpu", weights_only=True)
@@ -124,10 +129,12 @@ def review_files(paths, requirements, checkpoint_path, device="auto"):
     tokenizer = ByteBPE(checkpoint["merges"]); config = GPTConfig(**checkpoint["config"])
     torch.set_num_threads(4); target = choose_device(device)
     model = GPT(config).to(target); model.load_state_dict(checkpoint["model"]); model.eval()
+    schema_version = checkpoint["settings"].get("grounding_schema", 1)
+    response_tokens = checkpoint["settings"].get("generation_budget", 192) if schema_version == 2 else RESPONSE_TOKENS
     def predict(ids):
-        output = model.generate(torch.tensor([ids],device=target),RESPONSE_TOKENS,tokenizer.EOS)
+        output = model.generate(torch.tensor([ids],device=target),response_tokens,tokenizer.EOS)
         return tokenizer.decode(output[0,len(ids):].tolist())
-    result = review_extracted(documents, requirements, tokenizer, config.block_size, predict)
+    result = review_extracted(documents, requirements, tokenizer, config.block_size, predict, schema_version, response_tokens)
     result["model"] = dict(checkpoint=str(checkpoint_path), sha256=checkpoint_hash, step=checkpoint["step"],
-                           device=str(target), context_size=config.block_size, response_tokens=RESPONSE_TOKENS)
+                           device=str(target), context_size=config.block_size, response_tokens=response_tokens)
     return result

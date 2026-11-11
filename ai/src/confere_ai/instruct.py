@@ -50,7 +50,7 @@ def load_instructions(path):
         if projects.setdefault(row["project_id"], row["split"]) != row["split"]:
             raise ValueError("Projeto atravessando splits.")
         if row["task"].startswith("grounded_"):
-            if (row["prompt"] != prompt_for(row["requirement"], row["units"])
+            if (row["prompt"] != prompt_for(row["requirement"], row["units"], row.get("grounding_schema", 1))
                 or len({u["id"] for u in row["units"]}) != len(row["units"])
                 or row["task"] != "grounded_" + json.loads(row["target"])["status"]
                 or not judge(row["target"], row)["exact_match"]):
@@ -161,19 +161,24 @@ def run(args):
         if any(previous["config"][k]!=source["config"][k] for k in ("vocab_size","width","layers","heads")) or previous["merges"] != source["merges"]:
             raise ValueError("Comparação exige arquitetura e tokenizer iguais.")
         reference=GPT(GPTConfig(**previous["config"])).to(device);reference.load_state_dict(previous["model"]);reference.eval()
-        baseline=score(reference,tokenizer,controlled_validation,device,context_limit=evaluation_context)
+        baseline=score(reference,tokenizer,controlled_validation,device,context_limit=evaluation_context, response_tokens=generation_budget)
         del reference
-    else: baseline=score(model,tokenizer,controlled_validation,device,context_limit=evaluation_context)
+    else: baseline=score(model,tokenizer,controlled_validation,device,context_limit=evaluation_context, response_tokens=generation_budget)
     args.run_dir.mkdir(parents=True)
     objective = "conversation" if any("history" in r for r in rows) else "document_grounding" if any(r["task"].startswith("grounded_") for r in rows) else "instruction"
     settings = {"objective": objective, "seed": 42, "batch_size": args.batch_size, "learning_rate": args.learning_rate,"generation_budget":generation_budget,"human_fraction":human_fraction}
     settings["human_sampling_policy"]="homogeneous_batches"
     settings["public_fraction"]=public_fraction
     settings["document_fraction"]=document_fraction
+    schemas = {r.get("grounding_schema", 1) for r in rows if r["task"].startswith("grounded_")}
+    if len(schemas) > 1:
+        raise ValueError("Use um único contrato documental por treino.")
+    if schemas:
+        settings["grounding_schema"] = next(iter(schemas))
     info = {"objective": objective, "initialization": "local_checkpoint_new_optimizer", "resume_from": str(args.init_from),
             "base_step": source["step"], "source_objective": source["settings"]["objective"], "config": asdict(model.config), "parameters": sum(p.numel() for p in model.parameters()),
             "baseline_checkpoint": str(comparison or args.init_from), "train_evaluation_examples": len(train_eval),
-            "paired_evaluation_context":evaluation_context,"paired_evaluation_response_tokens":64,
+            "paired_evaluation_context":evaluation_context,"paired_evaluation_response_tokens":generation_budget,
             "human_validation_loss_examples":sum(r["task"]=="human_dialogue" for r in validation),
             "train_evaluation_policy":"amostra fixa sem reposição, seed 43",
             "data": str(args.data), "dataset_fingerprint": fingerprint, "settings": settings,
@@ -241,7 +246,7 @@ def run(args):
     (args.run_dir/"summary.json").write_text(json.dumps(summary, indent=2))
     selected = torch.load(args.run_dir/"best.pt", map_location="cpu", weights_only=True)
     model.load_state_dict(selected["model"]); model.eval()
-    result = {"baseline": baseline, "selected": score(model, tokenizer, controlled_validation, device,context_limit=evaluation_context), "selected_step": selected["step"], "test_examples_used": 0}
+    result = {"baseline": baseline, "selected": score(model, tokenizer, controlled_validation, device,context_limit=evaluation_context, response_tokens=generation_budget), "selected_step": selected["step"], "test_examples_used": 0}
     result["acceptance"] = acceptance(result["selected"])
     (args.run_dir/"instruction-evaluation.json").write_text(json.dumps(result, ensure_ascii=False, indent=2))
     if objective=="conversation":
