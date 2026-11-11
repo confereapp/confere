@@ -18,6 +18,9 @@ class EvidenceRobustnessTests(unittest.TestCase):
             spec = importlib.util.spec_from_file_location("robustness", scripts / "prepare_evidence_robustness.py")
             cls.module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(cls.module)
+            audit_spec = importlib.util.spec_from_file_location("audit_robustness", scripts / "evaluate_evidence_robustness.py")
+            cls.audit = importlib.util.module_from_spec(audit_spec)
+            audit_spec.loader.exec_module(cls.audit)
         finally:
             sys.path.remove(str(scripts))
 
@@ -54,3 +57,18 @@ class EvidenceRobustnessTests(unittest.TestCase):
                      evaluation_profile="single") for _ in range(99)]
         rows.append(dict(rows[0], exact_match=False, evaluation_profile="conflict"))
         self.assertFalse(acceptance(dict(samples=rows))["passed"])
+
+
+    def test_audit_requires_both_objectives_and_detects_conversation_regression(self):
+        doc = dict(id="doc", task="grounded_atendido", prompt="Testes", expected='{"status":"atendido"}',
+                   exact_match=True, valid_format=True, reference_valid=True, status_correct=True, unit_correct=True,
+                   result=dict(status="atendido"), evaluation_profile="single")
+        conversation = dict(id="conversation", task="conversation_identity", prompt="Olá", expected="Olá", exact_match=True)
+        def evaluate(before, after):
+            return self.audit.summarize(dict(baseline=dict(samples=before), selected=dict(samples=after)))
+        self.assertTrue(evaluate([doc, conversation], [doc, conversation])["controlled_gate_pass"])
+        self.assertFalse(evaluate([doc], [doc])["controlled_gate_pass"])
+        self.assertFalse(evaluate([conversation], [conversation])["controlled_gate_pass"])
+        self.assertFalse(evaluate([doc, conversation], [doc, dict(conversation, exact_match=False)])["conversation_regression_pass"])
+        with self.assertRaises(ValueError):
+            evaluate([doc], [dict(doc, id="other")])
