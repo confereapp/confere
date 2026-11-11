@@ -192,6 +192,7 @@ def run(args):
             "document_splits": dict(Counter(row["split"] for row in rows)), "train_ids": [r["id"] for r in train],
             "validation_ids": [r["id"] for r in validation], "test_examples_used": 0,
             "device": device, "torch": str(torch.__version__), "python": platform.python_version()}
+    info["mps_batch_padding_multiple"] = 128 if device == "mps" else None
     (args.run_dir/"run.json").write_text(json.dumps(info, ensure_ascii=False, indent=2))
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=.01)
     generator = torch.Generator().manual_seed(42)
@@ -206,6 +207,7 @@ def run(args):
     if document_fraction and (not documents or not synthetic):raise ValueError("Mistura documental exige documentos e exemplos autorais não documentais.")
     started, best, processed, memory = time.perf_counter(), float("inf"), 0, 0
     metrics = []
+    driver_memory = 0
     human_examples_processed=0
     human_tokens_processed=0
     public_examples_processed=0
@@ -215,6 +217,9 @@ def run(args):
     def record(step):
         nonlocal best
         item = {"step": step, "train_loss": evaluate(model, train_eval, device), "validation_loss": evaluate(model, encoded_val, device), "elapsed_seconds": time.perf_counter()-started}
+        if device == "mps":
+            item["mps_allocated_bytes"] = torch.mps.current_allocated_memory()
+            item["mps_driver_allocated_bytes"] = torch.mps.driver_allocated_memory()
         if human_eval:item["human_validation_loss"]=evaluate(model,human_eval,device)
         metrics.append(item)
         with (args.run_dir/"metrics.jsonl").open("a") as f: f.write(json.dumps(item)+"\n")
@@ -227,7 +232,7 @@ def run(args):
     for step in range(1, args.steps+1):
         model.train()
         indices=training_indices(len(train),humans,synthetic,args.batch_size,human_fraction,generator,public,public_fraction,documents,document_fraction)
-        x,y = batch(encoded_train,indices,device)
+        x,y = batch(encoded_train,indices,device,model.config.block_size)
         optimizer.zero_grad(set_to_none=True)
         loss = F.cross_entropy(model(x).flatten(0,1), y.flatten(), ignore_index=-100)
         if not torch.isfinite(loss).item(): raise ValueError("Loss não finita; checkpoint anterior preservado.")
@@ -240,7 +245,9 @@ def run(args):
                 public_examples_processed+=1;public_tokens_processed+=(y[j]!=-100).sum().item()
             if train[i]["task"].startswith("grounded_"):
                 document_examples_processed+=1;document_tokens_processed+=(y[j]!=-100).sum().item()
-        if device == "mps": memory = max(memory, torch.mps.current_allocated_memory())
+        if device == "mps":
+            memory = max(memory, torch.mps.current_allocated_memory())
+            driver_memory = max(driver_memory, torch.mps.driver_allocated_memory())
         timed_out=max_seconds is not None and time.perf_counter()-started>=max_seconds
         if step % args.eval_every == 0 or step == args.steps or timed_out: record(step)
         if timed_out: break
@@ -249,7 +256,7 @@ def run(args):
                "human_examples_processed":human_examples_processed,"human_tokens_processed":human_tokens_processed,
                "public_examples_processed":public_examples_processed,"public_tokens_processed":public_tokens_processed,
                "document_examples_processed":document_examples_processed,"document_tokens_processed":document_tokens_processed,
-               "mps_allocated_bytes_max_observed": memory, "process_peak_rss_bytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*(1 if platform.system()=="Darwin" else 1024)}
+               "mps_allocated_bytes_max_observed": memory, "mps_driver_allocated_bytes_max_observed": driver_memory, "process_peak_rss_bytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*(1 if platform.system()=="Darwin" else 1024)}
     (args.run_dir/"summary.json").write_text(json.dumps(summary, indent=2))
     selected = torch.load(args.run_dir/"best.pt", map_location="cpu", weights_only=True)
     model.load_state_dict(selected["model"]); model.eval()

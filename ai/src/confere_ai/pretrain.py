@@ -93,6 +93,7 @@ def run(args):
             "preparation_seconds": time.perf_counter() - preparation_started, "device": device,
             "torch": str(torch.__version__), "python": platform.python_version(),
             "note": "Métricas em amostras fixas de janelas; não são acurácia, diálogo nem avaliação de TCC."}
+    info["mps_batch_padding_multiple"] = 128 if device == "mps" else None
     (args.run_dir / "run.json").write_text(json.dumps(info, ensure_ascii=False, indent=2))
     (args.run_dir / "tokenizer.json").write_text(json.dumps({"merges": tokenizer.merges}))
     started, best_loss = time.perf_counter(), float("inf")
@@ -114,7 +115,7 @@ def run(args):
     for step in range(start_step + 1, args.steps + 1):
         model.train()
         indices = torch.randint(len(train_examples), (args.batch_size,), generator=generator).tolist()
-        x, y = batch(train_examples, indices, device)
+        x, y = batch(train_examples, indices, device, model.config.block_size)
         optimizer.zero_grad(set_to_none=True)
         loss = F.cross_entropy(model(x).flatten(0, 1), y.flatten(), ignore_index=-100)
         if not torch.isfinite(loss).item():

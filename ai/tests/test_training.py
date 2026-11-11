@@ -31,6 +31,35 @@ class TokenizerTests(unittest.TestCase):
 
 @unittest.skipIf(torch is None, "Instale ai[train] para os testes da rede")
 class TrainingTests(unittest.TestCase):
+    def test_bucketed_padding_preserves_prefix_loss_and_gradients(self):
+        from confere_ai.model import GPT, GPTConfig
+        from confere_ai.train import batch
+        from torch.nn import functional as F
+        torch.manual_seed(42)
+        model = GPT(GPTConfig(280, 8, 32, 1, 4))
+        examples = [([1, 2, 3], [-100, 3, 4]), ([4, 5], [-100, 6])]
+        original_x, original_y = batch(examples, [0, 1], "cpu", 8)
+        with patch.object(torch.Tensor, "to", lambda self, device: self):
+            padded_x, padded_y = batch(examples, [0, 1], "mps", 8)
+            bucket_x, _ = batch(examples, [0], "mps", 1024)
+        self.assertEqual(bucket_x.shape, (1, 128))
+        self.assertEqual(padded_x.shape, (2, 8))
+        torch.testing.assert_close(padded_x[:, :3], original_x)
+        torch.testing.assert_close(padded_y[:, :3], original_y)
+        self.assertTrue((padded_x[:, 3:] == ByteBPE.PAD).all())
+        self.assertTrue((padded_y[:, 3:] == -100).all())
+        loss = F.cross_entropy(model(original_x).flatten(0, 1), original_y.flatten(), ignore_index=-100)
+        loss.backward()
+        gradients = {name: p.grad.clone() for name, p in model.named_parameters()}
+        model.zero_grad(set_to_none=True)
+        padded_loss = F.cross_entropy(model(padded_x).flatten(0, 1), padded_y.flatten(), ignore_index=-100)
+        padded_loss.backward()
+        torch.testing.assert_close(loss, padded_loss)
+        for name, parameter in model.named_parameters():
+            torch.testing.assert_close(parameter.grad, gradients[name], rtol=1e-4, atol=1e-6)
+        with self.assertRaisesRegex(ValueError, "nenhum token"):
+            batch(examples, [0], "cpu", 2)
+
     def test_generation_stream_and_stop_match_generated_tokens(self):
         from confere_ai.model import GPT, GPTConfig
         model = GPT(GPTConfig(16, 8, 16, 1, 2)).eval()
