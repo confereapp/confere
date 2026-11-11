@@ -1,0 +1,351 @@
+{
+  "checkpoint": "ai/runs/evidence-intensive-bucketed-2026-11-11/best.pt",
+  "scope": "Authored API cases through the real Python service; known development cases, no real login or files",
+  "samples": [
+    {
+      "id": "positive",
+      "text": "O projeto inclui testes.",
+      "requirements": [
+        "O projeto deve incluir testes."
+      ],
+      "expected": [
+        "atendido"
+      ],
+      "conflicts": [
+        false
+      ],
+      "outputs": [
+        {
+          "status": "atendido",
+          "valid": true,
+          "conflict": false,
+          "correct": true,
+          "evidence": [
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "d57e4c94b169d33199309761b17117a42ad7ce54cdef79a6165f7fc92fdca5fe",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 24,
+              "quote": "O projeto inclui testes.",
+              "model_status": "atendido"
+            }
+          ],
+          "batches": 1
+        }
+      ],
+      "elapsed_ms": 1670.606875,
+      "model": {
+        "sha256": "082b4e1f7c2a84c1599f1377c1675a3aa741ed302e339816d9a3ef68ba50cde9",
+        "step": 7000,
+        "device": "mps",
+        "context_size": 1024,
+        "response_tokens": 256
+      }
+    },
+    {
+      "id": "negative",
+      "text": "O projeto não inclui testes.",
+      "requirements": [
+        "O projeto deve incluir testes."
+      ],
+      "expected": [
+        "nao_atendido"
+      ],
+      "conflicts": [
+        false
+      ],
+      "outputs": [
+        {
+          "status": "nao_atendido",
+          "valid": true,
+          "conflict": false,
+          "correct": true,
+          "evidence": [
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "cfca86d4fea5f965f454136b5fdb1bef61fdddacece2c418c62067cf1fae701b",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 28,
+              "quote": "O projeto não inclui testes.",
+              "model_status": "nao_atendido"
+            }
+          ],
+          "batches": 1
+        }
+      ],
+      "elapsed_ms": 1499.440208,
+      "model": {
+        "sha256": "082b4e1f7c2a84c1599f1377c1675a3aa741ed302e339816d9a3ef68ba50cde9",
+        "step": 7000,
+        "device": "mps",
+        "context_size": 1024,
+        "response_tokens": 256
+      }
+    },
+    {
+      "id": "same_unit",
+      "text": "🙂 O projeto inclui testes. O projeto não inclui testes.",
+      "requirements": [
+        "O projeto deve incluir testes."
+      ],
+      "expected": [
+        "evidencia_insuficiente"
+      ],
+      "conflicts": [
+        true
+      ],
+      "outputs": [
+        {
+          "status": "evidencia_insuficiente",
+          "valid": true,
+          "conflict": true,
+          "correct": true,
+          "evidence": [
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "3c2b1eab2a3aa3bfe3087c36e5be119cda6971557fd891557529c1843ec91eee",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 55,
+              "quote": "🙂 O projeto inclui testes. O projeto não inclui testes.",
+              "model_status": "atendido"
+            },
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "3c2b1eab2a3aa3bfe3087c36e5be119cda6971557fd891557529c1843ec91eee",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 55,
+              "quote": "🙂 O projeto inclui testes. O projeto não inclui testes.",
+              "model_status": "nao_atendido"
+            }
+          ],
+          "batches": 1
+        }
+      ],
+      "elapsed_ms": 1985.7421249999998,
+      "model": {
+        "sha256": "082b4e1f7c2a84c1599f1377c1675a3aa741ed302e339816d9a3ef68ba50cde9",
+        "step": 7000,
+        "device": "mps",
+        "context_size": 1024,
+        "response_tokens": 256
+      }
+    },
+    {
+      "id": "reverse_conflict",
+      "text": "O projeto não inclui testes. O projeto inclui testes.",
+      "requirements": [
+        "O projeto deve incluir testes."
+      ],
+      "expected": [
+        "evidencia_insuficiente"
+      ],
+      "conflicts": [
+        true
+      ],
+      "outputs": [
+        {
+          "status": "evidencia_insuficiente",
+          "valid": true,
+          "conflict": true,
+          "correct": true,
+          "evidence": [
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "ede627a5a26d8aab2ae69ecab9195e96919e672014839a802abc44f3445c3f30",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 53,
+              "quote": "O projeto não inclui testes. O projeto inclui testes.",
+              "model_status": "atendido"
+            },
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "ede627a5a26d8aab2ae69ecab9195e96919e672014839a802abc44f3445c3f30",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 53,
+              "quote": "O projeto não inclui testes. O projeto inclui testes.",
+              "model_status": "nao_atendido"
+            }
+          ],
+          "batches": 1
+        }
+      ],
+      "elapsed_ms": 1959.8419999999996,
+      "model": {
+        "sha256": "082b4e1f7c2a84c1599f1377c1675a3aa741ed302e339816d9a3ef68ba50cde9",
+        "step": 7000,
+        "device": "mps",
+        "context_size": 1024,
+        "response_tokens": 256
+      }
+    },
+    {
+      "id": "two_requirements",
+      "text": "🙂 O projeto inclui testes. O projeto não inclui backup.",
+      "requirements": [
+        "O projeto deve incluir testes.",
+        "O projeto deve incluir backup."
+      ],
+      "expected": [
+        "atendido",
+        "nao_atendido"
+      ],
+      "conflicts": [
+        false,
+        false
+      ],
+      "outputs": [
+        {
+          "status": "evidencia_insuficiente",
+          "valid": true,
+          "conflict": true,
+          "correct": false,
+          "evidence": [
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "10a516b5d8b5247ecb3db110a19f141509ca40ff7a64950b285a672092646bf9",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 55,
+              "quote": "🙂 O projeto inclui testes. O projeto não inclui backup.",
+              "model_status": "atendido"
+            },
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "10a516b5d8b5247ecb3db110a19f141509ca40ff7a64950b285a672092646bf9",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 55,
+              "quote": "🙂 O projeto inclui testes. O projeto não inclui backup.",
+              "model_status": "nao_atendido"
+            }
+          ],
+          "batches": 1
+        },
+        {
+          "status": "evidencia_insuficiente",
+          "valid": true,
+          "conflict": true,
+          "correct": false,
+          "evidence": [
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "10a516b5d8b5247ecb3db110a19f141509ca40ff7a64950b285a672092646bf9",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 55,
+              "quote": "🙂 O projeto inclui testes. O projeto não inclui backup.",
+              "model_status": "atendido"
+            },
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "10a516b5d8b5247ecb3db110a19f141509ca40ff7a64950b285a672092646bf9",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 55,
+              "quote": "🙂 O projeto inclui testes. O projeto não inclui backup.",
+              "model_status": "nao_atendido"
+            }
+          ],
+          "batches": 1
+        }
+      ],
+      "elapsed_ms": 2479.4719589999995,
+      "model": {
+        "sha256": "082b4e1f7c2a84c1599f1377c1675a3aa741ed302e339816d9a3ef68ba50cde9",
+        "step": 7000,
+        "device": "mps",
+        "context_size": 1024,
+        "response_tokens": 256
+      }
+    },
+    {
+      "id": "mention",
+      "text": "A equipe discutiu testes na reunião. Isso não informa sua implementação.",
+      "requirements": [
+        "O projeto deve incluir testes."
+      ],
+      "expected": [
+        "evidencia_insuficiente"
+      ],
+      "conflicts": [
+        false
+      ],
+      "outputs": [
+        {
+          "status": "evidencia_insuficiente",
+          "valid": true,
+          "conflict": false,
+          "correct": true,
+          "evidence": [],
+          "batches": 1
+        }
+      ],
+      "elapsed_ms": 1262.5501249999998,
+      "model": {
+        "sha256": "082b4e1f7c2a84c1599f1377c1675a3aa741ed302e339816d9a3ef68ba50cde9",
+        "step": 7000,
+        "device": "mps",
+        "context_size": 1024,
+        "response_tokens": 256
+      }
+    },
+    {
+      "id": "long_conflict",
+      "text": "O projeto inclui testes. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. O projeto não inclui testes.",
+      "requirements": [
+        "O projeto deve incluir testes."
+      ],
+      "expected": [
+        "evidencia_insuficiente"
+      ],
+      "conflicts": [
+        true
+      ],
+      "outputs": [
+        {
+          "status": "atendido",
+          "valid": true,
+          "conflict": false,
+          "correct": false,
+          "evidence": [
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "26a4a1cf9911003d8faae118d29e336b967112ee1b7eea356fa9b3070d89491f",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 1515,
+              "quote": "O projeto inclui testes. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu as tarefas da semana. A equipe registrou reuniões e distribuiu ",
+              "model_status": "atendido"
+            }
+          ],
+          "batches": 4
+        }
+      ],
+      "elapsed_ms": 2892.517,
+      "model": {
+        "sha256": "082b4e1f7c2a84c1599f1377c1675a3aa741ed302e339816d9a3ef68ba50cde9",
+        "step": 7000,
+        "device": "mps",
+        "context_size": 1024,
+        "response_tokens": 256
+      }
+    }
+  ]
+}
