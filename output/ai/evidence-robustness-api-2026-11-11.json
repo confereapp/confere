@@ -1,0 +1,86 @@
+{
+  "scope": "Three authored text cases, real Python inference through API service; not general quality",
+  "samples": [
+    {
+      "text": "O projeto inclui testes.",
+      "expected": "atendido",
+      "actual": "atendido",
+      "correct": true,
+      "valid": true,
+      "conflict": false,
+      "evidence": [
+        {
+          "document_id": "doc:1",
+          "document": "submission.txt",
+          "source_sha256": "d57e4c94b169d33199309761b17117a42ad7ce54cdef79a6165f7fc92fdca5fe",
+          "source_unit": "text:1",
+          "char_start": 0,
+          "char_end": 24,
+          "quote": "O projeto inclui testes.",
+          "model_status": "atendido"
+        }
+      ],
+      "model": {
+        "sha256": "77fbc2da64323c59bd27263768c6d10e09f73910d60e46f1108ce436e530395e",
+        "step": 589,
+        "device": "mps",
+        "context_size": 1024,
+        "response_tokens": 256
+      }
+    },
+    {
+      "text": "O projeto não inclui testes.",
+      "expected": "nao_atendido",
+      "actual": "nao_atendido",
+      "correct": true,
+      "valid": true,
+      "conflict": false,
+      "evidence": [
+        {
+          "document_id": "doc:1",
+          "document": "submission.txt",
+          "source_sha256": "cfca86d4fea5f965f454136b5fdb1bef61fdddacece2c418c62067cf1fae701b",
+          "source_unit": "text:1",
+          "char_start": 0,
+          "char_end": 28,
+          "quote": "O projeto não inclui testes.",
+          "model_status": "nao_atendido"
+        }
+      ],
+      "model": {
+        "sha256": "77fbc2da64323c59bd27263768c6d10e09f73910d60e46f1108ce436e530395e",
+        "step": 589,
+        "device": "mps",
+        "context_size": 1024,
+        "response_tokens": 256
+      }
+    },
+    {
+      "text": "🙂 O projeto inclui testes. O projeto não inclui testes.",
+      "expected": "evidencia_insuficiente",
+      "actual": "atendido",
+      "correct": false,
+      "valid": true,
+      "conflict": false,
+      "evidence": [
+        {
+          "document_id": "doc:1",
+          "document": "submission.txt",
+          "source_sha256": "3c2b1eab2a3aa3bfe3087c36e5be119cda6971557fd891557529c1843ec91eee",
+          "source_unit": "text:1",
+          "char_start": 0,
+          "char_end": 55,
+          "quote": "🙂 O projeto inclui testes. O projeto não inclui testes.",
+          "model_status": "atendido"
+        }
+      ],
+      "model": {
+        "sha256": "77fbc2da64323c59bd27263768c6d10e09f73910d60e46f1108ce436e530395e",
+        "step": 589,
+        "device": "mps",
+        "context_size": 1024,
+        "response_tokens": 256
+      }
+    }
+  ]
+}
