@@ -193,6 +193,7 @@ def run(args):
             "validation_ids": [r["id"] for r in validation], "test_examples_used": 0,
             "device": device, "torch": str(torch.__version__), "python": platform.python_version()}
     info["mps_batch_padding_multiple"] = 128 if device == "mps" else None
+    info["mps_generation_padding_multiple"] = 128 if device == "mps" else None
     (args.run_dir/"run.json").write_text(json.dumps(info, ensure_ascii=False, indent=2))
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=.01)
     generator = torch.Generator().manual_seed(42)

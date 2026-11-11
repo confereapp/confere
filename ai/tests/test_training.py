@@ -60,6 +60,29 @@ class TrainingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "nenhum token"):
             batch(examples, [0], "cpu", 2)
 
+    @unittest.skipIf(torch is None or not torch.backends.mps.is_available(), "MPS indisponível")
+    def test_mps_generation_padding_preserves_greedy_tokens(self):
+        from confere_ai.model import GPT, GPTConfig
+        torch.manual_seed(42)
+        model = GPT(GPTConfig(280, 256, 32, 2, 4)).to("mps").eval()
+        for size in (3, 140, 254):
+            prompt = (torch.arange(size) % 280).unsqueeze(0).to("mps")
+            steps = min(8, 256-size)
+            expected = prompt.clone()
+            with torch.no_grad():
+                for _ in range(steps):
+                    token = model(expected)[:, -1].argmax(dim=-1, keepdim=True)
+                    expected = torch.cat((expected, token), dim=1)
+            lengths = []
+            hook = model.register_forward_pre_hook(lambda module, args: lengths.append(args[0].shape[1]))
+            try:
+                actual = model.generate(prompt, steps, -1)
+            finally:
+                hook.remove()
+            torch.testing.assert_close(actual, expected, rtol=0, atol=0)
+            self.assertTrue(all(length in (128, 256) for length in lengths))
+            self.assertEqual(len(lengths), steps)
+
     def test_generation_stream_and_stop_match_generated_tokens(self):
         from confere_ai.model import GPT, GPTConfig
         model = GPT(GPTConfig(16, 8, 16, 1, 2)).eval()

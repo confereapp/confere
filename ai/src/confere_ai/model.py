@@ -84,7 +84,13 @@ class GPT(nn.Module):
         for _ in range(max_new_tokens):
             if should_stop is not None and should_stop():
                 break
-            next_id = self(prompt)[:, -1].argmax(dim=-1, keepdim=True)
+            length = prompt.shape[1]
+            forward_prompt = prompt
+            if prompt.device.type == "mps":
+                # Padding futuro não afeta a atenção causal e limita os formatos do MPS.
+                padded = min(self.config.block_size, ((length + 127) // 128) * 128)
+                forward_prompt = F.pad(prompt, (0, padded - length), value=0)
+            next_id = self(forward_prompt)[:, length - 1].argmax(dim=-1, keepdim=True)
             prompt = torch.cat((prompt, next_id), dim=1)
             if on_token is not None:
                 on_token(next_id.item())
