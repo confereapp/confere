@@ -73,3 +73,26 @@ Testes automatizados cobrem autenticação ausente, configuração ausente,
 entrada inválida, concorrência, erro de processo, protocolo inválido e liberação
 do bloqueio após falha. O [relatório do ciclo](MULTIPLE_EVIDENCE.md) registra os
 limites de qualidade do candidato.
+
+
+## Teste reproduzível com inferência real
+
+Além dos testes comuns, há um teste opcional do adaptador HTTP com subprocesso
+Python e pesos reais. Na raiz, com um checkpoint local explícito:
+
+```sh
+CONFERE_AI_LIVE_TEST=1 \
+AI_CHECKPOINT=ai/runs/evidence-robustness-2026-11-11/best.pt \
+AI_DEVICE=mps bun run test apps/api/src/modules/ai/live.test.ts
+```
+
+Ele cobre recusa sem sessão, respostas estruturadas, cobertura do texto,
+citações com offsets Unicode, sinalização inconclusiva de conflitos detectados
+e ausência de caminhos privados na resposta. Usa três textos autorais, incluindo
+uma afirmação e uma negação na mesma unidade com emoji.
+
+A sessão é sintética e o adaptador roda em memória, sem login, rede ou banco.
+O teste verifica transporte e coerência das flags; não exige que o modelo
+classifique corretamente os três textos. A qualidade semântica é medida nas
+avaliações documentais. Sem `CONFERE_AI_LIVE_TEST=1`, esse teste fica desativado
+e os testes comuns não carregam os pesos.
