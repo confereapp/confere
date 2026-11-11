@@ -1,0 +1,56 @@
+{
+  "dataset_sha256": "de45c98fff5a1c4c488a3114568ed2410e5feb95bf5b6e9c286ec7d9d92c2cfa",
+  "source": "ai/runs/evidence-intensive-bucketed-2026-11-11/best.pt",
+  "settings": {
+    "objective": "conversation",
+    "seed": 42,
+    "batch_size": 4,
+    "learning_rate": 1e-05,
+    "generation_budget": 256,
+    "human_fraction": 0.0,
+    "human_sampling_policy": "homogeneous_batches",
+    "public_fraction": 0.0,
+    "document_fraction": 0.65,
+    "grounding_schema": 2
+  },
+  "mps_batch_padding_multiple": 128,
+  "mps_generation_padding_multiple": 128,
+  "source_code": {
+    "generation": "7abf7dc",
+    "curriculum": "4826383"
+  },
+  "summary": {
+    "start_step": 0,
+    "final_step": 8000,
+    "stop_reason": "steps",
+    "elapsed_seconds": 806.259381417,
+    "tokens_processed": 1346535,
+    "initial": {
+      "step": 0,
+      "train_loss": 0.038716700731863896,
+      "validation_loss": 0.033853625757929516,
+      "elapsed_seconds": 2.3321664169999963,
+      "mps_allocated_bytes": 47308800,
+      "mps_driver_allocated_bytes": 1368588288
+    },
+    "final": {
+      "step": 8000,
+      "train_loss": 0.0038314676487119148,
+      "validation_loss": 0.011456754155040787,
+      "elapsed_seconds": 805.963138334,
+      "mps_allocated_bytes": 304877824,
+      "mps_driver_allocated_bytes": 2939142144
+    },
+    "human_examples_processed": 0,
+    "human_tokens_processed": 0,
+    "public_examples_processed": 0,
+    "public_tokens_processed": 0,
+    "document_examples_processed": 20796,
+    "document_tokens_processed": 1142866,
+    "mps_allocated_bytes_max_observed": 345907456,
+    "mps_driver_allocated_bytes_max_observed": 3043999744,
+    "process_peak_rss_bytes": 870236160
+  },
+  "test_examples_used": 0,
+  "adopted": false
+}
