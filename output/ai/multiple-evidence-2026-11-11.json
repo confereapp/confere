@@ -1,0 +1,236 @@
+{
+  "dataset_sha256": "150ce33b136855e50aeb3ed20b154f25d881e7cd6c64339addabf97aa7bfc3bb",
+  "response_tokens": 192,
+  "context_size": 1024,
+  "test_examples_used": 0,
+  "validation_inspected": true,
+  "results": [
+    {
+      "checkpoint": "ai/runs/document-long-contrasts-2026-11-04/best.pt",
+      "sha256": "d86d03e807bc1da34fd813e3797a8149e2d893f71d95ee92ae84bbeb941d11d0",
+      "step": 1200,
+      "document_correct": 0,
+      "document_total": 24,
+      "modes": {
+        "0": {
+          "total": 4,
+          "status": 0,
+          "pointers": 0,
+          "exact": 0,
+          "valid": 0
+        },
+        "1": {
+          "total": 4,
+          "status": 0,
+          "pointers": 0,
+          "exact": 0,
+          "valid": 0
+        },
+        "2": {
+          "total": 4,
+          "status": 0,
+          "pointers": 0,
+          "exact": 0,
+          "valid": 0
+        },
+        "3": {
+          "total": 4,
+          "status": 0,
+          "pointers": 0,
+          "exact": 0,
+          "valid": 0
+        },
+        "4": {
+          "total": 4,
+          "status": 0,
+          "pointers": 0,
+          "exact": 0,
+          "valid": 0
+        },
+        "5": {
+          "total": 4,
+          "status": 0,
+          "pointers": 0,
+          "exact": 0,
+          "valid": 0
+        }
+      },
+      "conversation_correct": 6,
+      "conversation_total": 6
+    },
+    {
+      "checkpoint": "ai/runs/multiple-evidence-2026-11-11/best.pt",
+      "sha256": "1d4907ee448ddbf6f97a3cd9c66c11c84d6fd4cad7481848e49a4c2e8cce95c0",
+      "step": 200,
+      "document_correct": 10,
+      "document_total": 24,
+      "modes": {
+        "0": {
+          "total": 4,
+          "status": 4,
+          "pointers": 4,
+          "exact": 4,
+          "valid": 4
+        },
+        "1": {
+          "total": 4,
+          "status": 4,
+          "pointers": 3,
+          "exact": 3,
+          "valid": 4
+        },
+        "2": {
+          "total": 4,
+          "status": 2,
+          "pointers": 2,
+          "exact": 2,
+          "valid": 3
+        },
+        "3": {
+          "total": 4,
+          "status": 3,
+          "pointers": 1,
+          "exact": 1,
+          "valid": 3
+        },
+        "4": {
+          "total": 4,
+          "status": 0,
+          "pointers": 0,
+          "exact": 0,
+          "valid": 0
+        },
+        "5": {
+          "total": 4,
+          "status": 0,
+          "pointers": 0,
+          "exact": 0,
+          "valid": 3
+        }
+      },
+      "conversation_correct": 6,
+      "conversation_total": 6
+    },
+    {
+      "checkpoint": "ai/runs/multiple-evidence-v2-2026-11-11/best.pt",
+      "sha256": "3619313cd2abcfc7c061961c3825e9bd1cf71ef329fef86e0e60c1173c342a1f",
+      "step": 400,
+      "document_correct": 22,
+      "document_total": 24,
+      "modes": {
+        "0": {
+          "total": 4,
+          "status": 4,
+          "pointers": 4,
+          "exact": 4,
+          "valid": 4
+        },
+        "1": {
+          "total": 4,
+          "status": 4,
+          "pointers": 4,
+          "exact": 4,
+          "valid": 4
+        },
+        "2": {
+          "total": 4,
+          "status": 3,
+          "pointers": 3,
+          "exact": 3,
+          "valid": 3
+        },
+        "3": {
+          "total": 4,
+          "status": 4,
+          "pointers": 4,
+          "exact": 4,
+          "valid": 4
+        },
+        "4": {
+          "total": 4,
+          "status": 4,
+          "pointers": 4,
+          "exact": 4,
+          "valid": 4
+        },
+        "5": {
+          "total": 4,
+          "status": 3,
+          "pointers": 3,
+          "exact": 3,
+          "valid": 3
+        }
+      },
+      "conversation_correct": 6,
+      "conversation_total": 6
+    }
+  ],
+  "http_smoke": {
+    "unauthenticated_status": 401,
+    "authenticated_status": 200,
+    "authentication": "injected local test session; real login not exercised",
+    "elapsed_ms": 3803.5781669999997,
+    "result": {
+      "schema_version": 2,
+      "experimental": true,
+      "offset_unit": "unicode_codepoints",
+      "scope_note": "Propostas restritas ao texto extraído. Referência válida não garante suporte semântico; imagens e demais conteúdos não extraídos exigem revisão.",
+      "sources": [
+        {
+          "id": "doc:1",
+          "name": "submission.txt",
+          "sha256": "d57e4c94b169d33199309761b17117a42ad7ce54cdef79a6165f7fc92fdca5fe",
+          "format": "text",
+          "warnings": [
+            "Entrada textual; não verifica conteúdo de anexos."
+          ],
+          "units": [
+            {
+              "id": "text:1",
+              "characters": 24
+            }
+          ]
+        }
+      ],
+      "requirements": [
+        {
+          "id": "R1",
+          "requirement": "O projeto deve incluir testes.",
+          "status": "atendido",
+          "requires_human_review": true,
+          "conflicting_evidence": false,
+          "model_outputs_valid": true,
+          "evidence": [
+            {
+              "document_id": "doc:1",
+              "document": "submission.txt",
+              "source_sha256": "d57e4c94b169d33199309761b17117a42ad7ce54cdef79a6165f7fc92fdca5fe",
+              "source_unit": "text:1",
+              "char_start": 0,
+              "char_end": 24,
+              "quote": "O projeto inclui testes.",
+              "model_status": "atendido"
+            }
+          ],
+          "coverage": {
+            "scope": "all_extracted_text",
+            "all_extracted_text_processed": true,
+            "text_characters": 24,
+            "processed_characters": 24,
+            "batches": 1,
+            "units_without_text": []
+          }
+        }
+      ],
+      "model": {
+        "sha256": "3619313cd2abcfc7c061961c3825e9bd1cf71ef329fef86e0e60c1173c342a1f",
+        "step": 400,
+        "device": "mps",
+        "context_size": 1024,
+        "response_tokens": 192
+      }
+    }
+  },
+  "adopted": false,
+  "note": "Templates autorais, validação inspecionada, seis turnos conhecidos. Sessão HTTP injetada. Não valida projetos reais ou login."
+}
