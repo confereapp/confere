@@ -79,7 +79,7 @@ def review_extracted(documents, requirements, tokenizer, context_size, predict, 
             if len(ids)+response_tokens > context_size:
                 raise ValueError("O lote planejado excede o contexto; conferência interrompida.")
             raw = predict(ids)
-            resolved = resolve(raw, "batch", aliases)
+            resolved = resolve(raw, "batch", aliases, schema_version)
             sound = resolved["valid_format"] and resolved["reference_valid"]
             valid = valid and sound
             status = resolved["result"]["status"]

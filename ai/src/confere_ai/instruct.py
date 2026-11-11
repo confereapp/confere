@@ -78,9 +78,9 @@ def score(model, tokenizer, rows, device, context_limit=None, response_tokens=64
         judged = judge(answer, row) if row["task"].startswith("grounded_") else {"exact_match": answer.strip() == row["target"].strip()}
         outputs.append({"id": row["id"], "task": row["task"], "prompt": row["prompt"], "expected": row["target"], "actual": answer, **trace, **judged})
     criterion = (f"Conversas com histórico gerado pelo modelo após o contexto inicial: igualdade exata após strip, greedy, {response_tokens} tokens. Não é qualidade geral."
-                 if any("history" in r for r in rows) else "Casos documentais: JSON estrito e status/unidade corretos; replay: igualdade exata após strip. Greedy, até 64 tokens. Templates, não documentos reais."
+                 if any("history" in r for r in rows) else f"Casos documentais: JSON estrito, status e conjunto de evidências corretos; replay: igualdade exata após strip. Greedy, até {response_tokens} tokens. Templates, não documentos reais."
                  if any(r["task"].startswith("grounded_") for r in rows) else
-                 "Igualdade exata após strip; greedy, até 64 tokens. Validação de templates, não conversa geral.")
+                 f"Igualdade exata após strip; greedy, até {response_tokens} tokens. Validação de templates, não conversa geral.")
     return {"correct": sum(row["exact_match"] for row in outputs), "total": len(outputs), "samples": outputs, "criterion": criterion}
 
 

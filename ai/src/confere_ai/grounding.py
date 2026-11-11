@@ -19,12 +19,15 @@ def prompt_for(requirement, units, schema_version=1):
     return instruction + "\nRequisito: " + requirement + "\n" + "\n".join(f'[{unit["id"]}] {unit["text"]}' for unit in units)
 
 
-def resolve(raw, document, units):
+def resolve(raw, document, units, schema_version=None):
     fallback = {"status": "evidencia_insuficiente", "evidence": [], "justification": "Saída inválida do modelo; conferência inconclusiva."}
     result = {"valid_format": False, "reference_valid": False, "result": fallback}
     try:
         value = json.loads(raw, object_pairs_hook=unique_object)
     except (ValueError, TypeError):
+        return result
+    if schema_version is not None and (not isinstance(value, dict) or set(value) !=
+                                      ({"status", "unit"} if schema_version == 1 else {"status", "evidence"})):
         return result
     if isinstance(value, dict) and "evidence" in value:
         return resolve_evidence(value, document, units, result)
@@ -76,8 +79,8 @@ def resolve_evidence(value, document, units, result):
 
 
 def judge(raw, row):
-    resolved = resolve(raw, row["document"], row["units"])
-    expected = resolve(row["target"], row["document"], row["units"])
+    resolved = resolve(raw, row["document"], row["units"], row.get("grounding_schema"))
+    expected = resolve(row["target"], row["document"], row["units"], row.get("grounding_schema"))
     valid = resolved["valid_format"] and resolved["reference_valid"] and expected["valid_format"] and expected["reference_valid"]
     status_correct = valid and resolved["result"]["status"] == expected["result"]["status"]
     def pointers(result):

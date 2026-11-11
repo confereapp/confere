@@ -57,6 +57,9 @@ class MultipleEvidenceTests(unittest.TestCase):
         self.assertTrue(judge(json.dumps(reordered), row)["exact_match"])
         missing = dict(status="atendido", evidence=self.value["evidence"][:1])
         self.assertFalse(judge(json.dumps(missing), row)["exact_match"])
+        row["grounding_schema"] = 2
+        legacy = json.dumps(dict(status="evidencia_insuficiente", unit=None))
+        self.assertFalse(judge(legacy, row)["valid_format"])
 
     def test_malformed_conflicts_duplicates_and_unknown_sources_fail_closed(self):
         bad = [dict(self.value, status="atendido"), dict(status="atendido", evidence=[]),
