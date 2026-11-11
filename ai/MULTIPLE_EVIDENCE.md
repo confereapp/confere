@@ -87,3 +87,9 @@ upload, persistência e promoção do modelo continuam pendentes. O próximo cic
 de qualidade deve variar distratores, tamanho e distribuição das evidências,
 incluindo afirmações opostas dentro da mesma unidade e uma avaliação nova
 revisada. Repetir apenas estes 24 casos não valida projetos reais.
+
+## Continuação com replay e casos difíceis
+
+O [ciclo seguinte](EVIDENCE_ROBUSTNESS.md) amplia os perfis e mede conversa
+por família. O candidato continua reprovado, incluindo uma falha semântica
+observada na inferência real pela API.

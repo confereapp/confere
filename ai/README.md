@@ -162,6 +162,7 @@ Definir metas numéricas após o primeiro benchmark. O teste final terá documen
 novos e rótulos revisados, separados por projeto e preferencialmente por enunciado.
 
 O primeiro ciclo de `ai/primeiro-modelo` foi integrado à `main`. O ciclo atual
-está em `ai/treinamento-integracao-api`; veja [treinos e resultados](MULTIPLE_EVIDENCE.md). Dados privados, ambientes, checkpoints
+está em `ai/treinamento-integracao-api`; veja [treinos e resultados](MULTIPLE_EVIDENCE.md)
+e o [ciclo de evidências difíceis com replay de conversa](EVIDENCE_ROBUSTNESS.md). Dados privados, ambientes, checkpoints
 e execuções não entram no Git. Commits sem `Co-Authored-By`; PRs sem `Generated with`.
 Merge na `main` fica para a integração revisada.
