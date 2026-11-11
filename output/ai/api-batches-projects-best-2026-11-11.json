@@ -1,0 +1,559 @@
+{
+  "checkpoint": "ai/runs/api-batches-2026-11-11/best.pt",
+  "checkpoint_sha256": "b7da213ff2645f7277bea58ab0c0a50fa89bf427f2d4274ec4f0cbd9b8742168",
+  "step": 2000,
+  "cases_sha256": "7bca5d9de232aee793240711b5d3358f92ab65663028ce543a6ca4e59988ac64",
+  "correct_requirements": 12,
+  "total_requirements": 36,
+  "valid_requirements": 36,
+  "false_positive": 2,
+  "exact_local_calls": 61,
+  "total_local_calls": 86,
+  "complete_projects": 1,
+  "total_projects": 18,
+  "test_examples_used": 0,
+  "adopted": false,
+  "note": "Documentos autorais da validação de desenvolvimento; sobrepõem os lotes locais da avaliação. Sem teste cego ou documento real.",
+  "cases": [
+    {
+      "id": "api-validation-0-scope_short",
+      "profile": "scope_short",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-validation-0-scope_long",
+      "profile": "scope_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-validation-0-tail_conflict",
+      "profile": "tail_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-validation-0-middle_evidence",
+      "profile": "middle_evidence",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-validation-0-short_conflict",
+      "profile": "short_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-validation-0-mention_long",
+      "profile": "mention_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-validation-1-scope_short",
+      "profile": "scope_short",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-validation-1-scope_long",
+      "profile": "scope_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-validation-1-tail_conflict",
+      "profile": "tail_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-validation-1-middle_evidence",
+      "profile": "middle_evidence",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 4,
+          "local_total": 4
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 4
+        }
+      ]
+    },
+    {
+      "id": "api-validation-1-short_conflict",
+      "profile": "short_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-validation-1-mention_long",
+      "profile": "mention_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-validation-2-scope_short",
+      "profile": "scope_short",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-validation-2-scope_long",
+      "profile": "scope_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-validation-2-tail_conflict",
+      "profile": "tail_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-validation-2-middle_evidence",
+      "profile": "middle_evidence",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-validation-2-short_conflict",
+      "profile": "short_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-validation-2-mention_long",
+      "profile": "mention_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        }
+      ]
+    }
+  ]
+}
