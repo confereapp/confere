@@ -1,0 +1,6 @@
+{
+  "error": "MPS backend out of memory (MPS allocated: 8.59 GiB, other allocations: 21.61 GiB, max allowed: 30.19 GiB). Tried to allocate 256 bytes on shared pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).",
+  "recorded_at": "2026-11-11T13:15:08.910442+00:00",
+  "last_checkpoint_step": 0,
+  "scope": "O total de passos executados após o último checkpoint não foi registrado. Tempos e loss abaixo cobrem somente os registros preservados."
+}
