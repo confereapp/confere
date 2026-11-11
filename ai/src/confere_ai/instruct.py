@@ -76,6 +76,8 @@ def score(model, tokenizer, rows, device, context_limit=None, response_tokens=64
         answer = tokenizer.decode(generated[0, len(ids):].tolist())
         if "history" in row: history.append((row["prompt"],answer))
         judged = judge(answer, row) if row["task"].startswith("grounded_") else {"exact_match": answer.strip() == row["target"].strip()}
+        if "evaluation_profile" in row:
+            trace["evaluation_profile"] = row["evaluation_profile"]
         outputs.append({"id": row["id"], "task": row["task"], "prompt": row["prompt"], "expected": row["target"], "actual": answer, **trace, **judged})
     criterion = (f"Conversas com histórico gerado pelo modelo após o contexto inicial: igualdade exata após strip, greedy, {response_tokens} tokens. Não é qualidade geral."
                  if any("history" in r for r in rows) else f"Casos documentais: JSON estrito, status e conjunto de evidências corretos; replay: igualdade exata após strip. Greedy, até {response_tokens} tokens. Templates, não documentos reais."
@@ -101,8 +103,13 @@ def acceptance(result):
                 "description":"Conversas sintéticas: ao menos 80% em cada família, com histórico gerado pelo modelo.","scope":"Não valida conversa aberta."}
     grounded = [r for r in result["samples"] if r["task"].startswith("grounded_")]
     if grounded:
-        return {"passed": all(r["valid_format"] and r["reference_valid"] for r in grounded) and sum(r["exact_match"] for r in grounded)/len(grounded) >= .9,
-                "description":"Piloto documental: 100% de formato/referências válidos e ao menos 90% de status e unidade corretos em conjunto.",
+        profiles = {}
+        for row in grounded:
+            counts = profiles.setdefault(row.get("evaluation_profile", "default"), [0, 0])
+            counts[0] += row["exact_match"]; counts[1] += 1
+        return {"passed": all(r["valid_format"] and r["reference_valid"] for r in grounded) and all(correct/total >= .9 for correct, total in profiles.values()),
+                "profiles": profiles,
+                "description":"Piloto documental: 100% de formato/referências válidos e ao menos 90% de status e evidências corretos em cada perfil.",
                 "scope":"Templates sintéticos; não comprova confiabilidade geral."}
     critical = {task: [0, 0] for task in ("copy", "field", "missing", "insufficient_context")}
     for row in result["samples"]:
