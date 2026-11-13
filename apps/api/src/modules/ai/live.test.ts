@@ -2,7 +2,7 @@ import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 import type { Context } from "../../context";
-import { reviewTextResult } from "./model";
+import { chatResult, reviewTextResult } from "./model";
 
 describe.skipIf(process.env.CONFERE_AI_LIVE_TEST !== "1")(
   "real local inference through the HTTP adapter",
@@ -82,6 +82,39 @@ describe.skipIf(process.env.CONFERE_AI_LIVE_TEST !== "1")(
         }
         expect(JSON.stringify(raw)).not.toContain('"checkpoint":');
       }
+      const invokeChat = (
+        ctx: Context,
+        method = "POST",
+        history: { message: string; response: string }[] = [],
+      ) =>
+        fetchRequestHandler({
+          endpoint: "/trpc",
+          router: aiRouter,
+          req: new Request("http://localhost/trpc/chat", {
+            method,
+            headers: { "content-type": "application/json" },
+            ...(method === "POST"
+              ? { body: JSON.stringify({ message: "Olá", history }) }
+              : {}),
+          }),
+          createContext: () => ctx,
+        });
+      expect((await invokeChat({ auth: null, session: null })).status).toBe(
+        401,
+      );
+      expect((await invokeChat(context, "GET")).status).toBe(405);
+      const first = await invokeChat(context);
+      expect(first.status).toBe(200);
+      const firstRaw = await first.json();
+      const result = chatResult.parse(firstRaw.result.data);
+      expect(result.response.trim().length).toBeGreaterThan(0);
+      expect(result.dropped_turns).toBe(0);
+      expect(JSON.stringify(firstRaw)).not.toContain('"checkpoint":');
+      const next = await invokeChat(context, "POST", [
+        { message: "Olá", response: result.response },
+      ]);
+      expect(next.status).toBe(200);
+      chatResult.parse((await next.json()).result.data);
     }, 120000);
   },
 );

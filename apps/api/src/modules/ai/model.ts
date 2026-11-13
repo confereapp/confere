@@ -70,3 +70,22 @@ export const reviewTextResult = z.object({
     response_tokens: z.number().int().positive(),
   }),
 });
+
+const chatText = z
+  .string()
+  .min(1)
+  .max(2000)
+  .refine((text) => text.trim().length > 0);
+export const chatInput = z.object({
+  message: chatText,
+  history: z
+    .array(z.object({ message: chatText, response: z.string().max(2000) }))
+    .max(8)
+    .default([]),
+});
+
+export const chatResult = z.object({
+  response: z.string().max(8192),
+  experimental: z.literal(true),
+  dropped_turns: z.number().int().nonnegative(),
+});

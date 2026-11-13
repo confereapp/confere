@@ -1,8 +1,11 @@
 import { protectedProcedure, router } from "../../index";
-import { reviewTextInput } from "./model";
-import { reviewText } from "./service";
+import { chatInput, reviewTextInput } from "./model";
+import { chat, reviewText } from "./service";
 
 export const aiRouter = router({
+  chat: protectedProcedure
+    .input(chatInput)
+    .mutation(({ input }) => chat(input)),
   reviewText: protectedProcedure
     .input(reviewTextInput)
     .mutation(({ input }) => reviewText(input)),

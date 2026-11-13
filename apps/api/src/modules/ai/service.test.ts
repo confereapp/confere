@@ -12,7 +12,7 @@ vi.mock("@confere/env/server", () => ({ env: mocks.env }));
 vi.mock("node:child_process", () => ({ execFile: mocks.execFile }));
 
 import { aiRouter } from "./index";
-import { reviewText } from "./service";
+import { chat, reviewText } from "./service";
 
 const input = {
   text: "O projeto inclui testes.",
@@ -28,6 +28,9 @@ describe("local AI boundary", () => {
   it("requires authentication before inference", async () => {
     const caller = aiRouter.createCaller({ auth: null, session: null });
     await expect(caller.reviewText(input)).rejects.toMatchObject({
+      code: "UNAUTHORIZED",
+    });
+    await expect(caller.chat({ message: "oi" })).rejects.toMatchObject({
       code: "UNAUTHORIZED",
     });
     expect(mocks.execFile).not.toHaveBeenCalled();
@@ -75,5 +78,75 @@ describe("local AI boundary", () => {
     finish(null, '{"experimental":false}');
     await invalid;
     expect(mocks.execFile).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("local chat boundary", () => {
+  beforeEach(() => {
+    mocks.env.AI_CHECKPOINT = "ai/runs/candidate/best.pt";
+    mocks.execFile.mockReset();
+  });
+
+  it("validates messages, history and server configuration", async () => {
+    for (const input of [
+      { message: " " },
+      { message: "x".repeat(2001) },
+      {
+        message: "oi",
+        history: Array(9).fill({ message: "oi", response: "sim" }),
+      },
+    ]) {
+      await expect(chat({ history: [], ...input })).rejects.toThrow();
+    }
+    mocks.env.AI_CHECKPOINT = undefined;
+    await expect(chat({ message: "oi", history: [] })).rejects.toMatchObject({
+      code: "PRECONDITION_FAILED",
+    });
+    expect(mocks.execFile).not.toHaveBeenCalled();
+  });
+
+  it("shares the inference slot and returns only validated public data", async () => {
+    let finish!: (error: Error | null, output: string) => void;
+    const end = vi.fn();
+    mocks.execFile.mockImplementation((_file, args, _options, callback) => {
+      expect(args).toContain("confere_ai.chat_api");
+      finish = callback;
+      return { stdin: { on: vi.fn(), end } };
+    });
+    const input = {
+      message: "olá 🙂",
+      history: [{ message: "oi", response: "olá" }],
+    };
+    const pending = chat(input);
+    await expect(
+      reviewText({ text: "teste", requirements: ["teste"] }),
+    ).rejects.toMatchObject({ code: "TOO_MANY_REQUESTS" });
+    expect(end).toHaveBeenCalledWith(JSON.stringify(input));
+    finish(
+      null,
+      JSON.stringify({
+        response: "olá",
+        experimental: true,
+        dropped_turns: 1,
+        checkpoint: "private",
+      }),
+    );
+    await expect(pending).resolves.toEqual({
+      response: "olá",
+      experimental: true,
+      dropped_turns: 1,
+    });
+    const oversized = chat(input);
+    const rejected = expect(oversized).rejects.toMatchObject({
+      code: "BAD_REQUEST",
+    });
+    finish(null, '{"error":"context_length"}');
+    await rejected;
+    const invalid = chat(input);
+    const invalidResult = expect(invalid).rejects.toMatchObject({
+      code: "INTERNAL_SERVER_ERROR",
+    });
+    finish(null, '{"response":42}');
+    await invalidResult;
   });
 });
