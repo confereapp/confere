@@ -96,3 +96,60 @@ O teste verifica transporte e coerência das flags; não exige que o modelo
 classifique corretamente os três textos. A qualidade semântica é medida nas
 avaliações documentais. Sem `CONFERE_AI_LIVE_TEST=1`, esse teste fica desativado
 e os testes comuns não carregam os pesos.
+
+## Conversa livre
+
+`POST /trpc/ai.chat` usa a mesma sessão autenticada e configuração local de pesos
+que `ai.reviewText`. Retorna texto gerado, sem exigir requisitos documentais.
+Na raiz, para usar o último checkpoint do treinamento:
+
+```sh
+rtk proxy env AI_CHECKPOINT=ai/runs/api-batches-2026-11-11/last.pt AI_DEVICE=mps bun run dev:server
+```
+
+Com o cliente tRPC autenticado:
+
+```ts
+const first = await trpc.ai.chat.mutate({ message: "Olá, quem é você?" });
+const next = await trpc.ai.chat.mutate({
+  message: "Como você pode ajudar?",
+  history: [{ message: "Olá, quem é você?", response: first.response }],
+});
+```
+
+HTTP direto, usando o cookie de sessão de uma conta autenticada:
+
+```sh
+curl -X POST http://localhost:3000/trpc/ai.chat \
+  -H 'Content-Type: application/json' \
+  -b cookies.txt \
+  --data '{"message":"Olá, quem é você?"}'
+```
+
+O arquivo `cookies.txt` deve conter a sessão obtida no login. A resposta tRPC
+tem o formato `{"result":{"data":{"response":"...","experimental":true,"dropped_turns":0}}}`.
+GET não executa geração; a rota é uma mutation POST.
+
+A mensagem aceita até 2.000 caracteres e o histórico opcional até oito pares
+`message`/`response`, cada texto com até 2.000 caracteres. O histórico é enviado
+pelo cliente e não é salvo no servidor. Os turnos antigos que excedem o contexto
+são descartados por inteiro, com a quantidade em `dropped_turns`. Uma mensagem
+atual que não cabe no contexto retorna `BAD_REQUEST`, mesmo estando dentro do
+limite de caracteres: o limite real depende da tokenização. A geração é limitada
+a 128 tokens de saída e pode produzir texto vazio ou interrompido nesse limite.
+
+Ambas as rotas compartilham uma única inferência por processo, timeout de
+120 segundos e limite de saída de 4 MiB. Cada chamada recarrega os pesos. O
+cliente não escolhe arquivos, dispositivo ou checkpoint. Sem `AI_CHECKPOINT`,
+a API retorna `PRECONDITION_FAILED`.
+
+Esse endpoint usa o formato de prompt da conversa no terminal. Ele não amplia a
+capacidade dos pesos: o candidato recente foi treinado sobretudo para análise
+documental e sua conversa geral não está validada. Nenhuma resposta é persistida.
+
+Verificação de 13/11/2026: 139 testes Python, tipos TypeScript e oito testes
+TypeScript com inferência real passaram. O teste HTTP em memória recusou sessão
+ausente com 401 e GET com 405, gerou resposta com o último checkpoint
+`api-batches-2026-11-11/last.pt` no MPS e aceitou uma segunda mensagem com
+histórico. A sessão desse teste é sintética; não verifica login real, servidor
+em rede ou qualidade semântica das respostas.
