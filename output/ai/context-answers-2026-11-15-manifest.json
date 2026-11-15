@@ -1,0 +1,16 @@
+{
+  "base_sha256": "de45c98fff5a1c4c488a3114568ed2410e5feb95bf5b6e9c286ec7d9d92c2cfa",
+  "dataset_sha256": "d2a8d3d413db62a5fe47157653fca1cfebebb5ffc9ad03109dee10b7c3614d83",
+  "splits": {
+    "train": 21881,
+    "validation": 365
+  },
+  "new_families": {
+    "conversation_context_answer_fact": 1212,
+    "conversation_context_answer_missing": 1212,
+    "conversation_context_answer_conflict": 1212,
+    "conversation_context_answer_support": 1212,
+    "conversation_context_answer_memory": 3636
+  },
+  "note": "Casos autorais controlados. Validação por formas e nomes diferentes, não teste cego nem prova de conversa geral. Nenhum teste consumido. Pesos herdam fontes anteriores."
+}
