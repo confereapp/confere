@@ -93,3 +93,16 @@ class SentenceDiagnosticTests(unittest.TestCase):
         self.assertEqual("".join(u["text"] for u in result["units"]), document["units"][0]["text"])
         self.assertEqual(len(result["units"]), 4)
         self.assertEqual(len(document["units"]), 1)
+
+
+class LexicalBindingTests(unittest.TestCase):
+    def test_requirement_changes_status_and_pointers_in_same_text(self):
+        from prepare_lexical_binding import documents, expected
+        rows = documents(18)
+        for first, second in zip(rows[::2], rows[1::2]):
+            self.assertEqual(first["units"], second["units"])
+            self.assertNotEqual(first["requirement"], second["requirement"])
+            for row in [first, second]:
+                import json
+                self.assertEqual(json.loads(row["target"]), expected(row["scenario"]["units"], row["scenario"]["feature"]))
+        self.assertEqual({r["task"] for r in rows}, {"grounded_atendido", "grounded_nao_atendido", "grounded_evidencia_insuficiente"})
