@@ -56,3 +56,61 @@ Mistura por lote: 1% humano, 39% público, 40% documental e 20% autoral de conve
 O orçamento de geração avaliativa continua 256 para comparação documental;
 a API de chat gera no máximo 128. O limite de 600 segundos cobre apenas o loop
 de treino. Novos dados, pesos e saídas brutas ficam locais/ignorados.
+
+## Resultados
+
+Concluídos 4.000 passos em 294,19 segundos no loop, com 856.383 tokens-alvo
+processados incluindo repetições. O passo 4.000 foi selecionado pela menor loss
+agregada de validação. SHA256 dos pesos:
+`0732c0cad4c01a2e025b3835110a42a6fd2971aebced089a25af161ed1f45b70`.
+Pico observado do driver MPS: 3.041.394.688 bytes. Não houve falha de memória.
+
+| Critério | Piloto anterior (referência) | Candidato |
+| --- | ---: | ---: |
+| Evidências e status locais corretos | 172/206 | 168/206 |
+| Conversa autoral: igualdade exata | 64/75 | 65/75 |
+| Loss pública separada, teacher-forced (75 casos) | 3,5042 | 1,8249 |
+| Igualdade exata pública, geração limitada a 128 tokens | 0/75 | 0/75 |
+| Loss da única validação humana | 4,9102 | 5,1800 |
+
+A loss publicada durante o treino mistura todo o conjunto de validação;
+não deve ser apresentada como loss pública isolada. Os dois primeiros critérios
+usam geração de 256 tokens, preservando a comparação documental. A avaliação
+pública separada usa 128, igual ao teto do chat. Igualdade exata penaliza paráfrases
+corretas e não é uma medida suficiente de qualidade aberta.
+
+Inspeção informal de 12 gerações públicas, com seed fixa 151126: continuam
+explicações incoerentes e repetição de frases. Identificou-se também um rótulo
+questionável da fonte: uma reação crítica a um comentário racista foi marcada
+como discurso de ódio apenas por mencioná-lo. Pontuação alta do classificador
+da fonte não garante rótulo correto. Não foi feita revisão humana independente.
+
+Composição aproximada por expressões literais nos prompts de treino: 344 de
+inferência, 272 de similaridade, 393 de discurso de ódio e 261 outros. São grupos
+heurísticos, não rótulos formais; mostram a concentração desta amostra em tarefas
+de classificação, insuficiente para representar conversa livre. Não é correto
+atribuir a melhora de loss a uma melhora geral de diálogo.
+
+Nos mesmos 18 documentos completos de desenvolvimento, o candidato acertou
+15/36 requisitos, com zero aprovações incorretas nesse conjunto, 36/36 saídas
+estruturalmente válidas e dois projetos inteiramente corretos. O piloto anterior
+teve 14/36, uma aprovação incorreta e zero projetos inteiramente corretos. É um
+pequeno ganho nesse conjunto autoral, não evidência de segurança geral; a avaliação
+local de 206 casos regrediu e inclui uma saída inválida. Não há teste cego nem
+documentos reais. Nenhum candidato foi promovido.
+
+Passaram 143 testes Python. As três páginas do PDF foram renderizadas e
+inspecionadas. O smoke adicional usa a ponte Python real do chat; não testa HTTP,
+login, Insomnia ou a qualidade de conversa geral. Não houve mudança TypeScript,
+checagem de tipos adicional ou alteração do checkpoint padrão da API. Sem push.
+
+Artefatos: [manifesto](../output/ai/hf-diverse-2026-11-15-manifest.json),
+[resultados completos](../output/ai/hf-diverse-2026-11-15-results.json),
+[inspeção qualitativa](../output/ai/hf-diverse-2026-11-15-qualitative.json),
+[composição](../output/ai/hf-diverse-2026-11-15-composition.json),
+[smoke do chat](../output/ai/hf-diverse-2026-11-15-chat-smoke.json),
+[PDF](../output/pdf/training/hf-diverse-2026-11-15.pdf).
+
+A próxima etapa útil requer curadoria dos alvos, balanceamento de tarefas e
+exemplos de resposta curta sustentada por contexto. Os resultados não justificam
+continuar ampliando volume desta mistura de classificação sem verificar os rótulos.

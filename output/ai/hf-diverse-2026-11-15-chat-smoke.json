@@ -1,0 +1,12 @@
+{
+  "request": {
+    "message": "Olá, quem é você?",
+    "history": []
+  },
+  "response": {
+    "response": "Sou o Confere.",
+    "experimental": true,
+    "dropped_turns": 0
+  },
+  "note": "Ponte Python real, sem servidor HTTP, sessão ou validação de conversa geral."
+}

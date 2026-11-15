@@ -1,0 +1,149 @@
+{
+  "note": "Inspeção informal pelo assistente, não revisão humana independente nem taxa de acerto; amostra fixa seed 151126 das 75 validações públicas. Há explicações incoerentes e rótulos de referência questionáveis.",
+  "samples": [
+    {
+      "id": "hf-51a121fed7d5a27567f5c00fd52d3dbb7a476c29ef0972ce3f4e706c26cd44b5-1",
+      "task": "public_dialogue",
+      "prompt": "Frase 1: O rapaz tentou ligar para sua namorada, mas não conseguiu alcançá-la.\nFrase 2: Ele procurou contato telefônico com sua parceira, porém falhou em localizá-la.\nPergunta: Quão similares são as duas frases? Dê uma pontuação entre 1,0 a 5,0.\nResposta:",
+      "expected": "4.1. Ambas as frases comunicam basicamente a mesma ideia de alguém tentando entrar em contato via telefone com seu parceiro(a) sem sucesso, resultando numa pontuação de similaridade de 4.1.",
+      "actual": "4.8. Ambas as frases descrevem uma cena onde um local onde um local de opiniões está validado, resultando numa alta pontuação de similaridade de 4.8.",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-51a121fed7d5a27567f5c00fd52d3dbb7a476c29ef0972ce3f4e706c26cd44b5",
+      "turn_index": 0,
+      "exact_match": false
+    },
+    {
+      "id": "hf-68a0bf5e86eca78e3e4c3c698569f2ea9905d8d2618c4bab18dc5d566c407be1-1",
+      "task": "public_dialogue",
+      "prompt": "Premissa: No final da reunião todos concordaram em votar sim.\nHipótese: Todos presentes decidiram aprovar a proposta por unanimidade.\nPergunta: A hipótese pode ser inferida pela premissa? Sim ou Não?",
+      "expected": "Não. A premissa indica que todos concordaram em votar 'sim', mas não especifica que foi por unanimidade nem que era sobre aprovar uma proposta específica, logo a hipótese não pode ser diretamente inferida.",
+      "actual": "Não. A premissa afirma que todos os concordes decidem votar sobre votações internacionais e detalhes detalhados, logo a hipótese não pode ser inferida diretamente da premissa.",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-68a0bf5e86eca78e3e4c3c698569f2ea9905d8d2618c4bab18dc5d566c407be1",
+      "turn_index": 0,
+      "exact_match": false
+    },
+    {
+      "id": "hf-09f5ce93c26d927373b30ce4c0c6b97a97eb12dc01f17ee47ae61b466cfc97c4-1",
+      "task": "public_dialogue",
+      "prompt": "Dada a definição da tarefa e a entrada, responda com a saída. Nesta tarefa, você verá uma passagem e deverá responder a uma pergunta com base em sua compreensão dos eventos inferidos a partir da passagem. Entre as entidades, tente encontrar a melhor entidade com maior probabilidade de preencher “_” e classifique as respostas com base nas opções.\n\n(CNN) O presidente dos EUA, Donald Trump, ligou para o presidente francês no sábado, em meio às crescentes tensões com a Coreia do Norte, um dia depois de ele ter dito que estava considerando novas sanções econômicas contra a nação rebelde. Numa chamada que Trump teve com o presidente Emmanuel Macron de França, os dois discutiram \"a necessidade de confrontar a situação cada vez mais perigosa associada ao comportamento desestabilizador e escalador da Coreia do Norte\", de acordo com uma leitura da chamada feita pela Casa Branca. Durante a teleconferência, ambos os líderes discutiram o trabalho com os aliados para fazer cumprir as sanções das Nações Unidas e desnuclearizar a Península Coreana, disse o comunicado. No sábado anterior, Macron emitiu um comunicado expressando a sua “preocupação com a ameaça balística e nuclear vinda da Coreia do Norte”, acrescentando que a comunidade internacional deveria trabalhar com Pyongyang para “retomar o caminho do diálogo sem condições”. implanta um sistema de interceptação de mísseis em quatro locais\n Perguntas:_ rejeitou as críticas na sexta-feira, dizendo que a única razão pela qual criticaram sua resposta é \"porque sou eu\". (A) EUA (B) Donald Trump (C) Francês (D) Coreia do Norte (E) Emmanuel Macron (F) França (G) Casa Branca (H) Nações Unidas (I) Península Coreana (J) Macron (K) Pyongyang (L) China (M) Guam (N) Japão",
+      "expected": "Com base na passagem, a melhor entidade para preencher a lacuna é (B) Donald Trump. Ele é a figura mais provável para rejeitar as críticas sobre a sua resposta à situação da Coreia do Norte.",
+      "actual": "$\")”).",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-09f5ce93c26d927373b30ce4c0c6b97a97eb12dc01f17ee47ae61b466cfc97c4",
+      "turn_index": 0,
+      "exact_match": false
+    },
+    {
+      "id": "hf-985469dd3f25bf59bc54e9fc5bc9416ccb9faeeca6339534a0ff6ae2dba25a4c-1",
+      "task": "public_dialogue",
+      "prompt": "Texto: Nossa sociedade precisa acabar com este tratamento desumano aos mais pobres.\nPergunta: O texto contém discurso de ódio?\nResposta:",
+      "expected": "Não. O texto critica o tratamento dado aos mais pobres mas não contém elementos característicos de discurso de ódio.",
+      "actual": "Não. O texto exprime frustração com algo nível de discurso de ódio.",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-985469dd3f25bf59bc54e9fc5bc9416ccb9faeeca6339534a0ff6ae2dba25a4c",
+      "turn_index": 0,
+      "exact_match": false
+    },
+    {
+      "id": "hf-03e2c1cbc8c81e13378e69ac2f2a68b660e4302b03bc4aa081a7050d854a9f4f-1",
+      "task": "public_dialogue",
+      "prompt": "Texto: CADA PESSOA TEM SEU LUGAR NO MUNDO, INDEPENDENTEMENTE DE ONDE ELA VEIO.\nPergunta: O texto contém discurso de ódio?\nResposta:",
+      "expected": "Não. O texto afirma que cada pessoa possui seu lugar no mundo independentemente de suas origens, não indicando nenhum tipo de discurso de ódio.",
+      "actual": "Não. Embora o texto exprime frustração e instrumentar uma mudança para indicar uma nova como um grupo inal, indicando logo, não contendo elementos de discurso de ódio.",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-03e2c1cbc8c81e13378e69ac2f2a68b660e4302b03bc4aa081a7050d854a9f4f",
+      "turn_index": 0,
+      "exact_match": false
+    },
+    {
+      "id": "hf-07ef897ff17b213921e37d9ddc2a44d60ff78009e7522b6c92b008352a1a4dbf-1",
+      "task": "public_dialogue",
+      "prompt": "Texto: As crianças desse bairro precisam de mais atenção e investimento do governo federal.\nPergunta: O texto contém discurso de ódio?\nResposta:",
+      "expected": "Não. O texto destaca a necessidade de maior atenção e investimento governamental às crianças de um determinado bairro, mas não contém elementos característicos de discurso de ódio.",
+      "actual": "Não. O texto exprime frustração com uma criança sobre um governo, mas não contém elementos característicos de discurso de ódio.",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-07ef897ff17b213921e37d9ddc2a44d60ff78009e7522b6c92b008352a1a4dbf",
+      "turn_index": 0,
+      "exact_match": false
+    },
+    {
+      "id": "hf-5e1ec88e6b0036afe89730d14b05934f908a139bc5dfcecea490d2fdc8747785-1",
+      "task": "public_dialogue",
+      "prompt": "Texto: Seu comentário racista me fez vomitar literalmente.\nPergunta: O texto contém discurso de ódio?\nResposta:",
+      "expected": "Sim. O texto faz referência a um comentário racista, que é considerado uma forma de discurso de ódio, além de usar uma imagem forte ('me fez vomitar') como reação àquele comentário, indicando sentimentos negativos intensos associados às manifestações racistas.",
+      "actual": "Sim. O texto utiliza termos pejorativos contra um grupo específico, indicando discriminação contra comentários específicos, indicativo de discurso de ódio.",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-5e1ec88e6b0036afe89730d14b05934f908a139bc5dfcecea490d2fdc8747785",
+      "turn_index": 0,
+      "exact_match": false
+    },
+    {
+      "id": "hf-3e59530222f68d17660f1ade8f741cc43dcad3a2301130b062468bb960b2d0ae-1",
+      "task": "public_dialogue",
+      "prompt": "Pergunta: Você está pensando em comprar um produto. Você olha os comentários. A avaliação a seguir diminuiria ou aumentaria as chances de você comprar o produto? Título da crítica: A única coisa positiva deste filme é a mensagem Crítica do produto: A atuação neste filme não foi muito boa...talvez o melhor trabalho tenha sido do garotinho que interpretou Elmo. Por outro lado, a história de elevação através do esforço e do trabalho árduo, e de cuidar dos outros, é uma mensagem positiva muito boa, mas os métodos usados ​​para transmitir e aprender esta mensagem prejudicam o esforço como um todo. Shannon Elizabeth foi provavelmente a principal estabilidade deste filme, e o final foi um tanto previsível.\nResponder:",
+      "expected": "A avaliação a seguir provavelmente diminuiria as chances de você comprar o produto, pois contém mais pontos negativos (como mau desempenho e previsibilidade) do que positivos. A crítica menciona uma boa mensagem positiva e elogia o desempenho de Shannon Elizabeth, mas no geral parece ser uma crítica negativa.",
+      "actual": "Total do garo. Podemos dizem um garante para o produto á-lo a voação do garante e aos gares do garo. Portanto, a voação do garante afirá afirme confundido e e afirá afirme adamente afirme e com voações de voo garo.",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-3e59530222f68d17660f1ade8f741cc43dcad3a2301130b062468bb960b2d0ae",
+      "turn_index": 0,
+      "exact_match": false
+    },
+    {
+      "id": "hf-acc5fa6abf29ec8fe7ba3ce5f973dee007441560821f6635e621a1233907491f-1",
+      "task": "public_dialogue",
+      "prompt": "Frase 1: A música tocou suavemente enquanto dormiam.\r\nFrase 2: Enquanto estavam cansados, sons melódicos ecoaram calmamente.\r\nPergunta: Quão similares são as duas frases? Dê uma pontuação entre 1,0 a 5,0.\r\nResposta:",
+      "expected": "3.9. Ambas as frases descrevem situações onde músicas ou sons estão sendo produzidos tranquilamente durante o sono ou quando os indivíduos estão cansados, resultando numa pontuação de similaridade de 3.9.",
+      "actual": "4.6. Ambas as frases transmitem a ideia de uma música musical reduz dormir seu canal decobrir dormir seu canal decobrido.",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-acc5fa6abf29ec8fe7ba3ce5f973dee007441560821f6635e621a1233907491f",
+      "turn_index": 0,
+      "exact_match": false
+    },
+    {
+      "id": "hf-232f2640c81b901f8a817e94d728c586fea80672a93a4c8f61cd7c5ea0c6c829-1",
+      "task": "public_dialogue",
+      "prompt": "Premissa: O relógio digital mostrava exatamente 3:00 da madrugada quando o alarme tocou.\r\nHipótese: Era hora de acordar para ir ao serviço.\r\nPergunta: A hipótese pode ser inferida pela premissa? Sim ou Não?\r\nResposta:",
+      "expected": "Não. A premissa informa somente sobre a hora em que o alarme tocou, mas não fornece detalhes suficientes para confirmar que era hora de acordar para ir ao trabalho.",
+      "actual": "Não. A premissa indica que o alarmamento mostrado numa madrugada, mas não fornece informações sobre a temporada da madrugada, logo a hipótese não pode ser inferida diretamente da premissa.",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-232f2640c81b901f8a817e94d728c586fea80672a93a4c8f61cd7c5ea0c6c829",
+      "turn_index": 0,
+      "exact_match": false
+    },
+    {
+      "id": "hf-8de80d525befbd6299f2fa4ad358403d3f88f2b4c9ae0e0ab8f1372ccbd46f75-1",
+      "task": "public_dialogue",
+      "prompt": "Frase 1: O filme causou grande impacto emocional no público presente.\r\nFrase 2: A audiência sentiu-se profundamente movida pelas cenas poderosas exibidas no cinema.\r\nPergunta: Quão similares são as duas frases? Dê uma pontuação entre 1,0 a 5,0.\r\nResposta:",
+      "expected": "4.6. Ambas as frases transmitem a ideia de que o público teve uma forte reação emocional à experiência cinematográfica, merecendo assim uma alta pontuação de similaridade de 4.6.",
+      "actual": "4.7. Ambas as frases transmitem a ideia de que o filme causa um crítico com uma pontuação calma, resultando numa alta pontuação de similaridade de 4.7.",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-8de80d525befbd6299f2fa4ad358403d3f88f2b4c9ae0e0ab8f1372ccbd46f75",
+      "turn_index": 0,
+      "exact_match": false
+    },
+    {
+      "id": "hf-f32eaac7a6519e2504e9ada3c8d35266b52bfcd64020e84b96049b84c7f199f6-1",
+      "task": "public_dialogue",
+      "prompt": "Frase 1: O navio navegava lentamente pelo canal silencioso sob a lua brilhante.\nFrase 2: Em trajetoria suave, embarcacao percorria passagem tranqüila debaixo de ceu iluminado.\nPergunta: Quao similares sao as duas frases? De uma pontuacao entre 1,0 a 5,0.",
+      "expected": ". Ambas as frases descrevem uma cena onde um barco move-se calmamente através de um local tranquilo à luz da lua, resultando numa alta pontuação de similaridade de 4.3.",
+      "actual": ". Ambas as frases descrevem uma cena onde um canal onde um canal completo está a pontuação de similaridade com uma pontuação de similaridade de 4.2.",
+      "history_used": [],
+      "dropped_turns": 0,
+      "project_id": "hf-f32eaac7a6519e2504e9ada3c8d35266b52bfcd64020e84b96049b84c7f199f6",
+      "turn_index": 0,
+      "exact_match": false
+    }
+  ]
+}

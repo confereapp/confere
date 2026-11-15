@@ -1,0 +1,9 @@
+{
+  "counts": {
+    "outros": 261,
+    "discurso_odio": 393,
+    "inferencia": 344,
+    "similaridade": 272
+  },
+  "note": "Grupos por expressões literais no prompt, apenas diagnóstico de composição; não são rótulos de qualidade ou métricas de avaliação."
+}
