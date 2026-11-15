@@ -1,0 +1,13 @@
+{
+  "source_sha256": "a1490a7d9805e86ce076af83dd39da96463b4ec26632445aa09be88bc9be2953",
+  "dataset_sha256": "da3b46b7f735d713cbef8d5401dedde03370369727ac59d833c1aa548fc7fc81",
+  "splits": {
+    "train": 31081,
+    "validation": 377
+  },
+  "paired_scenes": 2000,
+  "role_cases": 500,
+  "presence_scenes": 500,
+  "additional_document_rows": 2000,
+  "note": "Dados autorais, sem novas fontes públicas. Validação B preservada. Diagnósticos já inspecionados motivaram a variedade de formatos; desenvolvimento, não teste cego."
+}

@@ -86,3 +86,57 @@ Nove diagnósticos adicionais foram definidos em evaluate_context_smoke.py antes
 da conclusão do ciclo B, fora do corpus de treino, sem o preâmbulo/registro do
 currículo. Usam 128 tokens, como a API. Não são benchmark de conversa geral;
 igualdade literal deve ser interpretada com leitura semântica.
+
+### Resultado B
+
+O loop encerrou pelo limite de tempo no passo 5.630 (600 s mais a última avaliação),
+não nos 6.000 planejados. O mínimo de loss selecionou o passo 2.000, mas a avaliação
+gerativa dos últimos pesos foi melhor nas famílias contextuais:
+
+| Família | Selecionado 2.000 | Último 5.630 |
+| --- | ---: | ---: |
+| Fato, incluindo distrações | 18/24 | 23/24 |
+| Informação ausente | 5/12 | 8/12 |
+| Conflito | 11/12 | 12/12 |
+| Presença/ausência explícita | 12/12 | 12/12 |
+| Memória | 30/36 | 33/36 |
+
+A família de ausência continuou reprovada: quatro perguntas sobre quantidade de
+dias receberam linguagem de programação como resposta. Persistiram trocas/erros
+de grafia em alguns nomes e regressões documentais. Os critérios completos
+reprovaram ambos os candidatos. Não se promove nenhum deles.
+
+Os nove diagnósticos fora do formato de treino tiveram quatro respostas literais
+corretas no último checkpoint: responsável Lia, ausência de prazo, nome corrigido
+Rui e identidade do assistente. Os demais recusaram responder, inclusive quando
+havia dados suficientes. É evidência de dependência de formulação/estilo, não
+comprovação de diálogo geral. Os casos já foram inspecionados e passam a ser
+apenas diagnóstico de desenvolvimento, não teste independente para próximos ciclos.
+
+## Ciclo C
+
+Inicializa do último checkpoint B, escolhido pela geração contextual e não pela
+loss. Troca o preâmbulo rígido por quatro formatos (incluindo pergunta antes do
+texto), varia a realização das mesmas informações autorais e acrescenta 2.000
+pares de campos presentes/ausentes no mesmo contexto, 500 casos de atribuição de
+tarefas e 500 cenários com perguntas de presença, ausência explícita e assunto
+não informado. Mais 2.000 linhas documentais curtas foram geradas pelo pipeline
+existente de lotes reais, com requisitos diferentes no mesmo texto. A validação
+B fica literalmente intacta: 377 casos. Não foi consultado teste reservado.
+
+Corpus: context-answers-natural-v2-2026-11-15, 31.081 linhas de treino e 377 de
+validação. O diretório natural anterior foi preservado e não foi usado no treino.
+Não há novo download ou alvos externos. SHA256 dos dados:
+da3b46b7f735d713cbef8d5401dedde03370369727ac59d833c1aa548fc7fc81.
+
+Planejado: 6.000 passos, batch 4, lr 1e-5, avaliação a cada 500, 60% de lotes
+documentais e 40% de conversa autoral, contexto 1.024 e reserva 256, MPS com
+limites de memória anteriores e máximo de 600 segundos no loop.
+Diretório: ai/runs/context-answers-c-2026-11-15.
+
+Artefatos A e B: [A](../output/ai/context-answers-a-2026-11-15.json),
+[B](../output/ai/context-answers-b-2026-11-15.json),
+[manifesto C](../output/ai/context-answers-natural-2026-11-15-manifest.json).
+Os diagnósticos não validam fluência, conhecimento aberto ou documentos reais.
+Os relatórios históricos de pré-treinamento já registravam falta de fluência;
+estes currículos focam competências limitadas e não removem essa ressalva.
