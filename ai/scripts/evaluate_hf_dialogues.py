@@ -17,12 +17,13 @@ def main():
     parser.add_argument("--before", type=Path, required=True)
     parser.add_argument("--after", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--response-tokens", type=int, choices=[128, 256], default=256)
     args = parser.parse_args()
     if args.output.exists(): parser.error("Saída deve ser nova.")
     rows, digest = load_instructions(args.data)
     rows = [r for r in rows if r["split"] == "validation" and r["task"] in {"human_dialogue", "public_dialogue"}]
     assert rows and all(r["split"] != "test" for r in rows)
-    result = dict(dataset_sha256=digest, count=len(rows), test_examples_used=0, adopted=False,
+    result = dict(response_tokens=args.response_tokens, dataset_sha256=digest, count=len(rows), test_examples_used=0, adopted=False,
                   note="Loss teacher-forced e geração greedy; validações públicas não comprovam conversa geral. Linhagem de exposição humana não auditada.")
     torch.set_num_threads(4)
     for name, path in [("before", args.before), ("after", args.after)]:
@@ -34,7 +35,7 @@ def main():
         encoded = [encode_sample(row, tokenizer, model.config.block_size) for row in rows]
         result[name] = dict(checkpoint_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                             step=checkpoint["step"], loss=evaluate(model, encoded, "mps"),
-                            generation=score(model, tokenizer, rows, "mps", context_limit=1024, response_tokens=256))
+                            generation=score(model, tokenizer, rows, "mps", context_limit=1024, response_tokens=args.response_tokens))
         del model
         torch.mps.empty_cache()
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2))
