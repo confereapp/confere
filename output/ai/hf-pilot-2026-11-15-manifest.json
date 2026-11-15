@@ -1,0 +1,57 @@
+{
+  "base_sha256": "de45c98fff5a1c4c488a3114568ed2410e5feb95bf5b6e9c286ec7d9d92c2cfa",
+  "humans_sha256": "bfebf8457d2bcc9d330baf3dfc01ff5d7502adc8d631e2fa3574f43a24982f81",
+  "source": {
+    "source": "https://huggingface.co/datasets/Polygl0t/gigaverbo-v2-sft",
+    "revision": "845713c9330519809c104fa904481c57ae948789",
+    "license": "Apache-2.0",
+    "subset": "general",
+    "method": "Dataset viewer rows, offsets 0..2499; revision observed unchanged before/after; raw responses retained. Viewer revision parameter is not an immutable snapshot guarantee.",
+    "files": {
+      "general-400.json": "1c1406e9d2a8a018b0535bc1ed7bc008b9f02aaddb7557342732a5253db31131",
+      "general-800.json": "2d82f04783b564a55f3095fb6961d5a9c86766e0500d76fb7c53c70758054586",
+      "general-1000.json": "947bcde3a44e82119e536aaad693bd6d952e6dcc21802bcf90bd81614d6bbff0",
+      "general-2400.json": "473340cb12dd5daf1f4c2c5121dc0d1269f4a6e1d1a04bfedfac3e590588f38f",
+      "general-1200.json": "4e27a146f676bcbebbff39ea08f6a5fc871517bb649a0e1675c2c6ef8d233476",
+      "general-0.json": "287a3a52bce79b292304e2c660691e43476b727057ba93c8e2231cbee9ddb685",
+      "general-600.json": "89c60bbe9731531dbedba6a6920eca5bdff315b37766ed322deb26bdbe6cb211",
+      "general-1600.json": "75b01aa36d44e39101ff7437f01f033e3c8eacbb9a016e4d414614e4390ba322",
+      "general-2000.json": "d379503f01a22a4a5b303da2e5dcd5c9e86c3f575d8b02f3d1552fe2e1e1fb61",
+      "general-200.json": "5073b8dc44fa29aae41eb443e78e897deea3c007da8e348aeaa047613aa596f4",
+      "general-1800.json": "807a4afe6d41fdd1fc669e865c37fe61017e0ba4adafaad9a9392da3ce384bfb",
+      "general-1400.json": "233c1fe305c7eaa1353ee141deff43b1e3318297d1b9f24974f2baff41dbf88b",
+      "general-2200.json": "4d53311e3ae1d6127f0b1c4a44f326d73742a0eb3b55ee57ad647f0c035455d6",
+      "general-1100.json": "4331b902f4a524986996e8d5df57963986379de9c3b27f240acf04d4bbe9415f",
+      "general-500.json": "68f94e1e7525a1a59023ba0a78da97113f1ff807828701d5f461691cf6e972f8",
+      "general-900.json": "9b23719c8593ca2e203b6b03bcc6c088888cd027b57e96277855f80402451242",
+      "general-700.json": "7d98726b76810b5dffb91aebc88b32235625aa3b583294496e5fa3b2930c86b7",
+      "general-1300.json": "44cbcd1a792462c6aa7b54c4d1ea897cd632b26bc54b37facbfb40137b9d43aa",
+      "general-300.json": "3ca207747d6a39daa2a3a480c98b9f935c2653b624103d41236f7a2d06f5a0be",
+      "general-2100.json": "19568da03512c6f0c8bc147a36aa312b2ede1a3265148abcb30ba30f4c446df6",
+      "general-1700.json": "1b1ec08ef0bca820a7a874ae66a78009cd0469204c41f684f0c285965c3d8108",
+      "general-2300.json": "2ea321d4f898a3c54ae49bc14be5d0c7bec1fd7919e0b8aeed73d70f1a580bfd",
+      "general-1900.json": "255189d5a895eb19eb7c600ee671f7ec603635f5ca746773bb535545bf25a792",
+      "general-1500.json": "658fb2c519634bc737ec28affc2e7e4f4273eb3abdb735626ad70f7a3b953540",
+      "general-100.json": "0d0f9fad1c0626c7fcdd7b96864bff7fb9bcd180e49069b7c9b7b654245d8163"
+    }
+  },
+  "counts": {
+    "human_dialogue_train": 45,
+    "human_dialogue_test": 4,
+    "other_assistant_identity": 3,
+    "human_dialogue_validation": 1,
+    "unsupported_roles": 1528,
+    "too_long": 323,
+    "public_dialogue_train": 192,
+    "public_dialogue_test": 10,
+    "low_score": 439,
+    "public_dialogue_validation": 7,
+    "duplicate": 1
+  },
+  "splits": {
+    "train": 13840,
+    "validation": 289
+  },
+  "dataset_sha256": "3d115c987f97c8655daa75f5641f2f307430b13788bee8b60e2470662757c577",
+  "note": "Amostra inicial não aleatória; validação pública por conversa, sem avaliação cega da linhagem histórica. Teste reservado não é usado no treino."
+}
