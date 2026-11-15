@@ -83,3 +83,13 @@ class NaturalContextTests(unittest.TestCase):
                 s = row["scenario"]
                 expected = "Sim." if s["queried"] == s["positive"] else "Não." if s["queried"] == s["negative"] else ABSENT
                 self.assertEqual(row["target"], expected)
+
+
+class SentenceDiagnosticTests(unittest.TestCase):
+    def test_sentence_ablation_preserves_whitespace_unicode_and_all_characters(self):
+        from diagnose_sentence_units import split_document
+        document = dict(name="teste", units=[dict(id="text:1", text="🙂 Há testes.\n Não há testes! A equipe revisou? Sim.")])
+        result = split_document(document)
+        self.assertEqual("".join(u["text"] for u in result["units"]), document["units"][0]["text"])
+        self.assertEqual(len(result["units"]), 4)
+        self.assertEqual(len(document["units"]), 1)
