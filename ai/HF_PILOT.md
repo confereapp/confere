@@ -45,3 +45,53 @@ Uma primeira execução, hf-pilot-2026-11-15, foi interrompida durante a avalia�
 inicial, antes de atualizações de pesos: a inspeção detectou identidades de outros
 assistentes. Corpus e diretório originais foram preservados. O treino corrigido
 usa outro diretório e o filtro de identidades.
+
+## Resultado
+
+Treino concluído: 2.000 passos, 168,34 segundos no loop, 591.578 tokens-alvo
+processados com repetição. Pico observado do driver MPS: 3.041.411.072 bytes.
+O checkpoint de menor loss de validação foi o passo 1.750; não foi promovido.
+SHA256: `3086901d0889b6b40557b94ad76bdd2c60116143779835f166fc4fd8fa211015`.
+
+| Avaliação | Referência anterior | Candidato selecionado |
+| --- | ---: | ---: |
+| Status + evidências locais corretos | 167/206 | 172/206 |
+| Conversa autoral, igualdade exata | 65/75 | 64/75 |
+| Loss das oito validações públicas, teacher-forced | 5,5547 | 3,4134 |
+| Igualdade exata nas oito validações públicas | 0/8 | 0/8 |
+
+A inspeção das oito saídas públicas não encontrou respostas satisfatórias:
+há respostas fora do assunto e repetição extensa. A redução de loss não comprovou
+conversa livre útil. Igualdade exata não é um critério suficiente para conversa
+aberta, mas a inspeção também encontrou falhas claras. A loss foi calculada
+com respostas de referência; a geração é autoregressiva.
+
+Nos 18 documentos completos de desenvolvimento, o candidato acertou 14/36
+requisitos, com uma aprovação incorreta, 36/36 saídas estruturalmente válidas e
+nenhum documento com todos os requisitos corretos. Os mesmos casos tiveram
+14/36 requisitos corretos na referência anterior de passo 8.000, conforme
+`output/ai/api-batches-projects-last-2026-11-11.json`; não houve ganho agregado
+nessa avaliação completa. Não são documentos reais ou teste cego.
+
+Passaram 141 testes Python; após o ajuste de paginação, passaram os quatro
+testes específicos do relatório. As três páginas do PDF foram renderizadas e
+inspecionadas. Não houve mudança TypeScript nem nova checagem de UI/login/API
+em rede nesta etapa. Nenhum checkpoint padrão ou configuração da API foi trocado.
+Sem push.
+
+A emissão automática do PDF falhou após o treino e a avaliação, pois o novo
+manifesto usava `source` como objeto, enquanto o relatório espera uma string.
+O builder foi corrigido para usar `source_snapshot` nos metadados completos,
+e o PDF foi regenerado sem repetir o treino. As amostras agora começam em nova
+página para evitar conflito com o rodapé em relatórios densos.
+
+Artefatos: [manifesto](../output/ai/hf-pilot-2026-11-15-manifest.json),
+[resultados e gerações públicas](../output/ai/hf-pilot-2026-11-15-results.json),
+[PDF](../output/pdf/training/hf-pilot-filtered-2026-11-15.pdf).
+Pesos, corpus e registros brutos permanecem locais/ignorados em
+`ai/runs/hf-pilot-filtered-2026-11-15` e `ai/data/private/`.
+
+Próxima hipótese a avaliar: ampliar a diversidade de exemplos curtos sem
+superamostrar este conjunto pequeno, e medir separadamente interpretação de
+texto e geração livre. Esta execução não justifica aumentar passos repetindo
+os mesmos exemplos ou promover o candidato.
