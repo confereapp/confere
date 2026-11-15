@@ -33,6 +33,16 @@ def public_rows(messages, revision):
             for i in range(1, len(messages), 2)]
 
 
+def fits(row, tokenizer, context_size, max_answer_tokens):
+    if len(tokenizer.encode(row["target"])) + 1 > max_answer_tokens:
+        return False
+    try:
+        encode_sample(row, tokenizer, context_size)
+    except ValueError:
+        return False
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
@@ -40,7 +50,9 @@ def main():
     parser.add_argument("--base", type=Path, required=True)
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--max-answer-tokens", type=int, default=256)
     args = parser.parse_args()
+    if not 1 <= args.max_answer_tokens <= 256: parser.error("Limite de resposta deve estar entre 1 e 256 tokens.")
     if args.output.exists(): parser.error("Saída deve ser nova.")
     metadata = json.loads((args.source / "source.json").read_text())
     assert metadata["source"] == SOURCE and metadata["license"] == "Apache-2.0"
@@ -49,6 +61,7 @@ def main():
     rows, base_hash = load_instructions(args.base)
     seen = {json.dumps([r.get("history", []), r["prompt"].strip().casefold()], ensure_ascii=False) for r in rows}
     counts = Counter()
+    subsets = Counter()
     reserved = []
     def add(row):
         if any(name in row["target"].casefold() for name in ("open assistant", "openassistant", "laion", "chatgpt", "openai", "qwen", "aira")):
@@ -56,8 +69,9 @@ def main():
             return
         key = json.dumps([row["history"], row["prompt"].strip().casefold()], ensure_ascii=False)
         if key in seen: counts["duplicate"] += 1; return
-        try: encode_sample(row, tokenizer, ckpt["config"]["block_size"])
-        except ValueError: counts["too_long"] += 1; return
+        if not fits(row, tokenizer, ckpt["config"]["block_size"], args.max_answer_tokens):
+            counts["too_long"] += 1
+            return
         seen.add(key)
         if row["split"] == "test": reserved.append(row)
         else: rows.append(row)
@@ -73,7 +87,10 @@ def main():
             if value["instruct_score"] < 4: counts["low_score"] += 1; continue
             candidates = public_rows(value["messages"], metadata["revision"])
             if not candidates: counts["unsupported_roles"] += 1
-            for row in candidates: add(row)
+            for row in candidates:
+                before = len(rows)
+                add(row)
+                if len(rows) > before: subsets[name.rsplit("-", 1)[0] + "_" + row["split"]] += 1
     assert counts["public_dialogue_train"] and counts["human_dialogue_train"]
     for row in rows: encode_sample(row, tokenizer, ckpt["config"]["block_size"])
     args.output.mkdir(parents=True)
@@ -82,9 +99,9 @@ def main():
     load_instructions(target)
     (args.output / "reserved-test.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in reserved))
     manifest = dict(base_sha256=base_hash, humans_sha256=human_hash, source=SOURCE, source_snapshot=metadata,
-                    counts=dict(counts), splits=dict(Counter(r["split"] for r in rows)),
+                    counts=dict(counts), subsets=dict(subsets), max_answer_tokens=args.max_answer_tokens, splits=dict(Counter(r["split"] for r in rows)),
                     dataset_sha256=hashlib.sha256(target.read_bytes()).hexdigest(),
-                    note="Amostra inicial não aleatória; validação pública por conversa, sem avaliação cega da linhagem histórica. Teste reservado não é usado no treino.")
+                    note="Método de amostragem registrado em source_snapshot; validação pública por conversa, sem avaliação cega da linhagem histórica. Teste reservado não é usado no treino.")
     (args.output / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2))
     print(json.dumps(manifest, ensure_ascii=False), flush=True)
 

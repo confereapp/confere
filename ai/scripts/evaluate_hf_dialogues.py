@@ -23,7 +23,7 @@ def main():
     rows = [r for r in rows if r["split"] == "validation" and r["task"] in {"human_dialogue", "public_dialogue"}]
     assert rows and all(r["split"] != "test" for r in rows)
     result = dict(dataset_sha256=digest, count=len(rows), test_examples_used=0, adopted=False,
-                  note="Loss teacher-forced e geração greedy; oito validações públicas não comprovam conversa geral. Linhagem de exposição humana não auditada.")
+                  note="Loss teacher-forced e geração greedy; validações públicas não comprovam conversa geral. Linhagem de exposição humana não auditada.")
     torch.set_num_threads(4)
     for name, path in [("before", args.before), ("after", args.after)]:
         checkpoint = torch.load(path, map_location="cpu", weights_only=True)
