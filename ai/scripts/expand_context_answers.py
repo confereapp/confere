@@ -134,7 +134,7 @@ def main():
     path.write_text("".join(json.dumps(row, ensure_ascii=False)+"\n" for row in rows))
     load_instructions(path)
     manifest = dict(source_sha256=digest, dataset_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-                    splits=dict(Counter(r["split"] for r in rows)), corrected_validation_ids=corrections, added_distractor_validation=12,
+                    splits=dict(Counter(r["split"] for r in rows)), corrected_validation_ids=corrections, added_distractor_validation=sum(r["id"].startswith("distractor-") for r in rows),
                     note="Validação versionada: pergunta de nome agora explicita projeto em contexto que também contém nome de pessoa. Comparar antes/depois no mesmo conjunto corrigido; preservar o relatório original. Formas e nomes de validação não entram no treino. Casos de desenvolvimento, não teste cego.")
     (args.output / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2))
     print(json.dumps(manifest, ensure_ascii=False), flush=True)

@@ -65,3 +65,21 @@ class ExpandedContextTests(unittest.TestCase):
                 if row["scenario"]["question_role"] == "assistant": self.assertEqual(row["target"], "Sou o Confere.")
         questions = {r["prompt"].splitlines()[-1] for r in expanded if r["split"] == "validation"}
         self.assertFalse(any(r["prompt"].splitlines()[-1] in questions for r in expanded if r["split"] == "train"))
+
+
+class NaturalContextTests(unittest.TestCase):
+    def test_answerability_pairs_and_roles_have_literal_ground_truth(self):
+        from prepare_natural_context import build as natural
+        source = build(12, 3)
+        rows = natural(source, paired=20, role_count=10, presence=8)
+        self.assertEqual([r for r in rows if r["split"]=="validation"], [r for r in source if r["split"]=="validation"])
+        for row in rows:
+            if row["id"].startswith("answerability-"):
+                self.assertEqual(row["target"], answer(row["scenario"]["facts"], row["scenario"]["field"]))
+            elif row["id"].startswith("role-answer-"):
+                self.assertEqual(row["target"], row["scenario"]["roles"][row["scenario"]["requested"]]+".")
+
+            elif row["id"].startswith("presence-answer-"):
+                s = row["scenario"]
+                expected = "Sim." if s["queried"] == s["positive"] else "Não." if s["queried"] == s["negative"] else ABSENT
+                self.assertEqual(row["target"], expected)
