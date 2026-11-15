@@ -27,7 +27,7 @@ def load_instructions(path):
     for row in rows:
         human=row["provenance"]["kind"]=="human_openassistant"
         public=row["provenance"]["kind"]=="public_model_generated"
-        if public and (row["provenance"].get("source")!="https://huggingface.co/datasets/nicholasKluge/instruct-aira-dataset-v3" or row["provenance"].get("license")!="Apache-2.0" or not row["provenance"].get("revision")):
+        if public and (row["provenance"].get("source") not in {"https://huggingface.co/datasets/nicholasKluge/instruct-aira-dataset-v3", "https://huggingface.co/datasets/Polygl0t/gigaverbo-v2-sft"} or row["provenance"].get("license")!="Apache-2.0" or not row["provenance"].get("revision")):
             raise ValueError("Proveniência pública não rastreável.")
         if human and (row["provenance"].get("source") not in {"https://huggingface.co/datasets/OpenAssistant/oasst1","https://huggingface.co/datasets/OpenAssistant/oasst2"} or row["provenance"].get("license")!="Apache-2.0" or not row["provenance"].get("revision")):
             raise ValueError("Proveniência humana não rastreável.")
