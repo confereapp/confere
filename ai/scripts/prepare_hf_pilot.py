@@ -81,7 +81,7 @@ def main():
     target.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows))
     load_instructions(target)
     (args.output / "reserved-test.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in reserved))
-    manifest = dict(base_sha256=base_hash, humans_sha256=human_hash, source=metadata,
+    manifest = dict(base_sha256=base_hash, humans_sha256=human_hash, source=SOURCE, source_snapshot=metadata,
                     counts=dict(counts), splits=dict(Counter(r["split"] for r in rows)),
                     dataset_sha256=hashlib.sha256(target.read_bytes()).hexdigest(),
                     note="Amostra inicial não aleatória; validação pública por conversa, sem avaliação cega da linhagem histórica. Teste reservado não é usado no treino.")

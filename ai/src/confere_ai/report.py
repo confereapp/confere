@@ -213,6 +213,8 @@ def create_report(run_dir, output=None):
         current = next((item for item in comparison["results"] if Path(item["checkpoint"]).parent == run_dir), None)
         if current:
             samples = current["samples"]
+    if samples and not social_report:
+        story.append(PageBreak())
     for sample in ([] if social_report else samples[:3]):
         sample_start = len(story)
         label = sample.get("prompt", sample.get("prefix", "Não registrada"))

@@ -1,7 +1,27 @@
 {
   "base_sha256": "de45c98fff5a1c4c488a3114568ed2410e5feb95bf5b6e9c286ec7d9d92c2cfa",
   "humans_sha256": "bfebf8457d2bcc9d330baf3dfc01ff5d7502adc8d631e2fa3574f43a24982f81",
-  "source": {
+  "source": "https://huggingface.co/datasets/Polygl0t/gigaverbo-v2-sft",
+  "counts": {
+    "human_dialogue_train": 45,
+    "human_dialogue_test": 4,
+    "other_assistant_identity": 3,
+    "human_dialogue_validation": 1,
+    "unsupported_roles": 1528,
+    "too_long": 323,
+    "public_dialogue_train": 192,
+    "public_dialogue_test": 10,
+    "low_score": 439,
+    "public_dialogue_validation": 7,
+    "duplicate": 1
+  },
+  "splits": {
+    "train": 13840,
+    "validation": 289
+  },
+  "dataset_sha256": "3d115c987f97c8655daa75f5641f2f307430b13788bee8b60e2470662757c577",
+  "note": "Amostra inicial não aleatória; validação pública por conversa, sem avaliação cega da linhagem histórica. Teste reservado não é usado no treino.",
+  "source_snapshot": {
     "source": "https://huggingface.co/datasets/Polygl0t/gigaverbo-v2-sft",
     "revision": "845713c9330519809c104fa904481c57ae948789",
     "license": "Apache-2.0",
@@ -34,24 +54,5 @@
       "general-1500.json": "658fb2c519634bc737ec28affc2e7e4f4273eb3abdb735626ad70f7a3b953540",
       "general-100.json": "0d0f9fad1c0626c7fcdd7b96864bff7fb9bcd180e49069b7c9b7b654245d8163"
     }
-  },
-  "counts": {
-    "human_dialogue_train": 45,
-    "human_dialogue_test": 4,
-    "other_assistant_identity": 3,
-    "human_dialogue_validation": 1,
-    "unsupported_roles": 1528,
-    "too_long": 323,
-    "public_dialogue_train": 192,
-    "public_dialogue_test": 10,
-    "low_score": 439,
-    "public_dialogue_validation": 7,
-    "duplicate": 1
-  },
-  "splits": {
-    "train": 13840,
-    "validation": 289
-  },
-  "dataset_sha256": "3d115c987f97c8655daa75f5641f2f307430b13788bee8b60e2470662757c577",
-  "note": "Amostra inicial não aleatória; validação pública por conversa, sem avaliação cega da linhagem histórica. Teste reservado não é usado no treino."
+  }
 }
