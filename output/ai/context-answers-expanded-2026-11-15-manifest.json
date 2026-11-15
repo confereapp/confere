@@ -1,0 +1,19 @@
+{
+  "source_sha256": "d2a8d3d413db62a5fe47157653fca1cfebebb5ffc9ad03109dee10b7c3614d83",
+  "dataset_sha256": "a1490a7d9805e86ce076af83dd39da96463b4ec26632445aa09be88bc9be2953",
+  "splits": {
+    "train": 23081,
+    "validation": 377
+  },
+  "corrected_validation_ids": [
+    "context-answer-validation-fact-0-0",
+    "context-answer-validation-fact-4-0",
+    "context-answer-validation-fact-5-0",
+    "context-answer-validation-fact-6-0",
+    "context-answer-validation-missing-10-0",
+    "context-answer-validation-missing-11-0",
+    "context-answer-validation-conflict-6-0"
+  ],
+  "added_distractor_validation": 12,
+  "note": "Validação versionada: pergunta de nome agora explicita projeto em contexto que também contém nome de pessoa. Comparar antes/depois no mesmo conjunto corrigido; preservar o relatório original. Formas e nomes de validação não entram no treino. Casos de desenvolvimento, não teste cego."
+}
