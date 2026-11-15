@@ -27,3 +27,19 @@ class ContextAnswersTests(unittest.TestCase):
         train_prompts = {r["prompt"] for r in rows if r["split"] == "train"}
         validation_prompts = {r["prompt"] for r in rows if r["split"] == "validation"}
         self.assertFalse(train_prompts & validation_prompts)
+
+
+class ContextAuditTests(unittest.TestCase):
+    def test_family_regression_is_not_hidden_by_new_skill_gain(self):
+        from audit_context_answers import audit
+        samples = [dict(id=str(i), prompt=str(i), expected="ok", task="conversation_context_answer_"+task, exact_match=True)
+                   for i, task in enumerate(["fact", "missing", "conflict", "support", "memory"])]
+        samples += [dict(id="legacy", prompt="old", expected="ok", task="conversation_identity", exact_match=True),
+                    dict(id="doc", prompt="doc", expected="ok", task="grounded_atendido", exact_match=True,
+                         valid_format=True, reference_valid=True)]
+        after = [dict(row) for row in samples]
+        after[-2]["exact_match"] = False
+        result = audit(dict(baseline=dict(samples=samples), selected=dict(samples=after), test_examples_used=0))
+        self.assertTrue(result["context_pass"])
+        self.assertFalse(result["controlled_criteria_pass"])
+        self.assertIn("conversation_identity", result["regressions"])
