@@ -4,6 +4,7 @@ import torch
 from torch import nn
 from .grounding import prompt_for
 from .tokenizer import ByteBPE
+from .model import GPT, GPTConfig
 
 
 class EvidenceClassifier(nn.Module):
@@ -83,3 +84,25 @@ def fold_normalization(source, target, mean, scale):
     weights = source.weight / scale
     target.weight.copy_(weights.to(target.weight.dtype))
     target.bias.copy_((source.bias - weights @ mean).to(target.bias.dtype))
+
+
+class EvidencePredictor:
+    def __init__(self, checkpoint, device):
+        settings = checkpoint["settings"]
+        if (settings.get("objective") != "document_classifier" or settings.get("readout") != "shared_json_decision_prefix_v1"
+            or settings.get("threshold", .5) != .5):
+            raise ValueError("Contrato do classificador não suportado.")
+        self.tokenizer = ByteBPE(checkpoint["merges"])
+        self.config = GPTConfig(**checkpoint["config"])
+        if self.tokenizer.vocab_size != self.config.vocab_size: raise ValueError("Tokenizer incompatível.")
+        self.model = EvidenceClassifier(GPT(self.config))
+        self.model.load_state_dict(checkpoint["classifier"])
+        self.device = device; self.model.to(device).eval()
+
+    @torch.no_grad()
+    def predict_units(self, requirement, units):
+        if not units or len(units) > 4 or len({u["id"] for u in units}) != len(units):
+            raise ValueError("Informe de uma a quatro unidades distintas.")
+        items = [dict(ids=encode_unit(requirement, u["text"], self.tokenizer, self.config.block_size)) for u in units]
+        ids, lengths = unit_batch(items, self.device, self.config.block_size)
+        return response(units, self.model(ids, lengths).sigmoid().cpu().tolist())

@@ -26,12 +26,19 @@ def main():
     if not isinstance(cases, list) or not cases:
         parser.error("Informe casos anotados não vazios.")
     checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=True)
-    if checkpoint["settings"].get("grounding_schema") != 2 or checkpoint["settings"].get("generation_budget") != 256:
+    is_classifier = checkpoint["settings"].get("objective") == "document_classifier"
+    if not is_classifier and (checkpoint["settings"].get("grounding_schema") != 2 or checkpoint["settings"].get("generation_budget") != 256):
         parser.error("Avaliação exige contrato V2 e orçamento de 256 tokens.")
     torch.set_num_threads(4)
     device = choose_device(args.device)
-    model = GPT(GPTConfig(**checkpoint["config"])).to(device)
-    model.load_state_dict(checkpoint["model"]); model.eval()
+    config = GPTConfig(**checkpoint["config"])
+    classifier = None
+    if is_classifier:
+        from confere_ai.evidence_classifier import EvidencePredictor
+        classifier = EvidencePredictor(checkpoint, device)
+    else:
+        model = GPT(config).to(device)
+        model.load_state_dict(checkpoint["model"]); model.eval()
     tokenizer = ByteBPE(checkpoint["merges"])
     def predict(ids):
         output = model.generate(torch.tensor([ids], device=device), 256, tokenizer.EOS)
@@ -42,11 +49,12 @@ def main():
         document = scene["document"]; text = document["units"][0]["text"]
         assert hashlib.sha256(text.encode()).hexdigest() == document["sha256"]
         assert all(text[a["start"]:a["end"]] == a["quote"] for a in scene["annotations"])
-        expected_rows = local_rows(scene, tokenizer, model.config.block_size)
+        expected_rows = local_rows(scene, tokenizer, config.block_size)
         if expected_rows is None:
             raise ValueError("Evidência parcial: o tokenizer não corresponde ao corpus validado.")
-        result = review_extracted([document], scene["requirements"], tokenizer, model.config.block_size,
-                                  predict, schema_version=2, response_tokens=256)
+        result = review_extracted([document], scene["requirements"], tokenizer, config.block_size,
+                                  None if classifier else predict, schema_version=2, response_tokens=256,
+                                  predict_units=classifier.predict_units if classifier else None)
         assert len(scene["requirements"]) == len(scene["expected"]) == len(result["requirements"])
         requirement_results = []; cursor = 0
         for row, expected in zip(result["requirements"], scene["expected"]):
@@ -69,6 +77,7 @@ def main():
         results.append(dict(id=scene["id"], profile=scene["profile"], requirements=requirement_results, trace=result))
         print(json.dumps(dict(id=scene["id"], correct=sum(r["correct"] for r in requirement_results), total=len(requirement_results))), flush=True)
     output = dict(checkpoint=str(args.checkpoint), checkpoint_sha256=hashlib.sha256(args.checkpoint.read_bytes()).hexdigest(),
+                  prediction_type="unit_classifier" if is_classifier else "autoregressive",
                   step=checkpoint["step"], cases_sha256=hashlib.sha256(args.cases.read_bytes()).hexdigest(),
                   correct_requirements=correct, total_requirements=total, valid_requirements=valid,
                   false_positive=false_positive, exact_local_calls=local_correct, total_local_calls=local_total,

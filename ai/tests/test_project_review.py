@@ -11,6 +11,25 @@ from confere_ai.tokenizer import ByteBPE
 
 
 class ProjectReviewTests(unittest.TestCase):
+    def test_unit_predictor_preserves_coverage_quotes_and_conflicts(self):
+        doc = self.doc("Há testes. Não há testes.")
+        seen = []
+        def predict(requirement, units):
+            from confere_ai.evidence_classifier import response
+            seen.append((requirement, units))
+            return response(units, [[.9, .9] for _ in units])
+        result = review_extracted([doc], ["Testes"], ByteBPE([]), 512, None, 2, 64, predict_units=predict)["requirements"][0]
+        self.assertTrue(result["conflicting_evidence"])
+        self.assertEqual(result["status"], "evidencia_insuficiente")
+        self.assertEqual(seen[0][0], "Testes")
+        self.assertEqual(seen[0][1][0]["text"], doc["units"][0]["text"])
+        self.assertTrue(all(e["quote"] == doc["units"][0]["text"] for e in result["evidence"]))
+        self.assertEqual(result["coverage"]["processed_characters"], len(doc["units"][0]["text"]))
+        self.assertEqual(result["calls"][0]["inference_kind"], "unit_classifier")
+        self.assertNotIn("input_tokens", result["calls"][0])
+        with self.assertRaises(ValueError):
+            review_extracted([doc], ["Testes"], ByteBPE([]), 512, lambda ids:"", 2, 64, predict_units=predict)
+
     def test_pilot_audit_rejects_coverage_holes_and_modified_quotes(self):
         spec=importlib.util.spec_from_file_location("full_files",Path(__file__).parents[1]/"scripts/evaluate_full_files.py")
         module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)

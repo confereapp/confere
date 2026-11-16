@@ -3,13 +3,28 @@ import sys
 import unittest
 from pathlib import Path
 import torch
+from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from confere_ai.evidence_classifier import EvidenceClassifier, encode_unit, response, decision_prefix, fold_normalization
+from confere_ai.evidence_classifier import EvidenceClassifier, EvidencePredictor, encode_unit, response, decision_prefix, fold_normalization
 from confere_ai.model import GPT, GPTConfig
 from confere_ai.tokenizer import ByteBPE
 
 
 class EvidenceClassifierTests(unittest.TestCase):
+    def test_predictor_uses_provided_units_without_parsing_or_inventing_aliases(self):
+        from dataclasses import asdict
+        config = GPTConfig(vocab_size=260, block_size=512, width=16, layers=1, heads=2)
+        model = EvidenceClassifier(GPT(config))
+        checkpoint = dict(config=asdict(config), merges=[], classifier=model.state_dict(),
+                          settings=dict(objective="document_classifier", readout="shared_json_decision_prefix_v1"))
+        predictor = EvidencePredictor(checkpoint, "cpu")
+        units = [dict(id="page:2", text="Há testes."), dict(id="page:4", text="Não há testes.")]
+        with patch.object(predictor.model, "forward", return_value=torch.tensor([[9., -9.], [-9., 9.]])):
+            result = json.loads(predictor.predict_units("Testes", units))
+        self.assertEqual({e["unit"] for e in result["evidence"]}, {"page:2", "page:4"})
+        self.assertEqual(result["status"], "evidencia_insuficiente")
+        with self.assertRaises(ValueError): predictor.predict_units("Testes", units * 2)
+        with self.assertRaises(ValueError): EvidencePredictor(dict(checkpoint, settings={}), "cpu")
     def test_normalization_folding_preserves_logits_without_inference_preprocessing(self):
         torch.manual_seed(42)
         head = torch.nn.Linear(4, 2).double(); raw = torch.nn.Linear(4, 2)

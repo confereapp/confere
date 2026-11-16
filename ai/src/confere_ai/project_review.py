@@ -59,7 +59,9 @@ def batches_for(documents, requirement, tokenizer, context_size, schema_version=
     return batches
 
 
-def review_extracted(documents, requirements, tokenizer, context_size, predict, schema_version=1, response_tokens=RESPONSE_TOKENS):
+def review_extracted(documents, requirements, tokenizer, context_size, predict, schema_version=1, response_tokens=RESPONSE_TOKENS, *, predict_units=None):
+    if (predict is None) == (predict_units is None) or (predict_units is not None and schema_version != 2):
+        raise ValueError("Informe um único preditor; classificação por unidade exige V2.")
     if not documents or not requirements or any(not isinstance(r, str) or not r.strip() for r in requirements):
         raise ValueError("Informe arquivos e pelo menos um requisito não vazio.")
     if len({d["sha256"] for d in documents}) != len(documents):
@@ -78,7 +80,7 @@ def review_extracted(documents, requirements, tokenizer, context_size, predict, 
             ids = input_ids(requirement, aliases, tokenizer, schema_version)
             if len(ids)+response_tokens > context_size:
                 raise ValueError("O lote planejado excede o contexto; conferência interrompida.")
-            raw = predict(ids)
+            raw = predict_units(requirement, aliases) if predict_units is not None else predict(ids)
             resolved = resolve(raw, "batch", aliases, schema_version)
             sound = resolved["valid_format"] and resolved["reference_valid"]
             valid = valid and sound
@@ -91,7 +93,9 @@ def review_extracted(documents, requirements, tokenizer, context_size, predict, 
                 evidence_status = quote.get("model_status", status)
                 statuses.add(evidence_status)
                 evidence.append(dict(**{k:v for k,v in part.items() if k!="text"}, quote=part["text"], model_status=evidence_status))
-            calls.append(dict(batch=index, input_tokens=len(ids), raw_model_output=raw,
+            input_metadata = (dict(planned_input_tokens=len(ids), inference_kind="unit_classifier", units=len(aliases))
+                              if predict_units is not None else dict(input_tokens=len(ids)))
+            calls.append(dict(batch=index, **input_metadata, raw_model_output=raw,
                               valid_format=resolved["valid_format"], reference_valid=resolved["reference_valid"],
                               proposed_status=status, sources=mapping))
         conflict = len(statuses)>1
