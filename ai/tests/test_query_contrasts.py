@@ -11,6 +11,14 @@ from prepare_lexical_binding import expected
 
 
 class QueryContrastTests(unittest.TestCase):
+    def test_sentence_units_do_not_inherit_another_sentences_evidence(self):
+        rows=documents(40,topics=['consulta de obras','cadastro de animais','edição de visitas'],sentence_units=True)
+        self.assertTrue(any(len(r['units'])>2 for r in rows))
+        for row in rows:
+            self.assertLessEqual(len(row['units']),4)
+            self.assertTrue(all(len(u['facts'])<=1 for u in row['scenario']['units']))
+            self.assertEqual(json.loads(row['target']),expected(row['scenario']['units'],row['scenario']['feature']))
+
     def test_multiword_curriculum_preserves_feature_specific_annotations(self):
         topics=['registro de visitas','controle de acesso','catálogo de obras']
         rows=documents(20,topics=topics,forms=[('Foi entregue {}.','Não foi entregue {}.')])

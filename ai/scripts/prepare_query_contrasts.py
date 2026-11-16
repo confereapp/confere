@@ -104,7 +104,7 @@ def presence_pairs(count=1600):
                              provenance=dict(kind="synthetic_authored", note="Mesmo texto com perguntas de presença opostas e atributo ausente; não copia diagnósticos completos.")))
     return rows
 
-def documents(count=3600, *, topics=None, forms=None):
+def documents(count=3600, *, topics=None, forms=None, sentence_units=False):
     rng = random.Random(161131); rows = []
     for i in range(count):
         a, b = [s.casefold() for s in names(rng)]
@@ -127,7 +127,10 @@ def documents(count=3600, *, topics=None, forms=None):
         if not states: text = f"A equipe discutiu {a}; ainda não há comprovação de implementação."
         text = (text+filler if i % 2 else filler+" "+text).strip() + f" Registro técnico {rng.getrandbits(48):012x}."
         units = [dict(text=text, facts=states)]
-        aliases = [dict(id="page:1", text=text)]
+        if sentence_units:
+            units=[dict(text=(pos if status=='atendido' else neg).format(topic),facts=[(topic,status)]) for topic,status in states]
+            units.append(dict(text=filler.strip()+f" Registro técnico {rng.getrandbits(48):012x}.",facts=[]))
+        aliases = [dict(id=f"page:{j+1}", text=u['text']) for j,u in enumerate(units)]
         for j, feature in enumerate([a, b]):
             target = expected(units, feature); requirement = f"O projeto deve incluir {feature}."
             group = f"query-doc-{i}-{j}"
