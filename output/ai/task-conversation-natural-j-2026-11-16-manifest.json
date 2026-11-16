@@ -1,0 +1,18 @@
+{
+  "source_sha256": "10905137fcc5975a43552bdb524278acaae69ccd92c1eab8c60c6345f9be4912",
+  "dataset_sha256": "093f35fad1c8885e6f0970c7f8b37e49b385c89a6905ccaa9cfc2690144e6a91",
+  "splits": {
+    "validation": 171,
+    "train": 30783
+  },
+  "added": 6200,
+  "held_names": [
+    "Clara",
+    "Davi",
+    "Lia",
+    "Renata",
+    "Rui",
+    "Victor"
+  ],
+  "note": "Validação original intacta. Nenhum diagnóstico completo copiado; casos de desenvolvimento, não teste cego."
+}

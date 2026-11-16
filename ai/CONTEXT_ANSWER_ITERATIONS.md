@@ -441,3 +441,49 @@ J-documentos inicializa de G/best.pt, rede inteira, batch 4, lr 1e-5, perda padr
 por token (sem peso extra), 16.000 passos planejados, avaliação gerativa a cada
 2.000 e limite de 3.600 s no loop incluindo avaliações. Não há lotes de conversa
 nesse ajuste. Treino de conversa e recomposição dos gates continuam pendentes.
+
+### Resultado documental J e correções de currículo
+
+As avaliações completas de J foram 178/206 no passo zero, 169/206 no 2.000 e
+164/206 no 4.000, com uma saída inválida neste último. A seleção gerativa manteve
+o passo zero. Foi solicitada interrupção intencional por regressão; o processo
+já havia salvo o checkpoint 6.000 e estava avaliando esse passo. A avaliação
+6.000 foi interrompida e não tem resultado completo. Nenhuma falha numérica.
+Checkpoints e registros preservados; PDF interrompido de três páginas renderizado
+e inspecionado. O loop não concluiu os 16.000 passos planejados.
+
+O treino passa a poder encerrar após N avaliações consecutivas sem melhora
+(--selection-patience). O teste de integração confirma que geração melhor vence
+loss pior e que um empate prolongado encerra com selection_plateau. Não muda os
+gates de qualidade nem apaga as execuções rejeitadas. Passaram 168 testes Python.
+
+A inspeção encontrou 625 linhas de treino contendo "A especificação prevê",
+rotuladas pelo gerador como evidência de presença. Isso é ambíguo para comprovar
+implementação. K exclui essas linhas apenas de um novo snapshot, preservando os
+originais, e acrescenta pares com termos inventados sem o prefixo constante
+"recurso" e com distratores antes/depois das afirmações. Ambos os requisitos
+pareados continuam lendo exatamente as mesmas unidades. Duplicatas exatas são
+omitidas, alvos conflitantes recusados. São 24.867 linhas de treino e as mesmas
+206 de validação, SHA256 9cc27c7499efbd08d3e86544c70cdfa5593c0de8b6444bd22a82a47936f0953a.
+
+O currículo de conversa recebe 6.200 casos autorais adicionais de fatos, ausência,
+conflito, atribuição de tarefas e presença explícita: respostas derivadas do texto,
+sem copiar diagnósticos completos. Nomes dos diagnósticos e da validação ficam
+fora dos novos nomes; não é prova de teste cego, pois os padrões orientaram o
+desenvolvimento. Total 30.783 de treino, mesmas 171 validações; SHA256
+093f35fad1c8885e6f0970c7f8b37e49b385c89a6905ccaa9cfc2690144e6a91.
+
+O auditor conjunto verifica integralmente casos/históricos/alvos de validação,
+protocolo e pesos selecionados, recusando coortes incompletas ou duplicadas.
+O treino pode evoluir; os casos de validação e seus gates permanecem intactos.
+
+### Protocolo documental K
+
+Fonte G/best.pt; 16.000 passos planejados, lr 1e-5, batch 4, geração a cada 2.000,
+paciência 3 avaliações sem ganho e limite de 3.600 segundos no loop. Usa o corpus
+K e treina os seis blocos, norm e saída, congelando apenas embeddings de tokens
+e posições (--train-last-blocks 6). Hipótese: preservar as representações de entrada
+e ampliar associação lexical reduz a dependência do vocabulário visto. Seleção
+pela pior família gerada, peso por token normal (1), sem mistura de conversa.
+São mudanças conjuntas de currículo e atualização, sem atribuição causal isolada.
+Nenhum peso é promovido sem a avaliação conjunta e os fluxos completos.
