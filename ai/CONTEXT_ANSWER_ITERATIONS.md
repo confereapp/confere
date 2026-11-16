@@ -197,3 +197,46 @@ recusado, sem reaproveitamento silencioso ou aprovação de candidato.
 
 Passaram 151 testes Python antes de iniciar D. A API não foi reconfigurada e
 nenhum checkpoint foi promovido. Os PDFs A, B e C foram renderizados e inspecionados.
+
+### Resultado D
+
+6.000 passos concluídos, sem superar a loss de validação inicial. A seleção foi
+o passo zero (pesos do C), sem ganho: 330/377 casos exatos. Os últimos pesos
+regrediram: fatos 13/24, ausências 11/12, conflitos 12/12, presença/ausência 12/12
+e memória 23/36, além de regressões documentais. O candidato foi rejeitado.
+Não confundir execução do treino com melhora: o checkpoint selecionado não
+incorpora essas atualizações.
+
+## Ciclo E: ajuste conservador e diagnóstico MPS
+
+Volta a C/best.pt, reduz lr para 3e-6 e congela embeddings e quatro blocos iniciais.
+Treina os dois últimos blocos, norm e saída: 3.942.912 parâmetros treináveis.
+Mesmos dados D, mesma validação, batch 4, 50% de lotes documentais, até 8.000 passos
+ou 600 segundos no loop. A arquitetura e o formato de pesos não mudam.
+
+A primeira execução E interrompeu por gradiente não finito. O último checkpoint
+preservado era o passo zero; o número de atualizações não salvas da execução
+original é desconhecido. Não foi desativada a proteção contra gradientes inválidos.
+
+Um ensaio reproduziu o problema no passo 39: MPS gerou gradiente inválido em
+blocks.4.norm1.weight, apesar de loss finita (0,0577043); CPU com mesmos pesos e
+lote teve loss equivalente e gradientes finitos. A correção faz a entrada
+congelada da primeira LayerNorm treinável ser uma folha que recebe gradiente no
+MPS; isso não atualiza o encoder congelado. O hook não atua sob no_grad, portanto
+não muda a inferência. Reconfigurar o modelo remove o hook antigo.
+
+Após a correção: 512 atualizações reais sem gradientes inválidos; no lote do
+passo 39, loss MPS 0,0555913858 versus CPU 0,0555913411, diferença máxima absoluta
+de gradiente 1,39e-7. Testes CPU confirmam pesos congelados intactos; teste MPS
+confirma gradientes finitos e hook desabilitado na inferência. Não é alegação de
+que o backend inteiro esteja corrigido, apenas a execução exercitada.
+
+A execução interrompida e probes foram preservados em context-answers-e-2026-11-15.
+O reinício usa context-answers-e-fixed-2026-11-15 e novamente inicializa do C,
+sem reaproveitar atualizações não salvas do ensaio. A verificação posterior dos
+pesos congelados e os gates de ambos os objetivos continuam obrigatórios.
+
+Os gates agora registram também a aceitação preexistente completa de conversa
+(>=80% em cada família legada), além de contexto >=90%, documentos >=90% por
+perfil/formato 100% e ausência de regressões. Nenhum critério anterior é removido;
+os candidatos anteriores já estavam reprovados nos critérios documentais.
