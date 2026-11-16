@@ -25,3 +25,22 @@ class FinetuningTests(unittest.TestCase):
         for invalid in [0,3,-1]:
             with self.assertRaises(ValueError): configure_trainable(model,invalid)
             self.assertTrue(all(p.requires_grad for p in model.parameters()))
+
+    @unittest.skipUnless(torch.backends.mps.is_available(), "MPS unavailable")
+    def test_mps_boundary_has_finite_gradients_and_hook_is_disabled_for_inference(self):
+        torch.manual_seed(42)
+        model=GPT(GPTConfig(vocab_size=32,block_size=256,width=16,layers=3,heads=2)).to("mps")
+        configure_trainable(model,1)
+        seen=[]
+        model.blocks[2].norm1.register_forward_pre_hook(lambda module, inputs: seen.append(inputs[0].requires_grad))
+        frozen={name:p.detach().cpu().clone() for name,p in model.named_parameters() if not p.requires_grad}
+        for length in [128,256,128]:
+            model.zero_grad(set_to_none=True)
+            model(torch.randint(0,32,(2,length),device="mps")).square().mean().backward()
+            self.assertTrue(all(torch.isfinite(p.grad).all().item() for p in model.parameters() if p.grad is not None))
+            self.assertTrue(seen[-1])
+        with torch.no_grad(): model(torch.tensor([[1,2,3]],device="mps"))
+        self.assertFalse(seen[-1])
+        self.assertTrue(all(torch.equal(dict(model.named_parameters())[name].detach().cpu(),value) for name,value in frozen.items()))
+        configure_trainable(model)
+        self.assertFalse(hasattr(model,"_frozen_input_hook"))
