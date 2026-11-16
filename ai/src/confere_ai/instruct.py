@@ -177,6 +177,16 @@ def run(args):
             category = "context" if row["task"].startswith("conversation_context_answer_") else "legacy"
             conversation_pools[category].setdefault(row["task"], []).append(index)
         if not all(conversation_pools.values()): raise ValueError("Exige famílias legadas e contextuais.")
+    presence_pools = []
+    if getattr(args, "paired_presence_focus", False):
+        if not family_sampling or args.batch_size % 2: raise ValueError("Foco pareado exige amostragem de conversa e lote par.")
+        grouped = {}
+        for i, row in enumerate(train):
+            text = row.get("scenario", {}).get("text", "")
+            if row["task"] == "conversation_context_answer_support" and text.startswith("O projeto não inclui") and ", mas " in text:
+                grouped.setdefault(text, []).append(i)
+        presence_pools = [pool for pool in grouped.values() if len({train[i]["target"] for i in pool}) > 1]
+        if not presence_pools: raise ValueError("Currículo não contém consultas contrastivas sobre o mesmo texto.")
     balanced_selection = getattr(args, "balanced_objective_selection", False)
     generative_selection = getattr(args, "generative_selection", False)
     skip_initial_generation = getattr(args, "skip_initial_generation", False)
@@ -252,6 +262,7 @@ def run(args):
     objective = "conversation" if any("history" in r for r in rows) else "document_grounding" if any(r["task"].startswith("grounded_") for r in rows) else "instruction"
     settings = {"objective": objective, "seed": 42, "batch_size": args.batch_size, "learning_rate": args.learning_rate,"generation_budget":generation_budget,"human_fraction":human_fraction}
     settings["human_sampling_policy"]="homogeneous_batches"
+    settings["paired_presence_focus"] = bool(presence_pools)
     settings["training_loss_reduction"] = "example_mean" if family_sampling else "token_mean"
     if anchor_from:
         settings["anchor_checkpoint"] = str(anchor_from)
@@ -348,8 +359,12 @@ def run(args):
     record(0)
     for step in range(1, args.steps+1):
         model.train()
-        indices=(conversation_indices(conversation_pools, args.batch_size, generator) if family_sampling else
-                 training_indices(len(train),humans,synthetic,args.batch_size,human_fraction,generator,public,public_fraction,documents,document_fraction))
+        if presence_pools and torch.rand((), generator=generator).item() < .5:
+            from .evidence_classifier import paired_indices
+            indices = paired_indices(train, presence_pools, args.batch_size, generator, label_key="target")
+        else:
+            indices=(conversation_indices(conversation_pools, args.batch_size, generator) if family_sampling else
+                     training_indices(len(train),humans,synthetic,args.batch_size,human_fraction,generator,public,public_fraction,documents,document_fraction))
         x,y = batch(encoded_train,indices,device,model.config.block_size)
         optimizer.zero_grad(set_to_none=True)
         logits = model(x)
@@ -420,6 +435,7 @@ def main():
     parser.add_argument("--balanced-objective-selection", action="store_true", help="Selecionar checkpoint pela média das losses de conversa e documentos (50% cada).")
     parser.add_argument("--generative-selection", action="store_true", help="Selecionar por respostas geradas e pior família; loss continua registrada. Desenvolvimento, não teste cego.")
     parser.add_argument("--selection-patience", type=int, help="Encerrar após N avaliações gerativas consecutivas sem ganho.")
+    parser.add_argument("--paired-presence-focus", action="store_true", help="Metade dos lotes compara consultas de presença com respostas diferentes no mesmo texto; restante usa replay equilibrado.")
     parser.add_argument("--balanced-conversation-sampling", action="store_true", help="Lotes com 50% de famílias legadas e 50% contextuais; famílias equiprováveis em cada grupo.")
     parser.add_argument("--skip-initial-generation", action="store_true", help="Excluir a base causal não ajustada da seleção; exige referência externa e seleção gerativa.")
     parser.add_argument("--human-fraction",type=float,default=0.)

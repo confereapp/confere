@@ -86,14 +86,14 @@ def examples(rows, tokenizer, context_size, *, readout=READOUTS[0]):
 
 
 
-def paired_indices(items, pools, batch_size, generator):
+def paired_indices(items, pools, batch_size, generator, *, label_key="labels"):
     if batch_size <= 0 or batch_size % 2: raise ValueError("Lote pareado exige tamanho positivo e par.")
     if not pools: raise ValueError("Fontes pareadas vazias.")
     result = []
     for group in torch.randint(len(pools), (batch_size // 2,), generator=generator).tolist():
         pool = pools[group]
         first = pool[torch.randint(len(pool), (), generator=generator).item()]
-        alternatives = [i for i in pool if items[i]["labels"] != items[first]["labels"]]
+        alternatives = [i for i in pool if items[i][label_key] != items[first][label_key]]
         choices = alternatives or pool
         second = choices[torch.randint(len(choices), (), generator=generator).item()]
         result.extend([first, second])

@@ -127,3 +127,9 @@ class EvidenceClassifierTests(unittest.TestCase):
             result = json.loads(predictor.predict_units("Testes",units))
         self.assertEqual(result["status"],"evidencia_insuficiente")
         self.assertEqual({e["unit"] for e in result["evidence"]},{"page:2","page:4"})
+
+    def test_pair_sampler_supports_conversation_targets_without_changing_context(self):
+        from confere_ai.evidence_classifier import paired_indices
+        rows = [dict(target="Sim."),dict(target="Não."),dict(target="Sim.")]
+        indices = paired_indices(rows, [[0,1,2]], 8, torch.Generator().manual_seed(42), label_key="target")
+        self.assertTrue(all(rows[a]["target"] != rows[b]["target"] for a,b in zip(indices[::2],indices[1::2])))
