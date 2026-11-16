@@ -24,3 +24,9 @@ class TaskPairTests(unittest.TestCase):
         self.assertEqual(original_partition(original, original+[extra]), [extra])
         for subset in [[extra], [dict(original[0], target="no"), extra], original+[dict(extra, split="test")], original+[dict(extra, id="unmarked")]]:
             with self.assertRaises(ValueError): original_partition(original, subset)
+
+    def test_natural_development_conversations_do_not_replace_original_cases(self):
+        original = [dict(id="old", task="conversation_identity", split="validation")]
+        extra = dict(id="development-natural-0", task="conversation_context_answer_natural", split="validation")
+        self.assertEqual(original_partition(original, original+[extra]), [extra])
+        with self.assertRaises(ValueError): original_partition(original, [extra])

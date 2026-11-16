@@ -36,8 +36,8 @@ def original_partition(original, subset):
     extras = [r for r in actual if r["id"] not in ids]
     if ([r for r in actual if r["id"] in ids] != reserved
             or any(r["split"] != "validation" or not r["id"].startswith("development-")
-                   or not r["task"].startswith("grounded_") for r in extras)):
-        raise ValueError("Partição original alterada ou exemplos extras não declarados como desenvolvimento documental.")
+                   or not r["task"].startswith(("grounded_", "conversation_")) for r in extras)):
+        raise ValueError("Partição original alterada ou exemplos extras não declarados como desenvolvimento.")
     return extras
 
 def main():
