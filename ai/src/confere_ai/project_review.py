@@ -128,17 +128,27 @@ def review_documents(documents, requirements, checkpoint_path, device="auto"):
     checkpoint_hash = hashlib.sha256(payload).hexdigest()
     checkpoint = torch.load(BytesIO(payload), map_location="cpu", weights_only=True)
     del payload
-    if checkpoint["settings"].get("objective") not in {"conversation", "document_grounding"}:
+    objective = checkpoint["settings"].get("objective")
+    if objective not in {"conversation", "document_grounding", "document_classifier"}:
         raise ValueError("Use um checkpoint próprio de conferência documental ou treino misto.")
     tokenizer = ByteBPE(checkpoint["merges"]); config = GPTConfig(**checkpoint["config"])
     torch.set_num_threads(4); target = choose_device(device)
-    model = GPT(config).to(target); model.load_state_dict(checkpoint["model"]); model.eval()
-    schema_version = checkpoint["settings"].get("grounding_schema", 1)
-    response_tokens = checkpoint["settings"].get("generation_budget", 192) if schema_version == 2 else RESPONSE_TOKENS
-    def predict(ids):
-        output = model.generate(torch.tensor([ids],device=target),response_tokens,tokenizer.EOS)
-        return tokenizer.decode(output[0,len(ids):].tolist())
-    result = review_extracted(documents, requirements, tokenizer, config.block_size, predict, schema_version, response_tokens)
-    result["model"] = dict(checkpoint=str(checkpoint_path), sha256=checkpoint_hash, step=checkpoint["step"],
-                           device=str(target), context_size=config.block_size, response_tokens=response_tokens)
+    metadata = dict(checkpoint=str(checkpoint_path), sha256=checkpoint_hash, step=checkpoint["step"],
+                    device=str(target), context_size=config.block_size)
+    if objective == "document_classifier":
+        from .evidence_classifier import EvidencePredictor
+        predictor = EvidencePredictor(checkpoint, target)
+        result = review_extracted(documents, requirements, tokenizer, config.block_size, None, 2, 256,
+                                  predict_units=predictor.predict_units)
+        metadata.update(inference_kind="unit_classifier", fragment_token_reserve=256)
+    else:
+        model = GPT(config).to(target); model.load_state_dict(checkpoint["model"]); model.eval()
+        schema_version = checkpoint["settings"].get("grounding_schema", 1)
+        response_tokens = checkpoint["settings"].get("generation_budget", 192) if schema_version == 2 else RESPONSE_TOKENS
+        def predict(ids):
+            output = model.generate(torch.tensor([ids],device=target),response_tokens,tokenizer.EOS)
+            return tokenizer.decode(output[0,len(ids):].tolist())
+        result = review_extracted(documents, requirements, tokenizer, config.block_size, predict, schema_version, response_tokens)
+        metadata["response_tokens"] = response_tokens
+    result["model"] = metadata
     return result

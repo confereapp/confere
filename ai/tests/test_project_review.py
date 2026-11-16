@@ -30,6 +30,29 @@ class ProjectReviewTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             review_extracted([doc], ["Testes"], ByteBPE([]), 512, lambda ids:"", 2, 64, predict_units=predict)
 
+    def test_checkpoint_loader_accepts_classifier_without_decoder_and_records_real_kind(self):
+        from dataclasses import asdict
+        from unittest.mock import patch
+        import torch
+        from confere_ai.evidence_classifier import EvidenceClassifier
+        from confere_ai.model import GPT, GPTConfig
+        from confere_ai.project_review import review_documents
+        config = GPTConfig(vocab_size=260, block_size=512, width=16, layers=1, heads=2)
+        model = EvidenceClassifier(GPT(config))
+        with torch.no_grad():
+            model.head.weight.zero_(); model.head.bias.copy_(torch.tensor([9., -9.]))
+        checkpoint = dict(config=asdict(config), merges=[], classifier=model.state_dict(), step=7,
+                          settings=dict(objective="document_classifier", readout="shared_json_decision_prefix_v1"))
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)/"classifier.pt"; torch.save(checkpoint, path)
+            with patch.object(GPT, "generate", side_effect=AssertionError("Classifier cannot generate")):
+                result = review_documents([self.doc("Há testes.")], ["Testes"], path, "cpu")
+        self.assertEqual(result["requirements"][0]["status"], "atendido")
+        self.assertEqual(result["schema_version"], 2)
+        self.assertEqual(result["model"]["inference_kind"], "unit_classifier")
+        self.assertNotIn("response_tokens", result["model"])
+        self.assertEqual(result["model"]["fragment_token_reserve"], 256)
+
     def test_pilot_audit_rejects_coverage_holes_and_modified_quotes(self):
         spec=importlib.util.spec_from_file_location("full_files",Path(__file__).parents[1]/"scripts/evaluate_full_files.py")
         module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)

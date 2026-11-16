@@ -62,13 +62,21 @@ export const reviewTextResult = z.object({
       }),
     }),
   ),
-  model: z.object({
-    sha256: z.string().regex(/^[a-f0-9]{64}$/),
-    step: z.number().int().nonnegative(),
-    device: z.string(),
-    context_size: z.number().int().positive(),
-    response_tokens: z.number().int().positive(),
-  }),
+  model: z.intersection(
+    z.object({
+      sha256: z.string().regex(/^[a-f0-9]{64}$/),
+      step: z.number().int().nonnegative(),
+      device: z.string(),
+      context_size: z.number().int().positive(),
+    }),
+    z.union([
+      z.object({ response_tokens: z.number().int().positive() }),
+      z.object({
+        inference_kind: z.literal("unit_classifier"),
+        fragment_token_reserve: z.number().int().positive(),
+      }),
+    ]),
+  ),
 });
 
 const chatText = z
