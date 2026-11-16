@@ -28,8 +28,9 @@ def audit(evaluation):
     docs = [r for r in after if r["task"].startswith("grounded_")]
     assert docs
     doc_gate = acceptance({"samples": docs})
+    existing_gate = acceptance({"samples": after})
     return dict(context_families=context, context_pass=context_pass, regressions=regressions,
-                document_gate=doc_gate, controlled_criteria_pass=context_pass and not regressions and doc_gate["passed"],
+                document_gate=doc_gate, existing_acceptance=existing_gate, controlled_criteria_pass=context_pass and not regressions and existing_gate["passed"],
                 adopted=False, note="Gates de desenvolvimento: >=90% em cada família contextual, sem regressão por família legada e critério documental pré-existente. Mesmo aprovados, não comprovam conversa geral ou documentos reais.")
 
 

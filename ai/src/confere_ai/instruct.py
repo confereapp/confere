@@ -156,6 +156,9 @@ def run(args):
     tokenizer = ByteBPE(source["merges"])
     model = GPT(GPTConfig(**source["config"])).to(device)
     model.load_state_dict(source["model"]); model.eval()
+    from .finetuning import configure_trainable
+    last_blocks = getattr(args, "train_last_blocks", None)
+    trainable_count = configure_trainable(model, last_blocks)
     encoded_train = [encode_sample(row, tokenizer, model.config.block_size) for row in train]
     encoded_val = [encode_sample(row, tokenizer, model.config.block_size) for row in validation]
     human_eval=[encoded_val[i] for i,r in enumerate(validation) if r["task"]=="human_dialogue"]
@@ -180,6 +183,7 @@ def run(args):
     objective = "conversation" if any("history" in r for r in rows) else "document_grounding" if any(r["task"].startswith("grounded_") for r in rows) else "instruction"
     settings = {"objective": objective, "seed": 42, "batch_size": args.batch_size, "learning_rate": args.learning_rate,"generation_budget":generation_budget,"human_fraction":human_fraction}
     settings["human_sampling_policy"]="homogeneous_batches"
+    settings["train_last_blocks"] = last_blocks
     settings["public_fraction"]=public_fraction
     settings["document_fraction"]=document_fraction
     schemas = {r.get("grounding_schema", 1) for r in rows if r["task"].startswith("grounded_")}
@@ -199,11 +203,12 @@ def run(args):
             "device": device, "torch": str(torch.__version__), "python": platform.python_version()}
     from .evaluation_cache import protocol_fingerprint
     info["evaluation_protocol_hash"] = protocol_fingerprint()
+    info["trainable_parameters"] = trainable_count
     if baseline_from: info["baseline_evaluation_reused_from"] = str(baseline_from)
     info["mps_batch_padding_multiple"] = 128 if device == "mps" else None
     info["mps_generation_padding_multiple"] = 128 if device == "mps" else None
     (args.run_dir/"run.json").write_text(json.dumps(info, ensure_ascii=False, indent=2))
-    optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=.01)
+    optimizer = torch.optim.AdamW((p for p in model.parameters() if p.requires_grad), lr=args.learning_rate, weight_decay=.01)
     generator = torch.Generator().manual_seed(42)
     humans=[i for i,r in enumerate(train) if r["task"]=="human_dialogue"]
     public=[i for i,r in enumerate(train) if r["task"]=="public_dialogue"]
@@ -294,6 +299,7 @@ def main():
     parser.add_argument("--eval-every", type=int, default=200)
     parser.add_argument("--device", choices=["auto", "mps", "cpu"], default="auto")
     parser.add_argument("--response-tokens",type=int,default=64)
+    parser.add_argument("--train-last-blocks", type=int, help="Congelar embeddings e blocos iniciais; treinar apenas últimos N blocos, norm e saída.")
     parser.add_argument("--human-fraction",type=float,default=0.)
     parser.add_argument("--public-fraction",type=float,default=0.)
     parser.add_argument("--document-fraction",type=float,default=0.,help="Fração de lotes documentais separados dos demais exemplos autorais.")
