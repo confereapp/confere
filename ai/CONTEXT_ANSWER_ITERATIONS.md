@@ -290,3 +290,18 @@ Teste verifica sequência, alvos autorais e preservação da validação.
 Fonte context-answers-intent-2026-11-16, SHA256
 8de71ef39c4b3c64115fbb138bdfe6f1ca4872415b085a259c5d8fe86d9fc484.
 É um currículo controlado, sem alegação de fluência geral ou revisão independente.
+
+### Resultado F e protocolo G
+
+F concluiu 4.000 passos; o menor valor de validação foi no passo 500. Acerto
+controlado subiu de 330/377 para 332/377, mas houve regressão em insuficiência
+documental e agradecimentos informais. As cinco famílias contextuais mantiveram
+24/24, 11/12, 12/12, 12/12 e 33/36. O gate documental e o de conversa legada
+continuaram reprovados; nenhum checkpoint promovido. O ganho agregado não supera
+os critérios separados.
+
+G usará F/best.pt (passo 500) como candidato experimental de partida, sem adoção
+na API, para testar a reposição de continuidade sem descartar os pequenos ganhos
+documentais. Mesmos lr 3e-6, batch 4, últimos dois blocos, peso documental 4 e
+fração documental 0,5; 4.000 passos planejados, avaliação a cada 500 e limite
+600 segundos. Baseline F reaproveitado somente com o mesmo protocolo e validação.
