@@ -1,0 +1,1756 @@
+{
+  "runs": [
+    {
+      "run": "task-conversation-v-2026-11-16",
+      "data_sha256": "436839667eea9a7488d0e8580760dfceabe322775e9bc58d254bbbbc6f97fcb3",
+      "selected_step": 0,
+      "correct": 171,
+      "total": 171,
+      "acceptance": {
+        "passed": true,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            4,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            3,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            4,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            3,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            3,
+            3
+          ],
+          "conversation_slang_negation": [
+            3,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            4,
+            4
+          ],
+          "conversation_context_answer_fact": [
+            24,
+            24
+          ],
+          "conversation_context_answer_missing": [
+            12,
+            12
+          ],
+          "conversation_context_answer_conflict": [
+            12,
+            12
+          ],
+          "conversation_context_answer_support": [
+            12,
+            12
+          ],
+          "conversation_context_answer_memory": [
+            36,
+            36
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      },
+      "summary": {
+        "start_step": 0,
+        "final_step": 6000,
+        "stop_reason": "selection_plateau",
+        "elapsed_seconds": 723.6325285409999,
+        "tokens_processed": 694577,
+        "initial": {
+          "step": 0,
+          "train_loss": 0.0443947520758348,
+          "validation_loss": 0.0046506113433032814,
+          "elapsed_seconds": 2.3392346249999996,
+          "mps_allocated_bytes": 47308800,
+          "mps_driver_allocated_bytes": 160890880
+        },
+        "final": {
+          "step": 6000,
+          "train_loss": 0.04248551679393255,
+          "validation_loss": 0.004370185279216526,
+          "elapsed_seconds": 693.2312542909999,
+          "mps_allocated_bytes": 113033472,
+          "mps_driver_allocated_bytes": 1455865856
+        },
+        "human_examples_processed": 0,
+        "human_tokens_processed": 0,
+        "public_examples_processed": 0,
+        "public_tokens_processed": 0,
+        "document_examples_processed": 0,
+        "document_tokens_processed": 0,
+        "mps_allocated_bytes_max_observed": 129614080,
+        "mps_driver_allocated_bytes_max_observed": 1506197504,
+        "process_peak_rss_bytes": 670629888
+      },
+      "adopted": false
+    },
+    {
+      "run": "task-conversation-w-2026-11-16",
+      "data_sha256": "163d05fba2520c11edba9b663e505a84f3af0af50c8170d117bc716795f0a217",
+      "selected_step": 0,
+      "correct": 179,
+      "total": 180,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            4,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            3,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            4,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            3,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            3,
+            3
+          ],
+          "conversation_slang_negation": [
+            3,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            4,
+            4
+          ],
+          "conversation_context_answer_fact": [
+            24,
+            24
+          ],
+          "conversation_context_answer_missing": [
+            12,
+            12
+          ],
+          "conversation_context_answer_conflict": [
+            12,
+            12
+          ],
+          "conversation_context_answer_support": [
+            12,
+            12
+          ],
+          "conversation_context_answer_memory": [
+            36,
+            36
+          ],
+          "conversation_context_answer_natural": [
+            8,
+            9
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      },
+      "summary": {
+        "start_step": 0,
+        "final_step": 6000,
+        "stop_reason": "selection_plateau",
+        "elapsed_seconds": 782.5201004999999,
+        "tokens_processed": 694577,
+        "initial": {
+          "step": 0,
+          "train_loss": 0.04437715071177151,
+          "validation_loss": 0.006168370795438594,
+          "elapsed_seconds": 2.9541583330000023,
+          "mps_allocated_bytes": 47308800,
+          "mps_driver_allocated_bytes": 160890880
+        },
+        "final": {
+          "step": 6000,
+          "train_loss": 0.039883647063673026,
+          "validation_loss": 0.005971312596098272,
+          "elapsed_seconds": 749.7720975,
+          "mps_allocated_bytes": 113033472,
+          "mps_driver_allocated_bytes": 1456848896
+        },
+        "human_examples_processed": 0,
+        "human_tokens_processed": 0,
+        "public_examples_processed": 0,
+        "public_tokens_processed": 0,
+        "document_examples_processed": 0,
+        "document_tokens_processed": 0,
+        "mps_allocated_bytes_max_observed": 129614080,
+        "mps_driver_allocated_bytes_max_observed": 1507180544,
+        "process_peak_rss_bytes": 624410624
+      },
+      "adopted": false
+    },
+    {
+      "run": "task-conversation-x-2026-11-16",
+      "data_sha256": "eebc1b5ce4fb865795eb9f8f6fd283a9c7116d2eaf92cab4be3df6d621d2c3f1",
+      "selected_step": 0,
+      "correct": 179,
+      "total": 180,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            4,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            3,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            4,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            3,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            3,
+            3
+          ],
+          "conversation_slang_negation": [
+            3,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            4,
+            4
+          ],
+          "conversation_context_answer_fact": [
+            24,
+            24
+          ],
+          "conversation_context_answer_missing": [
+            12,
+            12
+          ],
+          "conversation_context_answer_conflict": [
+            12,
+            12
+          ],
+          "conversation_context_answer_support": [
+            12,
+            12
+          ],
+          "conversation_context_answer_memory": [
+            36,
+            36
+          ],
+          "conversation_context_answer_natural": [
+            8,
+            9
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      },
+      "summary": {
+        "start_step": 0,
+        "final_step": 6000,
+        "stop_reason": "selection_plateau",
+        "elapsed_seconds": 786.189255125,
+        "tokens_processed": 694577,
+        "initial": {
+          "step": 0,
+          "train_loss": 0.033169682627778044,
+          "validation_loss": 0.006168370795438594,
+          "elapsed_seconds": 3.668577292000002,
+          "mps_allocated_bytes": 47308800,
+          "mps_driver_allocated_bytes": 160890880
+        },
+        "final": {
+          "step": 6000,
+          "train_loss": 0.024055069476119097,
+          "validation_loss": 0.006017651352529011,
+          "elapsed_seconds": 763.320888792,
+          "mps_allocated_bytes": 112640256,
+          "mps_driver_allocated_bytes": 1456848896
+        },
+        "human_examples_processed": 0,
+        "human_tokens_processed": 0,
+        "public_examples_processed": 0,
+        "public_tokens_processed": 0,
+        "document_examples_processed": 0,
+        "document_tokens_processed": 0,
+        "mps_allocated_bytes_max_observed": 129614080,
+        "mps_driver_allocated_bytes_max_observed": 1506197504,
+        "process_peak_rss_bytes": 585220096
+      },
+      "adopted": false
+    },
+    {
+      "run": "task-conversation-z-2026-11-16",
+      "data_sha256": "eebc1b5ce4fb865795eb9f8f6fd283a9c7116d2eaf92cab4be3df6d621d2c3f1",
+      "selected_step": 0,
+      "correct": 179,
+      "total": 180,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            4,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            3,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            4,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            3,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            3,
+            3
+          ],
+          "conversation_slang_negation": [
+            3,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            4,
+            4
+          ],
+          "conversation_context_answer_fact": [
+            24,
+            24
+          ],
+          "conversation_context_answer_missing": [
+            12,
+            12
+          ],
+          "conversation_context_answer_conflict": [
+            12,
+            12
+          ],
+          "conversation_context_answer_support": [
+            12,
+            12
+          ],
+          "conversation_context_answer_memory": [
+            36,
+            36
+          ],
+          "conversation_context_answer_natural": [
+            8,
+            9
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      },
+      "summary": {
+        "start_step": 0,
+        "final_step": 8000,
+        "stop_reason": "selection_plateau",
+        "elapsed_seconds": 1206.659558958,
+        "tokens_processed": 926353,
+        "initial": {
+          "step": 0,
+          "train_loss": 0.033169682627778044,
+          "validation_loss": 0.006168370795438594,
+          "elapsed_seconds": 3.3051611659999978,
+          "mps_allocated_bytes": 47308800,
+          "mps_driver_allocated_bytes": 160890880
+        },
+        "final": {
+          "step": 8000,
+          "train_loss": 0.022139359042877473,
+          "validation_loss": 0.005209003307963069,
+          "elapsed_seconds": 1190.7326560000001,
+          "mps_allocated_bytes": 252344064,
+          "mps_driver_allocated_bytes": 2509897728
+        },
+        "human_examples_processed": 0,
+        "human_tokens_processed": 0,
+        "public_examples_processed": 0,
+        "public_tokens_processed": 0,
+        "document_examples_processed": 0,
+        "document_tokens_processed": 0,
+        "mps_allocated_bytes_max_observed": 302778112,
+        "mps_driver_allocated_bytes_max_observed": 2518286336,
+        "process_peak_rss_bytes": 631341056
+      },
+      "adopted": false
+    },
+    {
+      "run": "task-conversation-aa-2026-11-16",
+      "data_sha256": "da287d4c39a40b9a67eb0a684f605e6c368cca962ec6ad8d55fbdb3e3f157d36",
+      "selected_step": 0,
+      "correct": 179,
+      "total": 180,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            4,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            3,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            4,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            3,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            3,
+            3
+          ],
+          "conversation_slang_negation": [
+            3,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            4,
+            4
+          ],
+          "conversation_context_answer_fact": [
+            24,
+            24
+          ],
+          "conversation_context_answer_missing": [
+            12,
+            12
+          ],
+          "conversation_context_answer_conflict": [
+            12,
+            12
+          ],
+          "conversation_context_answer_support": [
+            12,
+            12
+          ],
+          "conversation_context_answer_memory": [
+            36,
+            36
+          ],
+          "conversation_context_answer_natural": [
+            8,
+            9
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      },
+      "summary": {
+        "start_step": 0,
+        "final_step": 7500,
+        "selected_step": 0,
+        "stop_reason": "interrupted_for_corrected_curriculum",
+        "elapsed_seconds": 1440.8599074580002,
+        "initial": {
+          "step": 0,
+          "train_loss": 0.02863201155632619,
+          "validation_loss": 0.006168370795438594,
+          "elapsed_seconds": 3.6298005410000016,
+          "mps_allocated_bytes": 94617600,
+          "mps_driver_allocated_bytes": 160890880
+        },
+        "final": {
+          "step": 7500,
+          "train_loss": 0.019092184161144457,
+          "validation_loss": 0.005184290785154291,
+          "elapsed_seconds": 1440.8599074580002,
+          "mps_allocated_bytes": 425509120,
+          "mps_driver_allocated_bytes": 2561474560
+        },
+        "measurement_scope": "through_last_preserved_checkpoint"
+      },
+      "adopted": false
+    },
+    {
+      "run": "task-conversation-ac-2026-11-16",
+      "data_sha256": "6d042775c885047626c4b5bb732809a513e9fa959ff029c2d5a853aee6a8981c",
+      "selected_step": 0,
+      "correct": 179,
+      "total": 180,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            4,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            3,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            4,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            3,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            3,
+            3
+          ],
+          "conversation_slang_negation": [
+            3,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            4,
+            4
+          ],
+          "conversation_context_answer_fact": [
+            24,
+            24
+          ],
+          "conversation_context_answer_missing": [
+            12,
+            12
+          ],
+          "conversation_context_answer_conflict": [
+            12,
+            12
+          ],
+          "conversation_context_answer_support": [
+            12,
+            12
+          ],
+          "conversation_context_answer_memory": [
+            36,
+            36
+          ],
+          "conversation_context_answer_natural": [
+            8,
+            9
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      },
+      "summary": {
+        "start_step": 0,
+        "final_step": 8000,
+        "stop_reason": "selection_plateau",
+        "elapsed_seconds": 1926.211103541,
+        "tokens_processed": 926353,
+        "initial": {
+          "step": 0,
+          "train_loss": 0.026298736202021986,
+          "validation_loss": 0.006168370795438594,
+          "elapsed_seconds": 1.2087499160000021,
+          "mps_allocated_bytes": 94617600,
+          "mps_driver_allocated_bytes": 165085184
+        },
+        "final": {
+          "step": 8000,
+          "train_loss": 0.0173993071989646,
+          "validation_loss": 0.004688952680139045,
+          "elapsed_seconds": 1915.276685541,
+          "mps_allocated_bytes": 424800512,
+          "mps_driver_allocated_bytes": 2603384832
+        },
+        "human_examples_processed": 0,
+        "human_tokens_processed": 0,
+        "public_examples_processed": 0,
+        "public_tokens_processed": 0,
+        "document_examples_processed": 0,
+        "document_tokens_processed": 0,
+        "mps_allocated_bytes_max_observed": 456654080,
+        "mps_driver_allocated_bytes_max_observed": 2611773440,
+        "process_peak_rss_bytes": 1149009920
+      },
+      "adopted": false
+    },
+    {
+      "run": "task-conversation-ae-2026-11-16",
+      "data_sha256": "6d042775c885047626c4b5bb732809a513e9fa959ff029c2d5a853aee6a8981c",
+      "selected_step": 0,
+      "correct": 179,
+      "total": 180,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            4,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            3,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            4,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            3,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            3,
+            3
+          ],
+          "conversation_slang_negation": [
+            3,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            4,
+            4
+          ],
+          "conversation_context_answer_fact": [
+            24,
+            24
+          ],
+          "conversation_context_answer_missing": [
+            12,
+            12
+          ],
+          "conversation_context_answer_conflict": [
+            12,
+            12
+          ],
+          "conversation_context_answer_support": [
+            12,
+            12
+          ],
+          "conversation_context_answer_memory": [
+            36,
+            36
+          ],
+          "conversation_context_answer_natural": [
+            8,
+            9
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      },
+      "summary": {
+        "start_step": 0,
+        "final_step": 8000,
+        "stop_reason": "selection_plateau",
+        "elapsed_seconds": 1388.906955542,
+        "tokens_processed": 926353,
+        "initial": {
+          "step": 0,
+          "train_loss": 0.026298736202021986,
+          "validation_loss": 0.006168370795438594,
+          "elapsed_seconds": 3.6245146250000033,
+          "mps_allocated_bytes": 94617600,
+          "mps_driver_allocated_bytes": 160890880
+        },
+        "final": {
+          "step": 8000,
+          "train_loss": 0.023158785890750502,
+          "validation_loss": 0.005961368702827606,
+          "elapsed_seconds": 1375.564134875,
+          "mps_allocated_bytes": 222226176,
+          "mps_driver_allocated_bytes": 1515798528
+        },
+        "human_examples_processed": 0,
+        "human_tokens_processed": 0,
+        "public_examples_processed": 0,
+        "public_tokens_processed": 0,
+        "document_examples_processed": 0,
+        "document_tokens_processed": 0,
+        "mps_allocated_bytes_max_observed": 224388352,
+        "mps_driver_allocated_bytes_max_observed": 1519960064,
+        "process_peak_rss_bytes": 773128192
+      },
+      "adopted": false
+    },
+    {
+      "run": "task-conversation-ag-2026-11-16",
+      "data_sha256": "6d042775c885047626c4b5bb732809a513e9fa959ff029c2d5a853aee6a8981c",
+      "selected_step": 0,
+      "correct": 179,
+      "total": 180,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            4,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            3,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            4,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            3,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            3,
+            3
+          ],
+          "conversation_slang_negation": [
+            3,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            4,
+            4
+          ],
+          "conversation_context_answer_fact": [
+            24,
+            24
+          ],
+          "conversation_context_answer_missing": [
+            12,
+            12
+          ],
+          "conversation_context_answer_conflict": [
+            12,
+            12
+          ],
+          "conversation_context_answer_support": [
+            12,
+            12
+          ],
+          "conversation_context_answer_memory": [
+            36,
+            36
+          ],
+          "conversation_context_answer_natural": [
+            8,
+            9
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      },
+      "summary": {
+        "start_step": 0,
+        "final_step": 6501,
+        "stop_reason": "time_limit",
+        "elapsed_seconds": 614.38340125,
+        "tokens_processed": 583916,
+        "initial": {
+          "step": 0,
+          "train_loss": 0.026298736202021986,
+          "validation_loss": 0.006168370795438594,
+          "elapsed_seconds": 6.874057125000007,
+          "mps_allocated_bytes": 94617600,
+          "mps_driver_allocated_bytes": 160890880
+        },
+        "final": {
+          "step": 6501,
+          "train_loss": 0.02258829476870675,
+          "validation_loss": 0.0064964736207460926,
+          "elapsed_seconds": 606.036189875,
+          "mps_allocated_bytes": 199806208,
+          "mps_driver_allocated_bytes": 1642741760
+        },
+        "human_examples_processed": 0,
+        "human_tokens_processed": 0,
+        "public_examples_processed": 0,
+        "public_tokens_processed": 0,
+        "document_examples_processed": 0,
+        "document_tokens_processed": 0,
+        "mps_allocated_bytes_max_observed": 230370048,
+        "mps_driver_allocated_bytes_max_observed": 1684684800,
+        "process_peak_rss_bytes": 1257046016
+      },
+      "adopted": false
+    },
+    {
+      "run": "task-conversation-ah-2026-11-16",
+      "data_sha256": "6d042775c885047626c4b5bb732809a513e9fa959ff029c2d5a853aee6a8981c",
+      "selected_step": 0,
+      "correct": 179,
+      "total": 180,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            4,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            3,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            4,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            3,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            3,
+            3
+          ],
+          "conversation_slang_negation": [
+            3,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            4,
+            4
+          ],
+          "conversation_context_answer_fact": [
+            24,
+            24
+          ],
+          "conversation_context_answer_missing": [
+            12,
+            12
+          ],
+          "conversation_context_answer_conflict": [
+            12,
+            12
+          ],
+          "conversation_context_answer_support": [
+            12,
+            12
+          ],
+          "conversation_context_answer_memory": [
+            36,
+            36
+          ],
+          "conversation_context_answer_natural": [
+            8,
+            9
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      },
+      "summary": {
+        "start_step": 0,
+        "final_step": 1701,
+        "stop_reason": "time_limit",
+        "elapsed_seconds": 197.143928,
+        "tokens_processed": 196164,
+        "initial": {
+          "step": 0,
+          "train_loss": 0.026298736202021986,
+          "validation_loss": 0.006168370795438594,
+          "elapsed_seconds": 0.9123098750000018,
+          "mps_allocated_bytes": 47308800,
+          "mps_driver_allocated_bytes": 165085184
+        },
+        "final": {
+          "step": 1701,
+          "train_loss": 0.02606449577194843,
+          "validation_loss": 0.006187390107888852,
+          "elapsed_seconds": 188.78479025,
+          "mps_allocated_bytes": 72872704,
+          "mps_driver_allocated_bytes": 1423998976
+        },
+        "human_examples_processed": 0,
+        "human_tokens_processed": 0,
+        "public_examples_processed": 0,
+        "public_tokens_processed": 0,
+        "document_examples_processed": 0,
+        "document_tokens_processed": 0,
+        "mps_allocated_bytes_max_observed": 85652224,
+        "mps_driver_allocated_bytes_max_observed": 1457553408,
+        "process_peak_rss_bytes": 1421754368
+      },
+      "adopted": false
+    },
+    {
+      "run": "evidence-classifier-ad-2026-11-16",
+      "selected_step": 0,
+      "correct": 292,
+      "total": 294,
+      "quality": [
+        true,
+        0,
+        1.0,
+        1.0,
+        0,
+        292
+      ],
+      "summary": {
+        "final_step": 4000,
+        "selected_step": 0,
+        "stop_reason": "selection_plateau",
+        "elapsed_seconds": 934.705142417,
+        "test_examples_used": 0
+      },
+      "adopted": false
+    },
+    {
+      "run": "evidence-classifier-af-2026-11-16",
+      "selected_step": 0,
+      "correct": 292,
+      "total": 294,
+      "quality": [
+        true,
+        0,
+        1.0,
+        1.0,
+        0,
+        292
+      ],
+      "summary": {
+        "final_step": 4000,
+        "selected_step": 0,
+        "stop_reason": "selection_plateau",
+        "elapsed_seconds": 1036.549773083,
+        "test_examples_used": 0
+      },
+      "adopted": false
+    }
+  ],
+  "note": "Desenvolvimento consultado repetidamente. Nenhuma promoção ou teste independente concluído."
+}

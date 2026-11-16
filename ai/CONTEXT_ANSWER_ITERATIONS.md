@@ -616,3 +616,32 @@ a coorte antiga é desenvolvimento e não mede vocabulário inédito. É obrigat
 um novo teste independente após congelar os pesos. Z libera toda a rede no
 ajuste de conversa com taxa pequena para investigar a limitação das últimas
 camadas congeladas. Nenhum desses candidatos foi promovido.
+
+## Platôs e replay de erros — continuação de 16/11
+
+W, X, Z, AC, AE e AG não superaram o snapshot congelado de V: 179/180,
+incluindo 171/171 originais e 8/9 naturais. AA foi encerrada deliberadamente
+após o checkpoint 7500 para corrigir o currículo e a ponderação das respostas.
+AH ajustou somente os 384 parâmetros do viés final, sem superar a base.
+O ajuste convexo desse mesmo viés usou exclusivamente os primeiros tokens de
+3.200 exemplos de treino; nenhum dos sete fatores de interpolação melhorou a
+base. Os demais tensores foram conferidos como idênticos ao checkpoint fonte.
+
+O relatório de aceitação passou a exigir os mesmos 90% nas famílias contextuais
+que o seletor já exigia. Resultados históricos desta etapa foram recalculados
+sob esse critério, sem modificar respostas, alvos ou pesos. Em nove exemplos,
+8/9 fica abaixo do limiar. Os PDFs registram essa reprovação.
+
+Nas revisões, AD e a cabeça categórica AF também selecionaram o passo inicial:
+292/294. As duas sondas residuais com encoder congelado não melhoraram esse
+resultado e não foram integradas. A melhor calibração anterior ainda falha
+em um requisito do fluxo documental completo; a meta conjunta segue pendente.
+
+O replay novo identifica erros exclusivamente no treino. Na conversa, o snapshot
+fonte erra o primeiro token em 8.314 de 68.843 exemplos; as conversas completas
+desses casos são repetidas, preservando IDs distintos, sequência e os mesmos
+180 exemplos de validação. Na revisão, o encoder fonte erra ao menos um dos
+dois estados em 1.170 de 75.046 unidades de treino. AJ dedica metade de cada
+lote a esses erros; nenhuma unidade de validação entra na mineração. AI e AJ
+são experimentos em execução, sem promoção. Resultados das rodadas encerradas:
+`output/ai/replay-iterations-2026-11-16.json`.
