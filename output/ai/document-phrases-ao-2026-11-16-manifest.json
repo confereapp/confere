@@ -1,0 +1,269 @@
+{
+  "dataset_sha256": "74e5c7c543d97d94f263b76a4f1036865c921ba00845c4a9b41b30b2d3945c86",
+  "source_sha256": "fed01fc85b549eb57bad0dfcbfbc1ffcac491f10a8ac59b7a4f5a378c2ae92aa",
+  "added_train": 24000,
+  "added_development": 116,
+  "train": 59459,
+  "validation": 410,
+  "forms": [
+    [
+      "O produto oferece {}.",
+      "O produto não oferece {}."
+    ],
+    [
+      "A aplicação fornece {}.",
+      "A aplicação não fornece {}."
+    ],
+    [
+      "O sistema possui {}.",
+      "O sistema não possui {}."
+    ],
+    [
+      "A plataforma suporta {}.",
+      "A plataforma não suporta {}."
+    ],
+    [
+      "A equipe entregou {}.",
+      "A equipe não entregou {}."
+    ],
+    [
+      "A equipe implementou {}.",
+      "A equipe não implementou {}."
+    ],
+    [
+      "A aplicação apresenta {}.",
+      "A aplicação não apresenta {}."
+    ],
+    [
+      "O produto disponibilizou {}.",
+      "O produto não disponibilizou {}."
+    ],
+    [
+      "Já foi entregue {}.",
+      "Ainda não foi entregue {}."
+    ],
+    [
+      "Constatamos a presença de {}.",
+      "Constatamos a ausência de {}."
+    ],
+    [
+      "A implementação de {} foi concluída.",
+      "A implementação de {} não foi concluída."
+    ],
+    [
+      "A funcionalidade de {} está pronta.",
+      "A funcionalidade de {} não está pronta."
+    ],
+    [
+      "O módulo de {} está ativo.",
+      "O módulo de {} está inativo."
+    ],
+    [
+      "O mecanismo de {} está habilitado.",
+      "O mecanismo de {} está desabilitado."
+    ],
+    [
+      "A função de {} está presente.",
+      "A função de {} está ausente."
+    ],
+    [
+      "O recurso de {} foi implantado.",
+      "O recurso de {} não foi implantado."
+    ],
+    [
+      "O componente de {} funciona.",
+      "O componente de {} não funciona."
+    ],
+    [
+      "A rotina de {} foi desenvolvida.",
+      "A rotina de {} não foi desenvolvida."
+    ],
+    [
+      "A etapa de {} foi finalizada.",
+      "A etapa de {} não foi finalizada."
+    ],
+    [
+      "A versão atual já dispõe de {}.",
+      "A versão atual ainda não dispõe de {}."
+    ],
+    [
+      "Verificamos que existe {}.",
+      "Verificamos que não existe {}."
+    ],
+    [
+      "Foi comprovada a existência de {}.",
+      "Foi comprovada a inexistência de {}."
+    ],
+    [
+      "A equipe adicionou {}.",
+      "A equipe não adicionou {}."
+    ],
+    [
+      "A entrega contempla {}.",
+      "A entrega não contempla {}."
+    ]
+  ],
+  "topics": [
+    "cadastro de visitantes",
+    "cadastro de animais",
+    "cadastro de obras",
+    "cadastro de fornecedores",
+    "cadastro de eventos",
+    "cadastro de equipamentos",
+    "cadastro de documentos",
+    "cadastro de mensagens",
+    "cadastro de candidatos",
+    "cadastro de serviços",
+    "cadastro de turmas",
+    "cadastro de questionários",
+    "cadastro de artigos",
+    "cadastro de orçamentos",
+    "cadastro de endereços",
+    "cadastro de comentários",
+    "consulta de visitantes",
+    "consulta de animais",
+    "consulta de obras",
+    "consulta de fornecedores",
+    "consulta de eventos",
+    "consulta de equipamentos",
+    "consulta de documentos",
+    "consulta de mensagens",
+    "consulta de candidatos",
+    "consulta de serviços",
+    "consulta de turmas",
+    "consulta de questionários",
+    "consulta de artigos",
+    "consulta de orçamentos",
+    "consulta de endereços",
+    "consulta de comentários",
+    "listagem de visitantes",
+    "listagem de animais",
+    "listagem de obras",
+    "listagem de fornecedores",
+    "listagem de eventos",
+    "listagem de equipamentos",
+    "listagem de documentos",
+    "listagem de mensagens",
+    "listagem de candidatos",
+    "listagem de serviços",
+    "listagem de turmas",
+    "listagem de questionários",
+    "listagem de artigos",
+    "listagem de orçamentos",
+    "listagem de endereços",
+    "listagem de comentários",
+    "edição de visitantes",
+    "edição de animais",
+    "edição de obras",
+    "edição de fornecedores",
+    "edição de eventos",
+    "edição de equipamentos",
+    "edição de documentos",
+    "edição de mensagens",
+    "edição de candidatos",
+    "edição de serviços",
+    "edição de turmas",
+    "edição de questionários",
+    "edição de artigos",
+    "edição de orçamentos",
+    "edição de endereços",
+    "edição de comentários",
+    "remoção de visitantes",
+    "remoção de animais",
+    "remoção de obras",
+    "remoção de fornecedores",
+    "remoção de eventos",
+    "remoção de equipamentos",
+    "remoção de documentos",
+    "remoção de mensagens",
+    "remoção de candidatos",
+    "remoção de serviços",
+    "remoção de turmas",
+    "remoção de questionários",
+    "remoção de artigos",
+    "remoção de orçamentos",
+    "remoção de endereços",
+    "remoção de comentários",
+    "organização de visitantes",
+    "organização de animais",
+    "organização de obras",
+    "organização de fornecedores",
+    "organização de eventos",
+    "organização de equipamentos",
+    "organização de documentos",
+    "organização de mensagens",
+    "organização de candidatos",
+    "organização de serviços",
+    "organização de turmas",
+    "organização de questionários",
+    "organização de artigos",
+    "organização de orçamentos",
+    "organização de endereços",
+    "organização de comentários",
+    "monitoramento de visitantes",
+    "monitoramento de animais",
+    "monitoramento de obras",
+    "monitoramento de fornecedores",
+    "monitoramento de eventos",
+    "monitoramento de equipamentos",
+    "monitoramento de documentos",
+    "monitoramento de mensagens",
+    "monitoramento de candidatos",
+    "monitoramento de serviços",
+    "monitoramento de turmas",
+    "monitoramento de questionários",
+    "monitoramento de artigos",
+    "monitoramento de orçamentos",
+    "monitoramento de endereços",
+    "monitoramento de comentários",
+    "avaliação de visitantes",
+    "avaliação de animais",
+    "avaliação de obras",
+    "avaliação de fornecedores",
+    "avaliação de eventos",
+    "avaliação de equipamentos",
+    "avaliação de documentos",
+    "avaliação de mensagens",
+    "avaliação de candidatos",
+    "avaliação de serviços",
+    "avaliação de turmas",
+    "avaliação de questionários",
+    "avaliação de artigos",
+    "avaliação de orçamentos",
+    "avaliação de endereços",
+    "avaliação de comentários",
+    "notificação de visitantes",
+    "notificação de animais",
+    "notificação de obras",
+    "notificação de fornecedores",
+    "notificação de eventos",
+    "notificação de equipamentos",
+    "notificação de documentos",
+    "notificação de mensagens",
+    "notificação de candidatos",
+    "notificação de serviços",
+    "notificação de turmas",
+    "notificação de questionários",
+    "notificação de artigos",
+    "notificação de orçamentos",
+    "notificação de endereços",
+    "notificação de comentários",
+    "compartilhamento de visitantes",
+    "compartilhamento de animais",
+    "compartilhamento de obras",
+    "compartilhamento de fornecedores",
+    "compartilhamento de eventos",
+    "compartilhamento de equipamentos",
+    "compartilhamento de documentos",
+    "compartilhamento de mensagens",
+    "compartilhamento de candidatos",
+    "compartilhamento de serviços",
+    "compartilhamento de turmas",
+    "compartilhamento de questionários",
+    "compartilhamento de artigos",
+    "compartilhamento de orçamentos",
+    "compartilhamento de endereços",
+    "compartilhamento de comentários"
+  ],
+  "note": "A coorte que reprovou passou a desenvolvimento. Novos exemplos de treino autorais; nenhum texto completo da coorte adicionado ao treino. Novo teste independente obrigatório após congelar o candidato."
+}

@@ -1,0 +1,1795 @@
+{
+  "original-full": {
+    "checkpoint": "ai/runs/evidence-sentences-al-2026-11-16/best.pt",
+    "checkpoint_sha256": "968d60aa7fd0e27fbc9486d2baa198cd5ba0e0803e7fe44c9c756f4e56754e96",
+    "prediction_type": "unit_classifier",
+    "step": 4000,
+    "cases_sha256": "7bca5d9de232aee793240711b5d3358f92ab65663028ce543a6ca4e59988ac64",
+    "correct_requirements": 36,
+    "total_requirements": 36,
+    "valid_requirements": 36,
+    "false_positive": 0,
+    "exact_local_calls": 86,
+    "total_local_calls": 86,
+    "complete_projects": 18,
+    "total_projects": 18,
+    "test_examples_used": 0,
+    "adopted": false,
+    "note": "Documentos autorais da validação de desenvolvimento; sobrepõem os lotes locais da avaliação. Sem teste cego ou documento real."
+  },
+  "development-full": {
+    "checkpoint": "ai/runs/evidence-sentences-al-2026-11-16/best.pt",
+    "checkpoint_sha256": "968d60aa7fd0e27fbc9486d2baa198cd5ba0e0803e7fe44c9c756f4e56754e96",
+    "prediction_type": "unit_classifier",
+    "step": 4000,
+    "cases_sha256": "294e85082f34a6f1761de7387929d0f071c7655359183714adb753a41ae3a90e",
+    "correct_requirements": 36,
+    "total_requirements": 36,
+    "valid_requirements": 36,
+    "false_positive": 0,
+    "exact_local_calls": 88,
+    "total_local_calls": 88,
+    "complete_projects": 18,
+    "total_projects": 18,
+    "test_examples_used": 0,
+    "adopted": false,
+    "note": "Documentos autorais da validação de desenvolvimento; sobrepõem os lotes locais da avaliação. Sem teste cego ou documento real."
+  },
+  "independent-full": {
+    "checkpoint": "ai/runs/evidence-sentences-al-2026-11-16/best.pt",
+    "checkpoint_sha256": "968d60aa7fd0e27fbc9486d2baa198cd5ba0e0803e7fe44c9c756f4e56754e96",
+    "prediction_type": "unit_classifier",
+    "step": 4000,
+    "cases_sha256": "7e4ec1f1847441f21b33895c1eb188b1eac5fe702ac35fe77bcbdf3f0a7347b9",
+    "correct_requirements": 30,
+    "total_requirements": 48,
+    "valid_requirements": 48,
+    "false_positive": 0,
+    "exact_local_calls": 98,
+    "total_local_calls": 116,
+    "complete_projects": 11,
+    "total_projects": 24,
+    "test_examples_used": 48,
+    "adopted": false,
+    "note": "Primeira inferência em coorte autoral criada após congelamento. Reprovou: 30/48; coorte passa a desenvolvimento para investigações futuras. Sem revisão humana independente ou documento real.",
+    "cohort_kind": "independent"
+  },
+  "independent_results": [
+    {
+      "id": "api-test-7111600-scope_short",
+      "profile": "scope_short",
+      "requirements": [
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111600-scope_long",
+      "profile": "scope_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111600-tail_conflict",
+      "profile": "tail_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111600-middle_evidence",
+      "profile": "middle_evidence",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111600-short_conflict",
+      "profile": "short_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111600-mention_long",
+      "profile": "mention_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111601-scope_short",
+      "profile": "scope_short",
+      "requirements": [
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111601-scope_long",
+      "profile": "scope_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111601-tail_conflict",
+      "profile": "tail_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": true,
+          "valid": true,
+          "local_correct": 4,
+          "local_total": 4
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": false,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 4
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111601-middle_evidence",
+      "profile": "middle_evidence",
+      "requirements": [
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111601-short_conflict",
+      "profile": "short_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 0,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111601-mention_long",
+      "profile": "mention_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111602-scope_short",
+      "profile": "scope_short",
+      "requirements": [
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111602-scope_long",
+      "profile": "scope_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111602-tail_conflict",
+      "profile": "tail_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111602-middle_evidence",
+      "profile": "middle_evidence",
+      "requirements": [
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111602-short_conflict",
+      "profile": "short_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111602-mention_long",
+      "profile": "mention_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111603-scope_short",
+      "profile": "scope_short",
+      "requirements": [
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111603-scope_long",
+      "profile": "scope_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111603-tail_conflict",
+      "profile": "tail_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 4
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 4,
+          "local_total": 4
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111603-middle_evidence",
+      "profile": "middle_evidence",
+      "requirements": [
+        {
+          "expected": {
+            "status": "nao_atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "nao_atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": false,
+          "valid": true,
+          "local_correct": 2,
+          "local_total": 3
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111603-short_conflict",
+      "profile": "short_conflict",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": true
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": true,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 1,
+          "local_total": 1
+        }
+      ]
+    },
+    {
+      "id": "api-test-7111603-mention_long",
+      "profile": "mention_long",
+      "requirements": [
+        {
+          "expected": {
+            "status": "evidencia_insuficiente",
+            "conflicting_evidence": false
+          },
+          "actual": "evidencia_insuficiente",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        },
+        {
+          "expected": {
+            "status": "atendido",
+            "conflicting_evidence": false
+          },
+          "actual": "atendido",
+          "conflict": false,
+          "correct": true,
+          "valid": true,
+          "local_correct": 3,
+          "local_total": 3
+        }
+      ]
+    }
+  ],
+  "conversation": {
+    "manifest": {
+      "checkpoint_sha256": "7dde83a57b3c38db364ac9bc202be807ad9e77e788120f665a84115865806b24",
+      "source_step": 4000,
+      "seed": 7111602,
+      "examples": 72,
+      "cases_sha256": "b8d145ab28424552734db0750dcd543ef1bbe14f55e61f2883d8af2760d22bfd",
+      "selection": "all_generated_cases_before_inference",
+      "note": "Coorte nova após congelamento; alvos autorais, sem revisão humana independente."
+    },
+    "correct": 37,
+    "total": 72,
+    "acceptance": {
+      "passed": false,
+      "counts": {
+        "conversation_context_answer_independent_support": [
+          11,
+          36
+        ],
+        "conversation_context_answer_independent_fact": [
+          9,
+          12
+        ],
+        "conversation_context_answer_independent_conflict": [
+          0,
+          6
+        ],
+        "conversation_context_answer_independent_missing": [
+          5,
+          6
+        ],
+        "conversation_context_answer_independent_memory": [
+          12,
+          12
+        ]
+      },
+      "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+      "scope": "Não valida conversa aberta."
+    },
+    "test_examples_used": 72,
+    "results": [
+      {
+        "id": "independent-aq-0",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui histórico de acessos. O projeto não inclui alertas por mensagem. O projeto inclui histórico de acessos?",
+        "expected": "Sim.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-0",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-1",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui histórico de acessos. O projeto não inclui alertas por mensagem. O projeto inclui alertas por mensagem?",
+        "expected": "Não.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-1",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-2",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui histórico de acessos. O projeto não inclui alertas por mensagem. O projeto inclui edição de comentários?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-2",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-3",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui filtros de busca, mas inclui pagamentos por cartão. O projeto inclui pagamentos por cartão?",
+        "expected": "Sim.",
+        "actual": "Sim.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-3",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-4",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui filtros de busca, mas inclui pagamentos por cartão. O projeto inclui filtros de busca?",
+        "expected": "Não.",
+        "actual": "Sim.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-4",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-5",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui filtros de busca, mas inclui pagamentos por cartão. O projeto inclui histórico de acessos?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Sim.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-5",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-6",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém relatórios de compras, mas não contém pagamentos por cartão. O projeto inclui relatórios de compras?",
+        "expected": "Sim.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-6",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-7",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém relatórios de compras, mas não contém pagamentos por cartão. O projeto inclui pagamentos por cartão?",
+        "expected": "Não.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-7",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-8",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém relatórios de compras, mas não contém pagamentos por cartão. O projeto inclui alertas por mensagem?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-8",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-9",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui relatórios de compras. O projeto não inclui filtros de busca. O projeto inclui relatórios de compras?",
+        "expected": "Sim.",
+        "actual": "Sim.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-9",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-10",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui relatórios de compras. O projeto não inclui filtros de busca. O projeto inclui filtros de busca?",
+        "expected": "Não.",
+        "actual": "Sim.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-10",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-11",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui relatórios de compras. O projeto não inclui filtros de busca. O projeto inclui histórico de acessos?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-11",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-12",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui filtros de busca, mas inclui avaliações de produtos. O projeto inclui avaliações de produtos?",
+        "expected": "Sim.",
+        "actual": "Sim.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-12",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-13",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui filtros de busca, mas inclui avaliações de produtos. O projeto inclui filtros de busca?",
+        "expected": "Não.",
+        "actual": "Sim.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-13",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-14",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui filtros de busca, mas inclui avaliações de produtos. O projeto inclui histórico de acessos?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Sim.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-14",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-15",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém avaliações de produtos, mas não contém filtros de busca. O projeto inclui avaliações de produtos?",
+        "expected": "Sim.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-15",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-16",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém avaliações de produtos, mas não contém filtros de busca. O projeto inclui filtros de busca?",
+        "expected": "Não.",
+        "actual": "C.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-16",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-17",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém avaliações de produtos, mas não contém filtros de busca. O projeto inclui alertas por mensagem?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Há informações conflitantes no texto.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-17",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-18",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui pagamentos por cartão. O projeto não inclui alertas por mensagem. O projeto inclui pagamentos por cartão?",
+        "expected": "Sim.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-18",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-19",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui pagamentos por cartão. O projeto não inclui alertas por mensagem. O projeto inclui alertas por mensagem?",
+        "expected": "Não.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-19",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-20",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui pagamentos por cartão. O projeto não inclui alertas por mensagem. O projeto inclui avaliações de produtos?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-20",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-21",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui avaliações de produtos, mas inclui reservas de salas. O projeto inclui reservas de salas?",
+        "expected": "Sim.",
+        "actual": "Salas.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-21",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-22",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui avaliações de produtos, mas inclui reservas de salas. O projeto inclui avaliações de produtos?",
+        "expected": "Não.",
+        "actual": "Sim.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-22",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-23",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui avaliações de produtos, mas inclui reservas de salas. O projeto inclui filtros de busca?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-23",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-24",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém filtros de busca, mas não contém avaliações de produtos. O projeto inclui filtros de busca?",
+        "expected": "Sim.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-24",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-25",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém filtros de busca, mas não contém avaliações de produtos. O projeto inclui avaliações de produtos?",
+        "expected": "Não.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-25",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-26",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém filtros de busca, mas não contém avaliações de produtos. O projeto inclui edição de comentários?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-26",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-27",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui histórico de acessos. O projeto não inclui filtros de busca. O projeto inclui histórico de acessos?",
+        "expected": "Sim.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-27",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-28",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui histórico de acessos. O projeto não inclui filtros de busca. O projeto inclui filtros de busca?",
+        "expected": "Não.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-28",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-29",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto inclui histórico de acessos. O projeto não inclui filtros de busca. O projeto inclui avaliações de produtos?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-29",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-30",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui pagamentos por cartão, mas inclui edição de comentários. O projeto inclui edição de comentários?",
+        "expected": "Sim.",
+        "actual": "Não.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-30",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-31",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui pagamentos por cartão, mas inclui edição de comentários. O projeto inclui pagamentos por cartão?",
+        "expected": "Não.",
+        "actual": "Sim.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-31",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-32",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto não inclui pagamentos por cartão, mas inclui edição de comentários. O projeto inclui relatórios de compras?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Sim.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-32",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-33",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém filtros de busca, mas não contém edição de comentários. O projeto inclui filtros de busca?",
+        "expected": "Sim.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-33",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-34",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém filtros de busca, mas não contém edição de comentários. O projeto inclui edição de comentários?",
+        "expected": "Não.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-34",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-35",
+        "task": "conversation_context_answer_independent_support",
+        "prompt": "O projeto contém filtros de busca, mas não contém edição de comentários. O projeto inclui histórico de acessos?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-35",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-36",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 41 dias. Qual é o prazo informado?",
+        "expected": "41 dias.",
+        "actual": "41 dias.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-36",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-37",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 12 dias. Qual é o prazo informado?",
+        "expected": "12 dias.",
+        "actual": "12 dias.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-37",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-38",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 60 dias. Qual é o prazo informado?",
+        "expected": "60 dias.",
+        "actual": "60 dias.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-38",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-39",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 85 dias. Qual é o prazo informado?",
+        "expected": "85 dias.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-39",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-40",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 34 dias. Qual é o prazo informado?",
+        "expected": "34 dias.",
+        "actual": "34 dias.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-40",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-41",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 80 dias. Qual é o prazo informado?",
+        "expected": "80 dias.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-41",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-42",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 26 dias. Qual é o prazo informado?",
+        "expected": "26 dias.",
+        "actual": "26 dias.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-42",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-43",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 24 dias. Qual é o prazo informado?",
+        "expected": "24 dias.",
+        "actual": "24 dias.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-43",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-44",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 32 dias. Qual é o prazo informado?",
+        "expected": "32 dias.",
+        "actual": "32 dias.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-44",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-45",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 19 dias. Qual é o prazo informado?",
+        "expected": "19 dias.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-45",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-46",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 67 dias. Qual é o prazo informado?",
+        "expected": "67 dias.",
+        "actual": "67 dias.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-46",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-47",
+        "task": "conversation_context_answer_independent_fact",
+        "prompt": "A entrega está prevista para daqui a 21 dias. Qual é o prazo informado?",
+        "expected": "21 dias.",
+        "actual": "21 dias.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-47",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-48",
+        "task": "conversation_context_answer_independent_conflict",
+        "prompt": "O prazo informado é de 65 dias. O prazo informado é de 82 dias. Quantos dias foram informados?",
+        "expected": "Há informações conflitantes no texto.",
+        "actual": "Isexu!",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-48",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-49",
+        "task": "conversation_context_answer_independent_missing",
+        "prompt": "O projeto usa Ruby. A equipe tem 3 integrantes. Qual é o prazo informado?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "3 dias.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-49",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-50",
+        "task": "conversation_context_answer_independent_conflict",
+        "prompt": "O prazo informado é de 55 dias. O prazo informado é de 72 dias. Quantos dias foram informados?",
+        "expected": "Há informações conflitantes no texto.",
+        "actual": "Isexu!",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-50",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-51",
+        "task": "conversation_context_answer_independent_missing",
+        "prompt": "O projeto usa Ruby. A equipe tem 4 integrantes. Qual é o prazo informado?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-51",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-52",
+        "task": "conversation_context_answer_independent_conflict",
+        "prompt": "O prazo informado é de 80 dias. O prazo informado é de 97 dias. Quantos dias foram informados?",
+        "expected": "Há informações conflitantes no texto.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-52",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-53",
+        "task": "conversation_context_answer_independent_missing",
+        "prompt": "O projeto usa Ruby. A equipe tem 5 integrantes. Qual é o prazo informado?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-53",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-54",
+        "task": "conversation_context_answer_independent_conflict",
+        "prompt": "O prazo informado é de 58 dias. O prazo informado é de 75 dias. Quantos dias foram informados?",
+        "expected": "Há informações conflitantes no texto.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-54",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-55",
+        "task": "conversation_context_answer_independent_missing",
+        "prompt": "O projeto usa Ruby. A equipe tem 6 integrantes. Qual é o prazo informado?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-55",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-56",
+        "task": "conversation_context_answer_independent_conflict",
+        "prompt": "O prazo informado é de 29 dias. O prazo informado é de 46 dias. Quantos dias foram informados?",
+        "expected": "Há informações conflitantes no texto.",
+        "actual": "IValeu! Se quiser, podemos continuar.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-56",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-57",
+        "task": "conversation_context_answer_independent_missing",
+        "prompt": "O projeto usa Ruby. A equipe tem 7 integrantes. Qual é o prazo informado?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-57",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-58",
+        "task": "conversation_context_answer_independent_conflict",
+        "prompt": "O prazo informado é de 56 dias. O prazo informado é de 73 dias. Quantos dias foram informados?",
+        "expected": "Há informações conflitantes no texto.",
+        "actual": "Isexu!",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-58",
+        "turn_index": 0,
+        "exact_match": false
+      },
+      {
+        "id": "independent-aq-59",
+        "task": "conversation_context_answer_independent_missing",
+        "prompt": "O projeto usa Ruby. A equipe tem 8 integrantes. Qual é o prazo informado?",
+        "expected": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "history_used": [],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-59",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-60",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Beatriz.",
+        "actual": "Seu nome é Beatriz.",
+        "history_used": [
+          [
+            "Meu nome é Lucas.",
+            "Prazer, Lucas."
+          ],
+          [
+            "Na verdade, eu me chamo Beatriz.",
+            "Prazer, Beatriz."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-60",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-61",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Pedro.",
+        "actual": "Seu nome é Pedro.",
+        "history_used": [
+          [
+            "Meu nome é Lucas.",
+            "Prazer, Lucas."
+          ],
+          [
+            "Na verdade, eu me chamo Pedro.",
+            "Prazer, Pedro."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-61",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-62",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Bruno.",
+        "actual": "Seu nome é Bruno.",
+        "history_used": [
+          [
+            "Meu nome é Lucas.",
+            "Prazer, Lucas."
+          ],
+          [
+            "Na verdade, eu me chamo Bruno.",
+            "Prazer, Bruno."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-62",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-63",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Marina.",
+        "actual": "Seu nome é Marina.",
+        "history_used": [
+          [
+            "Meu nome é Lucas.",
+            "Prazer, Lucas."
+          ],
+          [
+            "Na verdade, eu me chamo Marina.",
+            "Prazer, Marina."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-63",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-64",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Bruno.",
+        "actual": "Seu nome é Bruno.",
+        "history_used": [
+          [
+            "Meu nome é Sofia.",
+            "Prazer, Sofia."
+          ],
+          [
+            "Na verdade, eu me chamo Bruno.",
+            "Prazer, Bruno."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-64",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-65",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Ana.",
+        "actual": "Seu nome é Ana.",
+        "history_used": [
+          [
+            "Meu nome é Marina.",
+            "Prazer, Marina."
+          ],
+          [
+            "Na verdade, eu me chamo Ana.",
+            "Prazer, Ana."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-65",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-66",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Beatriz.",
+        "actual": "Seu nome é Beatriz.",
+        "history_used": [
+          [
+            "Meu nome é Ana.",
+            "Prazer, Ana."
+          ],
+          [
+            "Na verdade, eu me chamo Beatriz.",
+            "Prazer, Beatriz."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-66",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-67",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Ana.",
+        "actual": "Seu nome é Ana.",
+        "history_used": [
+          [
+            "Meu nome é Bruno.",
+            "Prazer, Bruno."
+          ],
+          [
+            "Na verdade, eu me chamo Ana.",
+            "Prazer, Ana."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-67",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-68",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Pedro.",
+        "actual": "Seu nome é Pedro.",
+        "history_used": [
+          [
+            "Meu nome é Bruno.",
+            "Prazer, Bruno."
+          ],
+          [
+            "Na verdade, eu me chamo Pedro.",
+            "Prazer, Pedro."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-68",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-69",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Ana.",
+        "actual": "Seu nome é Ana.",
+        "history_used": [
+          [
+            "Meu nome é Sofia.",
+            "Prazer, Sofia."
+          ],
+          [
+            "Na verdade, eu me chamo Ana.",
+            "Prazer, Ana."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-69",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-70",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Lucas.",
+        "actual": "Seu nome é Lucas.",
+        "history_used": [
+          [
+            "Meu nome é Beatriz.",
+            "Prazer, Beatriz."
+          ],
+          [
+            "Na verdade, eu me chamo Lucas.",
+            "Prazer, Lucas."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-70",
+        "turn_index": 0,
+        "exact_match": true
+      },
+      {
+        "id": "independent-aq-71",
+        "task": "conversation_context_answer_independent_memory",
+        "prompt": "Qual é meu nome agora?",
+        "expected": "Seu nome é Ana.",
+        "actual": "Seu nome é Ana.",
+        "history_used": [
+          [
+            "Meu nome é Beatriz.",
+            "Prazer, Beatriz."
+          ],
+          [
+            "Na verdade, eu me chamo Ana.",
+            "Prazer, Ana."
+          ]
+        ],
+        "dropped_turns": 0,
+        "project_id": "independent-aq-71",
+        "turn_index": 0,
+        "exact_match": true
+      }
+    ]
+  },
+  "note": "As duas primeiras coortes independentes reprovaram. Não houve promoção. Após a primeira inferência, ambas passam a desenvolvimento; novos testes são obrigatórios após o próximo congelamento."
+}

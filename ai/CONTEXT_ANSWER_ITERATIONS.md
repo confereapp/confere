@@ -645,3 +645,39 @@ dois estados em 1.170 de 75.046 unidades de treino. AJ dedica metade de cada
 lote a esses erros; nenhuma unidade de validação entra na mineração. AI e AJ
 são experimentos em execução, sem promoção. Resultados das rodadas encerradas:
 `output/ai/replay-iterations-2026-11-16.json`.
+
+## Segmentação e primeiras verificações independentes — continuação de 16/11
+
+AL preserva integralmente os pesos de Y e classifica cada frase antes de reunir
+os dois estados por unidade original. As evidências continuam apontando para
+os mesmos aliases e intervalos do fluxo da API. Isso resolveu os dois erros
+locais restantes: 294/294 e 36/36 requisitos em cada coorte documental anterior,
+sem falsos positivos. A primeira ablação com novas unidades por frase também
+passou, mas a implementação selecionada preserva as unidades de produção.
+O modo é explícito em `settings.unit_segmentation`; checkpoints anteriores
+continuam usando a unidade inteira. A regex não é segmentação linguística geral.
+
+Após congelar AL, foram criados 24 projetos, 48 requisitos, com novos termos
+compostos e molduras. Houve apenas rejeição prévia de três fixtures cuja frase
+anotada seria cortada pelo loteador; nenhuma seleção por resultado. A primeira
+inferência marcou **30/48**, sem falsos positivos. Essa reprovação impede a
+promoção, apesar do acerto nas coortes anteriores.
+
+AI selecionou o passo 4000 com 179/180 e todas as famílias de desenvolvimento
+aprovadas: 170/171 originais e 9/9 naturais. A primeira coorte nova de conversa,
+72 exemplos completos ausentes do treino, marcou **37/72**: presença 11/36,
+fatos 9/12, conflitos 0/6, informação ausente 5/6 e memória 12/12. O resultado
+não demonstra generalização suficiente e também impede promoção.
+
+As duas coortes reprovadas passaram explicitamente a desenvolvimento. AO
+acrescenta 24.000 exemplos de recursos compostos e 24 pares de predicados ao
+treino documental, mantendo as 410 avaliações separadas. AR acrescenta 36.000
+exemplos candidatos de conversa com quantidade variável de fatos, pergunta
+na mesma linha ou separada e recursos compostos; os 36.000 pedidos foram
+conferidos contra os pedidos completos da avaliação. A validação ampliada tem 252 exemplos.
+Nenhum alvo da avaliação é usado para treinar. Novas coortes independentes serão
+necessárias depois do congelamento dos próximos candidatos.
+
+Evidências: `output/ai/independent-checks-al-aq-2026-11-16.json` e os manifestos
+AO/AR em `output/ai/`. A meta conjunta permanece pendente; pesos padrão da API
+não foram alterados.
