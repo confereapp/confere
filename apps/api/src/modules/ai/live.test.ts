@@ -53,11 +53,15 @@ describe.skipIf(process.env.CONFERE_AI_LIVE_TEST !== "1")(
       expect(
         (await invoke("Texto", { auth: null, session: null })).status,
       ).toBe(401);
-      for (const text of [
-        "O projeto inclui testes.",
-        "O projeto não inclui testes.",
-        "🙂 O projeto inclui testes. O projeto não inclui testes.",
-      ]) {
+      for (const [text, status, conflict] of [
+        ["O projeto inclui testes.", "atendido", false],
+        ["O projeto não inclui testes.", "nao_atendido", false],
+        [
+          "🙂 O projeto inclui testes. O projeto não inclui testes.",
+          "evidencia_insuficiente",
+          true,
+        ],
+      ] as const) {
         const response = await invoke(text, context);
         expect(response.status).toBe(200);
         const raw = await response.json();
@@ -68,6 +72,10 @@ describe.skipIf(process.env.CONFERE_AI_LIVE_TEST !== "1")(
         expect(result.requirements).toHaveLength(1);
         const row = result.requirements[0];
         if (!row) throw new Error("Missing requirement result");
+        expect(row.status).toBe(status);
+        expect(row.conflicting_evidence).toBe(conflict);
+        expect(row.model_outputs_valid).toBe(true);
+        expect(row.evidence).toHaveLength(conflict ? 2 : 1);
         expect(row.coverage.processed_characters).toBe(Array.from(text).length);
         expect(row.coverage.text_characters).toBe(Array.from(text).length);
         for (const evidence of row.evidence) {
