@@ -310,7 +310,7 @@ fração documental 0,5; 4.000 passos planejados, avaliação a cada 500 e limit
 
 4.000 passos em 154,7 s; 556.617 tokens supervisionados com repetição. Melhor
 checkpoint pela loss agregada: passo 500, 337/377 casos exatos, documentos 178/206,
-conversa legada 68/75. As famílias contextuais ficaram em 24/24, 11/12, 12/12,
+conversa legada 67/75. As famílias contextuais ficaram em 24/24, 11/12, 12/12,
 12/12 e 33/36. Saudação informal subiu para 2/3, escopo 3/3, agradecimento 3/3;
 definição 1/4 e orientação 2/4 ainda falham. Houve regressão em grounded_atendido.
 Os últimos pesos (4.000) mantiveram contexto, mas regrediram em vários perfis
@@ -333,3 +333,14 @@ testar se congelar os primeiros blocos limita a associação entre pergunta e fo
 4.000 passos planejados, avaliações a cada 500, limite 600 segundos. A mudança
 de seleção e o descongelamento acontecem juntos: este ciclo não isola seus
 respectivos efeitos. Baseline G reaproveitado com coorte e protocolo idênticos.
+
+### Resultado H
+
+4.000 passos em 269,2 s, 556.617 tokens supervisionados com repetição. Seleção
+pela média dos objetivos escolheu 3.500; a média por token teria escolhido 4.000.
+Ambos reprovados. No selecionado, acerto caiu de 337/377 para 322/377, documentos
+167/206. Definições melhoraram de 1/4 para 4/4, memória contextual de 33/36 para
+35/36, mas ausências caíram para 9/12 e houve regressões documentais e legadas.
+Os últimos pesos também falham: ausências 8/12 e memória 26/36. A nova seleção
+expõe os dois objetivos, mas loss continua sem substituir os gates gerativos.
+PDF de três páginas renderizado e inspecionado; nenhum checkpoint promovido.
