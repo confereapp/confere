@@ -87,6 +87,11 @@ def create_report(run_dir, output=None):
     p("CONFERE | Treinamento local", "Title")
     p(run_dir.name, "Heading2")
     p("Relatório gerado em " + datetime.now(timezone.utc).strftime("%d/%m/%Y %H:%M UTC") + ". Fonte: artefatos da execução, sem inferência de resultados ausentes.")
+    termination = read_json(run_dir/"termination.json")
+    if termination:
+        assert summary["stop_reason"].startswith("interrupted_")
+        p("EXECUÇÃO ENCERRADA ANTECIPADAMENTE. " + termination["reason"])
+        p(termination["scope"])
     failure=read_json(run_dir/"failure.json")
     if failure:
         p("EXECUÇÃO INTERROMPIDA. " + failure["scope"])
