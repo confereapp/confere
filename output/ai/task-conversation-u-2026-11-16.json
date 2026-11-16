@@ -1,0 +1,269 @@
+{
+  "summary": {
+    "start_step": 0,
+    "final_step": 12000,
+    "stop_reason": "selection_plateau",
+    "elapsed_seconds": 1522.1936175,
+    "tokens_processed": 1388775,
+    "initial": {
+      "step": 0,
+      "train_loss": 0.06031933676281332,
+      "validation_loss": 0.0072262226973579795,
+      "elapsed_seconds": 3.75365575,
+      "mps_allocated_bytes": 47308800,
+      "mps_driver_allocated_bytes": 160890880
+    },
+    "final": {
+      "step": 12000,
+      "train_loss": 0.035646352311326644,
+      "validation_loss": 0.0042633222159559414,
+      "elapsed_seconds": 1499.096522083,
+      "mps_allocated_bytes": 112050432,
+      "mps_driver_allocated_bytes": 1455865856
+    },
+    "human_examples_processed": 0,
+    "human_tokens_processed": 0,
+    "public_examples_processed": 0,
+    "public_tokens_processed": 0,
+    "document_examples_processed": 0,
+    "document_tokens_processed": 0,
+    "mps_allocated_bytes_max_observed": 129614080,
+    "mps_driver_allocated_bytes_max_observed": 1506197504,
+    "process_peak_rss_bytes": 733462528
+  },
+  "selected_step": 6000,
+  "correct": 171,
+  "total": 171,
+  "acceptance": {
+    "passed": true,
+    "counts": {
+      "conversation_repair": [
+        2,
+        2
+      ],
+      "conversation_definition": [
+        4,
+        4
+      ],
+      "conversation_capability": [
+        3,
+        3
+      ],
+      "conversation_memory": [
+        3,
+        3
+      ],
+      "conversation_repeat": [
+        4,
+        4
+      ],
+      "conversation_clarify": [
+        3,
+        3
+      ],
+      "conversation_wellbeing": [
+        2,
+        2
+      ],
+      "conversation_composed": [
+        2,
+        2
+      ],
+      "conversation_misunderstanding": [
+        1,
+        1
+      ],
+      "conversation_closure": [
+        1,
+        1
+      ],
+      "conversation_flow_greeting": [
+        2,
+        2
+      ],
+      "conversation_flow_acknowledgement": [
+        2,
+        2
+      ],
+      "conversation_flow_identity": [
+        3,
+        3
+      ],
+      "conversation_flow_negation": [
+        3,
+        3
+      ],
+      "conversation_flow_switch": [
+        3,
+        3
+      ],
+      "conversation_flow_closure": [
+        2,
+        2
+      ],
+      "conversation_flow_state": [
+        4,
+        4
+      ],
+      "conversation_flow_topic": [
+        4,
+        4
+      ],
+      "conversation_flow_repair": [
+        1,
+        1
+      ],
+      "conversation_insufficient": [
+        1,
+        1
+      ],
+      "conversation_identity": [
+        1,
+        1
+      ],
+      "conversation_slang_hello": [
+        3,
+        3
+      ],
+      "conversation_slang_identity": [
+        3,
+        3
+      ],
+      "conversation_slang_function": [
+        3,
+        3
+      ],
+      "conversation_slang_scope": [
+        3,
+        3
+      ],
+      "conversation_slang_praise": [
+        3,
+        3
+      ],
+      "conversation_slang_negation": [
+        3,
+        3
+      ],
+      "conversation_social_context": [
+        1,
+        1
+      ],
+      "conversation_social": [
+        1,
+        1
+      ],
+      "conversation_guidance": [
+        4,
+        4
+      ],
+      "conversation_context_answer_fact": [
+        24,
+        24
+      ],
+      "conversation_context_answer_missing": [
+        12,
+        12
+      ],
+      "conversation_context_answer_conflict": [
+        12,
+        12
+      ],
+      "conversation_context_answer_support": [
+        12,
+        12
+      ],
+      "conversation_context_answer_memory": [
+        36,
+        36
+      ]
+    },
+    "description": "Conversas sintéticas: ao menos 80% em cada família, com histórico gerado pelo modelo.",
+    "scope": "Não valida conversa aberta."
+  },
+  "smoke": {
+    "checkpoint_sha256": "d579349296bc186450430ac773cdc65f6bdf8b4013af683dc088cc7958fb31a5",
+    "step": 6000,
+    "literal_matches": 7,
+    "total": 9,
+    "samples": [
+      {
+        "message": "No projeto Horizonte, a responsável é Lia. Qual é o nome da responsável?",
+        "target": "Lia.",
+        "actual": "Lia.",
+        "literal_match": true
+      },
+      {
+        "message": "A entrega está prevista para daqui a 18 dias. Qual é o prazo informado?",
+        "target": "18 dias.",
+        "actual": "18 dias.",
+        "literal_match": true
+      },
+      {
+        "message": "O projeto usa Python e terá testes automatizados. Qual linguagem ele usa?",
+        "target": "Python.",
+        "actual": "Python.",
+        "literal_match": true
+      },
+      {
+        "message": "A responsável pelo projeto é Lia. Não há prazo descrito. Qual é o prazo de entrega?",
+        "target": "Não tenho informação suficiente para responder.",
+        "actual": "Não tenho informação suficiente para responder.",
+        "literal_match": true
+      },
+      {
+        "message": "O relatório diz que há testes e depois diz que não há testes. Dá para confirmar se os testes existem?",
+        "target": "Há informações conflitantes no texto.",
+        "actual": "Há informações conflitantes no texto.",
+        "literal_match": true
+      },
+      {
+        "message": "Qual nome devo usar agora?",
+        "history": [
+          [
+            "Me chamo Lia.",
+            "Prazer, Lia."
+          ],
+          [
+            "Corrigindo: meu nome é Rui.",
+            "Prazer, Rui."
+          ]
+        ],
+        "target": "Seu nome é Rui.",
+        "actual": "Sou o Confere.",
+        "literal_match": false
+      },
+      {
+        "message": "Como você se chama?",
+        "history": [
+          [
+            "Me chamo Lia.",
+            "Prazer, Lia."
+          ],
+          [
+            "Corrigindo: meu nome é Rui.",
+            "Prazer, Rui."
+          ]
+        ],
+        "target": "Sou o Confere.",
+        "actual": "Sou o Confere.",
+        "literal_match": true
+      },
+      {
+        "message": "O projeto não inclui testes, mas inclui documentação. A documentação foi incluída?",
+        "target": "Sim.",
+        "actual": "Não.",
+        "literal_match": false
+      },
+      {
+        "message": "Equipe: Lia faz os testes; Rui escreve o manual. Quem faz os testes?",
+        "target": "Lia.",
+        "actual": "Lia.",
+        "literal_match": true
+      }
+    ],
+    "adopted": false,
+    "note": "Diagnósticos de desenvolvimento, formulados antes da conclusão do ciclo B; fora do corpus de treino. Igualdade literal penaliza paráfrases corretas; leitura semântica necessária. Não são teste cego de conversa geral."
+  },
+  "adopted": false
+}

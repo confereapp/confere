@@ -1,0 +1,21 @@
+{
+  "summary": {
+    "final_step": 14500,
+    "selected_step": 7000,
+    "stop_reason": "process_ended_without_summary",
+    "elapsed_seconds": null,
+    "note": "Processo ausente ao retomar. Causa e passos após último checkpoint não registrados; somente avaliações completas preservadas."
+  },
+  "correct": 290,
+  "total": 294,
+  "quality": [
+    false,
+    0,
+    1.047008547008547,
+    1.0,
+    -2,
+    290
+  ],
+  "checkpoint_sha256": "d0140744006dceeecc459dc4feed1d90ad4f5641af04837dbc5c7d7b52920628",
+  "adopted": false
+}
