@@ -75,3 +75,11 @@ def response(units, probabilities):
     statuses = {e["status"] for e in evidence}
     status = next(iter(statuses)) if len(statuses) == 1 else "evidencia_insuficiente"
     return json.dumps(dict(status=status, evidence=evidence), ensure_ascii=False)
+
+
+@torch.no_grad()
+def fold_normalization(source, target, mean, scale):
+    if not torch.all(scale > 0): raise ValueError("Escalas devem ser positivas.")
+    weights = source.weight / scale
+    target.weight.copy_(weights.to(target.weight.dtype))
+    target.bias.copy_((source.bias - weights @ mean).to(target.bias.dtype))

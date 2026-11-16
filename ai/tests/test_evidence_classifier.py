@@ -4,12 +4,20 @@ import unittest
 from pathlib import Path
 import torch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from confere_ai.evidence_classifier import EvidenceClassifier, encode_unit, response, decision_prefix
+from confere_ai.evidence_classifier import EvidenceClassifier, encode_unit, response, decision_prefix, fold_normalization
 from confere_ai.model import GPT, GPTConfig
 from confere_ai.tokenizer import ByteBPE
 
 
 class EvidenceClassifierTests(unittest.TestCase):
+    def test_normalization_folding_preserves_logits_without_inference_preprocessing(self):
+        torch.manual_seed(42)
+        head = torch.nn.Linear(4, 2).double(); raw = torch.nn.Linear(4, 2)
+        mean = torch.randn(4).double(); scale = torch.rand(4).double() + .1
+        x = torch.randn(7, 4)
+        fold_normalization(head, raw, mean, scale)
+        self.assertTrue(torch.allclose(raw(x).double(), head((x.double() - mean) / scale), atol=1e-6))
+        with self.assertRaises(ValueError): fold_normalization(head, raw, mean, torch.zeros(4))
     def test_readout_prefix_contains_no_class_dependent_tokens(self):
         tokenizer = ByteBPE.train([json.dumps(dict(status=s, evidence=[])) for s in
                                    ("atendido", "nao_atendido", "evidencia_insuficiente")] * 4, 300)
