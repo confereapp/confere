@@ -30,6 +30,21 @@ class GenerativeSelectionTests(unittest.TestCase):
         self.assertFalse(quality_key(dict(samples=[doc]))[0])
         with self.assertRaises(ValueError): quality_key(dict(samples=[]))
 
+    def test_met_family_floors_do_not_hide_more_errors_or_false_positives(self):
+        def result(correct_a, correct_b):
+            samples = []
+            for profile, size, correct in [("a",100,correct_a),("b",20,correct_b)]:
+                for i in range(size):
+                    passed = i < correct
+                    expected = "nao_atendido" if profile == "a" and i == 99 else "atendido"
+                    actual = "atendido" if passed or expected == "nao_atendido" else "nao_atendido"
+                    samples.append(dict(task="grounded_"+expected,evaluation_profile=profile,exact_match=passed,
+                                        valid_format=True,reference_valid=True,result=dict(status=actual),expected=json.dumps(dict(status=expected))))
+            return dict(samples=samples)
+        a, b = result(95,19), result(99,18)
+        self.assertFalse(quality_key(a)[0]); self.assertFalse(quality_key(b)[0])
+        self.assertGreater(quality_key(b), quality_key(a))
+
     def test_training_keeps_better_generated_answers_even_when_validation_loss_rises(self):
         from confere_ai.instruct import run
         from confere_ai.model import GPT, GPTConfig

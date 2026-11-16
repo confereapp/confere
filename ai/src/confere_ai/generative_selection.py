@@ -21,8 +21,5 @@ def quality_key(result):
     ratios = [correct / total / threshold for (_, _, threshold), (correct, total) in groups.items()]
     worst = min(ratios)
     passed = not invalid and not false_positive and worst >= 1
-    return (passed, -invalid, worst, sum(min(1., ratio) for ratio in ratios) / len(ratios),
+    return (passed, -invalid, min(1., worst), sum(min(1., ratio) for ratio in ratios) / len(ratios),
             -false_positive, sum(row["exact_match"] for row in result["samples"]))
-    ratios = [min(1., correct / total / threshold) for (_, _, threshold), (correct, total) in groups.items()]
-    return (int(not invalid and not false_positive and min(ratios) >= 1), -invalid,
-            min(ratios), sum(ratios) / len(ratios), -false_positive, result["correct"])
