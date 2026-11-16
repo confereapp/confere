@@ -1,0 +1,295 @@
+{
+  "evidence-classifier-q": {
+    "run": "ai/runs/evidence-classifier-q-2026-11-16",
+    "summary": {
+      "final_step": 3000,
+      "selected_step": 0,
+      "stop_reason": "selection_plateau",
+      "elapsed_seconds": 391.05172625,
+      "test_examples_used": 0
+    },
+    "selected_step": 0,
+    "correct": 275,
+    "total": 294,
+    "adopted": false,
+    "checkpoint_sha256": "11391f88d1dcb3cbc02764e82e658b8265065df790b5a6248235c8c833503a0b",
+    "quality": [
+      false,
+      0,
+      0.6666666666666666,
+      0.9628791687615217,
+      -6,
+      275
+    ],
+    "acceptance": {
+      "passed": false,
+      "profiles": {
+        "previous_multiple_evidence": [
+          24,
+          24
+        ],
+        "single_positive": [
+          12,
+          12
+        ],
+        "single_negative": [
+          12,
+          12
+        ],
+        "mention_only": [
+          12,
+          12
+        ],
+        "multiple_positive": [
+          12,
+          12
+        ],
+        "multiple_negative": [
+          12,
+          12
+        ],
+        "split_conflict": [
+          12,
+          12
+        ],
+        "shared_conflict": [
+          12,
+          12
+        ],
+        "other_topic": [
+          12,
+          12
+        ],
+        "api_batch_atendido": [
+          16,
+          16
+        ],
+        "api_batch_nao_atendido": [
+          17,
+          17
+        ],
+        "api_batch_evidencia_insuficiente": [
+          50,
+          50
+        ],
+        "api_batch_conflict": [
+          3,
+          3
+        ],
+        "development_api_batch_atendido": [
+          12,
+          18
+        ],
+        "development_api_batch_nao_atendido": [
+          9,
+          15
+        ],
+        "development_api_batch_evidencia_insuficiente": [
+          45,
+          52
+        ],
+        "development_api_batch_conflict": [
+          3,
+          3
+        ]
+      },
+      "description": "Piloto documental: 100% de formato/referências válidos e ao menos 90% de status e evidências corretos em cada perfil.",
+      "scope": "Templates sintéticos; não comprova confiabilidade geral."
+    }
+  },
+  "task-conversation-q": {
+    "run": "ai/runs/task-conversation-q-2026-11-16",
+    "summary": {
+      "start_step": 0,
+      "final_step": 9000,
+      "stop_reason": "selection_plateau",
+      "elapsed_seconds": 838.2450928330001,
+      "tokens_processed": 1038370,
+      "initial": {
+        "step": 0,
+        "train_loss": 0.07847793610872043,
+        "validation_loss": 0.02012835638679196,
+        "elapsed_seconds": 1.664090625,
+        "mps_allocated_bytes": 47308800,
+        "mps_driver_allocated_bytes": 160890880
+      },
+      "final": {
+        "step": 9000,
+        "train_loss": 0.008548654857584286,
+        "validation_loss": 0.024651517983589197,
+        "elapsed_seconds": 821.9983675000001,
+        "mps_allocated_bytes": 297511168,
+        "mps_driver_allocated_bytes": 2496348160
+      },
+      "human_examples_processed": 0,
+      "human_tokens_processed": 0,
+      "public_examples_processed": 0,
+      "public_tokens_processed": 0,
+      "document_examples_processed": 0,
+      "document_tokens_processed": 0,
+      "mps_allocated_bytes_max_observed": 430840064,
+      "mps_driver_allocated_bytes_max_observed": 2542485504,
+      "process_peak_rss_bytes": 945094656
+    },
+    "selected_step": 3000,
+    "correct": 157,
+    "total": 171,
+    "adopted": false,
+    "checkpoint_sha256": "134a61dff8919b5009a1b9ace55cbe3b3d860c593d3abcc2bccee9f0b109a8e8",
+    "quality": null,
+    "acceptance": {
+      "passed": false,
+      "counts": {
+        "conversation_repair": [
+          2,
+          2
+        ],
+        "conversation_definition": [
+          4,
+          4
+        ],
+        "conversation_capability": [
+          3,
+          3
+        ],
+        "conversation_memory": [
+          3,
+          3
+        ],
+        "conversation_repeat": [
+          4,
+          4
+        ],
+        "conversation_clarify": [
+          3,
+          3
+        ],
+        "conversation_wellbeing": [
+          2,
+          2
+        ],
+        "conversation_composed": [
+          2,
+          2
+        ],
+        "conversation_misunderstanding": [
+          1,
+          1
+        ],
+        "conversation_closure": [
+          1,
+          1
+        ],
+        "conversation_flow_greeting": [
+          2,
+          2
+        ],
+        "conversation_flow_acknowledgement": [
+          2,
+          2
+        ],
+        "conversation_flow_identity": [
+          3,
+          3
+        ],
+        "conversation_flow_negation": [
+          3,
+          3
+        ],
+        "conversation_flow_switch": [
+          3,
+          3
+        ],
+        "conversation_flow_closure": [
+          2,
+          2
+        ],
+        "conversation_flow_state": [
+          4,
+          4
+        ],
+        "conversation_flow_topic": [
+          3,
+          4
+        ],
+        "conversation_flow_repair": [
+          1,
+          1
+        ],
+        "conversation_insufficient": [
+          1,
+          1
+        ],
+        "conversation_identity": [
+          1,
+          1
+        ],
+        "conversation_slang_hello": [
+          2,
+          3
+        ],
+        "conversation_slang_identity": [
+          3,
+          3
+        ],
+        "conversation_slang_function": [
+          2,
+          3
+        ],
+        "conversation_slang_scope": [
+          3,
+          3
+        ],
+        "conversation_slang_praise": [
+          3,
+          3
+        ],
+        "conversation_slang_negation": [
+          3,
+          3
+        ],
+        "conversation_social_context": [
+          1,
+          1
+        ],
+        "conversation_social": [
+          1,
+          1
+        ],
+        "conversation_guidance": [
+          3,
+          4
+        ],
+        "conversation_context_answer_fact": [
+          24,
+          24
+        ],
+        "conversation_context_answer_missing": [
+          12,
+          12
+        ],
+        "conversation_context_answer_conflict": [
+          9,
+          12
+        ],
+        "conversation_context_answer_support": [
+          12,
+          12
+        ],
+        "conversation_context_answer_memory": [
+          29,
+          36
+        ]
+      },
+      "description": "Conversas sintéticas: ao menos 80% em cada família, com histórico gerado pelo modelo.",
+      "scope": "Não valida conversa aberta."
+    }
+  },
+  "http_adapter_check": {
+    "command": "CONFERE_AI_LIVE_TEST=1 AI_CHECKPOINT=evidence-classifier-finetune/best.pt AI_CHAT_CHECKPOINT=task-conversation-p/best.pt AI_DEVICE=cpu SKIP_ENV_VALIDATION=1 bun run test apps/api/src/modules/ai/live.test.ts",
+    "passed": true,
+    "synthetic_session": true,
+    "real_database_session_tested": false,
+    "weight_quality_approved": false
+  }
+}
