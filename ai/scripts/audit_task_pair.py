@@ -28,6 +28,18 @@ def combine(baseline, parts):
                 criterion="Mesma coorte original; cada objetivo usa seu ajuste especializado. Desenvolvimento, sem teste cego.")
 
 
+
+def original_partition(original, subset):
+    reserved = [r for r in original if r["split"] != "train"]
+    ids = {r["id"] for r in reserved}
+    actual = [r for r in subset if r["split"] != "train"]
+    extras = [r for r in actual if r["id"] not in ids]
+    if ([r for r in actual if r["id"] in ids] != reserved
+            or any(r["split"] != "validation" or not r["id"].startswith("development-")
+                   or not r["task"].startswith("grounded_") for r in extras)):
+        raise ValueError("Partição original alterada ou exemplos extras não declarados como desenvolvimento documental.")
+    return extras
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("source", "baseline", "documents", "conversation", "output"):
@@ -43,9 +55,9 @@ def main():
         info = json.loads((directory / "run.json").read_text())
         subset, subset_digest = load_instructions(Path(info["data"]))
         original = [r for r in rows if r["task"].startswith(prefix)]
-        if ([r for r in subset if r["split"] != "train"] != [r for r in original if r["split"] != "train"]
-            or subset_digest != info["dataset_fingerprint"]):
-            raise ValueError("Currículo especializado difere da partição original.")
+        extras = original_partition(original, subset)
+        if subset_digest != info["dataset_fingerprint"]:
+            raise ValueError("Hash do currículo especializado difere da execução.")
         checkpoint_path = directory / "best.pt"
         checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
         if checkpoint["settings"].get("objective") == "document_classifier":
@@ -70,9 +82,11 @@ def main():
                 (r["id"], r["task"], r["prompt"], r["target"]) for r in subset if r["split"] == "validation"]:
             raise ValueError("Geração não corresponde à validação do objetivo declarado.")
         if checkpoint["step"] != result["selected_step"]: raise ValueError("Passo dos pesos difere da geração.")
-        parts.append(result["selected"])
+        original_ids = {r["id"] for r in original if r["split"] == "validation"}
+        original_samples = [r for r in result["selected"]["samples"] if r["id"] in original_ids]
+        parts.append(dict(samples=original_samples, total=len(original_samples), correct=sum(r["exact_match"] for r in original_samples)))
         checkpoints[name] = dict(path=str(checkpoint_path), step=checkpoint["step"], sha256=hashlib.sha256(checkpoint_path.read_bytes()).hexdigest(),
-                                 prediction_type=checkpoint["settings"].get("objective"), quality=quality_key(result["selected"]))
+                                 additional_development_validation=len(extras), prediction_type=checkpoint["settings"].get("objective"), quality=quality_key(result["selected"]))
     result = dict(baseline=baseline, selected=combine(baseline, parts), test_examples_used=0)
     result["audit"] = audit(result)
     result["audit"]["specialist_quality_passed"] = all(c["quality"][0] for c in checkpoints.values())
