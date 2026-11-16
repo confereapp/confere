@@ -135,6 +135,9 @@ def run(args):
         raise ValueError("Saída deve ser nova; passos, batch e taxa devem ser positivos.")
     max_seconds=getattr(args,"max_seconds",None)
     if max_seconds is not None and (not math.isfinite(max_seconds) or max_seconds<=0): raise ValueError("Prazo de treino inválido.")
+    decision_weight = getattr(args, "document_decision_weight", 1.)
+    if not math.isfinite(decision_weight) or decision_weight < 1:
+        raise ValueError("Peso documental deve ser finito e >= 1.")
     torch.set_num_threads(4); torch.manual_seed(42)
     device = choose_device(args.device)
     rows, fingerprint = load_instructions(args.data)
@@ -160,6 +163,9 @@ def run(args):
     last_blocks = getattr(args, "train_last_blocks", None)
     trainable_count = configure_trainable(model, last_blocks)
     encoded_train = [encode_sample(row, tokenizer, model.config.block_size) for row in train]
+    from .decision_loss import decision_weights, weighted_loss, weight_batch
+    train_weights = ([decision_weights(row, tokenizer, encoded[1], decision_weight)
+                      for row, encoded in zip(train, encoded_train)] if decision_weight > 1 else None)
     encoded_val = [encode_sample(row, tokenizer, model.config.block_size) for row in validation]
     human_eval=[encoded_val[i] for i,r in enumerate(validation) if r["task"]=="human_dialogue"]
     evaluation_indices=torch.randperm(len(encoded_train),generator=torch.Generator().manual_seed(43)).tolist()[:128]
@@ -184,6 +190,7 @@ def run(args):
     settings = {"objective": objective, "seed": 42, "batch_size": args.batch_size, "learning_rate": args.learning_rate,"generation_budget":generation_budget,"human_fraction":human_fraction}
     settings["human_sampling_policy"]="homogeneous_batches"
     settings["train_last_blocks"] = last_blocks
+    settings["document_decision_weight"] = decision_weight
     settings["public_fraction"]=public_fraction
     settings["document_fraction"]=document_fraction
     schemas = {r.get("grounding_schema", 1) for r in rows if r["task"].startswith("grounded_")}
@@ -248,7 +255,9 @@ def run(args):
         indices=training_indices(len(train),humans,synthetic,args.batch_size,human_fraction,generator,public,public_fraction,documents,document_fraction)
         x,y = batch(encoded_train,indices,device,model.config.block_size)
         optimizer.zero_grad(set_to_none=True)
-        loss = F.cross_entropy(model(x).flatten(0,1), y.flatten(), ignore_index=-100)
+        logits = model(x)
+        loss = (weighted_loss(logits, y, weight_batch(train_weights, indices, y.shape, device))
+                if train_weights is not None else F.cross_entropy(logits.flatten(0,1), y.flatten(), ignore_index=-100))
         if not torch.isfinite(loss).item(): raise ValueError("Loss não finita; checkpoint anterior preservado.")
         loss.backward(); torch.nn.utils.clip_grad_norm_(model.parameters(), 1., error_if_nonfinite=True); optimizer.step()
         processed += (y != -100).sum().item()
@@ -300,6 +309,7 @@ def main():
     parser.add_argument("--device", choices=["auto", "mps", "cpu"], default="auto")
     parser.add_argument("--response-tokens",type=int,default=64)
     parser.add_argument("--train-last-blocks", type=int, help="Congelar embeddings e blocos iniciais; treinar apenas últimos N blocos, norm e saída.")
+    parser.add_argument("--document-decision-weight", type=float, default=1., help="Peso dos valores status/unit no treino; avaliação continua sem pesos.")
     parser.add_argument("--human-fraction",type=float,default=0.)
     parser.add_argument("--public-fraction",type=float,default=0.)
     parser.add_argument("--document-fraction",type=float,default=0.,help="Fração de lotes documentais separados dos demais exemplos autorais.")

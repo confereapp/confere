@@ -108,6 +108,8 @@ def create_report(run_dir, output=None):
     p("SHA-256 dos dados: " + info.get("dataset_fingerprint", "Não registrado"))
     if info.get("trainable_parameters") is not None:
         p("Parâmetros treináveis: " + str(info["trainable_parameters"]) + "; últimos blocos explicitamente selecionados: " + str(info.get("settings", {}).get("train_last_blocks")) + " (None indica rede inteira).")
+    if info.get("settings", {}).get("document_decision_weight", 1) > 1:
+        p("Treino: peso " + str(info["settings"]["document_decision_weight"]) + " nos valores documentais status/unit; demais tokens-alvo com peso 1. Avaliação e seleção por loss continuam sem pesos.")
     if info.get("context_note"):
         p("Adaptação de contexto: " + str(info.get("source_context")) + " para " + str(config.get("block_size")) + " tokens; passo de origem " + str(info.get("source_step")) + ". " + info["context_note"])
     if info.get("previous_dataset_fingerprint"):

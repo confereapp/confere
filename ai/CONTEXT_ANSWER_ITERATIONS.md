@@ -258,3 +258,19 @@ acertaram 21. Não houve ganho que justificasse a troca de decodificação; a AP
 continua inalterada. A enumeração usa ordem canônica e não cobre todas as
 serializações equivalentes. O piloto já inspecionado é desenvolvimento, não teste
 cego. Evidências completas nos resumos JSON C e E corrigido em output/ai.
+
+## Ciclo F: peso nos valores de decisão
+
+Hipótese: a média por token do JSON dedica muitos termos à sintaxe já aprendida;
+a pequena loss não garante status e referências corretos. Novo ensaio inicializa
+novamente de C, com os mesmos dados D/E e a mesma coorte de validação. Cada token
+que se sobrepõe ao valor de um campo status ou unit recebe peso 4; demais tokens
+supervisionados, inclusive EOS, peso 1. Prefixos e padding continuam mascarados.
+A média é normalizada pela soma dos pesos ativos. O alinhamento usa bytes UTF-8
+do tokenizer e confere literalmente os labels, sem procurar palavras no prompt.
+
+Mesmos lr 3e-6, batch 4, últimos dois blocos treináveis e fração documental 0,5
+do ciclo E. 4.000 passos planejados, avaliações a cada 500, limite 600 segundos.
+Validação, seleção pela loss e avaliação gerativa permanecem sem pesos. Não há
+mudança no contrato nem na inferência da API; peso padrão 1 preserva o treino
+anterior. O ensaio testa documentos sem abandonar os gates de conversa.
