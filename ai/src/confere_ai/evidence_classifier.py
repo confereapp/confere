@@ -6,6 +6,8 @@ from .grounding import prompt_for
 from .tokenizer import ByteBPE
 from .model import GPT, GPTConfig
 
+READOUTS = ("shared_json_decision_prefix_v1", "suffix_query_decision_prefix_v1")
+
 
 class EvidenceClassifier(nn.Module):
     def __init__(self, backbone):
@@ -33,8 +35,10 @@ def decision_prefix(tokenizer):
     return prefix
 
 
-def encode_unit(requirement, text, tokenizer, context_size, prefix=None):
-    prompt = prompt_for(requirement, [dict(id="page:1", text=text)], 2)
+def encode_unit(requirement, text, tokenizer, context_size, prefix=None, *, readout=READOUTS[0]):
+    if readout not in READOUTS: raise ValueError("Representação do classificador não suportada.")
+    prompt = (prompt_for(requirement, [dict(id="page:1", text=text)], 2) if readout == READOUTS[0]
+              else f"Texto a conferir:\n{text}\nRequisito consultado: {requirement}")
     prefix = decision_prefix(tokenizer) if prefix is None else prefix
     ids = [tokenizer.BOS] + tokenizer.encode(prompt) + [tokenizer.SEP] + prefix
     if len(ids) > context_size:
@@ -42,7 +46,7 @@ def encode_unit(requirement, text, tokenizer, context_size, prefix=None):
     return ids
 
 
-def examples(rows, tokenizer, context_size):
+def examples(rows, tokenizer, context_size, *, readout=READOUTS[0]):
     result = []
     prefix = decision_prefix(tokenizer)
     for row in rows:
@@ -52,7 +56,7 @@ def examples(rows, tokenizer, context_size):
         for unit in row["units"]:
             labels = [float((unit["id"], status) in pointers) for status in ("atendido", "nao_atendido")]
             result.append(dict(row_id=row["id"], unit=unit["id"], labels=labels,
-                               ids=encode_unit(row["requirement"], unit["text"], tokenizer, context_size, prefix)))
+                               ids=encode_unit(row["requirement"], unit["text"], tokenizer, context_size, prefix, readout=readout)))
     return result
 
 
@@ -89,9 +93,10 @@ def fold_normalization(source, target, mean, scale):
 class EvidencePredictor:
     def __init__(self, checkpoint, device):
         settings = checkpoint["settings"]
-        if (settings.get("objective") != "document_classifier" or settings.get("readout") != "shared_json_decision_prefix_v1"
+        if (settings.get("objective") != "document_classifier" or settings.get("readout") not in READOUTS
             or settings.get("threshold", .5) != .5):
             raise ValueError("Contrato do classificador não suportado.")
+        self.readout = settings["readout"]
         self.tokenizer = ByteBPE(checkpoint["merges"])
         self.config = GPTConfig(**checkpoint["config"])
         if self.tokenizer.vocab_size != self.config.vocab_size: raise ValueError("Tokenizer incompatível.")
@@ -103,6 +108,6 @@ class EvidencePredictor:
     def predict_units(self, requirement, units):
         if not units or len(units) > 4 or len({u["id"] for u in units}) != len(units):
             raise ValueError("Informe de uma a quatro unidades distintas.")
-        items = [dict(ids=encode_unit(requirement, u["text"], self.tokenizer, self.config.block_size)) for u in units]
+        items = [dict(ids=encode_unit(requirement, u["text"], self.tokenizer, self.config.block_size, readout=self.readout)) for u in units]
         ids, lengths = unit_batch(items, self.device, self.config.block_size)
         return response(units, self.model(ids, lengths).sigmoid().cpu().tolist())

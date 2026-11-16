@@ -25,6 +25,19 @@ class EvidenceClassifierTests(unittest.TestCase):
         self.assertEqual(result["status"], "evidencia_insuficiente")
         with self.assertRaises(ValueError): predictor.predict_units("Testes", units * 2)
         with self.assertRaises(ValueError): EvidencePredictor(dict(checkpoint, settings={}), "cpu")
+    def test_suffix_query_is_after_source_and_training_matches_inference_encoding(self):
+        tokenizer = ByteBPE([])
+        readout = "suffix_query_decision_prefix_v1"
+        ids = encode_unit("Incluir backup.", "Há testes.", tokenizer, 512, readout=readout)
+        text = tokenizer.decode(ids)
+        self.assertLess(text.index("Há testes."), text.index("Incluir backup."))
+        self.assertNotIn("atendido", text)
+        from confere_ai.evidence_classifier import examples
+        row = dict(id="example", requirement="Incluir backup.", units=[dict(id="page:4", text="Há testes.")],
+                   grounding_schema=2, target=json.dumps(dict(status="evidencia_insuficiente", evidence=[])))
+        self.assertEqual(examples([row], tokenizer, 512, readout=readout)[0]["ids"], ids)
+        with self.assertRaises(ValueError): encode_unit("Backup", "Texto", tokenizer, 512, readout="unknown")
+
     def test_normalization_folding_preserves_logits_without_inference_preprocessing(self):
         torch.manual_seed(42)
         head = torch.nn.Linear(4, 2).double(); raw = torch.nn.Linear(4, 2)
