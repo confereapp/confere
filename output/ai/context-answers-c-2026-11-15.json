@@ -32937,5 +32937,728 @@
     "evaluation_protocol_hash": "46f2c112289f4494e350416b15409d8356ef54a750bcb436d7a92b5ffed27dc7",
     "source_commit_verified": "cb81ffd",
     "note": "Verificação retrospectiva explícita: arquivos model/chat/tokenizer idênticos ao commit do início do C; corpo de score e versão torch também idênticos. Não altera métricas ou pesos."
+  },
+  "structured_map_pilot": {
+    "checkpoint_sha256": "4f473ca6f9a07e59480c63abfaa05a9bbe736bd51ed7d5aadf0a695d98b78b6e",
+    "method": "Full response sum negative log probability, including EOS, no length normalization; finite schema V2 candidates in canonical alias/status order. Not all equivalent serializations are enumerated.",
+    "greedy_correct": 21,
+    "candidate_correct": 21,
+    "total": 26,
+    "results": [
+      {
+        "id": "multi-validation-0",
+        "profile": "previous_multiple_evidence",
+        "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "multi-validation-1",
+        "profile": "previous_multiple_evidence",
+        "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+        "greedy": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+        "candidate": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-validation-1.txt",
+                "unit": "page:2",
+                "quote": "Foi confirmada a presença de monitoramento.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-0",
+        "profile": "single_positive",
+        "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "candidate": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "robust-validation-0.txt",
+                "unit": "page:1",
+                "quote": "Registro validation-0. A equipe discutiu monitoramento na reunião. Isso não informa sua implementação. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.\nO projeto não inclui busca.\nFoi confirmada a presença de monitoramento. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-1",
+        "profile": "single_negative",
+        "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy_correct": false,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": false,
+          "unit_correct": false,
+          "exact_match": false
+        }
+      },
+      {
+        "id": "robust-validation-2",
+        "profile": "mention_only",
+        "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-3",
+        "profile": "multiple_positive",
+        "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}, {\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+        "greedy": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}, {\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+        "candidate": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}, {\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "robust-validation-3.txt",
+                "unit": "page:2",
+                "quote": "Foi confirmada a presença de monitoramento. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "atendido"
+              },
+              {
+                "document": "robust-validation-3.txt",
+                "unit": "page:3",
+                "quote": "Foi confirmada a presença de monitoramento.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-4",
+        "profile": "multiple_negative",
+        "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+        "greedy": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+        "candidate": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+        "greedy_correct": false,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "robust-validation-4.txt",
+                "unit": "page:1",
+                "quote": "Registro validation-4. Foi confirmada a ausência de busca.",
+                "model_status": "nao_atendido"
+              },
+              {
+                "document": "robust-validation-4.txt",
+                "unit": "page:2",
+                "quote": "O projeto não inclui monitoramento.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": false,
+          "exact_match": false
+        }
+      },
+      {
+        "id": "robust-validation-5",
+        "profile": "split_conflict",
+        "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}, {\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}, {\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}, {\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [
+              {
+                "document": "robust-validation-5.txt",
+                "unit": "page:2",
+                "quote": "Foi confirmada a ausência de relatórios. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "nao_atendido"
+              },
+              {
+                "document": "robust-validation-5.txt",
+                "unit": "page:3",
+                "quote": "Foi confirmada a presença de relatórios.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-6",
+        "profile": "shared_conflict",
+        "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [
+              {
+                "document": "robust-validation-6.txt",
+                "unit": "page:1",
+                "quote": "Registro validation-6. O projeto não inclui relatórios.\nFoi confirmada a presença de monitoramento. Foi confirmada a ausência de monitoramento. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.\nA equipe discutiu monitoramento na reunião. Isso não informa sua implementação. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "atendido"
+              },
+              {
+                "document": "robust-validation-6.txt",
+                "unit": "page:1",
+                "quote": "Registro validation-6. O projeto não inclui relatórios.\nFoi confirmada a presença de monitoramento. Foi confirmada a ausência de monitoramento. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.\nA equipe discutiu monitoramento na reunião. Isso não informa sua implementação. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-7",
+        "profile": "other_topic",
+        "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+        "greedy": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+        "candidate": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "robust-validation-7.txt",
+                "unit": "page:3",
+                "quote": "Foi confirmada a presença de busca. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-8",
+        "profile": "single_positive",
+        "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "candidate": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "robust-validation-8.txt",
+                "unit": "page:1",
+                "quote": "Registro validation-8. Foi confirmada a presença de relatórios. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-9",
+        "profile": "single_negative",
+        "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "candidate": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "robust-validation-9.txt",
+                "unit": "page:1",
+                "quote": "Registro validation-9. Foi confirmada a ausência de monitoramento. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.\nA equipe discutiu monitoramento na reunião. Isso não informa sua implementação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-10",
+        "profile": "mention_only",
+        "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-11",
+        "profile": "multiple_positive",
+        "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}, {\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+        "greedy": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}, {\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+        "candidate": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}, {\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "robust-validation-11.txt",
+                "unit": "page:3",
+                "quote": "Foi confirmada a presença de busca.",
+                "model_status": "atendido"
+              },
+              {
+                "document": "robust-validation-11.txt",
+                "unit": "page:4",
+                "quote": "Foi confirmada a presença de busca. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-12",
+        "profile": "multiple_negative",
+        "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+        "greedy": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+        "candidate": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "robust-validation-12.txt",
+                "unit": "page:1",
+                "quote": "Registro validation-12. Foi confirmada a ausência de monitoramento. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "nao_atendido"
+              },
+              {
+                "document": "robust-validation-12.txt",
+                "unit": "page:2",
+                "quote": "Foi confirmada a ausência de monitoramento.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-13",
+        "profile": "split_conflict",
+        "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}, {\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}, {\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}, {\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [
+              {
+                "document": "robust-validation-13.txt",
+                "unit": "page:2",
+                "quote": "Foi confirmada a ausência de monitoramento. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "nao_atendido"
+              },
+              {
+                "document": "robust-validation-13.txt",
+                "unit": "page:4",
+                "quote": "Foi confirmada a presença de monitoramento. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-14",
+        "profile": "shared_conflict",
+        "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [
+              {
+                "document": "robust-validation-14.txt",
+                "unit": "page:1",
+                "quote": "Registro validation-14. Foi confirmada a presença de busca. Foi confirmada a ausência de busca. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "atendido"
+              },
+              {
+                "document": "robust-validation-14.txt",
+                "unit": "page:1",
+                "quote": "Registro validation-14. Foi confirmada a presença de busca. Foi confirmada a ausência de busca. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "robust-validation-15",
+        "profile": "other_topic",
+        "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "candidate": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "robust-validation-15.txt",
+                "unit": "page:1",
+                "quote": "Registro validation-15. Foi confirmada a presença de relatórios. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.\nA equipe discutiu relatórios na reunião. Isso não informa sua implementação. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.\nO projeto não inclui monitoramento. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas. A equipe registrou as atividades e distribuiu tarefas.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "api-validation-0-scope_short-r0-b0",
+        "profile": "api_batch_atendido",
+        "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "candidate": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "api-validation-0-scope_short.txt",
+                "unit": "page:1",
+                "quote": "🙂 Registro de projeto 54388367. Foi confirmada a presença de monitoramento. Foi confirmada a ausência de busca.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "api-validation-0-scope_short-r1-b0",
+        "profile": "api_batch_nao_atendido",
+        "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy_correct": false,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [
+              {
+                "document": "api-validation-0-scope_short.txt",
+                "unit": "page:1",
+                "quote": "🙂 Registro de projeto 54388367. Foi confirmada a presença de monitoramento. Foi confirmada a ausência de busca.",
+                "model_status": "atendido"
+              },
+              {
+                "document": "api-validation-0-scope_short.txt",
+                "unit": "page:1",
+                "quote": "🙂 Registro de projeto 54388367. Foi confirmada a presença de monitoramento. Foi confirmada a ausência de busca.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": false,
+          "unit_correct": false,
+          "exact_match": false
+        }
+      },
+      {
+        "id": "api-validation-0-scope_long-r0-b0",
+        "profile": "api_batch_nao_atendido",
+        "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy_correct": false,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": false,
+          "unit_correct": false,
+          "exact_match": false
+        }
+      },
+      {
+        "id": "api-validation-0-scope_long-r0-b1",
+        "profile": "api_batch_evidencia_insuficiente",
+        "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "api-validation-0-scope_long-r0-b2",
+        "profile": "api_batch_evidencia_insuficiente",
+        "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "api-validation-0-scope_long-r1-b1",
+        "profile": "api_batch_atendido",
+        "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+        "greedy_correct": false,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": false,
+          "unit_correct": false,
+          "exact_match": false
+        }
+      },
+      {
+        "id": "api-validation-0-short_conflict-r0-b0",
+        "profile": "api_batch_conflict",
+        "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [
+              {
+                "document": "api-validation-0-short_conflict.txt",
+                "unit": "page:1",
+                "quote": "🙂 Registro de projeto 60205666. Foi confirmada a presença de relatórios. Foi confirmada a ausência de relatórios. Foi confirmada a ausência de busca.",
+                "model_status": "atendido"
+              },
+              {
+                "document": "api-validation-0-short_conflict.txt",
+                "unit": "page:1",
+                "quote": "🙂 Registro de projeto 60205666. Foi confirmada a presença de relatórios. Foi confirmada a ausência de relatórios. Foi confirmada a ausência de busca.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      },
+      {
+        "id": "api-validation-1-short_conflict-r0-b0",
+        "profile": "api_batch_conflict",
+        "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "candidate": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}, {\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+        "greedy_correct": true,
+        "candidate_judgment": {
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [
+              {
+                "document": "api-validation-1-short_conflict.txt",
+                "unit": "page:1",
+                "quote": "🙂 Registro de projeto 93761151. Foi confirmada a ausência de monitoramento. Foi confirmada a presença de monitoramento. Foi confirmada a presença de busca.",
+                "model_status": "atendido"
+              },
+              {
+                "document": "api-validation-1-short_conflict.txt",
+                "unit": "page:1",
+                "quote": "🙂 Registro de projeto 93761151. Foi confirmada a ausência de monitoramento. Foi confirmada a presença de monitoramento. Foi confirmada a presença de busca.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      }
+    ],
+    "adopted": false,
+    "note": "Experimento offline estratificado; não altera geração nem decisões da API. Métrica de desenvolvimento, sem consulta a teste reservado."
   }
 }

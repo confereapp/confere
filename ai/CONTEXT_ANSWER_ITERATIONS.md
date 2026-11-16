@@ -240,3 +240,21 @@ Os gates agora registram também a aceitação preexistente completa de conversa
 (>=80% em cada família legada), além de contexto >=90%, documentos >=90% por
 perfil/formato 100% e ausência de regressões. Nenhum critério anterior é removido;
 os candidatos anteriores já estavam reprovados nos critérios documentais.
+
+### Resultado E corrigido
+
+8.000 passos concluídos em 281,7 s, com 1.090.841 tokens supervisionados contando
+repetições. Todos os 50 tensores congelados ficaram idênticos aos do checkpoint C.
+A loss de validação subiu de 0,01884 para 0,02163; o melhor checkpoint permaneceu
+no passo zero. Os últimos pesos preservaram fatos 24/24, ausências 11/12,
+conflitos 12/12 e presença 12/12, mas memória caiu de 33/36 para 28/36.
+Também houve regressões documentais. Resultado rejeitado, sem promoção na API.
+O PDF da execução foi renderizado e suas três páginas foram inspecionadas.
+
+Uma segunda ablação offline no C comparou geração greedy com escolha por
+probabilidade da resposta JSON completa entre candidatos finitos, incluindo EOS,
+sem normalização por comprimento. Nos mesmos 26 casos estratificados, ambos
+acertaram 21. Não houve ganho que justificasse a troca de decodificação; a API
+continua inalterada. A enumeração usa ordem canônica e não cobre todas as
+serializações equivalentes. O piloto já inspecionado é desenvolvimento, não teste
+cego. Evidências completas nos resumos JSON C e E corrigido em output/ai.
