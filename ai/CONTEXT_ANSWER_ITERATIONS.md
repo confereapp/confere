@@ -507,3 +507,21 @@ contextuais; cada família equiprovável dentro do grupo. Lotes não misturam
 famílias. Teste confirma que tamanho da família não domina sua probabilidade.
 16.000 passos planejados, batch 4, geração a cada 2.000, paciência 3, limite
 3.600 s. Objetivo é aprender os casos novos preservando as habilidades anteriores.
+
+## Reforço da base de linguagem N
+
+As variações L/M ainda não atenderam aos critérios conjuntos. O próximo ensaio
+retoma o pré-treino próprio foundation-1024-2026-11-02/best.pt, passo 2.748,
+com o mesmo corpus congelado wikipedia-pt-10k (SHA256
+8482048a8285d4c7355323521a31c781df7fc691b105fd5f65ea5972db84d0d1), mesmo
+tokenizer, arquitetura e contexto. --resume preserva otimizador e RNG: batch 4,
+lr 1e-4, seed 42, contexto/vocabulário 1.024 e mesmas 32 janelas de avaliação por
+split. Planejados 30.000 passos adicionais (total 32.748), limite de 7.200 s no
+loop, registros a cada 2.000. Teste reservado continua fora do preparo/métricas.
+
+Hipótese: os ajustes curtos estão limitados pela base de linguagem pouco treinada;
+é necessário verificar capacidade após mais previsão de tokens antes de insistir
+nos mesmos templates. Melhora de loss causal não aprova chat ou conferência.
+Depois do pré-treino, comparar validação comum e saídas reais, reajustar tarefas
+e exigir novamente todos os gates gerativos e fluxos completos. Nenhum peso
+externo importado, nenhuma publicação de corpus/pesos e nenhuma troca na API.
