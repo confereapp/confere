@@ -130,6 +130,20 @@ def training_indices(train_count,humans,synthetic,batch_size,human_fraction,gene
     return [pool[i] for i in torch.randint(len(pool),(batch_size,),generator=generator).tolist()]
 
 
+def validation_losses(model, examples, rows, device, balanced=False):
+    if not balanced:
+        return {"validation_loss": evaluate(model, examples, device)}
+    groups = {name: [example for example, row in zip(examples, rows) if row["task"].startswith(prefix)]
+              for name, prefix in (("conversation", "conversation_"), ("documents", "grounded_"))}
+    if not all(groups.values()) or sum(map(len, groups.values())) != len(examples):
+        raise ValueError("Seleção equilibrada exige somente conversa e documentos, ambos presentes.")
+    losses = {name: evaluate(model, items, device) for name, items in groups.items()}
+    tokens = {name: sum(label != -100 for _, labels in items for label in labels) for name, items in groups.items()}
+    return {"validation_loss": sum(losses[name] * tokens[name] for name in groups) / sum(tokens.values()),
+            "selection_loss": sum(losses.values()) / 2,
+            **{name + "_validation_loss": loss for name, loss in losses.items()}}
+
+
 def run(args):
     if args.run_dir.exists() or args.steps <= 0 or args.batch_size <= 0 or args.eval_every <= 0 or not math.isfinite(args.learning_rate) or args.learning_rate <= 0:
         raise ValueError("Saída deve ser nova; passos, batch e taxa devem ser positivos.")
@@ -143,6 +157,11 @@ def run(args):
     rows, fingerprint = load_instructions(args.data)
     train = [row for row in rows if row["split"] == "train"]
     validation = [row for row in rows if row["split"] == "validation"]
+    balanced_selection = getattr(args, "balanced_objective_selection", False)
+    if balanced_selection and ({"conversation" if row["task"].startswith("conversation_") else "documents"
+                                if row["task"].startswith("grounded_") else "other" for row in validation}
+                               != {"conversation", "documents"}):
+        raise ValueError("Seleção equilibrada exige validação de conversa e documentos exclusivamente.")
     generation_budget=getattr(args,"response_tokens",64)
     human_fraction=getattr(args,"human_fraction",0.)
     public_fraction=getattr(args,"public_fraction",0.)
@@ -191,6 +210,7 @@ def run(args):
     settings["human_sampling_policy"]="homogeneous_batches"
     settings["train_last_blocks"] = last_blocks
     settings["document_decision_weight"] = decision_weight
+    settings["checkpoint_selection"] = "objective_mean" if balanced_selection else "token_mean"
     settings["public_fraction"]=public_fraction
     settings["document_fraction"]=document_fraction
     schemas = {r.get("grounding_schema", 1) for r in rows if r["task"].startswith("grounded_")}
@@ -237,7 +257,9 @@ def run(args):
     document_tokens_processed=0
     def record(step):
         nonlocal best
-        item = {"step": step, "train_loss": evaluate(model, train_eval, device), "validation_loss": evaluate(model, encoded_val, device), "elapsed_seconds": time.perf_counter()-started}
+        item = {"step": step, "train_loss": evaluate(model, train_eval, device),
+                **validation_losses(model, encoded_val, validation, device, balanced_selection),
+                "elapsed_seconds": time.perf_counter()-started}
         if device == "mps":
             item["mps_allocated_bytes"] = torch.mps.current_allocated_memory()
             item["mps_driver_allocated_bytes"] = torch.mps.driver_allocated_memory()
@@ -246,8 +268,9 @@ def run(args):
         with (args.run_dir/"metrics.jsonl").open("a") as f: f.write(json.dumps(item)+"\n")
         print(json.dumps(item), flush=True)
         save_checkpoint(args.run_dir/"last.pt", model, optimizer, tokenizer, generator, step, fingerprint, settings)
-        if item["validation_loss"] < best:
-            best = item["validation_loss"]
+        selection_loss = item.get("selection_loss", item["validation_loss"])
+        if selection_loss < best:
+            best = selection_loss
             save_checkpoint(args.run_dir/"best.pt", model, optimizer, tokenizer, generator, step, fingerprint, settings)
     record(0)
     for step in range(1, args.steps+1):
@@ -310,6 +333,7 @@ def main():
     parser.add_argument("--response-tokens",type=int,default=64)
     parser.add_argument("--train-last-blocks", type=int, help="Congelar embeddings e blocos iniciais; treinar apenas últimos N blocos, norm e saída.")
     parser.add_argument("--document-decision-weight", type=float, default=1., help="Peso dos valores status/unit no treino; avaliação continua sem pesos.")
+    parser.add_argument("--balanced-objective-selection", action="store_true", help="Selecionar checkpoint pela média das losses de conversa e documentos (50% cada).")
     parser.add_argument("--human-fraction",type=float,default=0.)
     parser.add_argument("--public-fraction",type=float,default=0.)
     parser.add_argument("--document-fraction",type=float,default=0.,help="Fração de lotes documentais separados dos demais exemplos autorais.")
