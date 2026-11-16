@@ -487,3 +487,23 @@ e ampliar associação lexical reduz a dependência do vocabulário visto. Sele�
 pela pior família gerada, peso por token normal (1), sem mistura de conversa.
 São mudanças conjuntas de currículo e atualização, sem atribuição causal isolada.
 Nenhum peso é promovido sem a avaliação conjunta e os fluxos completos.
+
+### Interrupção K e conversa J
+
+O ambiente interrompeu K com checkpoint 4.000 salvo, antes da conclusão da geração
+4.000. No 2.000 houve 181/206 acertos, mas cinco saídas/referências inválidas e
+queda em split_conflict (3/12); melhor selecionado ainda zero. Registros preservados
+com interrupção explícita; PDF de três páginas renderizado e inspecionado.
+
+A conversa J usou o currículo natural, lr 1e-5, batch 4, seis blocos treináveis
+com embeddings congelados, geração a cada 2.000 e paciência 3. Terminou por
+selection_plateau no passo 6.000: 159/171 no início, 136 no 2.000, 124 no 4.000
+e 130 no 6.000. Pesos iniciais preservados. Fatos e memória contextual foram as
+principais regressões; não houve promoção nem relaxamento dos gates.
+
+A próxima conversa L usa o mesmo corpus e inicialização G, lr 3e-6, apenas dois
+últimos blocos treináveis, e amostragem hierárquica: 50% de lotes legados, 50%
+contextuais; cada família equiprovável dentro do grupo. Lotes não misturam
+famílias. Teste confirma que tamanho da família não domina sua probabilidade.
+16.000 passos planejados, batch 4, geração a cada 2.000, paciência 3, limite
+3.600 s. Objetivo é aprender os casos novos preservando as habilidades anteriores.
