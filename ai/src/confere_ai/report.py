@@ -106,6 +106,8 @@ def create_report(run_dir, output=None):
         ("RSS máximo do processo", f'{summary["process_peak_rss_bytes"] / 1e6:.1f} MB' if summary.get("process_peak_rss_bytes") else "Não registrado"),
     ])
     p("SHA-256 dos dados: " + info.get("dataset_fingerprint", "Não registrado"))
+    if info.get("trainable_parameters") is not None:
+        p("Parâmetros treináveis: " + str(info["trainable_parameters"]) + "; últimos blocos explicitamente selecionados: " + str(info.get("settings", {}).get("train_last_blocks")) + " (None indica rede inteira).")
     if info.get("context_note"):
         p("Adaptação de contexto: " + str(info.get("source_context")) + " para " + str(config.get("block_size")) + " tokens; passo de origem " + str(info.get("source_step")) + ". " + info["context_note"])
     if info.get("previous_dataset_fingerprint"):
