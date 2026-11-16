@@ -145,11 +145,14 @@ def validation_losses(model, examples, rows, device, balanced=False):
 
 
 def conversation_indices(pools, batch_size, generator):
-    category = list(pools)[torch.randint(len(pools), (), generator=generator).item()]
-    families = pools[category]
-    family = list(families)[torch.randint(len(families), (), generator=generator).item()]
-    pool = families[family]
-    return [pool[i] for i in torch.randint(len(pool), (batch_size,), generator=generator).tolist()]
+    indices = []
+    for _ in range(batch_size):
+        category = list(pools)[torch.randint(len(pools), (), generator=generator).item()]
+        families = pools[category]
+        family = list(families)[torch.randint(len(families), (), generator=generator).item()]
+        pool = families[family]
+        indices.append(pool[torch.randint(len(pool), (), generator=generator).item()])
+    return indices
 
 
 def run(args):
@@ -246,7 +249,7 @@ def run(args):
     if generative_selection: settings["checkpoint_selection"] = "generated_family_quality"
     settings["selection_patience"] = selection_patience
     settings["initial_candidate_generation_measured"] = not skip_initial_generation
-    settings["conversation_sampling"] = "equal_legacy_context_then_uniform_family" if family_sampling else "uniform_examples"
+    settings["conversation_sampling"] = "equal_legacy_context_then_uniform_family_per_example" if family_sampling else "uniform_examples"
     settings["public_fraction"]=public_fraction
     settings["document_fraction"]=document_fraction
     schemas = {r.get("grounding_schema", 1) for r in rows if r["task"].startswith("grounded_")}
