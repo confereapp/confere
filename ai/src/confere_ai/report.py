@@ -112,7 +112,10 @@ def create_report(run_dir, output=None):
     ])
     p("SHA-256 dos dados: " + info.get("dataset_fingerprint", "Não registrado"))
     if info.get("trainable_parameters") is not None:
-        p("Parâmetros treináveis: " + str(info["trainable_parameters"]) + "; últimos blocos explicitamente selecionados: " + str(info.get("settings", {}).get("train_last_blocks")) + " (None indica rede inteira).")
+        if info.get("settings", {}).get("trainable_scope") == "final_normalization_bias":
+            p("Parâmetros treináveis: " + str(info["trainable_parameters"]) + "; somente viés da normalização final. Demais parâmetros congelados.")
+        else:
+            p("Parâmetros treináveis: " + str(info["trainable_parameters"]) + "; últimos blocos explicitamente selecionados: " + str(info.get("settings", {}).get("train_last_blocks")) + " (None indica rede inteira).")
     if info.get("settings", {}).get("document_decision_weight", 1) > 1:
         p("Treino: peso " + str(info["settings"]["document_decision_weight"]) + " nos valores documentais status/unit; demais tokens-alvo com peso 1. Avaliação e seleção por loss continuam sem pesos.")
     if info.get("settings", {}).get("checkpoint_selection") == "objective_mean":

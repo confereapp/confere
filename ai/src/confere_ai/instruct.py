@@ -223,7 +223,7 @@ def run(args):
     model.load_state_dict(source["model"]); model.eval()
     from .finetuning import configure_trainable
     last_blocks = getattr(args, "train_last_blocks", None)
-    trainable_count = configure_trainable(model, last_blocks)
+    trainable_count = configure_trainable(model, last_blocks, norm_bias_only=getattr(args, "train_norm_bias_only", False))
     encoded_train = [encode_sample(row, tokenizer, model.config.block_size) for row in train]
     from .decision_loss import decision_weights, weighted_loss, weight_batch, example_mean_loss
     train_weights = ([decision_weights(row, tokenizer, encoded[1], decision_weight)
@@ -262,6 +262,7 @@ def run(args):
     objective = "conversation" if any("history" in r for r in rows) else "document_grounding" if any(r["task"].startswith("grounded_") for r in rows) else "instruction"
     settings = {"objective": objective, "seed": 42, "batch_size": args.batch_size, "learning_rate": args.learning_rate,"generation_budget":generation_budget,"human_fraction":human_fraction}
     settings["human_sampling_policy"]="homogeneous_batches"
+    settings["trainable_scope"] = "final_normalization_bias" if getattr(args, "train_norm_bias_only", False) else "selected_blocks" if last_blocks is not None else "all_parameters"
     settings["paired_presence_focus"] = bool(presence_pools)
     settings["training_loss_reduction"] = "example_mean" if family_sampling else "token_mean"
     if anchor_from:
@@ -430,6 +431,7 @@ def main():
     parser.add_argument("--eval-every", type=int, default=200)
     parser.add_argument("--device", choices=["auto", "mps", "cpu"], default="auto")
     parser.add_argument("--response-tokens",type=int,default=64)
+    parser.add_argument("--train-norm-bias-only", action="store_true", help="Ajustar somente o viés da normalização final, preservando blocos, embeddings e projeção.")
     parser.add_argument("--train-last-blocks", type=int, help="Congelar embeddings e blocos iniciais; treinar apenas últimos N blocos, norm e saída.")
     parser.add_argument("--document-decision-weight", type=float, default=1., help="Peso dos valores status/unit no treino; avaliação continua sem pesos.")
     parser.add_argument("--balanced-objective-selection", action="store_true", help="Selecionar checkpoint pela média das losses de conversa e documentos (50% cada).")
