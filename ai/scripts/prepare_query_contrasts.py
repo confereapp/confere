@@ -15,7 +15,7 @@ from prepare_context_answers import answer, FIELDS, NAMES
 from prepare_natural_answers import STATEMENTS
 from prepare_lexical_binding import FORMS, WORDS, expected
 from expand_context_answers import names
-from prepare_api_batches import local_rows
+from prepare_api_batches import local_rows, scene_for, PROFILES
 
 DOC_FORMS = FORMS + [
     ("Há evidência explícita de {}.", "Há indicação explícita de ausência de {}."),
@@ -92,6 +92,66 @@ def documents(count=3600):
     return rows
 
 
+
+def long_documents(tokenizer, count=120):
+    rng = random.Random(161132); rows = []; skipped = 0
+    for i in range(count):
+        for profile in PROFILES:
+            scene = scene_for("train", 700000+i, profile, rng, forms=DOC_FORMS)
+            local = local_rows(scene, tokenizer)
+            if local is None:
+                skipped += 1
+                continue
+            for row in local:
+                row.update(id="query-long-"+row["id"], project_id="query-long-"+row["project_id"])
+            rows.extend(local)
+    return rows, skipped
+
+
+def intent_variations(source, count=3000):
+    rng = random.Random(161133); rows = []
+    pool = [r for r in source if r["split"] == "train" and r["task"].startswith("conversation_")
+            and not r["task"].startswith("conversation_context_answer_")]
+    excluded = {r["prompt"].strip().casefold() for r in source if r["split"] != "train"}
+    replacements = [("o que", "o q"), ("oq", "o q"), ("você", "vc"), ("você", "tu"),
+                    ("vc", "c"), ("não", "nao"), ("estou", "tô"), ("ainda", "até agora"),
+                    ("não sei", "estou em dúvida"), ("não sei", "não decidi"), ("como", "como é que")]
+    for i in range(count):
+        original = rng.choice(pool); prompt = original["prompt"]
+        rng.shuffle(replacements)
+        for a, b in replacements[:rng.randint(2, 7)]: prompt = prompt.replace(a, b)
+        if prompt == original["prompt"] or prompt.strip().casefold() in excluded: continue
+        row = copy.deepcopy(original); group = f"intent-variation-{i}"
+        row.update(id=group, project_id=group, turn_index=0, prompt=prompt)
+        rows.append(row)
+    intents = {
+        "hello": (["opa, podemos trocar ideia?", "opa, vamos bater papo?", "salve, vamos conversar?", "ei, bora trocar ideia?", "oi, podemos bater um papo?"], "Olá! Sou o Confere."),
+        "function": (["o q tu faz?", "o q c faz aí?", "o q você consegue fazer?", "me diz o q tu faz aí", "qual é tua função aí?"], "Sou um experimento para apoiar a conferência de projetos."),
+        "negation": (["to sem projeto agr", "tô sem nenhum trabalho de projeto", "não tenho nenhum projeto agr", "ainda to sem projeto", "por enquanto tô sem um projeto"], "Sem problema. Podemos conversar sem um projeto."),
+    }
+    for i in range(300):
+        for task, (prompts, target) in intents.items():
+            prompt = rng.choice(prompts)
+            assert prompt.casefold() not in excluded
+            group = f"intent-colloquial-{task}-{i}"
+            rows.append(dict(id=group, project_id=group, split="train", task="conversation_slang_"+task,
+                             prompt=prompt, target=target, history=copy.deepcopy(rng.choice(pool)["history"][-3:]), turn_index=0,
+                             response_tokens=256, provenance=dict(kind="synthetic_authored", note="Intenção atual em históricos variados; formas de desenvolvimento sem copiar pedidos da validação.")))
+    # A mesma incerteza pede uma proposta no início e foco após as sugestões.
+    proposal = "Sem problema. Podemos falar de objetivos, requisitos ou evidências."
+    focus = "Vamos começar pelo tema do seu projeto. Qual é o tema?"
+    uncertain = ["não tenho certeza do que pedir agora", "estou em dúvida sobre o que posso pedir", "não decidi como você pode ajudar", "não sei escolher o que pedir a você", "ainda não decidi o que vou pedir"]
+    again = ["continuo indeciso entre as sugestões", "ainda tenho dúvida entre essas alternativas", "não consigo escolher dentre essas opções", "mesmo depois das sugestões continuo em dúvida", "nenhuma dessas opções me ajudou a decidir"]
+    for i in range(300):
+        first = rng.choice(uncertain); second = rng.choice(again)
+        seed = copy.deepcopy(rng.choice(pool)["history"][-2:]); group = f"intent-guidance-{i}"
+        for j, (prompt, target) in enumerate([(first, proposal), (second, focus)]):
+            rows.append(dict(id=f"{group}-{j}", project_id=group, split="train", task="conversation_guidance",
+                             prompt=prompt, target=target, history=copy.deepcopy(seed), turn_index=j, response_tokens=256,
+                             provenance=dict(kind="synthetic_authored", note="Variação autoral de intenção com histórico; somente treino.")))
+            seed.append([prompt, target])
+    return rows
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("output", type=Path); p.add_argument("--source", type=Path, required=True)
@@ -102,7 +162,23 @@ def main():
     if args.development_cases and args.task != "documents": p.error("Casos completos são documentais.")
     source, digest = load_instructions(args.source)
     checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=True); tokenizer = ByteBPE(checkpoint["merges"])
-    added = conversations() if args.task == "conversation" else documents()
+    skipped = 0
+    if args.task == "conversation": added = conversations() + intent_variations(source)
+    else:
+        long_rows, skipped = long_documents(tokenizer)
+        added = documents() + long_rows
+    duplicates = 0
+    if args.task == "documents":
+        known = {r["prompt"].strip().casefold(): r["target"] for r in source}
+        unique = []
+        for row in added:
+            key = row["prompt"].strip().casefold()
+            if key in known:
+                if json.loads(known[key]) != json.loads(row["target"]): raise ValueError("Fragmento com alvos conflitantes.")
+                duplicates += 1
+                continue
+            known[key] = row["target"]; unique.append(row)
+        added = unique
     rows = source + added
     assert [r for r in rows if r["split"] != "train"] == [r for r in source if r["split"] != "train"]
     development = []
@@ -121,7 +197,7 @@ def main():
     args.output.mkdir(parents=True); path = args.output/"examples.jsonl"
     path.write_text("".join(json.dumps(r, ensure_ascii=False)+"\n" for r in rows)); load_instructions(path)
     manifest = dict(source_sha256=digest, dataset_sha256=hashlib.sha256(path.read_bytes()).hexdigest(), added_train=len(added),
-                    splits=dict(Counter(r["split"] for r in rows)), development_rows=len(development),
+                    splits=dict(Counter(r["split"] for r in rows)), development_rows=len(development), skipped_partial_evidence_scenes=skipped, duplicate_train_fragments_omitted=duplicates,
                     development_cases_sha256=hashlib.sha256(args.development_cases.read_bytes()).hexdigest() if args.development_cases else None,
                     note="Validação original preservada. Coorte antes reservada agora declarada desenvolvimento após falha; nunca entrou no treino. Novo teste pós-congelamento obrigatório.")
     (args.output/"manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2)); print(json.dumps(manifest, ensure_ascii=False))

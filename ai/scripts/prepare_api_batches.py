@@ -21,9 +21,9 @@ BACKGROUND = ("A equipe registrou reuniões e distribuiu as tarefas da semana.",
               "O documento descreve o calendário das reuniões e a divisão do trabalho.")
 
 
-def scene_for(split, family, profile, rng):
+def scene_for(split, family, profile, rng, *, forms=None):
     feature, other = rng.sample(TOPICS[split], 2)
-    forms = LEXICAL if split == "train" else FORMS[split]
+    forms = forms if forms is not None else (LEXICAL if split == "train" else FORMS[split])
     positive, negative = rng.choice(forms)
     first = rng.choice(("atendido", "nao_atendido"))
     second = "nao_atendido" if first == "atendido" else "atendido"
