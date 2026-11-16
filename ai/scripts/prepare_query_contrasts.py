@@ -83,7 +83,7 @@ def presence_pairs(count=1600):
         a, b, missing = rng.sample(FEATURES, 3)
         clauses = [f"O projeto inclui {a}.", f"O projeto não inclui {b}."]
         rng.shuffle(clauses); text = " ".join(clauses)
-        if i % 3 == 0 and (a, b) != ("documentação", "testes"):
+        if i % 3 == 0:
             text = (f"O projeto inclui {a}, mas não inclui {b}." if i % 2 else
                     f"O projeto não inclui {b}, mas inclui {a}.")
         for j, (feature, target) in enumerate([(a, "Sim."), (b, "Não."), (missing, "Não tenho informação suficiente para responder.")]):
@@ -93,6 +93,8 @@ def presence_pairs(count=1600):
                 question = (f"Os {feature} foram incluídos?" if feature == "testes" else
                             f"A {feature} foi incluída?" if feature == "documentação" else f"O {feature} foi incluído?")
             prompt = text + " " + question
+            if prompt in excluded:
+                prompt = text + " " + questions[0].format(feature)
             assert prompt not in excluded
             rows.append(dict(id=group, project_id=group, split="train", task="conversation_context_answer_support",
                              prompt=prompt, target=target, history=[], turn_index=0, response_tokens=256,

@@ -239,10 +239,23 @@ def run(args):
         baseline=score(reference,tokenizer,controlled_validation,device,context_limit=evaluation_context, response_tokens=generation_budget)
         del reference
     else: baseline=score(model,tokenizer,controlled_validation,device,context_limit=evaluation_context, response_tokens=generation_budget)
+    anchor = None
+    anchor_from = getattr(args, "anchor_from", None)
+    if anchor_from:
+        anchor_weights = torch.load(anchor_from, map_location="cpu", weights_only=True)
+        if anchor_weights["config"] != source["config"] or anchor_weights["merges"] != source["merges"]:
+            raise ValueError("Âncora exige arquitetura e tokenizer idênticos.")
+        anchor = GPT(GPTConfig(**source["config"])).to(device)
+        anchor.load_state_dict(anchor_weights["model"]); anchor.eval().requires_grad_(False)
+        del anchor_weights
     args.run_dir.mkdir(parents=True)
     objective = "conversation" if any("history" in r for r in rows) else "document_grounding" if any(r["task"].startswith("grounded_") for r in rows) else "instruction"
     settings = {"objective": objective, "seed": 42, "batch_size": args.batch_size, "learning_rate": args.learning_rate,"generation_budget":generation_budget,"human_fraction":human_fraction}
     settings["human_sampling_policy"]="homogeneous_batches"
+    if anchor_from:
+        settings["anchor_checkpoint"] = str(anchor_from)
+        settings["anchor_sha256"] = hashlib.sha256(Path(anchor_from).read_bytes()).hexdigest()
+        settings["anchor_policy"] = "kl_only_gold_matching_teacher_tokens_weight_1"
     settings["train_last_blocks"] = last_blocks
     settings["document_decision_weight"] = decision_weight
     settings["checkpoint_selection"] = "objective_mean" if balanced_selection else "token_mean"
@@ -341,6 +354,10 @@ def run(args):
         logits = model(x)
         loss = (weighted_loss(logits, y, weight_batch(train_weights, indices, y.shape, device))
                 if train_weights is not None else F.cross_entropy(logits.flatten(0,1), y.flatten(), ignore_index=-100))
+        if anchor is not None:
+            from .distillation import correct_teacher_kl
+            with torch.no_grad(): anchor_logits = anchor(x)
+            loss = loss + correct_teacher_kl(logits, anchor_logits, y)
         if not torch.isfinite(loss).item(): raise ValueError("Loss não finita; checkpoint anterior preservado.")
         loss.backward(); torch.nn.utils.clip_grad_norm_(model.parameters(), 1., error_if_nonfinite=True); optimizer.step()
         processed += (y != -100).sum().item()
@@ -388,6 +405,7 @@ def main():
     parser.add_argument("--data", type=Path, default=Path("ai/data/authored/instructions.jsonl"))
     parser.add_argument("--init-from", type=Path, required=True)
     parser.add_argument("--baseline-from", type=Path, help="Reusar geração já auditada apenas com pesos, protocolo e validação idênticos.")
+    parser.add_argument("--anchor-from", type=Path, help="Preservar probabilidades corretas de checkpoint próprio; tokens divergentes do alvo não são ancorados.")
     parser.add_argument("--compare-with", type=Path, help="Checkpoint local anterior avaliado nos mesmos pedidos novos.")
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--steps", type=int, default=2000)
