@@ -168,6 +168,8 @@ class EvidencePredictor:
         for offset in range(0,len(items),8):
             ids,lengths=unit_batch(items[offset:offset+8],self.device,self.config.block_size)
             predictions.extend(self.model.evidence_scores(self.model(ids,lengths)).cpu().tolist())
+        if any(len(v)!=2 or any(not 0<=s<=1 for s in v) for v in predictions):
+            raise ValueError('Probabilidades de frase inválidas.')
         probabilities=[];offset=0
         for group in parts:
             values=predictions[offset:offset+len(group)];offset+=len(group)
