@@ -1,0 +1,12 @@
+{
+  "source_sha256": "9cc27c7499efbd08d3e86544c70cdfa5593c0de8b6444bd22a82a47936f0953a",
+  "dataset_sha256": "bd247c25028cf2ad49de591596892449a5a117f5786fad0ce6f21ce5a859dd10",
+  "added_train": 7200,
+  "splits": {
+    "train": 32067,
+    "validation": 294
+  },
+  "development_rows": 88,
+  "development_cases_sha256": "294e85082f34a6f1761de7387929d0f071c7655359183714adb753a41ae3a90e",
+  "note": "Validação original preservada. Coorte antes reservada agora declarada desenvolvimento após falha; nunca entrou no treino. Novo teste pós-congelamento obrigatório."
+}

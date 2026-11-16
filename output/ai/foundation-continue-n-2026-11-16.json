@@ -1,0 +1,126 @@
+{
+  "run": "ai/runs/foundation-continue-n-2026-11-16",
+  "summary": {
+    "start_step": 2748,
+    "final_step": 32748,
+    "stop_reason": "steps",
+    "elapsed_seconds": 4538.025173874999,
+    "tokens_processed": 94186392,
+    "best_validation_loss_in_this_run": 2.4625292057355153,
+    "mps_allocated_bytes_max_observed": 390457088,
+    "process_peak_rss_bytes": 1129218048,
+    "initial": {
+      "step": 2748,
+      "train_loss": 2.7026578252846183,
+      "validation_loss": 2.7876015102508878,
+      "elapsed_seconds": 0.8301385830000001
+    },
+    "final": {
+      "step": 32748,
+      "train_loss": 2.1637933712867623,
+      "validation_loss": 2.479666974076391,
+      "elapsed_seconds": 4537.741126958
+    }
+  },
+  "adopted": false,
+  "comparison": {
+    "dataset_fingerprint": "8482048a8285d4c7355323521a31c781df7fc691b105fd5f65ea5972db84d0d1",
+    "test_examples_used": 0,
+    "note": "Perda de próximo token; não mede diálogo ou acurácia factual. Geração greedy idêntica entre variantes.",
+    "results": [
+      {
+        "checkpoint": "ai/runs/foundation-1024-2026-11-02/best.pt",
+        "step": 2748,
+        "training_dataset_fingerprint": "8482048a8285d4c7355323521a31c781df7fc691b105fd5f65ea5972db84d0d1",
+        "validation_loss": 2.6369294851079212,
+        "evaluation_block_size": 256,
+        "validation_windows": 3230,
+        "validation_tokens": 773505,
+        "samples": [
+          {
+            "prefix": "A ciência é ",
+            "continuation": "constituída por ciências que consiste em um ciêncio químico, e por sua vez, por sua vez, por sua vez, o ciêncio é necessário para o ciêncio humano ou a ciência da ciência. O ciêncio é também conhecido como ciência da ciência da ciência, que é necessário para o ciêncio humano ou da ciência da computação human"
+          },
+          {
+            "prefix": "Um projeto de software deve ",
+            "continuation": "ser uma conexão de software livre e software livre, que é possível ser definido como um projeto para o software livre, e deve ser definida como um projeto para o software livre.\n\nO projeto foi criado para um projeto para o software livre, e dev"
+          },
+          {
+            "prefix": "O Brasil é ",
+            "continuation": "constituído por dois municípios do distrito de Santa Maria, sendo a segunda maior cidade do país, sendo a segunda maior cidade do país, com uma densidade populacional de 2021 unidades de Portugal. População\t\n<small>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+          },
+          {
+            "prefix": "Para verificar um requisito, é necessário ",
+            "continuation": "para o requisito ou requisito.\n\nNão é necessário para o requisito, o requisito é necessário para o requisito-requisito-requisito-requisito-requisito-requisito-requisito-requisito-requisito"
+          },
+          {
+            "prefix": "Qual é o seu nome?",
+            "continuation": " Schopton Schopton, que significa \"Schopton\" (Schopton Schopton Schopton Schopton Schopton Schopton Schopton Schopton Schopton Schopt"
+          }
+        ]
+      },
+      {
+        "checkpoint": "ai/runs/foundation-continue-n-2026-11-16/best.pt",
+        "step": 30000,
+        "training_dataset_fingerprint": "8482048a8285d4c7355323521a31c781df7fc691b105fd5f65ea5972db84d0d1",
+        "validation_loss": 2.469154053345413,
+        "evaluation_block_size": 256,
+        "validation_windows": 3230,
+        "validation_tokens": 773505,
+        "samples": [
+          {
+            "prefix": "A ciência é ",
+            "continuation": "definida como um sistema de ciências que permitem a mecânica quântica e realizar um sistema de números racionais.\n\nO ciência é definido como um sistema de números racionais (como os números racionais) são números racionais.\n\nO ciência é definido como um sistema de números racion"
+          },
+          {
+            "prefix": "Um projeto de software deve ",
+            "continuation": "ser usado para realizar um sistema operacional para realizar um sistema operacional para realizar um sistema operacional chamado Windows CPads.\n\nO projeto é baseado no sistema operacional que foi baseado no sistema operacional baseado no sistema operacional Windows CPads.\n\nO projeto é base"
+          },
+          {
+            "prefix": "O Brasil é ",
+            "continuation": "caracterizado por um grupo de pessoas que vivem no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil no Brasil"
+          },
+          {
+            "prefix": "Para verificar um requisito, é necessário ",
+            "continuation": "para o caso de um requisito para o caso de um requisito para o requisito requisito ou para o requisito real ou requisitos reais ou de um requisito real ou não só reais ou não só reais ou não só reais ou não só reais ou não só re"
+          },
+          {
+            "prefix": "Qual é o seu nome?",
+            "continuation": " Os nomes da língua portuguesa são o nome de um país sem nome de um nome de um doce que é compartilha as línguas oficiais da língua portuguesa que não se sabe se referir a um doce da língua portuguesa como uma das línguas oficiais da língua portuguesa como uma língua oficial da língua portuguesa que é traduz como uma língua oficial da língua "
+          }
+        ]
+      },
+      {
+        "checkpoint": "ai/runs/foundation-continue-n-2026-11-16/last.pt",
+        "step": 32748,
+        "training_dataset_fingerprint": "8482048a8285d4c7355323521a31c781df7fc691b105fd5f65ea5972db84d0d1",
+        "validation_loss": 2.4743423565615457,
+        "evaluation_block_size": 256,
+        "validation_windows": 3230,
+        "validation_tokens": 773505,
+        "samples": [
+          {
+            "prefix": "A ciência é ",
+            "continuation": "determinada a partir do início da divisão de cinco anos (ou cinco anos (anos = anos = anos = anos = anos = anos = anos = anos = anos = anos = anos = anos = anos = anos = anos = anos = anos = anos = anos (anos = anos = anos = an"
+          },
+          {
+            "prefix": "Um projeto de software deve ",
+            "continuation": "ser usado para realizar um sistema operacional chamado para realizar um sistema operacional chamado Windows CP/IBM que foi lançado, mas o sistema operacional foi lançado, mas também foi lançado, e portanto o sistema operacional CP/MP chamado Windows CP para usuário M"
+          },
+          {
+            "prefix": "O Brasil é ",
+            "continuation": "usado para designar as fronteiras do país, sendo o mais importante do Brasil. No Brasil é usado para designar as fronteiras do país.\n\nSéculo XX \nNo Brasil, o Brasil é usado para designar as fronteiras do país.\n\nNo Brasil \nNo Brasil o Brasil é usado para design"
+          },
+          {
+            "prefix": "Para verificar um requisito, é necessário ",
+            "continuation": "ser o parlamento para o parlamento, que não há paradoxo ou parlamento, mas não há paradoxo ou parlamento, mas não há paradoxo ou parlamento.\n\nPara parlamento, o parlamento é parlamento ou parlamento, ou parlamento, ou parlamento, ou parlamento, ou parlamento, "
+          },
+          {
+            "prefix": "Qual é o seu nome?",
+            "continuation": " É o nome da aldeia ou da aldeia ou da aldeia ou da aldeia ou da aldeia ou da aldeia. O nome da aldeia é derivado da aldeia ou da aldeia ou da aldeia ou da aldeia ou da aldeia ou da aldeia ou da aldeia ou da aldei"
+          }
+        ]
+      }
+    ]
+  }
+}

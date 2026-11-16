@@ -535,3 +535,33 @@ base 2.748, enquanto a GPU continua o treino. Mesmas 3.230 janelas de 256 tokens
 sentido; a melhora estatística não é qualidade de conversa. Saídas completas,
 dispositivo e hashes estão em output/ai/foundation-continue-n-intermediate-2026-11-16.json.
 A execução N continua; checkpoint intermediário não foi promovido.
+
+## Transferência documental e continuação N–Q — 16/11
+
+O classificador por unidade no passo 5000 atingiu 206/206 casos controlados,
+36/36 requisitos no conjunto original de documentos completos e 90/90 casos
+curtos reservados. Isso não generalizou para a nova coorte de documentos
+completos: 21/36 requisitos, 6/18 projetos completos e três falsos positivos.
+Esses pesos **não foram aprovados**. A coorte completa antes reservada agora é
+explicitamente desenvolvimento, só em validação, e exige novo teste após
+congelamento. JSON e referências do classificador são construídos; relevância e
+polaridades são predições aprendidas. Os detalhes estão em
+`output/ai/evidence-classifier-development-2026-11-16.json`.
+
+N concluiu mais 30.000 passos causais (94.186.392 posições de token processadas,
+incluindo repetições). Nas mesmas 3.230 janelas de validação de 256 tokens,
+a perda mudou de 2,636929 na origem para 2,469154 no melhor checkpoint de N;
+o último marcou 2,474342. As continuações ainda repetem e inventam: essa redução
+não aprova conversa. O teste do corpus não foi usado.
+
+O, inicializado de um snapshot de N, ficou em 148/171 respostas exatas e perdeu
+famílias. P restaurou 7.200 exemplos históricos de treino e selecionou 156/171,
+mas ainda falhou em famílias legadas e nas perguntas com informação ausente.
+Os PDFs e JSONs correspondentes registram as execuções sem promover pesos.
+
+Q acrescenta perguntas pareadas sobre texto idêntico e nomes de recursos
+próximos. A amostragem de conversa mantém 50% legado/50% contexto e famílias
+uniformes, agora escolhidas por exemplo dentro do lote para reduzir oscilações.
+A validação de conversa original permanece intacta; os 88 lotes documentais da
+coorte que falhou são validação de desenvolvimento adicional, nunca treino.
+Os critérios finais de família, cobertura e falsos positivos permanecem iguais.

@@ -1,0 +1,2179 @@
+{
+  "adopted": false,
+  "note": "Coorte documental reservada falhou e agora informa desenvolvimento; novo teste obrigatório após congelar pesos.",
+  "evaluation.json": {
+    "path": "ai/runs/evidence-classifier-finetune-2026-11-16/evaluation.json",
+    "sha256": "1986c79c02a8de02b89a929c61215fbe0e2cdee6d4f0b5fa468148b2217c688c",
+    "selected_step": 5000,
+    "correct": 206,
+    "total": 206,
+    "quality": [
+      true,
+      0,
+      1.1111111111111112,
+      1.0,
+      0,
+      206
+    ],
+    "profiles": {
+      "previous_multiple_evidence": [
+        24,
+        24
+      ],
+      "single_positive": [
+        12,
+        12
+      ],
+      "single_negative": [
+        12,
+        12
+      ],
+      "mention_only": [
+        12,
+        12
+      ],
+      "multiple_positive": [
+        12,
+        12
+      ],
+      "multiple_negative": [
+        12,
+        12
+      ],
+      "split_conflict": [
+        12,
+        12
+      ],
+      "shared_conflict": [
+        12,
+        12
+      ],
+      "other_topic": [
+        12,
+        12
+      ],
+      "api_batch_atendido": [
+        16,
+        16
+      ],
+      "api_batch_nao_atendido": [
+        17,
+        17
+      ],
+      "api_batch_evidencia_insuficiente": [
+        50,
+        50
+      ],
+      "api_batch_conflict": [
+        3,
+        3
+      ]
+    }
+  },
+  "complete-documents.json": {
+    "path": "ai/runs/evidence-classifier-finetune-2026-11-16/complete-documents.json",
+    "sha256": "e72d53fa7793c72ede35a22ab93e3ad87d3d5237f914bafd91af43a65da3605a",
+    "checkpoint": "ai/runs/evidence-classifier-finetune-2026-11-16/best.pt",
+    "checkpoint_sha256": "8c25c006a07a5fb2a15296b2ab8c6254b529b67f56f4557302b6a88cd41d793d",
+    "prediction_type": "unit_classifier",
+    "step": 5000,
+    "cases_sha256": "7bca5d9de232aee793240711b5d3358f92ab65663028ce543a6ca4e59988ac64",
+    "correct_requirements": 36,
+    "total_requirements": 36,
+    "valid_requirements": 36,
+    "false_positive": 0,
+    "exact_local_calls": 86,
+    "total_local_calls": 86,
+    "complete_projects": 18,
+    "total_projects": 18,
+    "test_examples_used": 0,
+    "adopted": false
+  },
+  "heldout-evaluation.json": {
+    "path": "ai/runs/evidence-classifier-finetune-2026-11-16/heldout-evaluation.json",
+    "sha256": "7ee3da209f91f549223daae78d56cfe2f2e966206de1d5af1806d22d6c6e6b99",
+    "manifest": {
+      "frozen_checkpoint_sha256": "8c25c006a07a5fb2a15296b2ab8c6254b529b67f56f4557302b6a88cd41d793d",
+      "selected_step": 5000,
+      "documents": 90,
+      "training_eligible": false,
+      "source_generator_sha256": "86e3636ccc5bb575bac6b70a9be6ce7eb5d93efc1248e8742e0ad7eec97734b4",
+      "dataset_sha256": "352f734f7b6caca06db2f436b45cc3f82728cce8c5a2b97b7261a8d2477a9f23",
+      "note": "Primeira avaliação do teste documental histórico após congelar o candidato. Somente conversão V1 para V2, sem mudança semântica dos alvos. Não usado no treino ou seleção do candidato."
+    },
+    "result": {
+      "correct": 90,
+      "total": 90,
+      "samples": [
+        {
+          "id": "contrast-test-0",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Equipe: 799465.\n[page:3] Tema: biblioteca.\n[page:4] Há evidência explícita de exportação.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-0.pdf",
+                "unit": "page:4",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-1",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Há indicação explícita de ausência de auditoria.\n[page:2] Equipe: 155730.\n[page:3] Tema: biblioteca.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-1.pdf",
+                "unit": "page:1",
+                "quote": "Há indicação explícita de ausência de auditoria.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-2",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Equipe: 522326.\n[page:2] Tema: biblioteca.\n[page:3] O projeto inclui acessibilidade.\n[page:4] A equipe documentou a reunião inicial.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-3",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Há evidência explícita de exportação.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Equipe: 463344.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-3.pdf",
+                "unit": "page:1",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-4",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Equipe: 947618.\n[page:4] Há indicação explícita de ausência de exportação.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-4.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-5",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Equipe: 400773.\n[page:2] Tema: biblioteca.\n[page:3] O projeto inclui acessibilidade.\n[page:4] A equipe documentou a reunião inicial.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-6",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Tema: biblioteca.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Equipe: 402329.\n[page:4] Há evidência explícita de auditoria.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-6.pdf",
+                "unit": "page:4",
+                "quote": "Há evidência explícita de auditoria.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-7",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 337026.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Há indicação explícita de ausência de exportação.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-7.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-8",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Equipe: 150889.\n[page:3] Tema: biblioteca.\n[page:4] A equipe documentou a reunião inicial.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-9",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Equipe: 707869.\n[page:4] Há evidência explícita de exportação.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-9.pdf",
+                "unit": "page:4",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-10",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Equipe: 281434.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Tema: biblioteca.\n[page:4] Há indicação explícita de ausência de importação.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-10.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de importação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-11",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] O projeto inclui acessibilidade.\n[page:3] A equipe documentou a reunião inicial.\n[page:4] Equipe: 379062.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-12",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Tema: biblioteca.\n[page:2] Há evidência explícita de importação.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Equipe: 294348.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-12.pdf",
+                "unit": "page:2",
+                "quote": "Há evidência explícita de importação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-13",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Equipe: 724628.\n[page:4] Há indicação explícita de ausência de exportação.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-13.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-14",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Equipe: 855441.\n[page:2] Tema: biblioteca.\n[page:3] A equipe documentou a reunião inicial.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-15",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Há evidência explícita de auditoria.\n[page:3] Tema: biblioteca.\n[page:4] Equipe: 357159.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-15.pdf",
+                "unit": "page:2",
+                "quote": "Há evidência explícita de auditoria.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-16",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Equipe: 607220.\n[page:2] Tema: biblioteca.\n[page:3] Há indicação explícita de ausência de exportação.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-16.pdf",
+                "unit": "page:3",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-17",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] A equipe documentou a reunião inicial.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Tema: biblioteca.\n[page:4] Equipe: 514074.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-18",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 192860.\n[page:3] Há evidência explícita de auditoria.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-18.pdf",
+                "unit": "page:3",
+                "quote": "Há evidência explícita de auditoria.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-19",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Há indicação explícita de ausência de importação.\n[page:4] Equipe: 668510.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-19.pdf",
+                "unit": "page:3",
+                "quote": "Há indicação explícita de ausência de importação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-20",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 211957.\n[page:3] A equipe documentou a reunião inicial.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-21",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Tema: biblioteca.\n[page:2] Há evidência explícita de importação.\n[page:3] Equipe: 903066.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-21.pdf",
+                "unit": "page:2",
+                "quote": "Há evidência explícita de importação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-22",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Há indicação explícita de ausência de importação.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Tema: biblioteca.\n[page:4] Equipe: 455055.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-22.pdf",
+                "unit": "page:1",
+                "quote": "Há indicação explícita de ausência de importação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-23",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Equipe: 129301.\n[page:2] Tema: biblioteca.\n[page:3] O projeto inclui acessibilidade.\n[page:4] A equipe documentou a reunião inicial.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-24",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Há evidência explícita de importação.\n[page:4] Equipe: 333452.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-24.pdf",
+                "unit": "page:3",
+                "quote": "Há evidência explícita de importação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-25",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] Há indicação explícita de ausência de exportação.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Equipe: 334695.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-25.pdf",
+                "unit": "page:2",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-26",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Tema: biblioteca.\n[page:2] A equipe documentou a reunião inicial.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Equipe: 610734.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-27",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Há evidência explícita de auditoria.\n[page:4] Equipe: 719732.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-27.pdf",
+                "unit": "page:3",
+                "quote": "Há evidência explícita de auditoria.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-28",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Há indicação explícita de ausência de exportação.\n[page:2] Equipe: 728777.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-28.pdf",
+                "unit": "page:1",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-29",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 653963.\n[page:3] O projeto inclui acessibilidade.\n[page:4] A equipe documentou a reunião inicial.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-30",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Equipe: 609437.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Tema: biblioteca.\n[page:4] Há evidência explícita de importação.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-30.pdf",
+                "unit": "page:4",
+                "quote": "Há evidência explícita de importação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-31",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Equipe: 594482.\n[page:4] Há indicação explícita de ausência de auditoria.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-31.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de auditoria.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-32",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Equipe: 949947.\n[page:4] A equipe documentou a reunião inicial.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-33",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Equipe: 349575.\n[page:3] Tema: biblioteca.\n[page:4] Há evidência explícita de importação.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-33.pdf",
+                "unit": "page:4",
+                "quote": "Há evidência explícita de importação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-34",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] Há indicação explícita de ausência de exportação.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Equipe: 240901.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-34.pdf",
+                "unit": "page:2",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-35",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Tema: biblioteca.\n[page:2] A equipe documentou a reunião inicial.\n[page:3] Equipe: 474162.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-36",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Equipe: 270806.\n[page:2] Há evidência explícita de exportação.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-36.pdf",
+                "unit": "page:2",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-37",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] Há indicação explícita de ausência de exportação.\n[page:3] Equipe: 388272.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-37.pdf",
+                "unit": "page:2",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-38",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 700631.\n[page:3] A equipe documentou a reunião inicial.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-39",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Há evidência explícita de auditoria.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Tema: biblioteca.\n[page:4] Equipe: 378184.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-39.pdf",
+                "unit": "page:1",
+                "quote": "Há evidência explícita de auditoria.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-40",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Equipe: 390969.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Há indicação explícita de ausência de auditoria.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-40.pdf",
+                "unit": "page:3",
+                "quote": "Há indicação explícita de ausência de auditoria.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-41",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] A equipe documentou a reunião inicial.\n[page:3] Equipe: 334236.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-42",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Tema: biblioteca.\n[page:2] Há evidência explícita de importação.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Equipe: 595356.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-42.pdf",
+                "unit": "page:2",
+                "quote": "Há evidência explícita de importação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-43",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 607285.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Há indicação explícita de ausência de auditoria.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-43.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de auditoria.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-44",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Equipe: 342030.\n[page:2] Tema: biblioteca.\n[page:3] A equipe documentou a reunião inicial.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-45",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Equipe: 680838.\n[page:2] Há evidência explícita de exportação.\n[page:3] Tema: biblioteca.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-45.pdf",
+                "unit": "page:2",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-46",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Há indicação explícita de ausência de auditoria.\n[page:2] Tema: biblioteca.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Equipe: 667233.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-46.pdf",
+                "unit": "page:1",
+                "quote": "Há indicação explícita de ausência de auditoria.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-47",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Equipe: 155374.\n[page:4] A equipe documentou a reunião inicial.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-48",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Tema: biblioteca.\n[page:2] Há evidência explícita de auditoria.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Equipe: 816389.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-48.pdf",
+                "unit": "page:2",
+                "quote": "Há evidência explícita de auditoria.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-49",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Equipe: 888187.\n[page:3] Tema: biblioteca.\n[page:4] Há indicação explícita de ausência de exportação.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-49.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-50",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 856557.\n[page:3] O projeto inclui acessibilidade.\n[page:4] A equipe documentou a reunião inicial.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-51",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Equipe: 884779.\n[page:2] Há evidência explícita de importação.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-51.pdf",
+                "unit": "page:2",
+                "quote": "Há evidência explícita de importação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-52",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Equipe: 504779.\n[page:4] Há indicação explícita de ausência de importação.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-52.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de importação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-53",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] O projeto inclui acessibilidade.\n[page:3] A equipe documentou a reunião inicial.\n[page:4] Equipe: 433577.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-54",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Há evidência explícita de exportação.\n[page:4] Equipe: 455067.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-54.pdf",
+                "unit": "page:3",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-55",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Equipe: 303994.\n[page:2] Tema: biblioteca.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Há indicação explícita de ausência de exportação.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-55.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-56",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Equipe: 186692.\n[page:2] A equipe documentou a reunião inicial.\n[page:3] Tema: biblioteca.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-57",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Equipe: 534796.\n[page:3] Há evidência explícita de exportação.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-57.pdf",
+                "unit": "page:3",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-58",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Há indicação explícita de ausência de importação.\n[page:3] Equipe: 697594.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-58.pdf",
+                "unit": "page:2",
+                "quote": "Há indicação explícita de ausência de importação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-59",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] A equipe documentou a reunião inicial.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Tema: biblioteca.\n[page:4] Equipe: 362400.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-60",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Tema: biblioteca.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Há evidência explícita de auditoria.\n[page:4] Equipe: 519813.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-60.pdf",
+                "unit": "page:3",
+                "quote": "Há evidência explícita de auditoria.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-61",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Há indicação explícita de ausência de exportação.\n[page:2] Equipe: 453809.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-61.pdf",
+                "unit": "page:1",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-62",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] A equipe documentou a reunião inicial.\n[page:2] Tema: biblioteca.\n[page:3] Equipe: 764225.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-63",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Equipe: 303531.\n[page:4] Há evidência explícita de exportação.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-63.pdf",
+                "unit": "page:4",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-64",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Tema: biblioteca.\n[page:2] Há indicação explícita de ausência de auditoria.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Equipe: 250534.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-64.pdf",
+                "unit": "page:2",
+                "quote": "Há indicação explícita de ausência de auditoria.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-65",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] A equipe documentou a reunião inicial.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Tema: biblioteca.\n[page:4] Equipe: 608321.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-66",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Há evidência explícita de exportação.\n[page:4] Equipe: 711489.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-66.pdf",
+                "unit": "page:3",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-67",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Equipe: 734773.\n[page:2] Tema: biblioteca.\n[page:3] Há indicação explícita de ausência de auditoria.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-67.pdf",
+                "unit": "page:3",
+                "quote": "Há indicação explícita de ausência de auditoria.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-68",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 342855.\n[page:3] O projeto inclui acessibilidade.\n[page:4] A equipe documentou a reunião inicial.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-69",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Há evidência explícita de auditoria.\n[page:2] Equipe: 283342.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-69.pdf",
+                "unit": "page:1",
+                "quote": "Há evidência explícita de auditoria.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-70",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Há indicação explícita de ausência de importação.\n[page:2] Tema: biblioteca.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Equipe: 813954.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-70.pdf",
+                "unit": "page:1",
+                "quote": "Há indicação explícita de ausência de importação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-71",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Tema: biblioteca.\n[page:2] A equipe documentou a reunião inicial.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Equipe: 213394.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-72",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Equipe: 833383.\n[page:2] Há evidência explícita de importação.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-72.pdf",
+                "unit": "page:2",
+                "quote": "Há evidência explícita de importação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-73",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Tema: biblioteca.\n[page:2] Há indicação explícita de ausência de auditoria.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Equipe: 874127.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-73.pdf",
+                "unit": "page:2",
+                "quote": "Há indicação explícita de ausência de auditoria.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-74",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 972415.\n[page:3] A equipe documentou a reunião inicial.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-75",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Equipe: 534100.\n[page:2] Há evidência explícita de exportação.\n[page:3] Tema: biblioteca.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-75.pdf",
+                "unit": "page:2",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-76",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 192365.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Há indicação explícita de ausência de importação.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-76.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de importação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-77",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] A equipe documentou a reunião inicial.\n[page:3] Tema: biblioteca.\n[page:4] Equipe: 558823.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-78",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 316890.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Há evidência explícita de importação.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-78.pdf",
+                "unit": "page:4",
+                "quote": "Há evidência explícita de importação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-79",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 347665.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Há indicação explícita de ausência de exportação.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-79.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de exportação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-80",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] A equipe documentou a reunião inicial.\n[page:3] Tema: biblioteca.\n[page:4] Equipe: 926189.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-81",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Equipe: 251089.\n[page:3] Tema: biblioteca.\n[page:4] Há evidência explícita de exportação.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-81.pdf",
+                "unit": "page:4",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-82",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] Tema: biblioteca.\n[page:2] Equipe: 681552.\n[page:3] Há indicação explícita de ausência de importação.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-82.pdf",
+                "unit": "page:3",
+                "quote": "Há indicação explícita de ausência de importação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-83",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] A equipe documentou a reunião inicial.\n[page:2] Tema: biblioteca.\n[page:3] Equipe: 259968.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-84",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Equipe: 236950.\n[page:2] Há evidência explícita de exportação.\n[page:3] Tema: biblioteca.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:2\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-84.pdf",
+                "unit": "page:2",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-85",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir importação.\n[page:1] O projeto inclui acessibilidade.\n[page:2] Tema: biblioteca.\n[page:3] Equipe: 505681.\n[page:4] Há indicação explícita de ausência de importação.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:4\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-85.pdf",
+                "unit": "page:4",
+                "quote": "Há indicação explícita de ausência de importação.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-86",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] A equipe documentou a reunião inicial.\n[page:2] Equipe: 918100.\n[page:3] Tema: biblioteca.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-87",
+          "task": "grounded_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir exportação.\n[page:1] Equipe: 492890.\n[page:2] Tema: biblioteca.\n[page:3] Há evidência explícita de exportação.\n[page:4] O projeto inclui acessibilidade.",
+          "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "actual": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:3\"}]}",
+          "evaluation_profile": "heldout_single_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-87.pdf",
+                "unit": "page:3",
+                "quote": "Há evidência explícita de exportação.",
+                "model_status": "atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-88",
+          "task": "grounded_nao_atendido",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Há indicação explícita de ausência de auditoria.\n[page:2] O projeto inclui acessibilidade.\n[page:3] Tema: biblioteca.\n[page:4] Equipe: 417221.",
+          "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "actual": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+          "evaluation_profile": "heldout_single_nao_atendido",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "nao_atendido",
+            "evidence": [
+              {
+                "document": "fiction-test-88.pdf",
+                "unit": "page:1",
+                "quote": "Há indicação explícita de ausência de auditoria.",
+                "model_status": "nao_atendido"
+              }
+            ],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        },
+        {
+          "id": "contrast-test-89",
+          "task": "grounded_evidencia_insuficiente",
+          "prompt": "Confira o requisito. Retorne JSON com status e evidence (lista de status e unit). Liste todas as evidências relevantes, inclusive opostas. Sem evidência ou com conflito, status evidencia_insuficiente.\nRequisito: O projeto deve incluir auditoria.\n[page:1] Equipe: 907813.\n[page:2] A equipe documentou a reunião inicial.\n[page:3] O projeto inclui acessibilidade.\n[page:4] Tema: biblioteca.",
+          "expected": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "evaluation_profile": "heldout_single_evidencia_insuficiente",
+          "valid_format": true,
+          "reference_valid": true,
+          "result": {
+            "status": "evidencia_insuficiente",
+            "evidence": [],
+            "justification": "Classificação experimental; suporte semântico exige revisão humana."
+          },
+          "status_correct": true,
+          "unit_correct": true,
+          "exact_match": true
+        }
+      ]
+    },
+    "quality": [
+      true,
+      0,
+      1.1111111111111112,
+      1.0,
+      0,
+      90
+    ],
+    "adopted": false
+  },
+  "heldout-complete-documents.json": {
+    "path": "ai/runs/evidence-classifier-finetune-2026-11-16/heldout-complete-documents.json",
+    "sha256": "9c63b980eeeea67184bafc1bfc69ff00a60c1db182a8e5ec12ea298023317292",
+    "checkpoint": "ai/runs/evidence-classifier-finetune-2026-11-16/best.pt",
+    "checkpoint_sha256": "8c25c006a07a5fb2a15296b2ab8c6254b529b67f56f4557302b6a88cd41d793d",
+    "prediction_type": "unit_classifier",
+    "step": 5000,
+    "cases_sha256": "294e85082f34a6f1761de7387929d0f071c7655359183714adb753a41ae3a90e",
+    "correct_requirements": 21,
+    "total_requirements": 36,
+    "valid_requirements": 36,
+    "false_positive": 3,
+    "exact_local_calls": 69,
+    "total_local_calls": 88,
+    "complete_projects": 6,
+    "total_projects": 18,
+    "test_examples_used": 0,
+    "adopted": false
+  }
+}
