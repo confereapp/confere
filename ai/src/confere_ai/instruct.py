@@ -144,6 +144,14 @@ def validation_losses(model, examples, rows, device, balanced=False):
             **{name + "_validation_loss": loss for name, loss in losses.items()}}
 
 
+def conversation_indices(pools, batch_size, generator):
+    category = list(pools)[torch.randint(len(pools), (), generator=generator).item()]
+    families = pools[category]
+    family = list(families)[torch.randint(len(families), (), generator=generator).item()]
+    pool = families[family]
+    return [pool[i] for i in torch.randint(len(pool), (batch_size,), generator=generator).tolist()]
+
+
 def run(args):
     if args.run_dir.exists() or args.steps <= 0 or args.batch_size <= 0 or args.eval_every <= 0 or not math.isfinite(args.learning_rate) or args.learning_rate <= 0:
         raise ValueError("Saída deve ser nova; passos, batch e taxa devem ser positivos.")
@@ -157,6 +165,15 @@ def run(args):
     rows, fingerprint = load_instructions(args.data)
     train = [row for row in rows if row["split"] == "train"]
     validation = [row for row in rows if row["split"] == "validation"]
+    family_sampling = getattr(args, "balanced_conversation_sampling", False)
+    conversation_pools = {"legacy": {}, "context": {}}
+    if family_sampling:
+        if any(not row["task"].startswith("conversation_") for row in train):
+            raise ValueError("Amostragem por família exige somente conversa.")
+        for index, row in enumerate(train):
+            category = "context" if row["task"].startswith("conversation_context_answer_") else "legacy"
+            conversation_pools[category].setdefault(row["task"], []).append(index)
+        if not all(conversation_pools.values()): raise ValueError("Exige famílias legadas e contextuais.")
     balanced_selection = getattr(args, "balanced_objective_selection", False)
     generative_selection = getattr(args, "generative_selection", False)
     selection_patience = getattr(args, "selection_patience", None)
@@ -221,6 +238,7 @@ def run(args):
     settings["checkpoint_selection"] = "objective_mean" if balanced_selection else "token_mean"
     if generative_selection: settings["checkpoint_selection"] = "generated_family_quality"
     settings["selection_patience"] = selection_patience
+    settings["conversation_sampling"] = "equal_legacy_context_then_uniform_family" if family_sampling else "uniform_examples"
     settings["public_fraction"]=public_fraction
     settings["document_fraction"]=document_fraction
     schemas = {r.get("grounding_schema", 1) for r in rows if r["task"].startswith("grounded_")}
@@ -302,7 +320,8 @@ def run(args):
     record(0)
     for step in range(1, args.steps+1):
         model.train()
-        indices=training_indices(len(train),humans,synthetic,args.batch_size,human_fraction,generator,public,public_fraction,documents,document_fraction)
+        indices=(conversation_indices(conversation_pools, args.batch_size, generator) if family_sampling else
+                 training_indices(len(train),humans,synthetic,args.batch_size,human_fraction,generator,public,public_fraction,documents,document_fraction))
         x,y = batch(encoded_train,indices,device,model.config.block_size)
         optimizer.zero_grad(set_to_none=True)
         logits = model(x)
@@ -366,6 +385,7 @@ def main():
     parser.add_argument("--balanced-objective-selection", action="store_true", help="Selecionar checkpoint pela média das losses de conversa e documentos (50% cada).")
     parser.add_argument("--generative-selection", action="store_true", help="Selecionar por respostas geradas e pior família; loss continua registrada. Desenvolvimento, não teste cego.")
     parser.add_argument("--selection-patience", type=int, help="Encerrar após N avaliações gerativas consecutivas sem ganho.")
+    parser.add_argument("--balanced-conversation-sampling", action="store_true", help="Lotes com 50% de famílias legadas e 50% contextuais; famílias equiprováveis em cada grupo.")
     parser.add_argument("--human-fraction",type=float,default=0.)
     parser.add_argument("--public-fraction",type=float,default=0.)
     parser.add_argument("--document-fraction",type=float,default=0.,help="Fração de lotes documentais separados dos demais exemplos autorais.")
