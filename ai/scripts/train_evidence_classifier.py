@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
 import time
 import torch
@@ -34,9 +35,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("data", "init-from", "run-dir"): parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--steps", type=int, default=8000)
+    parser.add_argument("--encoder-learning-rate", type=float, default=1e-5)
+    parser.add_argument("--head-learning-rate", type=float, default=1e-4)
+    parser.add_argument("--selection-patience", type=int, default=6)
     parser.add_argument("--device", choices=["cpu", "mps"], default="mps")
     args = parser.parse_args()
-    if args.run_dir.exists() or args.steps <= 0: parser.error("Saída nova e passos positivos são obrigatórios.")
+    if (args.run_dir.exists() or args.steps <= 0 or args.selection_patience <= 0
+            or any(not math.isfinite(v) or v <= 0 for v in [args.encoder_learning_rate, args.head_learning_rate])): parser.error("Saída nova e passos positivos são obrigatórios.")
     torch.set_num_threads(4); torch.manual_seed(42)
     rows, digest = load_instructions(args.data)
     if any(not r["task"].startswith("grounded_") for r in rows): parser.error("Somente documentos controlados.")
@@ -54,10 +59,10 @@ def main():
     validation = [r for r in rows if r["split"] == "validation"]
     val = examples(validation, tokenizer, backbone.config.block_size)
     generator = torch.Generator().manual_seed(42)
-    optimizer = torch.optim.AdamW([dict(params=[p for p in model.backbone.parameters() if p.requires_grad], lr=1e-5),
-                                  dict(params=model.head.parameters(), lr=1e-4)], weight_decay=.01)
+    optimizer = torch.optim.AdamW([dict(params=[p for p in model.backbone.parameters() if p.requires_grad], lr=args.encoder_learning_rate),
+                                  dict(params=model.head.parameters(), lr=args.head_learning_rate)], weight_decay=.01)
     settings = dict(objective="document_classifier", readout="shared_json_decision_prefix_v1", frozen_embeddings=True,
-                    encoder_learning_rate=1e-5, head_learning_rate=1e-4, batch_size=8, threshold=.5,
+                    encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5,
                     checkpoint_selection="generated_family_quality", sampling="uniform_units", loss="unweighted_bce")
     args.run_dir.mkdir(parents=True)
     info = dict(data=str(args.data), dataset_fingerprint=digest, source=str(args.init_from),
@@ -94,7 +99,7 @@ def main():
                 best, selected, selected_step = key, result, step; stale = 0; checkpoint(step, "best.pt")
             else: stale += 1
             if key[0]: stop = "controlled_acceptance"; break
-            if stale >= 6: stop = "selection_plateau"; break
+            if stale >= args.selection_patience: stop = "selection_plateau"; break
     (args.run_dir / "evaluation.json").write_text(json.dumps(dict(baseline=baseline, selected=selected, selected_step=selected_step,
         quality=best, acceptance=acceptance(selected), adopted=False), ensure_ascii=False, indent=2))
     (args.run_dir / "summary.json").write_text(json.dumps(dict(final_step=step, selected_step=selected_step, stop_reason=stop,
