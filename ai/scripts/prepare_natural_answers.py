@@ -33,10 +33,9 @@ ROLES = [("testes", "{} faz os testes.", "Quem faz os testes?"),
 
 
 def name(rng):
-    while True:
-        value = (rng.choice(["Iara", "Noa", "Teo", "Caê", "Luiz", "Inês", "Dora", "Hugo", "Íris", "Bia", "Ari", "Ítalo"])
-                 if rng.random() < .5 else "".join(rng.choices("abcdeghijlmnoprstuvzáéíóúãç", k=rng.randint(2, 9))).capitalize())
-        if value not in HELD_NAMES: return value
+    values = ["Iara", "Noa", "Teo", "Caê", "Luiz", "Inês", "Dora", "Hugo", "Íris", "Bia", "Ari", "Ítalo"]
+    assert not HELD_NAMES.intersection(values)
+    return rng.choice(values)
 
 
 def build(source, contexts=4000, roles=1000, presence=1200):
