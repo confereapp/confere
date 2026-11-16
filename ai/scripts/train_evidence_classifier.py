@@ -37,6 +37,7 @@ def main():
     for name in ("data", "init-from", "run-dir"): parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--eval-every", type=int, default=500)
     parser.add_argument("--steps", type=int, default=8000)
+    parser.add_argument("--require-perfect-validation", action="store_true")
     parser.add_argument("--paired-queries", action="store_true")
     parser.add_argument("--readout", choices=READOUTS)
     parser.add_argument("--encoder-learning-rate", type=float, default=1e-5)
@@ -70,7 +71,7 @@ def main():
     generator = torch.Generator().manual_seed(42)
     optimizer = torch.optim.AdamW([dict(params=[p for p in model.backbone.parameters() if p.requires_grad], lr=args.encoder_learning_rate),
                                   dict(params=model.head.parameters(), lr=args.head_learning_rate)], weight_decay=.01)
-    settings = dict(objective="document_classifier", readout=readout, frozen_embeddings=True,
+    settings = dict(objective="document_classifier", readout=readout, frozen_embeddings=True, require_perfect_validation=args.require_perfect_validation,
                     encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5, eval_every=args.eval_every,
                     checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", loss="unweighted_bce")
     args.run_dir.mkdir(parents=True)
@@ -109,7 +110,9 @@ def main():
             if best is None or key > best:
                 best, selected, selected_step = key, result, step; stale = 0; checkpoint(step, "best.pt")
             else: stale += 1
-            if key[0]: stop = "controlled_acceptance"; break
+            assert 0 <= result["correct"] <= result["total"]
+            if key[0] and (not args.require_perfect_validation or result["correct"] == result["total"]):
+                stop = "controlled_acceptance"; break
             if stale >= args.selection_patience: stop = "selection_plateau"; break
     (args.run_dir / "evaluation.json").write_text(json.dumps(dict(baseline=baseline, selected=selected, selected_step=selected_step,
         quality=best, acceptance=acceptance(selected), adopted=False), ensure_ascii=False, indent=2))

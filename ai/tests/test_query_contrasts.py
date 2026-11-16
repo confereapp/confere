@@ -79,3 +79,12 @@ class QueryContrastTests(unittest.TestCase):
         pairs = [(rows[i*2]["scenario"]["feature"], rows[i*2+1]["scenario"]["feature"]) for i in range(120) if i % 3 == 1]
         self.assertGreater(len({a[:2] for a, _ in pairs}), 5)
         self.assertTrue(all(a != b for a, b in pairs))
+
+    def test_question_form_is_not_correlated_with_clause_order(self):
+        rows = presence_pairs(2000)
+        direct_positive_after_negative = [r for r in rows if r["target"] == "Sim."
+            and r["scenario"]["text"].startswith("O projeto não inclui") and ", mas " in r["scenario"]["text"]
+            and r["prompt"].endswith("A documentação foi incluída?")]
+        self.assertTrue(direct_positive_after_negative)
+        from evaluate_context_smoke import CASES
+        self.assertFalse({r["prompt"] for r in rows} & {c["message"] for c in CASES})

@@ -84,12 +84,12 @@ def presence_pairs(count=1600):
         clauses = [f"O projeto inclui {a}.", f"O projeto não inclui {b}."]
         rng.shuffle(clauses); text = " ".join(clauses)
         if i % 3 == 0:
-            text = (f"O projeto inclui {a}, mas não inclui {b}." if i % 2 else
+            text = (f"O projeto inclui {a}, mas não inclui {b}." if rng.random() < .5 else
                     f"O projeto não inclui {b}, mas inclui {a}.")
         for j, (feature, target) in enumerate([(a, "Sim."), (b, "Não."), (missing, "Não tenho informação suficiente para responder.")]):
             group = f"query-presence-{i}-{j}"
             question = rng.choice(questions).format(feature)
-            if i % 2:
+            if rng.random() < .5:
                 question = (f"Os {feature} foram incluídos?" if feature == "testes" else
                             f"A {feature} foi incluída?" if feature == "documentação" else f"O {feature} foi incluído?")
             prompt = text + " " + question
