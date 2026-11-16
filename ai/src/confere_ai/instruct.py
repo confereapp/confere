@@ -162,7 +162,12 @@ def run(args):
     evaluation_indices=torch.randperm(len(encoded_train),generator=torch.Generator().manual_seed(43)).tolist()[:128]
     train_eval=[encoded_train[index] for index in evaluation_indices]
     comparison = getattr(args, "compare_with", None)
-    if comparison:
+    baseline_from = getattr(args, "baseline_from", None)
+    if baseline_from:
+        if comparison: raise ValueError("Cache e comparação alternativa não podem ser usados juntos.")
+        from .evaluation_cache import reuse_baseline
+        baseline = reuse_baseline(baseline_from, args.init_from, controlled_validation, evaluation_context, generation_budget)
+    elif comparison:
         previous = torch.load(comparison, map_location="cpu", weights_only=True)
         if evaluation_context>previous["config"]["block_size"]: raise ValueError("Contexto de avaliação não cabe na referência.")
         if any(previous["config"][k]!=source["config"][k] for k in ("vocab_size","width","layers","heads")) or previous["merges"] != source["merges"]:
@@ -192,6 +197,9 @@ def run(args):
             "document_splits": dict(Counter(row["split"] for row in rows)), "train_ids": [r["id"] for r in train],
             "validation_ids": [r["id"] for r in validation], "test_examples_used": 0,
             "device": device, "torch": str(torch.__version__), "python": platform.python_version()}
+    from .evaluation_cache import protocol_fingerprint
+    info["evaluation_protocol_hash"] = protocol_fingerprint()
+    if baseline_from: info["baseline_evaluation_reused_from"] = str(baseline_from)
     info["mps_batch_padding_multiple"] = 128 if device == "mps" else None
     info["mps_generation_padding_multiple"] = 128 if device == "mps" else None
     (args.run_dir/"run.json").write_text(json.dumps(info, ensure_ascii=False, indent=2))
@@ -277,6 +285,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, default=Path("ai/data/authored/instructions.jsonl"))
     parser.add_argument("--init-from", type=Path, required=True)
+    parser.add_argument("--baseline-from", type=Path, help="Reusar geração já auditada apenas com pesos, protocolo e validação idênticos.")
     parser.add_argument("--compare-with", type=Path, help="Checkpoint local anterior avaliado nos mesmos pedidos novos.")
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--steps", type=int, default=2000)
