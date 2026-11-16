@@ -1,6 +1,9 @@
 import json
+import sys
 import unittest
+from pathlib import Path
 import torch
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from confere_ai.evidence_classifier import EvidenceClassifier, encode_unit, response
 from confere_ai.model import GPT, GPTConfig
 from confere_ai.tokenizer import ByteBPE
@@ -26,3 +29,12 @@ class EvidenceClassifierTests(unittest.TestCase):
         first.sum().backward()
         self.assertTrue(torch.isfinite(model.head.weight.grad).all())
         with self.assertRaises(ValueError): encode_unit("testes", "x" * 100, ByteBPE(), 32)
+
+    def test_head_evaluation_uses_predictions_instead_of_copying_gold_evidence(self):
+        from probe_evidence_head import evaluate_head
+        row = dict(id="probe", task="grounded_evidencia_insuficiente", prompt="probe", document="author.txt", grounding_schema=2,
+                   units=[dict(id="page:2", text="Há testes."), dict(id="page:4", text="Não há testes.")],
+                   target=json.dumps(dict(status="evidencia_insuficiente", evidence=[dict(status="atendido", unit="page:2"), dict(status="nao_atendido", unit="page:4")])))
+        head = torch.nn.Identity()
+        self.assertEqual(evaluate_head(head, torch.tensor([[5., -5.], [-5., 5.]]), [row])["correct"], 1)
+        self.assertEqual(evaluate_head(head, torch.full((2, 2), -5.), [row])["correct"], 0)
