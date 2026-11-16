@@ -6,7 +6,7 @@ import itertools
 import json
 from pathlib import Path
 import torch
-from confere_ai.evidence_classifier import EvidencePredictor, examples, unit_batch, response
+from confere_ai.evidence_classifier import EvidencePredictor, examples, unit_batch, response, STATE_MODES
 from confere_ai.generative_selection import quality_key
 from confere_ai.grounding import judge
 from confere_ai.instruct import load_instructions, acceptance
@@ -30,13 +30,14 @@ def main():
     if args.run_dir.exists(): p.error("Saída já existe.")
     payload = args.checkpoint.read_bytes(); checkpoint = torch.load(BytesIO(payload), map_location="cpu", weights_only=True)
     predictor = EvidencePredictor(checkpoint, args.device); torch.set_num_threads(4)
+    if predictor.model.state_mode != STATE_MODES[0]: p.error("Limiares aplicam-se somente às cabeças binárias.")
     rows, digest = load_instructions(args.data); rows = [r for r in rows if r["split"] == "validation"]
     if not rows or any(not r["task"].startswith("grounded_") for r in rows): p.error("Exige validação documental.")
     encoded = examples(rows, predictor.tokenizer, predictor.config.block_size, readout=predictor.readout); probabilities = []
     with torch.no_grad():
         for offset in range(0, len(encoded), 8):
             ids, lengths = unit_batch(encoded[offset:offset+8], args.device, predictor.config.block_size)
-            probabilities.extend(predictor.model(ids, lengths).sigmoid().cpu().tolist())
+            probabilities.extend(predictor.model.evidence_scores(predictor.model(ids, lengths)).cpu().tolist())
     grid = []; best = selected = thresholds = None
     for pair in itertools.product([.5, .6, .7, .8, .9, .95, .99], repeat=2):
         result = evaluate_thresholds(rows, probabilities, pair); key = quality_key(result)

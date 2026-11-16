@@ -7,7 +7,7 @@ import math
 from pathlib import Path
 import time
 import torch
-from confere_ai.evidence_classifier import EvidenceClassifier, examples, unit_batch, response, READOUTS, paired_indices
+from confere_ai.evidence_classifier import EvidenceClassifier, examples, unit_batch, response, READOUTS, paired_indices, STATE_MODES, load_binary_as_categorical
 from confere_ai.finetuning import configure_trainable
 from confere_ai.generative_selection import quality_key
 from confere_ai.grounding import judge
@@ -21,7 +21,7 @@ def score(model, encoded, rows, device, thresholds=(.5, .5)):
     model.eval(); probabilities = []
     for offset in range(0, len(encoded), 8):
         ids, lengths = unit_batch(encoded[offset:offset+8], device, model.backbone.config.block_size)
-        probabilities.extend(model(ids, lengths).sigmoid().cpu().tolist())
+        probabilities.extend(model.evidence_scores(model(ids, lengths)).cpu().tolist())
     results = []; offset = 0
     for row in rows:
         count = len(row["units"])
@@ -37,6 +37,7 @@ def main():
     for name in ("data", "init-from", "run-dir"): parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--eval-every", type=int, default=500)
     parser.add_argument("--steps", type=int, default=8000)
+    parser.add_argument("--categorical-states", action="store_true")
     parser.add_argument("--require-perfect-validation", action="store_true")
     parser.add_argument("--paired-queries", action="store_true")
     parser.add_argument("--readout", choices=READOUTS)
@@ -53,10 +54,13 @@ def main():
     source = torch.load(args.init_from, map_location="cpu", weights_only=True)
     backbone = GPT(GPTConfig(**source["config"]))
     if "classifier" not in source: backbone.load_state_dict(source["model"])
-    model = EvidenceClassifier(backbone)
+    source_mode = source["settings"].get("state_mode", STATE_MODES[0])
+    state_mode = STATE_MODES[1] if args.categorical_states else source_mode
+    model = EvidenceClassifier(backbone, state_mode)
     if "classifier" in source:
         if source["settings"].get("readout") not in READOUTS: parser.error("Representação incompatível.")
-        model.load_state_dict(source["classifier"])
+        if source_mode == STATE_MODES[0] and state_mode == STATE_MODES[1]: load_binary_as_categorical(model, source["classifier"])
+        else: model.load_state_dict(source["classifier"])
     model.to(args.device)
     configure_trainable(model.backbone, model.backbone.config.layers)
     tokenizer = ByteBPE(source["merges"])
@@ -71,7 +75,7 @@ def main():
     generator = torch.Generator().manual_seed(42)
     optimizer = torch.optim.AdamW([dict(params=[p for p in model.backbone.parameters() if p.requires_grad], lr=args.encoder_learning_rate),
                                   dict(params=model.head.parameters(), lr=args.head_learning_rate)], weight_decay=.01)
-    settings = dict(objective="document_classifier", readout=readout, frozen_embeddings=True, require_perfect_validation=args.require_perfect_validation,
+    settings = dict(objective="document_classifier", state_mode=state_mode, readout=readout, frozen_embeddings=True, require_perfect_validation=args.require_perfect_validation,
                     encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5, eval_every=args.eval_every,
                     checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", loss="unweighted_bce")
     args.run_dir.mkdir(parents=True)
@@ -96,7 +100,7 @@ def main():
             items = [train[i] for i in indices]
             ids, lengths = unit_batch(items, args.device, backbone.config.block_size)
             labels = torch.tensor([item["labels"] for item in items], device=args.device)
-            loss = torch.nn.functional.binary_cross_entropy_with_logits(model(ids, lengths), labels)
+            loss = model.loss(model(ids, lengths), labels)
             if not torch.isfinite(loss): raise ValueError("Loss não finita; checkpoint anterior preservado.")
             optimizer.zero_grad(set_to_none=True); loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1., error_if_nonfinite=True); optimizer.step()

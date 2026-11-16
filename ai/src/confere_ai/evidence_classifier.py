@@ -7,15 +7,18 @@ from .grounding import prompt_for
 from .tokenizer import ByteBPE
 from .model import GPT, GPTConfig
 
+STATE_MODES = ("independent_binary", "categorical_four_state")
 READOUTS = ("shared_json_decision_prefix_v1", "suffix_query_decision_prefix_v1")
 
 
 class EvidenceClassifier(nn.Module):
-    def __init__(self, backbone):
+    def __init__(self, backbone, state_mode=STATE_MODES[0]):
         super().__init__()
+        if state_mode not in STATE_MODES: raise ValueError("Modo de estados não suportado.")
+        self.state_mode = state_mode
         backbone.head = nn.Identity()
         self.backbone = backbone
-        self.head = nn.Linear(backbone.config.width, 2)
+        self.head = nn.Linear(backbone.config.width, 4 if state_mode == STATE_MODES[1] else 2)
         backbone.initialize(self.head)
 
     def features(self, ids, lengths):
@@ -24,6 +27,27 @@ class EvidenceClassifier(nn.Module):
 
     def forward(self, ids, lengths):
         return self.head(self.features(ids, lengths))
+
+    def evidence_scores(self, logits):
+        if self.state_mode == STATE_MODES[0]: return logits.sigmoid()
+        states = logits.argmax(-1)
+        return torch.stack(((states & 1) != 0, (states & 2) != 0), dim=-1).float()
+
+    def loss(self, logits, labels):
+        if self.state_mode == STATE_MODES[0]:
+            return torch.nn.functional.binary_cross_entropy_with_logits(logits, labels)
+        states = (labels[:, 0] + 2 * labels[:, 1]).long()
+        return torch.nn.functional.cross_entropy(logits, states)
+
+
+@torch.no_grad()
+def load_binary_as_categorical(model, state):
+    if model.state_mode != STATE_MODES[1]: raise ValueError("Destino deve usar quatro estados.")
+    missing, unexpected = model.load_state_dict({k:v for k,v in state.items() if not k.startswith("head.")}, strict=False)
+    assert set(missing) == {"head.weight", "head.bias"} and not unexpected
+    for name in ["weight", "bias"]:
+        source = state["head."+name]; target = getattr(model.head, name)
+        target[0].zero_(); target[1].copy_(source[0]); target[2].copy_(source[1]); target[3].copy_(source[0]+source[1])
 
 
 def decision_prefix(tokenizer):
@@ -119,7 +143,7 @@ class EvidencePredictor:
         self.tokenizer = ByteBPE(checkpoint["merges"])
         self.config = GPTConfig(**checkpoint["config"])
         if self.tokenizer.vocab_size != self.config.vocab_size: raise ValueError("Tokenizer incompatível.")
-        self.model = EvidenceClassifier(GPT(self.config))
+        self.model = EvidenceClassifier(GPT(self.config), settings.get("state_mode", STATE_MODES[0]))
         self.model.load_state_dict(checkpoint["classifier"])
         self.device = device; self.model.to(device).eval()
 
@@ -129,4 +153,4 @@ class EvidencePredictor:
             raise ValueError("Informe de uma a quatro unidades distintas.")
         items = [dict(ids=encode_unit(requirement, u["text"], self.tokenizer, self.config.block_size, readout=self.readout)) for u in units]
         ids, lengths = unit_batch(items, self.device, self.config.block_size)
-        return response(units, self.model(ids, lengths).sigmoid().cpu().tolist(), self.thresholds)
+        return response(units, self.model.evidence_scores(self.model(ids, lengths)).cpu().tolist(), self.thresholds)

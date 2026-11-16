@@ -103,3 +103,27 @@ class EvidenceClassifierTests(unittest.TestCase):
         self.assertEqual(json.loads(response(units, [[.9, .55]], [.8, .6]))["evidence"], [dict(status="atendido", unit="page:4")])
         for invalid in [[.5], [float("nan"), .5], [1., .5]]:
             with self.assertRaises(ValueError): response(units, [[.9,.1]], invalid)
+
+    def test_four_states_preserve_initial_binary_decisions_and_learn_conflict_jointly(self):
+        from confere_ai.evidence_classifier import load_binary_as_categorical
+        config = GPTConfig(vocab_size=260, block_size=32, width=16, layers=1, heads=2)
+        old = EvidenceClassifier(GPT(config)); new = EvidenceClassifier(GPT(config), "categorical_four_state")
+        load_binary_as_categorical(new, old.state_dict())
+        features = torch.randn(50,16)
+        self.assertTrue(torch.equal((old.head(features).sigmoid() >= .5).float(), new.evidence_scores(new.head(features))))
+        logits = torch.tensor([[4.,0.,0.,0.],[0.,4.,0.,0.],[0.,0.,4.,0.],[0.,0.,0.,4.]], requires_grad=True)
+        labels = torch.tensor([[0.,0.],[1.,0.],[0.,1.],[1.,1.]])
+        self.assertTrue(torch.equal(new.evidence_scores(logits), labels))
+        new.loss(logits,labels).backward(); self.assertTrue(torch.isfinite(logits.grad).all())
+
+    def test_predictor_loads_categorical_state_metadata_and_keeps_aliases(self):
+        from dataclasses import asdict
+        config = GPTConfig(vocab_size=260, block_size=512, width=16, layers=1, heads=2)
+        model = EvidenceClassifier(GPT(config), "categorical_four_state")
+        checkpoint = dict(config=asdict(config),merges=[],classifier=model.state_dict(),settings=dict(objective="document_classifier",readout="shared_json_decision_prefix_v1",state_mode="categorical_four_state"))
+        predictor = EvidencePredictor(checkpoint,"cpu")
+        units = [dict(id="page:2",text="Há testes."),dict(id="page:4",text="Não há testes.")]
+        with patch.object(predictor.model,"forward",return_value=torch.tensor([[0.,9.,0.,0.],[0.,0.,9.,0.]])):
+            result = json.loads(predictor.predict_units("Testes",units))
+        self.assertEqual(result["status"],"evidencia_insuficiente")
+        self.assertEqual({e["unit"] for e in result["evidence"]},{"page:2","page:4"})
