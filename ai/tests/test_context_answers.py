@@ -106,3 +106,14 @@ class LexicalBindingTests(unittest.TestCase):
                 import json
                 self.assertEqual(json.loads(row["target"]), expected(row["scenario"]["units"], row["scenario"]["feature"]))
         self.assertEqual({r["task"] for r in rows}, {"grounded_atendido", "grounded_nao_atendido", "grounded_evidencia_insuficiente"})
+
+
+class ContextAcceptanceTests(unittest.TestCase):
+    def test_natural_family_eight_of_nine_is_not_reported_as_accepted(self):
+        from confere_ai.instruct import acceptance
+        rows = [dict(task="conversation_context_answer_natural", exact_match=i < 8) for i in range(9)]
+        self.assertFalse(acceptance(dict(samples=rows))["passed"])
+        rows[-1]["exact_match"] = True
+        self.assertTrue(acceptance(dict(samples=rows))["passed"])
+        legacy = [dict(task="conversation_identity", exact_match=i < 8) for i in range(10)]
+        self.assertTrue(acceptance(dict(samples=legacy))["passed"])

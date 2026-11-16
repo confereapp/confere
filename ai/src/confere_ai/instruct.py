@@ -99,8 +99,8 @@ def acceptance(result):
         tasks={}
         for row in conversational:
             pair=tasks.setdefault(row["task"],[0,0]);pair[0]+=row["exact_match"];pair[1]+=1
-        return {"passed":all(c/t>=.8 for c,t in tasks.values()),"counts":tasks,
-                "description":"Conversas sintéticas: ao menos 80% em cada família, com histórico gerado pelo modelo.","scope":"Não valida conversa aberta."}
+        return {"passed":all(c/t >= (.9 if task.startswith("conversation_context_answer_") else .8) for task,(c,t) in tasks.items()),"counts":tasks,
+                "description":"Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.","scope":"Não valida conversa aberta."}
     grounded = [r for r in result["samples"] if r["task"].startswith("grounded_")]
     if grounded:
         profiles = {}
