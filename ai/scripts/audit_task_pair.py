@@ -42,7 +42,7 @@ def main():
         info = json.loads((directory / "run.json").read_text())
         subset, subset_digest = load_instructions(Path(info["data"]))
         original = [r for r in rows if r["task"].startswith(prefix)]
-        if (subset[:len(original)] != original or any(r["split"] != "train" for r in subset[len(original):])
+        if ([r for r in subset if r["split"] != "train"] != [r for r in original if r["split"] != "train"]
             or subset_digest != info["dataset_fingerprint"]):
             raise ValueError("Currículo especializado difere da partição original.")
         if (info["evaluation_protocol_hash"] != protocol_fingerprint() or info["device"] != "mps"

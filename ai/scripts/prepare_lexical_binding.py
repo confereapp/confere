@@ -34,11 +34,11 @@ def expected(units, feature):
     return dict(status=status, evidence=evidence)
 
 
-def documents(count=2000):
+def documents(count=2000, feature_prefix="recurso "):
     rng = random.Random(151130)
     rows = []
     for i in range(count):
-        invented = ["recurso " + value.casefold() for value in names(rng)]
+        invented = [feature_prefix + value.casefold() for value in names(rng)]
         if i % 3 == 0: feature, other = invented
         elif i % 3 == 1: feature, other = invented[0], rng.choice(WORDS)
         else: feature, other = rng.sample(WORDS, 2)
