@@ -158,6 +158,9 @@ def run(args):
     train = [row for row in rows if row["split"] == "train"]
     validation = [row for row in rows if row["split"] == "validation"]
     balanced_selection = getattr(args, "balanced_objective_selection", False)
+    generative_selection = getattr(args, "generative_selection", False)
+    if generative_selection and balanced_selection:
+        raise ValueError("Escolha seleção gerativa ou seleção pela média das losses.")
     if balanced_selection and ({"conversation" if row["task"].startswith("conversation_") else "documents"
                                 if row["task"].startswith("grounded_") else "other" for row in validation}
                                != {"conversation", "documents"}):
@@ -170,6 +173,8 @@ def run(args):
             and human_fraction+public_fraction+document_fraction<1): raise ValueError("Frações de mistura inválidas.")
     if any(r.get("response_tokens",64)!=generation_budget for r in rows if "history" in r): raise ValueError("Orçamento do corpus deve corresponder ao treino.")
     controlled_validation=[r for r in validation if r["task"] not in {"human_dialogue","public_dialogue"}] if generation_budget>64 else validation
+    if generative_selection and (not controlled_validation or any(not r["task"].startswith(("grounded_", "conversation_")) for r in controlled_validation)):
+        raise ValueError("Seleção gerativa exige validação controlada por objetivo.")
     source = torch.load(args.init_from, map_location="cpu", weights_only=True)
     evaluation_context=getattr(args,"evaluation_context",None) or (256 if generation_budget>64 else source["config"]["block_size"])
     if not 66<=evaluation_context<=source["config"]["block_size"]: raise ValueError("Contexto de avaliação inválido.")
@@ -211,6 +216,7 @@ def run(args):
     settings["train_last_blocks"] = last_blocks
     settings["document_decision_weight"] = decision_weight
     settings["checkpoint_selection"] = "objective_mean" if balanced_selection else "token_mean"
+    if generative_selection: settings["checkpoint_selection"] = "generated_family_quality"
     settings["public_fraction"]=public_fraction
     settings["document_fraction"]=document_fraction
     schemas = {r.get("grounding_schema", 1) for r in rows if r["task"].startswith("grounded_")}
@@ -247,6 +253,7 @@ def run(args):
     if public and not public_fraction: raise ValueError("Defina --public-fraction explicitamente para a fonte pública.")
     if document_fraction and (not documents or not synthetic):raise ValueError("Mistura documental exige documentos e exemplos autorais não documentais.")
     started, best, processed, memory = time.perf_counter(), float("inf"), 0, 0
+    best_quality = best_generation = None
     metrics = []
     driver_memory = 0
     human_examples_processed=0
@@ -256,7 +263,7 @@ def run(args):
     document_examples_processed=0
     document_tokens_processed=0
     def record(step):
-        nonlocal best
+        nonlocal best, best_quality, best_generation
         item = {"step": step, "train_loss": evaluate(model, train_eval, device),
                 **validation_losses(model, encoded_val, validation, device, balanced_selection),
                 "elapsed_seconds": time.perf_counter()-started}
@@ -268,6 +275,17 @@ def run(args):
         with (args.run_dir/"metrics.jsonl").open("a") as f: f.write(json.dumps(item)+"\n")
         print(json.dumps(item), flush=True)
         save_checkpoint(args.run_dir/"last.pt", model, optimizer, tokenizer, generator, step, fingerprint, settings)
+        if generative_selection:
+            from .generative_selection import quality_key
+            generation = (baseline if step == 0 and not comparison else
+                          score(model, tokenizer, controlled_validation, device, evaluation_context, generation_budget))
+            quality = quality_key(generation)
+            (args.run_dir / f"generation-{step}.json").write_text(json.dumps(dict(quality=quality, result=generation), ensure_ascii=False, indent=2))
+            print(json.dumps(dict(generation_step=step, quality=quality, correct=generation["correct"], total=generation["total"])), flush=True)
+            if best_quality is None or quality > best_quality:
+                best_quality, best_generation = quality, generation
+                save_checkpoint(args.run_dir/"best.pt", model, optimizer, tokenizer, generator, step, fingerprint, settings)
+            return
         selection_loss = item.get("selection_loss", item["validation_loss"])
         if selection_loss < best:
             best = selection_loss
@@ -306,7 +324,7 @@ def run(args):
     (args.run_dir/"summary.json").write_text(json.dumps(summary, indent=2))
     selected = torch.load(args.run_dir/"best.pt", map_location="cpu", weights_only=True)
     model.load_state_dict(selected["model"]); model.eval()
-    result = {"baseline": baseline, "selected": score(model, tokenizer, controlled_validation, device,context_limit=evaluation_context, response_tokens=generation_budget), "selected_step": selected["step"], "test_examples_used": 0}
+    result = {"baseline": baseline, "selected": best_generation if generative_selection else score(model, tokenizer, controlled_validation, device,context_limit=evaluation_context, response_tokens=generation_budget), "selected_step": selected["step"], "test_examples_used": 0}
     result["acceptance"] = acceptance(result["selected"])
     (args.run_dir/"instruction-evaluation.json").write_text(json.dumps(result, ensure_ascii=False, indent=2))
     if objective=="conversation":
@@ -334,6 +352,7 @@ def main():
     parser.add_argument("--train-last-blocks", type=int, help="Congelar embeddings e blocos iniciais; treinar apenas últimos N blocos, norm e saída.")
     parser.add_argument("--document-decision-weight", type=float, default=1., help="Peso dos valores status/unit no treino; avaliação continua sem pesos.")
     parser.add_argument("--balanced-objective-selection", action="store_true", help="Selecionar checkpoint pela média das losses de conversa e documentos (50% cada).")
+    parser.add_argument("--generative-selection", action="store_true", help="Selecionar por respostas geradas e pior família; loss continua registrada. Desenvolvimento, não teste cego.")
     parser.add_argument("--human-fraction",type=float,default=0.)
     parser.add_argument("--public-fraction",type=float,default=0.)
     parser.add_argument("--document-fraction",type=float,default=0.,help="Fração de lotes documentais separados dos demais exemplos autorais.")
