@@ -55,6 +55,19 @@ def conversations(count=2400):
                              history=[], turn_index=0, response_tokens=256, prompt=header+text+"\n"+question, target=target,
                              scenario=dict(facts=copy.deepcopy(facts), field=field),
                              provenance=dict(kind="synthetic_authored", note="Perguntas contrastivas sobre os mesmos fatos; somente treino de desenvolvimento.")))
+    for i in range(count // 2):
+        first, second = rng.sample(NAMES, 2)
+        group = f"query-memory-{i}"; history = []
+        turns = [
+            (rng.choice(["Pode me chamar pelo nome {}.", "Eu me chamo {}.", "Meu nome é {}."]).format(first), f"Prazer, {first}."),
+            (rng.choice(["Na verdade, eu me chamo {}.", "Retificando, me chamo {}.", "Preciso corrigir: me chamo {}.", "Eu disse errado: meu nome é {}."]).format(second), f"Prazer, {second}."),
+            (rng.choice(["Qual meu nome depois de corrigir?", "Agora como eu me chamo?", "Qual foi o nome corrigido?"]), f"Seu nome é {second}."),
+        ]
+        for j, (prompt, target) in enumerate(turns):
+            rows.append(dict(id=f"{group}-{j}", project_id=group, split="train", task="conversation_context_answer_memory",
+                             prompt=prompt, target=target, history=copy.deepcopy(history), turn_index=j, response_tokens=256,
+                             provenance=dict(kind="synthetic_authored", note="Nomes autorais de treino; correções explícitas com formas variadas. Desenvolvimento, sem teste cego.")))
+            history.append([prompt, target])
     return rows
 
 

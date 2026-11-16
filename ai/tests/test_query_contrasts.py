@@ -21,6 +21,7 @@ class QueryContrastTests(unittest.TestCase):
 
     def test_unrelated_conflict_does_not_contaminate_other_questions(self):
         rows = conversations(24)
+        rows = [r for r in rows if "scenario" in r]
         for row in rows:
             self.assertEqual(row["target"], answer(row["scenario"]["facts"], row["scenario"]["field"]))
         for offset in range(0, len(rows), 4):
@@ -51,3 +52,11 @@ class QueryContrastTests(unittest.TestCase):
         transformed = [r for r in rows if r["id"].startswith("intent-variation-")]
         self.assertTrue(transformed)
         self.assertTrue(all(r["target"] == source[0]["target"] and r["turn_index"] == 0 for r in transformed))
+
+    def test_memory_corrections_use_latest_name_and_coherent_history(self):
+        rows = [r for r in conversations(4) if r["task"].endswith("memory")]
+        self.assertEqual(len(rows), 6)
+        for a, b, c in zip(rows[::3], rows[1::3], rows[2::3]):
+            self.assertNotEqual(a["target"], b["target"])
+            self.assertEqual(c["target"], "Seu nome é " + b["target"].removeprefix("Prazer, "))
+            self.assertEqual(c["history"], [[a["prompt"], a["target"]], [b["prompt"], b["target"]]])
