@@ -215,7 +215,7 @@ def run(args):
     last_blocks = getattr(args, "train_last_blocks", None)
     trainable_count = configure_trainable(model, last_blocks)
     encoded_train = [encode_sample(row, tokenizer, model.config.block_size) for row in train]
-    from .decision_loss import decision_weights, weighted_loss, weight_batch
+    from .decision_loss import decision_weights, weighted_loss, weight_batch, example_mean_loss
     train_weights = ([decision_weights(row, tokenizer, encoded[1], decision_weight)
                       for row, encoded in zip(train, encoded_train)] if decision_weight > 1 else None)
     encoded_val = [encode_sample(row, tokenizer, model.config.block_size) for row in validation]
@@ -252,6 +252,7 @@ def run(args):
     objective = "conversation" if any("history" in r for r in rows) else "document_grounding" if any(r["task"].startswith("grounded_") for r in rows) else "instruction"
     settings = {"objective": objective, "seed": 42, "batch_size": args.batch_size, "learning_rate": args.learning_rate,"generation_budget":generation_budget,"human_fraction":human_fraction}
     settings["human_sampling_policy"]="homogeneous_batches"
+    settings["training_loss_reduction"] = "example_mean" if family_sampling else "token_mean"
     if anchor_from:
         settings["anchor_checkpoint"] = str(anchor_from)
         settings["anchor_sha256"] = hashlib.sha256(Path(anchor_from).read_bytes()).hexdigest()
@@ -353,7 +354,7 @@ def run(args):
         optimizer.zero_grad(set_to_none=True)
         logits = model(x)
         loss = (weighted_loss(logits, y, weight_batch(train_weights, indices, y.shape, device))
-                if train_weights is not None else F.cross_entropy(logits.flatten(0,1), y.flatten(), ignore_index=-100))
+                if train_weights is not None else example_mean_loss(logits, y) if family_sampling else F.cross_entropy(logits.flatten(0,1), y.flatten(), ignore_index=-100))
         if anchor is not None:
             from .distillation import correct_teacher_kl
             with torch.no_grad(): anchor_logits = anchor(x)

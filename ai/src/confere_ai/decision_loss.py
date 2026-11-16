@@ -39,3 +39,10 @@ def weight_batch(examples, indices, shape, device):
         values = examples[source]
         weights[index, :len(values)] = torch.tensor(values)
     return weights.to(device)
+
+
+def example_mean_loss(logits, labels):
+    counts = (labels != -100).sum(-1)
+    if (counts == 0).any(): raise ValueError("Cada exemplo deve conter tokens-alvo.")
+    losses = F.cross_entropy(logits.transpose(1, 2), labels, ignore_index=-100, reduction="none")
+    return (losses.sum(-1) / counts).mean()
