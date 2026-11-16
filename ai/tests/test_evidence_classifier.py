@@ -24,6 +24,10 @@ class EvidenceClassifierTests(unittest.TestCase):
         self.assertEqual(output['status'],'evidencia_insuficiente')
         self.assertEqual({e['unit'] for e in output['evidence']},{'original:4'})
         self.assertEqual(len(output['evidence']),2)
+        long_units=[dict(id='original:4',text='Nada. '*8+'Há testes.'),units[1]]
+        with patch.object(predictor.model,'forward',side_effect=[torch.full((8,2),-9.),torch.tensor([[9.,-9.],[-9.,9.]])]):
+            batched=json.loads(predictor.predict_units('Testes',long_units))
+        self.assertEqual(batched['evidence'],[dict(status='atendido',unit='original:4'),dict(status='nao_atendido',unit='original:8')])
         with patch.object(predictor.model,'forward',return_value=torch.tensor([[9.,-9.],[float('nan'),9.],[-9.,-9.]])):
             with self.assertRaises(ValueError): predictor.predict_units('Testes',units)
         text='Uma frase!  Outra.\nÚltima🙂'

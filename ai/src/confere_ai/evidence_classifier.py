@@ -159,7 +159,7 @@ class EvidencePredictor:
         self.device = device; self.model.to(device).eval()
 
     @torch.no_grad()
-    def predict_units(self, requirement, units):
+    def probabilities(self, requirement, units):
         if not units or len(units) > 4 or len({u["id"] for u in units}) != len(units):
             raise ValueError("Informe de uma a quatro unidades distintas.")
         parts=[sentence_parts(u['text']) if self.segmentation=='sentences_v1' else [u['text']] for u in units]
@@ -174,4 +174,7 @@ class EvidencePredictor:
         for group in parts:
             values=predictions[offset:offset+len(group)];offset+=len(group)
             probabilities.append([max(v[i] for v in values) for i in range(2)])
-        return response(units, probabilities, self.thresholds)
+        return probabilities
+
+    def predict_units(self, requirement, units):
+        return response(units,self.probabilities(requirement,units),self.thresholds)

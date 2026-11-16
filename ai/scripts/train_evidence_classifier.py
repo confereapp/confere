@@ -95,6 +95,8 @@ def main():
                     encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5, eval_every=args.eval_every,
                     checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", error_replay=args.error_replay, initial_train_errors=len(hard), loss="categorical_ce" if state_mode==STATE_MODES[1] else "unweighted_bce")
     settings['unit_segmentation']=source['settings'].get('unit_segmentation','whole_unit_v1')
+    settings['thresholds']=source['settings'].get('thresholds',[.5,.5])
+    response([],[],settings['thresholds'])
     predictor=None
     if settings['unit_segmentation']=='sentences_v1':
         from confere_ai.evidence_classifier import EvidencePredictor
@@ -130,7 +132,7 @@ def main():
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1., error_if_nonfinite=True); optimizer.step()
         if step % args.eval_every == 0 or step == args.steps:
             checkpoint(step, "last.pt")
-            result = score(model, val, validation, args.device, predict_units=predictor.predict_units if predictor else None); key = quality_key(result)
+            result = score(model, val, validation, args.device,settings['thresholds'],predict_units=predictor.predict_units if predictor else None); key = quality_key(result)
             if baseline is None: baseline = result
             (args.run_dir / f"evaluation-{step}.json").write_text(json.dumps(dict(quality=key, result=result), ensure_ascii=False, indent=2))
             print(json.dumps(dict(step=step, correct=result["correct"], total=result["total"], quality=key,
