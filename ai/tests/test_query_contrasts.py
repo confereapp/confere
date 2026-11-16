@@ -63,7 +63,7 @@ class QueryContrastTests(unittest.TestCase):
 
     def test_resource_spelling_does_not_determine_polarity(self):
         rows = documents(300)
-        near = [r for r in rows if r["scenario"]["feature"].startswith("pré")]
+        near = [r for r in rows if r["scenario"]["feature"].startswith(("im", "ex", "pré", "pós"))]
         states = {e["status"] for r in near for e in json.loads(r["target"])["evidence"]}
         self.assertEqual(states, {"atendido", "nao_atendido"})
 
@@ -73,3 +73,9 @@ class QueryContrastTests(unittest.TestCase):
             self.assertEqual([a["target"], b["target"], c["target"]], ["Sim.", "Não.", "Não tenho informação suficiente para responder."])
             self.assertEqual(a["prompt"].split(". ")[:2], b["prompt"].split(". ")[:2])
             self.assertEqual(a["prompt"].split(". ")[:2], c["prompt"].split(". ")[:2])
+
+    def test_near_resources_vary_beyond_two_fixed_prefixes(self):
+        rows = documents(120)
+        pairs = [(rows[i*2]["scenario"]["feature"], rows[i*2+1]["scenario"]["feature"]) for i in range(120) if i % 3 == 1]
+        self.assertGreater(len({a[:2] for a, _ in pairs}), 5)
+        self.assertTrue(all(a != b for a, b in pairs))

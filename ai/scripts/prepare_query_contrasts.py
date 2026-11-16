@@ -26,6 +26,7 @@ DOC_FORMS = FORMS + [
     ("O recurso {} está implementado.", "O recurso {} não está implementado."),
     ("Existe suporte a {}.", "Não existe suporte a {}."),
 ]
+PREFIXES = ["im", "ex", "re", "de", "in", "con", "trans", "auto", "micro", "macro", "sub", "inter", "super", "pré", "pós"]
 QUESTIONS = {
     "nome": ["Que nome consta para o projeto?", "Qual o nome que este projeto recebeu?", "O projeto foi chamado de quê?"],
     "responsavel": ["Quem consta como responsável?", "Qual pessoa assume a responsabilidade?", "Quem está encarregado do projeto?"],
@@ -62,7 +63,7 @@ def conversations(count=2400):
         turns = [
             (rng.choice(["Pode me chamar pelo nome {}.", "Eu me chamo {}.", "Meu nome é {}."]).format(first), f"Prazer, {first}."),
             (rng.choice(["Na verdade, eu me chamo {}.", "Retificando, me chamo {}.", "Preciso corrigir: me chamo {}.", "Eu disse errado: meu nome é {}."]).format(second), f"Prazer, {second}."),
-            (rng.choice(["Qual meu nome depois de corrigir?", "Agora como eu me chamo?", "Qual foi o nome corrigido?"]), f"Seu nome é {second}."),
+            (rng.choice(["Qual meu nome depois de corrigir?", "Agora como eu me chamo?", "Qual foi o nome corrigido?", "Que nome devo usar depois da correção?", "Qual nome devo usar para me identificar?"]), f"Seu nome é {second}."),
         ]
         for j, (prompt, target) in enumerate(turns):
             rows.append(dict(id=f"{group}-{j}", project_id=group, split="train", task="conversation_context_answer_memory",
@@ -83,7 +84,11 @@ def presence_pairs(count=1600):
         rng.shuffle(clauses); text = " ".join(clauses)
         for j, (feature, target) in enumerate([(a, "Sim."), (b, "Não."), (missing, "Não tenho informação suficiente para responder.")]):
             group = f"query-presence-{i}-{j}"
-            prompt = text + " " + rng.choice(questions).format(feature)
+            question = rng.choice(questions).format(feature)
+            if i % 2:
+                question = (f"Os {feature} foram incluídos?" if feature == "testes" else
+                            f"A {feature} foi incluída?" if feature == "documentação" else f"O {feature} foi incluído?")
+            prompt = text + " " + question
             assert prompt not in excluded
             rows.append(dict(id=group, project_id=group, split="train", task="conversation_context_answer_support",
                              prompt=prompt, target=target, history=[], turn_index=0, response_tokens=256,
@@ -98,7 +103,7 @@ def documents(count=3600):
         if i % 3 == 0:
             a = rng.choice(WORDS); b = a + rng.choice([" adicional", " externo", " antigo"])
         elif i % 3 == 1:
-            stem = a; a, b = "pré"+stem, "pós"+stem
+            stem = a; left, right = rng.sample(PREFIXES, 2); a, b = left+stem, right+stem
         pos, neg = rng.choice(DOC_FORMS)
         first, second = rng.sample(["atendido", "nao_atendido"], 2)
         states = [(a, first), (b, second)]; mode = rng.randrange(6)
@@ -135,7 +140,8 @@ def long_documents(tokenizer, count=120):
             if i % 3:
                 a, b = [s.casefold() for s in names(rng)]
                 suffix = rng.choice(["ção", "mento", "dade", "ncia", "tura", "grafia"])
-                topics = [a+suffix, b+suffix] if i % 3 == 1 else ["pré"+a+suffix, "pós"+a+suffix]
+                left, right = rng.sample(PREFIXES, 2)
+                topics = [a+suffix, b+suffix] if i % 3 == 1 else [left+a+suffix, right+a+suffix]
             scene = scene_for("train", 700000+i, profile, rng, forms=DOC_FORMS, topics=topics)
             local = local_rows(scene, tokenizer)
             if local is None:
