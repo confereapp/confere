@@ -565,3 +565,30 @@ uniformes, agora escolhidas por exemplo dentro do lote para reduzir oscilações
 A validação de conversa original permanece intacta; os 88 lotes documentais da
 coorte que falhou são validação de desenvolvimento adicional, nunca treino.
 Os critérios finais de família, cobertura e falsos positivos permanecem iguais.
+
+## Rodadas R–T e transferência por consulta — 16/11
+
+A rodada documental R, mesmo com novas molduras longas, não superou o checkpoint
+inicial no critério por família (275/294; seis falsos positivos locais). Um
+snapshot no passo 2500 acertou 99/100 fragmentos longos de treino amostrados,
+mas só 63/100 pares curtos novos: acerto em textos conhecidos não demonstrou
+associação aberta entre requisito e trecho. O formato experimental que move a
+pergunta para depois do trecho foi encerrado deliberadamente: S selecionou
+230/294, com dez falsos positivos, e nunca foi aprovado.
+
+O gerador foi corrigido para que tipo de nome não determine polaridade; novos
+fragmentos longos também incluem termos inventados próximos. A rodada T mantém
+o protocolo anterior e amostra duas consultas sobre o mesmo trecho juntas,
+preferindo alvos diferentes quando existem. São 14.719 fontes de treino com
+contrastes entre 30.740 fontes distintas; nenhuma amostra de validação participa
+da escolha dos lotes.
+
+Na conversa, R chegou a 167/171 e foi encerrada deliberadamente no checkpoint
+preservado de 11000 passos (geração selecionada completa no passo 10000; geração
+11000 interrompida e não utilizada). O ajuste focado T alcançou 168/171 no passo
+1000 e passou 8/9 diagnósticos naturais, contra 4/9 na referência G. O erro
+natural restante confunde atributo ausente com outro incluído no mesmo texto;
+o novo currículo U acrescenta perguntas de presença/ausência sobre texto
+idêntico. Esses resultados intermediários **não atingem a meta conjunta**.
+A validação original continua intacta e não há promoção ou mudança dos pesos
+padrão. Os relatórios identificam encerramentos e medições incompletas.

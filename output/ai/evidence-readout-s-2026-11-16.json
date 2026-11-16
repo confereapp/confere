@@ -1,0 +1,23 @@
+{
+  "run": "ai/runs/evidence-classifier-s-2026-11-16",
+  "summary": {
+    "final_step": 3500,
+    "selected_step": 2500,
+    "stop_reason": "interrupted_for_underperforming_readout",
+    "elapsed_seconds": null,
+    "test_examples_used": 0,
+    "scope": "Somente checkpoints completos preservados. Passos posteriores ao último checkpoint e duração final não registrados. Encerramento deliberado, sem erro numérico observado."
+  },
+  "selected_correct": 230,
+  "selected_total": 294,
+  "quality": [
+    false,
+    0,
+    0.18518518518518517,
+    0.7402441368704344,
+    -10,
+    230
+  ],
+  "checkpoint_sha256": "78e53dbb5e26906d6cca6776d0232d2ec4ab945c96fde6bb24d719b7cf37abf1",
+  "adopted": false
+}

@@ -1,0 +1,84 @@
+{
+  "checkpoint_sha256": "6bf330926be183f2d686e754fb0820b8a564e081c30159cea57177e7e48a53d3",
+  "step": 1000,
+  "literal_matches": 8,
+  "total": 9,
+  "samples": [
+    {
+      "message": "No projeto Horizonte, a responsável é Lia. Qual é o nome da responsável?",
+      "target": "Lia.",
+      "actual": "Lia.",
+      "literal_match": true
+    },
+    {
+      "message": "A entrega está prevista para daqui a 18 dias. Qual é o prazo informado?",
+      "target": "18 dias.",
+      "actual": "18 dias.",
+      "literal_match": true
+    },
+    {
+      "message": "O projeto usa Python e terá testes automatizados. Qual linguagem ele usa?",
+      "target": "Python.",
+      "actual": "Python.",
+      "literal_match": true
+    },
+    {
+      "message": "A responsável pelo projeto é Lia. Não há prazo descrito. Qual é o prazo de entrega?",
+      "target": "Não tenho informação suficiente para responder.",
+      "actual": "Não tenho informação suficiente para responder.",
+      "literal_match": true
+    },
+    {
+      "message": "O relatório diz que há testes e depois diz que não há testes. Dá para confirmar se os testes existem?",
+      "target": "Há informações conflitantes no texto.",
+      "actual": "Há informações conflitantes no texto.",
+      "literal_match": true
+    },
+    {
+      "message": "Qual nome devo usar agora?",
+      "history": [
+        [
+          "Me chamo Lia.",
+          "Prazer, Lia."
+        ],
+        [
+          "Corrigindo: meu nome é Rui.",
+          "Prazer, Rui."
+        ]
+      ],
+      "target": "Seu nome é Rui.",
+      "actual": "Seu nome é Rui.",
+      "literal_match": true
+    },
+    {
+      "message": "Como você se chama?",
+      "history": [
+        [
+          "Me chamo Lia.",
+          "Prazer, Lia."
+        ],
+        [
+          "Corrigindo: meu nome é Rui.",
+          "Prazer, Rui."
+        ]
+      ],
+      "target": "Sou o Confere.",
+      "actual": "Sou o Confere.",
+      "literal_match": true
+    },
+    {
+      "message": "O projeto não inclui testes, mas inclui documentação. A documentação foi incluída?",
+      "target": "Sim.",
+      "actual": "Não.",
+      "literal_match": false
+    },
+    {
+      "message": "Equipe: Lia faz os testes; Rui escreve o manual. Quem faz os testes?",
+      "target": "Lia.",
+      "actual": "Lia.",
+      "literal_match": true
+    }
+  ],
+  "adopted": false,
+  "note": "Diagnósticos de desenvolvimento, formulados antes da conclusão do ciclo B; fora do corpus de treino. Igualdade literal penaliza paráfrases corretas; leitura semântica necessária. Não são teste cego de conversa geral."
+}
