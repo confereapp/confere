@@ -13,7 +13,7 @@ def protocol_fingerprint():
     return hashlib.sha256(payload + inspect.getsource(score).encode() + str(torch.__version__).encode()).hexdigest()
 
 
-def reuse_baseline(directory, checkpoint, validation, context_size, response_tokens):
+def reuse_baseline(directory, checkpoint, validation, context_size, response_tokens, device="mps"):
     from .instruct import load_instructions
     directory = Path(directory)
     info = json.loads((directory / "run.json").read_text())
@@ -28,7 +28,7 @@ def reuse_baseline(directory, checkpoint, validation, context_size, response_tok
     digest = hashlib.sha256(Path(checkpoint).read_bytes()).hexdigest()
     if digest != audit["checkpoint_sha256"] or result["selected_step"] != audit["selected_step"]:
         raise ValueError("Cache não corresponde aos pesos selecionados.")
-    if (info["paired_evaluation_context"] != context_size
+    if (info["device"] != device or info["paired_evaluation_context"] != context_size
         or info["paired_evaluation_response_tokens"] != response_tokens or result["test_examples_used"] != 0):
         raise ValueError("Cache usa protocolo de geração diferente.")
     rows, source_digest = load_instructions(Path(info["data"]))

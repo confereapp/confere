@@ -15,7 +15,7 @@ class EvaluationCacheTests(unittest.TestCase):
             rows = [dict(id=split, project_id=split, split=split, task="conversation_test", history=[], turn_index=0,
                          response_tokens=256, prompt="oi-"+split, target="olá", provenance=dict(kind="synthetic_authored")) for split in ["train", "validation"]]
             corpus = root / "data.jsonl"; corpus.write_text("\n".join(json.dumps(r) for r in rows))
-            info = dict(evaluation_protocol_hash=protocol_fingerprint(), paired_evaluation_context=1024, paired_evaluation_response_tokens=256,
+            info = dict(device="mps", evaluation_protocol_hash=protocol_fingerprint(), paired_evaluation_context=1024, paired_evaluation_response_tokens=256,
                         data=str(corpus), dataset_fingerprint=hashlib.sha256(corpus.read_bytes()).hexdigest())
             audit = dict(checkpoint_sha256=hashlib.sha256(checkpoint.read_bytes()).hexdigest(), selected_step=1)
             selected = dict(total=1, correct=1, samples=[dict(id="validation", task="conversation_test", prompt="oi-validation", expected="olá", actual="olá", exact_match=True)])
@@ -29,5 +29,6 @@ class EvaluationCacheTests(unittest.TestCase):
             (root/"run.json").write_text(json.dumps(bad_info))
             with self.assertRaises(ValueError): reuse_baseline(root,checkpoint,[rows[1]],1024,256)
             (root/"run.json").write_text(json.dumps(info))
+            with self.assertRaises(ValueError): reuse_baseline(root,checkpoint,[rows[1]],1024,256,device="cpu")
             checkpoint.write_bytes(b"changed")
             with self.assertRaises(ValueError): reuse_baseline(root,checkpoint,[rows[1]],1024,256)

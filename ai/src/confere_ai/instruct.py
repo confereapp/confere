@@ -166,7 +166,7 @@ def run(args):
     if baseline_from:
         if comparison: raise ValueError("Cache e comparação alternativa não podem ser usados juntos.")
         from .evaluation_cache import reuse_baseline
-        baseline = reuse_baseline(baseline_from, args.init_from, controlled_validation, evaluation_context, generation_budget)
+        baseline = reuse_baseline(baseline_from, args.init_from, controlled_validation, evaluation_context, generation_budget, device)
     elif comparison:
         previous = torch.load(comparison, map_location="cpu", weights_only=True)
         if evaluation_context>previous["config"]["block_size"]: raise ValueError("Contexto de avaliação não cabe na referência.")
