@@ -344,3 +344,15 @@ Ambos reprovados. No selecionado, acerto caiu de 337/377 para 322/377, documento
 Os últimos pesos também falham: ausências 8/12 e memória 26/36. A nova seleção
 expõe os dois objetivos, mas loss continua sem substituir os gates gerativos.
 PDF de três páginas renderizado e inspecionado; nenhum checkpoint promovido.
+
+## Ensaio I: média de pesos compatíveis
+
+G preservou melhor os documentos/contexto; H aprendeu definições e correções,
+mas regrediu em outros casos. O ensaio offline I testa a média 50/50 de G/best.pt
+e H/best.pt, ambos descendentes da mesma rede, arquitetura, tokenizer, corpus e
+contrato V2. Sem novas atualizações, sem trocar a decodificação nem a API.
+O resultado é um checkpoint de passo zero com fontes e hashes explícitos e
+optimizer reinicializado; não representa retomada do optimizer de qualquer origem.
+Tensores incompatíveis/não finitos ou buffers inteiros divergentes são recusados.
+Mesmos 377 casos controlados e mesmos gates, baseline G preservado. A média não
+é presumida superior: precisa preservar os dois objetivos na geração.
