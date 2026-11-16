@@ -96,3 +96,10 @@ class EvidenceClassifierTests(unittest.TestCase):
         head = torch.nn.Identity()
         self.assertEqual(evaluate_head(head, torch.tensor([[5., -5.], [-5., 5.]]), [row])["correct"], 1)
         self.assertEqual(evaluate_head(head, torch.full((2, 2), -5.), [row])["correct"], 0)
+
+    def test_calibrated_thresholds_filter_weak_predictions_without_changing_references(self):
+        units = [dict(id="page:4")]
+        self.assertEqual(json.loads(response(units, [[.7, .55]], [.8, .6]))["evidence"], [])
+        self.assertEqual(json.loads(response(units, [[.9, .55]], [.8, .6]))["evidence"], [dict(status="atendido", unit="page:4")])
+        for invalid in [[.5], [float("nan"), .5], [1., .5]]:
+            with self.assertRaises(ValueError): response(units, [[.9,.1]], invalid)

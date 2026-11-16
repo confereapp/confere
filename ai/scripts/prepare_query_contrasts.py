@@ -26,6 +26,7 @@ DOC_FORMS = FORMS + [
     ("O recurso {} está implementado.", "O recurso {} não está implementado."),
     ("Existe suporte a {}.", "Não existe suporte a {}."),
 ]
+DOMAIN_PAIRS = [("importação", "exportação"), ("autenticação", "autorização"), ("cadastro", "recadastro"), ("criptografia", "descriptografia"), ("upload", "download"), ("inclusão", "exclusão"), ("ativação", "desativação"), ("validação", "invalidação"), ("conexão", "desconexão"), ("instalação", "desinstalação")]
 PREFIXES = ["im", "ex", "re", "de", "in", "con", "trans", "auto", "micro", "macro", "sub", "inter", "super", "pré", "pós"]
 QUESTIONS = {
     "nome": ["Que nome consta para o projeto?", "Qual o nome que este projeto recebeu?", "O projeto foi chamado de quê?"],
@@ -107,6 +108,7 @@ def documents(count=3600):
             a = rng.choice(WORDS); b = a + rng.choice([" adicional", " externo", " antigo"])
         elif i % 3 == 1:
             stem = a; left, right = rng.sample(PREFIXES, 2); a, b = left+stem, right+stem
+        if i % 4 == 0: a, b = rng.choice(DOMAIN_PAIRS)
         pos, neg = rng.choice(DOC_FORMS)
         first, second = rng.sample(["atendido", "nao_atendido"], 2)
         states = [(a, first), (b, second)]; mode = rng.randrange(6)
@@ -145,6 +147,7 @@ def long_documents(tokenizer, count=120):
                 suffix = rng.choice(["ção", "mento", "dade", "ncia", "tura", "grafia"])
                 left, right = rng.sample(PREFIXES, 2)
                 topics = [a+suffix, b+suffix] if i % 3 == 1 else [left+a+suffix, right+a+suffix]
+            if i % 4 == 0: topics = rng.choice(DOMAIN_PAIRS)
             scene = scene_for("train", 700000+i, profile, rng, forms=DOC_FORMS, topics=topics)
             local = local_rows(scene, tokenizer)
             if local is None:

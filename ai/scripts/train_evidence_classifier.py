@@ -17,7 +17,7 @@ from confere_ai.tokenizer import ByteBPE
 
 
 @torch.no_grad()
-def score(model, encoded, rows, device):
+def score(model, encoded, rows, device, thresholds=(.5, .5)):
     model.eval(); probabilities = []
     for offset in range(0, len(encoded), 8):
         ids, lengths = unit_batch(encoded[offset:offset+8], device, model.backbone.config.block_size)
@@ -25,7 +25,7 @@ def score(model, encoded, rows, device):
     results = []; offset = 0
     for row in rows:
         count = len(row["units"])
-        raw = response(row["units"], probabilities[offset:offset+count]); offset += count
+        raw = response(row["units"], probabilities[offset:offset+count], thresholds); offset += count
         results.append(dict(id=row["id"], task=row["task"], prompt=row["prompt"], expected=row["target"], actual=raw,
                             evaluation_profile=row.get("evaluation_profile", "default"), **judge(raw, row)))
     assert offset == len(probabilities)

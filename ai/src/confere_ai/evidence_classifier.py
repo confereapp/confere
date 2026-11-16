@@ -84,14 +84,16 @@ def unit_batch(items, device, context_size):
     return ids.to(device), torch.tensor(lengths, device=device)
 
 
-def response(units, probabilities):
+def response(units, probabilities, thresholds=(.5, .5)):
+    if len(thresholds) != 2 or any(not isinstance(v, (float, int)) or not 0 < v < 1 for v in thresholds):
+        raise ValueError("Limiares devem conter dois números entre zero e um.")
     if len(probabilities) != len(units): raise ValueError("Uma previsão é obrigatória por unidade.")
     evidence = []
     for unit, values in zip(units, probabilities):
         if len(values) != 2 or any(not 0 <= value <= 1 for value in values):
             raise ValueError("Probabilidades inválidas.")
-        for status, value in zip(("atendido", "nao_atendido"), values):
-            if value >= .5: evidence.append(dict(status=status, unit=unit["id"]))
+        for status, value, threshold in zip(("atendido", "nao_atendido"), values, thresholds):
+            if value >= threshold: evidence.append(dict(status=status, unit=unit["id"]))
     statuses = {e["status"] for e in evidence}
     status = next(iter(statuses)) if len(statuses) == 1 else "evidencia_insuficiente"
     return json.dumps(dict(status=status, evidence=evidence), ensure_ascii=False)
@@ -111,6 +113,8 @@ class EvidencePredictor:
         if (settings.get("objective") != "document_classifier" or settings.get("readout") not in READOUTS
             or settings.get("threshold", .5) != .5):
             raise ValueError("Contrato do classificador não suportado.")
+        self.thresholds = settings.get("thresholds", [.5, .5])
+        response([], [], self.thresholds)
         self.readout = settings["readout"]
         self.tokenizer = ByteBPE(checkpoint["merges"])
         self.config = GPTConfig(**checkpoint["config"])
@@ -125,4 +129,4 @@ class EvidencePredictor:
             raise ValueError("Informe de uma a quatro unidades distintas.")
         items = [dict(ids=encode_unit(requirement, u["text"], self.tokenizer, self.config.block_size, readout=self.readout)) for u in units]
         ids, lengths = unit_batch(items, self.device, self.config.block_size)
-        return response(units, self.model(ids, lengths).sigmoid().cpu().tolist())
+        return response(units, self.model(ids, lengths).sigmoid().cpu().tolist(), self.thresholds)
