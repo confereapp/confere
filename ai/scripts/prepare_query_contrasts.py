@@ -102,7 +102,7 @@ def presence_pairs(count=1600):
                              provenance=dict(kind="synthetic_authored", note="Mesmo texto com perguntas de presença opostas e atributo ausente; não copia diagnósticos completos.")))
     return rows
 
-def documents(count=3600):
+def documents(count=3600, *, topics=None, forms=None):
     rng = random.Random(161131); rows = []
     for i in range(count):
         a, b = [s.casefold() for s in names(rng)]
@@ -111,7 +111,8 @@ def documents(count=3600):
         elif i % 3 == 1:
             stem = a; left, right = rng.sample(PREFIXES, 2); a, b = left+stem, right+stem
         if i % 4 == 0: a, b = rng.choice(DOMAIN_PAIRS)
-        pos, neg = rng.choice(DOC_FORMS)
+        if topics is not None: a,b=rng.sample(topics,2)
+        pos, neg = rng.choice(DOC_FORMS if forms is None else forms)
         first, second = rng.sample(["atendido", "nao_atendido"], 2)
         states = [(a, first), (b, second)]; mode = rng.randrange(6)
         if mode == 1: states = [(a, second), (b, first)]

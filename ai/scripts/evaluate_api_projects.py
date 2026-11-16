@@ -19,6 +19,7 @@ def main():
     parser.add_argument("--cases", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=["mps", "cpu"], default="mps")
+    parser.add_argument("--cohort-kind", choices=['development','independent'], default='development')
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Saída já existe.")
@@ -82,8 +83,8 @@ def main():
                   correct_requirements=correct, total_requirements=total, valid_requirements=valid,
                   false_positive=false_positive, exact_local_calls=local_correct, total_local_calls=local_total,
                   complete_projects=sum(all(r["correct"] for r in case["requirements"]) for case in results),
-                  total_projects=len(results), test_examples_used=0, adopted=False, results=results,
-                  note="Documentos autorais da validação de desenvolvimento; sobrepõem os lotes locais da avaliação. Sem teste cego ou documento real.")
+                  total_projects=len(results), cohort_kind=args.cohort_kind, test_examples_used=total if args.cohort_kind=='independent' else 0, adopted=False, results=results,
+                  note=("Coorte autoral nova após congelamento. Sem documento real ou revisão humana independente." if args.cohort_kind=='independent' else "Documentos autorais da validação de desenvolvimento; sobrepõem os lotes locais da avaliação. Sem teste cego ou documento real."))
     with args.output.open("x") as file:
         json.dump(output, file, ensure_ascii=False, indent=2)
     print(json.dumps({k: v for k, v in output.items() if k != "results"}), flush=True)

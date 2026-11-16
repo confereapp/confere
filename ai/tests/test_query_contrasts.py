@@ -11,6 +11,13 @@ from prepare_lexical_binding import expected
 
 
 class QueryContrastTests(unittest.TestCase):
+    def test_multiword_curriculum_preserves_feature_specific_annotations(self):
+        topics=['registro de visitas','controle de acesso','catálogo de obras']
+        rows=documents(20,topics=topics,forms=[('Foi entregue {}.','Não foi entregue {}.')])
+        for row in rows:
+            self.assertIn(row['scenario']['feature'],topics)
+            self.assertEqual(json.loads(row['target']),expected(row['scenario']['units'],row['scenario']['feature']))
+
     def test_same_document_requires_different_answers_without_lexical_shortcuts(self):
         rows = documents(30)
         for a, b in zip(rows[::2], rows[1::2]):
