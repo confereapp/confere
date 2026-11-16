@@ -67,9 +67,11 @@ def main():
     (args.run_dir / "run.json").write_text(json.dumps(info, ensure_ascii=False, indent=2))
     best = baseline = selected = None; selected_step = None; stale = 0; started = time.perf_counter()
     def checkpoint(step, filename):
+        temporary = args.run_dir / (filename + ".tmp")
         torch.save(dict(config=source["config"], merges=source["merges"], classifier={k:v.detach().cpu() for k,v in model.state_dict().items()},
                         step=step, settings=settings, dataset_fingerprint=digest, optimizer=optimizer.state_dict(),
-                        generator_state=generator.get_state()), args.run_dir / filename)
+                        generator_state=generator.get_state()), temporary)
+        temporary.replace(args.run_dir / filename)
     stop = "steps"
     for step in range(args.steps + 1):
         if step:
