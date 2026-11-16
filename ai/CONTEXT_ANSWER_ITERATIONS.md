@@ -305,3 +305,31 @@ na API, para testar a reposição de continuidade sem descartar os pequenos ganh
 documentais. Mesmos lr 3e-6, batch 4, últimos dois blocos, peso documental 4 e
 fração documental 0,5; 4.000 passos planejados, avaliação a cada 500 e limite
 600 segundos. Baseline F reaproveitado somente com o mesmo protocolo e validação.
+
+### Resultado G
+
+4.000 passos em 154,7 s; 556.617 tokens supervisionados com repetição. Melhor
+checkpoint pela loss agregada: passo 500, 337/377 casos exatos, documentos 178/206,
+conversa legada 68/75. As famílias contextuais ficaram em 24/24, 11/12, 12/12,
+12/12 e 33/36. Saudação informal subiu para 2/3, escopo 3/3, agradecimento 3/3;
+definição 1/4 e orientação 2/4 ainda falham. Houve regressão em grounded_atendido.
+Os últimos pesos (4.000) mantiveram contexto, mas regrediram em vários perfis
+documentais e em estado de projeto. Ambos reprovados; nenhuma promoção.
+PDF de três páginas renderizado e inspecionado.
+
+## Ciclo H: seleção com objetivos equilibrados e atualização integral
+
+A validação contém 11.544 tokens documentais e 2.289 de conversa: a média por
+token anterior dava 83,45% do peso aos documentos. Para a prioridade igual
+confirmada pelo usuário, H seleciona pela média das duas losses por objetivo,
+50% cada. A média por token continua registrada, assim como as perdas separadas;
+a loss individual não recebe os pesos de treino na avaliação. Os gates gerativos
+continuam idênticos e separados, sem aprovação por média. O modo anterior segue
+como padrão das outras execuções; H ativa --balanced-objective-selection.
+
+Inicializa de G/best.pt (passo 500), mantém dados G, batch 4, lr 3e-6, peso 4 nos
+valores documentais e 50% dos lotes documentais. Atualiza a rede inteira para
+testar se congelar os primeiros blocos limita a associação entre pergunta e fonte.
+4.000 passos planejados, avaliações a cada 500, limite 600 segundos. A mudança
+de seleção e o descongelamento acontecem juntos: este ciclo não isola seus
+respectivos efeitos. Baseline G reaproveitado com coorte e protocolo idênticos.

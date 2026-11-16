@@ -11,6 +11,9 @@ O [plano de modelos e versões](MODEL_PLAN.md) explica a relação entre a branc
 as várias execuções e o checkpoint principal do aplicativo.
 O [pré-treino de linguagem em português](PRETRAINING.md) usa um snapshot da
 Wikipédia com proveniência e splits por artigo; ainda não é um chat validado.
+As [iterações de respostas contextuais](CONTEXT_ANSWER_ITERATIONS.md) registram
+os currículos, checkpoints avaliados e regressões, com critérios separados para
+conversa e documentos. Ganhos parciais não promovem automaticamente um checkpoint.
 
 ## Executar
 
