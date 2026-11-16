@@ -71,8 +71,8 @@ class QueryContrastTests(unittest.TestCase):
         rows = presence_pairs(20)
         for a, b, c in zip(rows[::3], rows[1::3], rows[2::3]):
             self.assertEqual([a["target"], b["target"], c["target"]], ["Sim.", "Não.", "Não tenho informação suficiente para responder."])
-            self.assertEqual(a["prompt"].split(". ")[:2], b["prompt"].split(". ")[:2])
-            self.assertEqual(a["prompt"].split(". ")[:2], c["prompt"].split(". ")[:2])
+            self.assertEqual(a["scenario"]["text"], b["scenario"]["text"])
+            self.assertEqual(a["scenario"]["text"], c["scenario"]["text"])
 
     def test_near_resources_vary_beyond_two_fixed_prefixes(self):
         rows = documents(120)
