@@ -1,0 +1,7 @@
+{
+  "source_sha256": "163d05fba2520c11edba9b663e505a84f3af0af50c8170d117bc716795f0a217",
+  "dataset_sha256": "eebc1b5ce4fb865795eb9f8f6fd283a9c7116d2eaf92cab4be3df6d621d2c3f1",
+  "added_train": 1536,
+  "validation_changed": false,
+  "note": "Contrastes com conjunção; combinação completa do diagnóstico excluída do gerador. Validação 180 intacta."
+}

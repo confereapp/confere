@@ -1,0 +1,7 @@
+{
+  "source_sha256": "436839667eea9a7488d0e8580760dfceabe322775e9bc58d254bbbbc6f97fcb3",
+  "dataset_sha256": "163d05fba2520c11edba9b663e505a84f3af0af50c8170d117bc716795f0a217",
+  "additional_development_validation": 9,
+  "training_changed": false,
+  "note": "171 casos originais intactos; nove diagnósticos naturais conhecidos em família separada com limiar de 90%. Novo teste independente exigido após congelamento."
+}

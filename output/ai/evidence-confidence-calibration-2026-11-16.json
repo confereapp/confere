@@ -1,0 +1,135 @@
+{
+  "step": 1000,
+  "checkpoint_sha256": "4d71ba8554bc0854b393acd34e621acdfb31f934aba591bac44bddc437ff8f73",
+  "dataset_sha256": "fde4850ce1e507620493e2ebc823c187f777d4c210ad522d5a737fd276182cd8",
+  "top": [
+    {
+      "positive_threshold": 0.8,
+      "negative_threshold": 0.6,
+      "quality": [
+        true,
+        0,
+        1.0493827160493827,
+        1.0,
+        0,
+        293
+      ]
+    },
+    {
+      "positive_threshold": 0.8,
+      "negative_threshold": 0.7,
+      "quality": [
+        true,
+        0,
+        1.0493827160493827,
+        1.0,
+        0,
+        293
+      ]
+    },
+    {
+      "positive_threshold": 0.8,
+      "negative_threshold": 0.8,
+      "quality": [
+        true,
+        0,
+        1.0493827160493827,
+        1.0,
+        0,
+        293
+      ]
+    },
+    {
+      "positive_threshold": 0.8,
+      "negative_threshold": 0.9,
+      "quality": [
+        true,
+        0,
+        1.0493827160493827,
+        1.0,
+        0,
+        293
+      ]
+    },
+    {
+      "positive_threshold": 0.8,
+      "negative_threshold": 0.5,
+      "quality": [
+        true,
+        0,
+        1.0493827160493827,
+        1.0,
+        0,
+        292
+      ]
+    },
+    {
+      "positive_threshold": 0.5,
+      "negative_threshold": 0.6,
+      "quality": [
+        false,
+        0,
+        1.0493827160493827,
+        1.0,
+        -1,
+        292
+      ]
+    },
+    {
+      "positive_threshold": 0.5,
+      "negative_threshold": 0.7,
+      "quality": [
+        false,
+        0,
+        1.0493827160493827,
+        1.0,
+        -1,
+        292
+      ]
+    },
+    {
+      "positive_threshold": 0.5,
+      "negative_threshold": 0.8,
+      "quality": [
+        false,
+        0,
+        1.0493827160493827,
+        1.0,
+        -1,
+        292
+      ]
+    },
+    {
+      "positive_threshold": 0.5,
+      "negative_threshold": 0.9,
+      "quality": [
+        false,
+        0,
+        1.0493827160493827,
+        1.0,
+        -1,
+        292
+      ]
+    },
+    {
+      "positive_threshold": 0.6,
+      "negative_threshold": 0.6,
+      "quality": [
+        false,
+        0,
+        1.0493827160493827,
+        1.0,
+        -1,
+        292
+      ]
+    }
+  ],
+  "note": "Calibração na validação de desenvolvimento, sem novo teste independente.",
+  "full_document_evaluation": {
+    "correct": 35,
+    "total": 36,
+    "false_positive": 0,
+    "blocked_profile": "scope_short",
+    "note": "5/6 neste perfil, abaixo de 90%; sem promoção."
+  }
+}

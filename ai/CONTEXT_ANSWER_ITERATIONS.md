@@ -592,3 +592,27 @@ o novo currículo U acrescenta perguntas de presença/ausência sobre texto
 idêntico. Esses resultados intermediários **não atingem a meta conjunta**.
 A validação original continua intacta e não há promoção ou mudança dos pesos
 padrão. Os relatórios identificam encerramentos e medições incompletas.
+
+## Validação ampliada e calibração — continuação de 16/11
+
+U selecionou o passo 6000 com 171/171 casos originais, porém marcou só 7/9
+nos diagnósticos naturais (nome do usuário e atributo incluído confundidos).
+O acerto controlado não autoriza promoção. W acrescenta os nove diagnósticos
+conhecidos como família separada de validação de desenvolvimento; nenhum entrou
+no treino. Os 171 casos originais continuam intactos e são auditados à parte.
+X acrescenta 1536 exemplos de treino com atributos opostos ligados por “mas”,
+excluindo a combinação completa do diagnóstico, sem alterar a validação 180.
+
+A calibração documental em pesos congelados de V (passo 1000) encontrou
+limiares positivo 0,8 e negativo 0,6 com 293/294 acertos locais e nenhum falso
+positivo. No fluxo completo dessa coorte, foram 35/36 requisitos e zero falsos
+positivos; o perfil curto ficou em 5/6, ainda abaixo da meta. Os limiares são
+metadados explícitos do checkpoint, não alteração dos alvos nem evidência
+inventada. A compatibilidade anterior preserva os limiares 0,5/0,5.
+
+Y amplia pares técnicos próximos (importação/exportação, autenticação/autorização
+etc.). Esses termos antes reservados agora estão explicitamente no treino;
+a coorte antiga é desenvolvimento e não mede vocabulário inédito. É obrigatório
+um novo teste independente após congelar os pesos. Z libera toda a rede no
+ajuste de conversa com taxa pequena para investigar a limitação das últimas
+camadas congeladas. Nenhum desses candidatos foi promovido.
