@@ -525,3 +525,13 @@ nos mesmos templates. Melhora de loss causal não aprova chat ou conferência.
 Depois do pré-treino, comparar validação comum e saídas reais, reajustar tarefas
 e exigir novamente todos os gates gerativos e fluxos completos. Nenhum peso
 externo importado, nenhuma publicação de corpus/pesos e nenhuma troca na API.
+
+### Verificação intermediária N
+
+Checkpoint 8.000 congelado em diagnostics/candidate.pt e comparado na CPU com a
+base 2.748, enquanto a GPU continua o treino. Mesmas 3.230 janelas de 256 tokens,
+773.505 alvos da validação completa; nenhum teste consultado. Loss 2,636929 para
+2,556101. As gerações greedy ainda repetem palavras e produzem afirmações sem
+sentido; a melhora estatística não é qualidade de conversa. Saídas completas,
+dispositivo e hashes estão em output/ai/foundation-continue-n-intermediate-2026-11-16.json.
+A execução N continua; checkpoint intermediário não foi promovido.

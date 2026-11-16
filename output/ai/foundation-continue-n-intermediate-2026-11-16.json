@@ -1,0 +1,74 @@
+{
+  "dataset_fingerprint": "8482048a8285d4c7355323521a31c781df7fc691b105fd5f65ea5972db84d0d1",
+  "test_examples_used": 0,
+  "note": "Perda de próximo token; não mede diálogo ou acurácia factual. Geração greedy idêntica entre variantes.",
+  "results": [
+    {
+      "checkpoint": "ai/runs/foundation-1024-2026-11-02/best.pt",
+      "step": 2748,
+      "training_dataset_fingerprint": "8482048a8285d4c7355323521a31c781df7fc691b105fd5f65ea5972db84d0d1",
+      "validation_loss": 2.6369294851079212,
+      "evaluation_block_size": 256,
+      "validation_windows": 3230,
+      "validation_tokens": 773505,
+      "samples": [
+        {
+          "prefix": "A ciência é ",
+          "continuation": "constituída por ciências que consiste em um ciêncio químico, e por sua vez, por sua vez, por sua vez, o ciêncio é necessário para o ciêncio humano ou a ciência da ciência. O ciêncio é também conhecido como ciência da ciência da ciência, que é necessário para o ciêncio humano ou da ciência da computação human"
+        },
+        {
+          "prefix": "Um projeto de software deve ",
+          "continuation": "ser uma conexão de software livre e software livre, que é possível ser definido como um projeto para o software livre, e deve ser definida como um projeto para o software livre.\n\nO projeto foi criado para um projeto para o software livre, e dev"
+        },
+        {
+          "prefix": "O Brasil é ",
+          "continuation": "constituído por dois municípios do distrito de Santa Maria, sendo a segunda maior cidade do país, sendo a segunda maior cidade do país, com uma densidade populacional de 2021 unidades de Portugal. População\t\n<small>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+        },
+        {
+          "prefix": "Para verificar um requisito, é necessário ",
+          "continuation": "para o requisito ou requisito.\n\nNão é necessário para o requisito, o requisito é necessário para o requisito-requisito-requisito-requisito-requisito-requisito-requisito-requisito-requisito"
+        },
+        {
+          "prefix": "Qual é o seu nome?",
+          "continuation": " Schopton Schopton, que significa \"Schopton\" (Schopton Schopton Schopton Schopton Schopton Schopton Schopton Schopton Schopton Schopt"
+        }
+      ]
+    },
+    {
+      "checkpoint": "ai/runs/foundation-continue-n-2026-11-16/diagnostics/candidate.pt",
+      "step": 8000,
+      "training_dataset_fingerprint": "8482048a8285d4c7355323521a31c781df7fc691b105fd5f65ea5972db84d0d1",
+      "validation_loss": 2.556100539511504,
+      "evaluation_block_size": 256,
+      "validation_windows": 3230,
+      "validation_tokens": 773505,
+      "samples": [
+        {
+          "prefix": "A ciência é ",
+          "continuation": "baseada na ciência da computação, ciência e comunicação.\n\nO ciência social da ciência da computação, ciência e comunicação.\n\nO ciência da computação, ciência e comunicação.\n\nO ciência da computação, ciência e comunicação: computação, ciência, computação, computação, computação, computação, computação, computação, computação, computação, computação, computação, computação, computação, computação, comput"
+        },
+        {
+          "prefix": "Um projeto de software deve ",
+          "continuation": "ser utilizado para projetos de software livre e projeto para o software livre e desenvolvir o software livre e desenvolvido e desenvolvido e software livre, e desenvolvido e software livre e software livre e software livre e software livre, e "
+        },
+        {
+          "prefix": "O Brasil é ",
+          "continuation": "usado para designar as palavras de origem portuguesa como \"centro-es\" (\"centro-es\") ou \"centro-esquerda do centro-esquerdo\" (\"centro-esquerda\") ou \"centro-esquerda\" (\"centro-esquerda\") ou \"centro-esquerda"
+        },
+        {
+          "prefix": "Para verificar um requisito, é necessário ",
+          "continuation": "para o projeto para o projeto para o projeto para o projeto para o projeto para o software livre.\n\nO projeto foi criado para criar um projeto para o software livre, e portátil para o software livre, e em instruções de software livre, e em instruções de "
+        },
+        {
+          "prefix": "Qual é o seu nome?",
+          "continuation": " O nome da palavra \"latina\" é usado para designar a palavra latina \"latina\" (latina) ou latim latina\n|latina_brasão      = latina\n|latina_brasão             = latina\n|latina_brasão             = latin"
+        }
+      ]
+    }
+  ],
+  "device": "cpu",
+  "checkpoint_sha256": {
+    "ai/runs/foundation-1024-2026-11-02/best.pt": "d3a6a900f1fd17354d2f05a7542daed588899e84529668da92163606984a460f",
+    "ai/runs/foundation-continue-n-2026-11-16/diagnostics/candidate.pt": "92dc537b00b7b51d6549448c4fb9acf90b401fce23c3100d850062845514adea"
+  }
+}
