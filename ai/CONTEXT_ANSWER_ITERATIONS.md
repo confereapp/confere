@@ -410,3 +410,34 @@ MPS de gradientes, alinhamento dos pesos documentais, seleção por objetivo,
 continuidade dos diálogos e recusas de combinações incompatíveis. git diff --check
 sem erros. PDFs E corrigido, F, G e H renderizados e inspecionados. Autoria Git
 verificada como Guilherme Brasil, mensagens sem nomes ou atribuições a modelos.
+
+## Continuação J: especialização por objetivo e seleção gerativa
+
+O usuário reforçou continuar até a meta conjunta, sem encerrar em ganho parcial.
+F/G/H mostraram interferência: H aprendeu definições, mas perdeu acerto documental;
+a média I não reteve ambas as habilidades. J separa os ajustes mantendo a mesma
+arquitetura e todos os casos originais. Não muda o contrato da API nesta fase.
+
+Currículo documental: 13.498 linhas de treino e as mesmas 206 de validação,
+SHA256 710d70b6711d71d6fc9f61b50a142a825e2e3aef490b0d8c6c26d73b8dae11ac.
+Currículo de conversa: 24.583 de treino e as mesmas 171 de validação,
+SHA256 10905137fcc5975a43552bdb524278acaae69ccd92c1eab8c60c6345f9be4912.
+Nenhum alvo ou caso reservado foi acrescentado, removido ou alterado na separação.
+A aceitação conjunta deverá recompor os 377 IDs e exigir os mesmos gates, além
+de documentos completos sem aprovações indevidas e diagnóstico de conversa fora
+dos templates. Dois ajustes isolados não constituem aprovação do sistema.
+
+Nova opção --generative-selection escolhe pesos pelas respostas em cada avaliação:
+aprovação integral vem primeiro; depois formato/referências válidos, pior família
+relativa ao limiar, cobertura das demais famílias, falsos positivos e acerto total.
+Limiares permanecem 90% por perfil documental/contextual e 80% por família legada.
+A aprovação gerativa também exige zero falsos positivos documentais. A loss segue
+registrada, mas não escolhe o checkpoint. Resultados completos por passo ficam
+em generation-N.json. A validação é desenvolvimento repetidamente consultado,
+sem alegação de teste cego. O cache da geração selecionada só evita repeti-la no
+fim da mesma execução; o teste de regressão verifica essa correspondência.
+
+J-documentos inicializa de G/best.pt, rede inteira, batch 4, lr 1e-5, perda padrão
+por token (sem peso extra), 16.000 passos planejados, avaliação gerativa a cada
+2.000 e limite de 3.600 s no loop incluindo avaliações. Não há lotes de conversa
+nesse ajuste. Treino de conversa e recomposição dos gates continuam pendentes.
