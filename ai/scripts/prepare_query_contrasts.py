@@ -12,7 +12,8 @@ from confere_ai.instruct import load_instructions
 from confere_ai.tokenizer import ByteBPE
 from confere_ai.training_data import encode_sample
 from prepare_context_answers import answer, FIELDS, NAMES
-from prepare_natural_answers import STATEMENTS
+from prepare_natural_answers import STATEMENTS, FEATURES
+from evaluate_context_smoke import CASES
 from prepare_lexical_binding import FORMS, WORDS, expected
 from expand_context_answers import names
 from prepare_api_batches import local_rows, scene_for, PROFILES
@@ -70,6 +71,25 @@ def conversations(count=2400):
             history.append([prompt, target])
     return rows
 
+
+
+def presence_pairs(count=1600):
+    rng = random.Random(161134); rows = []
+    excluded = {c["message"] for c in CASES}
+    questions = ["O registro confirma a presença de {}?", "A parte de {} foi incluída?", "O item {} foi incluído?", "Há {} nesse projeto?"]
+    for i in range(count):
+        a, b, missing = rng.sample(FEATURES, 3)
+        clauses = [f"O projeto inclui {a}.", f"O projeto não inclui {b}."]
+        rng.shuffle(clauses); text = " ".join(clauses)
+        for j, (feature, target) in enumerate([(a, "Sim."), (b, "Não."), (missing, "Não tenho informação suficiente para responder.")]):
+            group = f"query-presence-{i}-{j}"
+            prompt = text + " " + rng.choice(questions).format(feature)
+            assert prompt not in excluded
+            rows.append(dict(id=group, project_id=group, split="train", task="conversation_context_answer_support",
+                             prompt=prompt, target=target, history=[], turn_index=0, response_tokens=256,
+                             scenario=dict(present=a, absent=b, missing=missing, queried=feature),
+                             provenance=dict(kind="synthetic_authored", note="Mesmo texto com perguntas de presença opostas e atributo ausente; não copia diagnósticos completos.")))
+    return rows
 
 def documents(count=3600):
     rng = random.Random(161131); rows = []
@@ -167,7 +187,7 @@ def intent_variations(source, count=3000):
         turns = [("state", update, acknowledgement),
                  ("state", rng.choice(["qual é a situação atual do projeto?", "me lembra como está a situação do meu projeto", "o que eu disse sobre ter um projeto?"]), state),
                  ("topic", rng.choice(["quero que o assunto seja {}", "o tema que escolhi para conversar é {}", "vamos bater papo a respeito de {}"]).format(topic), f"Podemos conversar sobre {topic}."),
-                 ("topic", rng.choice(["do que estamos falando agora?", "sobre que tema estamos conversando neste momento?", "qual é o assunto da nossa conversa agora?"]), f"Estamos conversando sobre {topic}.")]
+                 ("topic", rng.choice(["do que estamos falando agora?", "do que estamos conversando neste momento?", "sobre que tema estamos conversando neste momento?", "qual é o assunto da nossa conversa agora?"]), f"Estamos conversando sobre {topic}.")]
         for j, (task, prompt, target) in enumerate(turns):
             assert prompt.casefold() not in excluded
             rows.append(dict(id=f"{group}-{j}", project_id=group, split="train", task="conversation_flow_"+task,
@@ -178,7 +198,7 @@ def intent_variations(source, count=3000):
     proposal = "Sem problema. Podemos falar de objetivos, requisitos ou evidências."
     focus = "Vamos começar pelo tema do seu projeto. Qual é o tema?"
     uncertain = ["não tenho certeza do que pedir agora", "estou em dúvida sobre o que posso pedir", "não decidi como você pode ajudar", "não sei escolher o que pedir a você", "ainda não decidi o que vou pedir"]
-    again = ["continuo indeciso entre as sugestões", "ainda tenho dúvida entre essas alternativas", "não consigo escolher dentre essas opções", "mesmo depois das sugestões continuo em dúvida", "nenhuma dessas opções me ajudou a decidir"]
+    again = ["continuo indeciso entre as sugestões", "ainda tenho dúvida entre essas alternativas", "não consigo escolher dentre essas opções", "mesmo depois das sugestões continuo em dúvida", "nenhuma dessas opções me ajudou a decidir", "não sei qual das sugestões faz mais sentido", "ainda não sei qual alternativa faz sentido pra mim", "não consigo saber qual opção faz sentido"]
     for i in range(300):
         first = rng.choice(uncertain); second = rng.choice(again)
         seed = copy.deepcopy(rng.choice(pool)["history"][-2:]); group = f"intent-guidance-{i}"
@@ -200,7 +220,7 @@ def main():
     source, digest = load_instructions(args.source)
     checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=True); tokenizer = ByteBPE(checkpoint["merges"])
     skipped = 0
-    if args.task == "conversation": added = conversations() + intent_variations(source)
+    if args.task == "conversation": added = conversations() + presence_pairs() + intent_variations(source)
     else:
         long_rows, skipped = long_documents(tokenizer)
         added = documents() + long_rows

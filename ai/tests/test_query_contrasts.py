@@ -3,7 +3,7 @@ import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/"scripts"))
-from prepare_query_contrasts import conversations, documents, long_documents, intent_variations
+from prepare_query_contrasts import conversations, documents, long_documents, intent_variations, presence_pairs
 from confere_ai.tokenizer import ByteBPE
 from confere_ai.grounding import judge
 from prepare_context_answers import answer
@@ -66,3 +66,10 @@ class QueryContrastTests(unittest.TestCase):
         near = [r for r in rows if r["scenario"]["feature"].startswith("pré")]
         states = {e["status"] for r in near for e in json.loads(r["target"])["evidence"]}
         self.assertEqual(states, {"atendido", "nao_atendido"})
+
+    def test_presence_questions_require_opposite_answers_for_identical_context(self):
+        rows = presence_pairs(20)
+        for a, b, c in zip(rows[::3], rows[1::3], rows[2::3]):
+            self.assertEqual([a["target"], b["target"], c["target"]], ["Sim.", "Não.", "Não tenho informação suficiente para responder."])
+            self.assertEqual(a["prompt"].split(". ")[:2], b["prompt"].split(". ")[:2])
+            self.assertEqual(a["prompt"].split(". ")[:2], c["prompt"].split(". ")[:2])
