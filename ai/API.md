@@ -21,12 +21,21 @@ o checkpoint padrão do chat foi preservado.
 
 Também é possível definir as variáveis em `apps/server/.env`:
 
-- `AI_CHECKPOINT`: obrigatório para habilitar inferência; caminho local absoluto
-  ou relativo à raiz. Somente pesos próprios de origem conhecida.
+- `AI_CHECKPOINT`: pesos para revisão documental; também servem de fallback para
+  conversa. Caminho local absoluto ou relativo à raiz, de origem conhecida.
+- `AI_CHAT_CHECKPOINT`: opcional; pesos exclusivos de conversa. Permite configurar
+  o chat sem habilitar a revisão documental. Se ausente, usa `AI_CHECKPOINT`.
 - `AI_PYTHON`: opcional; padrão `ai/.venv/bin/python` na raiz.
 - `AI_DEVICE`: `auto`, `cpu` ou `mps`; padrão `auto`.
 
-Sem checkpoint configurado, a chamada retorna `PRECONDITION_FAILED`.
+Sem checkpoint configurado para a tarefa, a chamada retorna `PRECONDITION_FAILED`.
+
+A revisão aceita o decoder documental anterior e checkpoints com objetivo
+`document_classifier`. Nesse último caso, o encoder aprende relevância e estados
+por unidade; JSON e referências são construídos a partir dessas predições. Os
+metadados retornam `inference_kind: unit_classifier` e `fragment_token_reserve`
+(reserva do loteador), em vez de alegar tokens gerados pelo decoder. Essa
+compatibilidade não aprova os pesos: os critérios de qualidade continuam exigidos.
 O cliente autenticado pode executar:
 
 ```ts

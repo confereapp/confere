@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({
   env: {
     AI_CHECKPOINT: "ai/runs/candidate/best.pt" as string | undefined,
+    AI_CHAT_CHECKPOINT: undefined as string | undefined,
     AI_DEVICE: "cpu",
     AI_PYTHON: undefined,
   },
@@ -22,6 +23,7 @@ const input = {
 describe("local AI boundary", () => {
   beforeEach(() => {
     mocks.env.AI_CHECKPOINT = "ai/runs/candidate/best.pt";
+    mocks.env.AI_CHAT_CHECKPOINT = undefined;
     mocks.execFile.mockReset();
   });
 
@@ -84,6 +86,7 @@ describe("local AI boundary", () => {
 describe("local chat boundary", () => {
   beforeEach(() => {
     mocks.env.AI_CHECKPOINT = "ai/runs/candidate/best.pt";
+    mocks.env.AI_CHAT_CHECKPOINT = undefined;
     mocks.execFile.mockReset();
   });
 
@@ -103,6 +106,34 @@ describe("local chat boundary", () => {
       code: "PRECONDITION_FAILED",
     });
     expect(mocks.execFile).not.toHaveBeenCalled();
+  });
+
+  it("uses the chat checkpoint independently and falls back to the shared checkpoint", async () => {
+    mocks.execFile.mockImplementation((_file, _args, _options, callback) => {
+      callback(
+        null,
+        JSON.stringify({
+          response: "oi",
+          experimental: true,
+          dropped_turns: 0,
+        }),
+      );
+      return { stdin: { on: vi.fn(), end: vi.fn() } };
+    });
+    await chat({ message: "oi", history: [] });
+    expect(mocks.execFile.mock.calls[0][1][3]).toMatch(
+      /ai\/runs\/candidate\/best.pt$/,
+    );
+    mocks.env.AI_CHAT_CHECKPOINT = "ai/runs/conversation/best.pt";
+    mocks.env.AI_CHECKPOINT = undefined;
+    await chat({ message: "oi", history: [] });
+    expect(mocks.execFile.mock.calls[1][1][3]).toMatch(
+      /ai\/runs\/conversation\/best.pt$/,
+    );
+    await expect(reviewText(input)).rejects.toMatchObject({
+      code: "PRECONDITION_FAILED",
+    });
+    expect(mocks.execFile).toHaveBeenCalledTimes(2);
   });
 
   it("shares the inference slot and returns only validated public data", async () => {

@@ -21,6 +21,7 @@ export const env = createEnv({
     CORS_ORIGIN: z.url(),
 
     AI_CHECKPOINT: z.string().min(1).optional(),
+    AI_CHAT_CHECKPOINT: z.string().min(1).optional(),
     AI_PYTHON: z.string().min(1).optional(),
     AI_DEVICE: z.enum(["auto", "cpu", "mps"]).default("auto"),
 

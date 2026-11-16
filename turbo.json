@@ -19,6 +19,7 @@
       "persistent": true,
       "passThroughEnv": [
         "AI_CHECKPOINT",
+        "AI_CHAT_CHECKPOINT",
         "AI_PYTHON",
         "AI_DEVICE",
         "PYTORCH_MPS_HIGH_WATERMARK_RATIO",

@@ -22,29 +22,34 @@ export async function reviewText(input: typeof reviewTextInput._output) {
 
 export async function chat(input: typeof chatInput._output) {
   const request = chatInput.parse(input);
-  return runInference("confere_ai.chat_api", request, (value) => {
-    if (
-      value &&
-      typeof value === "object" &&
-      "error" in value &&
-      value.error === "context_length"
-    ) {
-      throw new TRPCError({
-        code: "BAD_REQUEST",
-        message:
-          "Mensagem longa demais para o contexto do modelo. Encurte o texto.",
-      });
-    }
-    return chatResult.parse(value);
-  });
+  return runInference(
+    "confere_ai.chat_api",
+    request,
+    (value) => {
+      if (
+        value &&
+        typeof value === "object" &&
+        "error" in value &&
+        value.error === "context_length"
+      ) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message:
+            "Mensagem longa demais para o contexto do modelo. Encurte o texto.",
+        });
+      }
+      return chatResult.parse(value);
+    },
+    env.AI_CHAT_CHECKPOINT ?? env.AI_CHECKPOINT,
+  );
 }
 
 async function runInference<T>(
   module: string,
   request: unknown,
   parse: (value: unknown) => T,
+  checkpoint = env.AI_CHECKPOINT,
 ): Promise<T> {
-  const checkpoint = env.AI_CHECKPOINT;
   if (!checkpoint) {
     throw new TRPCError({
       code: "PRECONDITION_FAILED",
