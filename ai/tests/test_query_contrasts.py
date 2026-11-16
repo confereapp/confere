@@ -33,11 +33,17 @@ class QueryContrastTests(unittest.TestCase):
             self.assertEqual(row["target"], answer(row["scenario"]["facts"], row["scenario"]["field"]))
         for offset in range(0, len(rows), 4):
             group = rows[offset:offset+4]
-            self.assertEqual(len({r["prompt"].rsplit("\n", 1)[0] for r in group}), 1)
+            self.assertTrue(all(r['scenario']['facts']==group[0]['scenario']['facts'] for r in group))
             self.assertEqual(len({r["scenario"]["field"] for r in group}), 4)
         conflict_groups = [rows[i:i+4] for i in range(0, len(rows), 4) if any(r["task"].endswith("conflict") for r in rows[i:i+4])]
         self.assertTrue(conflict_groups)
         self.assertTrue(all(sum(r["task"].endswith("conflict") for r in g) == 1 for g in conflict_groups))
+
+    def test_facts_vary_in_count_and_questions_are_not_bound_to_newlines(self):
+        rows=[r for r in conversations(200) if not r['task'].endswith('memory')]
+        self.assertTrue(any(len(r['scenario']['facts'])==1 and r['task'].endswith('conflict') for r in rows))
+        self.assertTrue(any('\n' not in r['prompt'] for r in rows))
+        self.assertTrue(any('\nPergunta: ' in r['prompt'] for r in rows))
 
     def test_long_transfer_uses_actual_fragments_and_never_labels_partial_sentences(self):
         rows, skipped = long_documents(ByteBPE([]), 1)

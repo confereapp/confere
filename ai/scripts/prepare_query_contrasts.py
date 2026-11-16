@@ -42,6 +42,8 @@ def conversations(count=2400):
         a, b = rng.sample(NAMES, 2)
         facts = dict(nome=[rng.choice(["Serra", "Brisa", "Vale", "Trilha", "Sol", "Cedro"])],
                      responsavel=[a], prazo=[rng.randint(1, 180)], linguagem=[rng.choice(["Python", "Java", "Lua", "Ruby", "Go", "C", "Rust"])])
+        retained=rng.sample(list(facts),rng.randint(1,len(facts)))
+        facts={key:value for key,value in facts.items() if key in retained}
         changed = rng.choice(list(facts)); mode = i % 4
         if mode == 1: del facts[changed]
         elif mode == 2: facts[changed].append(dict(nome="Mar", responsavel=b, prazo=200, linguagem="Pascal")[changed])
@@ -55,7 +57,7 @@ def conversations(count=2400):
             family = "missing" if not facts.get(field) else "conflict" if len(set(facts[field])) > 1 else "fact"
             group = f"query-chat-{i}-{field}"
             rows.append(dict(id=group, project_id=group, split="train", task="conversation_context_answer_"+family,
-                             history=[], turn_index=0, response_tokens=256, prompt=header+text+"\n"+question, target=target,
+                             history=[], turn_index=0, response_tokens=256, prompt=header+text+rng.choice(["\n"," ","\nPergunta: "])+question, target=target,
                              scenario=dict(facts=copy.deepcopy(facts), field=field),
                              provenance=dict(kind="synthetic_authored", note="Perguntas contrastivas sobre os mesmos fatos; somente treino de desenvolvimento.")))
     for i in range(count // 2):
