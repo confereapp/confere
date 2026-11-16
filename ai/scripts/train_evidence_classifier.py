@@ -17,6 +17,18 @@ from confere_ai.tokenizer import ByteBPE
 
 
 @torch.no_grad()
+def training_errors(model, train, device):
+    model.eval(); errors=[]
+    for offset in range(0,len(train),8):
+        items=train[offset:offset+8]
+        ids,lengths=unit_batch(items,device,model.backbone.config.block_size)
+        predicted=model.evidence_scores(model(ids,lengths))>=.5
+        labels=torch.tensor([item['labels'] for item in items],device=device).bool()
+        errors.extend(offset+i for i,bad in enumerate((predicted!=labels).any(-1).cpu().tolist()) if bad)
+    return errors
+
+
+@torch.no_grad()
 def score(model, encoded, rows, device, thresholds=(.5, .5)):
     model.eval(); probabilities = []
     for offset in range(0, len(encoded), 8):
@@ -40,6 +52,7 @@ def main():
     parser.add_argument("--categorical-states", action="store_true")
     parser.add_argument("--require-perfect-validation", action="store_true")
     parser.add_argument("--paired-queries", action="store_true")
+    parser.add_argument("--error-replay", action="store_true", help="Metade de cada lote revisita erros medidos somente no treino inicial.")
     parser.add_argument("--readout", choices=READOUTS)
     parser.add_argument("--encoder-learning-rate", type=float, default=1e-5)
     parser.add_argument("--head-learning-rate", type=float, default=1e-4)
@@ -73,17 +86,21 @@ def main():
         for i, item in enumerate(train): pools[item["source_key"]].append(i)
     paired_pools = list(pools.values())
     generator = torch.Generator().manual_seed(42)
+    hard = training_errors(model,train,args.device) if args.error_replay else []
+    if args.error_replay: print(json.dumps(dict(train_error_units=len(hard),train_units=len(train))),flush=True)
     optimizer = torch.optim.AdamW([dict(params=[p for p in model.backbone.parameters() if p.requires_grad], lr=args.encoder_learning_rate),
                                   dict(params=model.head.parameters(), lr=args.head_learning_rate)], weight_decay=.01)
     settings = dict(objective="document_classifier", state_mode=state_mode, readout=readout, frozen_embeddings=True, require_perfect_validation=args.require_perfect_validation,
                     encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5, eval_every=args.eval_every,
-                    checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", loss="unweighted_bce")
+                    checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", error_replay=args.error_replay, initial_train_errors=len(hard), loss="categorical_ce" if state_mode==STATE_MODES[1] else "unweighted_bce")
     args.run_dir.mkdir(parents=True)
     info = dict(data=str(args.data), dataset_fingerprint=digest, source=str(args.init_from),
                 source_sha256=hashlib.sha256(args.init_from.read_bytes()).hexdigest(), device=args.device,
                 train_units=len(train), validation_units=len(val), settings=settings, optimizer_reset=True, test_examples_used=0,
                 note="Predição semântica por unidade; JSON/referências por construção. Validação de desenvolvimento, sem teste cego; sem integração na API.")
     (args.run_dir / "run.json").write_text(json.dumps(info, ensure_ascii=False, indent=2))
+    if args.error_replay:
+        (args.run_dir/'training-errors.json').write_text(json.dumps([dict(row_id=train[i]['row_id'],unit=train[i]['unit']) for i in hard]))
     best = baseline = selected = None; selected_step = None; stale = 0; started = time.perf_counter()
     def checkpoint(step, filename):
         temporary = args.run_dir / (filename + ".tmp")
@@ -97,6 +114,7 @@ def main():
             model.train()
             indices = (paired_indices(train, paired_pools, 8, generator) if args.paired_queries
                        else torch.randint(len(train), (8,), generator=generator).tolist())
+            if hard: indices[:4]=[hard[i] for i in torch.randint(len(hard),(4,),generator=generator).tolist()]
             items = [train[i] for i in indices]
             ids, lengths = unit_batch(items, args.device, backbone.config.block_size)
             labels = torch.tensor([item["labels"] for item in items], device=args.device)
