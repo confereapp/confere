@@ -35,6 +35,7 @@ def score(model, encoded, rows, device, thresholds=(.5, .5)):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("data", "init-from", "run-dir"): parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument("--eval-every", type=int, default=500)
     parser.add_argument("--steps", type=int, default=8000)
     parser.add_argument("--paired-queries", action="store_true")
     parser.add_argument("--readout", choices=READOUTS)
@@ -43,7 +44,7 @@ def main():
     parser.add_argument("--selection-patience", type=int, default=6)
     parser.add_argument("--device", choices=["cpu", "mps"], default="mps")
     args = parser.parse_args()
-    if (args.run_dir.exists() or args.steps <= 0 or args.selection_patience <= 0
+    if (args.run_dir.exists() or args.steps <= 0 or args.selection_patience <= 0 or args.eval_every <= 0
             or any(not math.isfinite(v) or v <= 0 for v in [args.encoder_learning_rate, args.head_learning_rate])): parser.error("Saída nova e passos positivos são obrigatórios.")
     torch.set_num_threads(4); torch.manual_seed(42)
     rows, digest = load_instructions(args.data)
@@ -70,7 +71,7 @@ def main():
     optimizer = torch.optim.AdamW([dict(params=[p for p in model.backbone.parameters() if p.requires_grad], lr=args.encoder_learning_rate),
                                   dict(params=model.head.parameters(), lr=args.head_learning_rate)], weight_decay=.01)
     settings = dict(objective="document_classifier", readout=readout, frozen_embeddings=True,
-                    encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5,
+                    encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5, eval_every=args.eval_every,
                     checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", loss="unweighted_bce")
     args.run_dir.mkdir(parents=True)
     info = dict(data=str(args.data), dataset_fingerprint=digest, source=str(args.init_from),
@@ -98,7 +99,7 @@ def main():
             if not torch.isfinite(loss): raise ValueError("Loss não finita; checkpoint anterior preservado.")
             optimizer.zero_grad(set_to_none=True); loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1., error_if_nonfinite=True); optimizer.step()
-        if step % 500 == 0 or step == args.steps:
+        if step % args.eval_every == 0 or step == args.steps:
             checkpoint(step, "last.pt")
             result = score(model, val, validation, args.device); key = quality_key(result)
             if baseline is None: baseline = result
