@@ -1,0 +1,10 @@
+{
+  "source_sha256": "da3b46b7f735d713cbef8d5401dedde03370369727ac59d833c1aa548fc7fc81",
+  "dataset_sha256": "082c8a107b91e6ed49334b4544e0dec2385db51245af47d387e54ea85ee7f8e3",
+  "additional_documents": 4000,
+  "splits": {
+    "train": 35081,
+    "validation": 377
+  },
+  "note": "Validação C preservada literalmente; apenas treino adicional de associação entre requisito e evidência. Sem consulta a teste reservado, desenvolvimento não cego."
+}

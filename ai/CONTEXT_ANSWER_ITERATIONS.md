@@ -140,3 +140,60 @@ Artefatos A e B: [A](../output/ai/context-answers-a-2026-11-15.json),
 Os diagnósticos não validam fluência, conhecimento aberto ou documentos reais.
 Os relatórios históricos de pré-treinamento já registravam falta de fluência;
 estes currículos focam competências limitadas e não removem essa ressalva.
+
+### Resultado C
+
+O loop parou no passo 5.893 por prazo. O mínimo de loss selecionou o passo 1.500.
+Esse checkpoint passou no gate contextual: fatos 24/24, ausências 11/12,
+conflitos 12/12, presença/ausência 12/12 e memória 33/36. Não passou no gate
+conjunto: persistiram regressões legadas e perfis documentais abaixo do mínimo.
+O último checkpoint piorou (18/24, 11/12, 12/12, 12/12 e 28/36 respectivamente),
+portanto não foi usado como inicialização da próxima etapa. O diagnóstico de
+linguagem natural do selecionado ficou em 4/9 respostas literais corretas, com
+falhas ainda claras; não comprova conversa livre útil fora desse escopo.
+
+Uma ablação offline usou os primeiros seis documentos (um por família) do conjunto
+autoral já inspecionado. Dividir todo o texto em frases, sem remover caracteres,
+piorou de 4/12 para 2/12 requisitos corretos e aumentou de 28 para 134 chamadas.
+Ambas as versões tiveram 12 saídas válidas e zero aprovações incorretas nesse
+piloto. A mudança foi rejeitada: a API e a estratégia de divisão de produção
+permaneceram intactas. O regex era apenas diagnóstico, não segmentador geral.
+
+## Ciclo D
+
+Prioridade confirmada pelo usuário: conversa e documentos com o mesmo peso na
+aceitação; não promover ganho de um objetivo às custas do outro. Inicialização:
+C/best.pt, passo 1.500, que foi melhor que C/last.pt na avaliação gerativa.
+
+Adiciona 4.000 linhas documentais pareadas: o mesmo texto é consultado sobre dois
+requisitos e os alvos/referências são derivados das afirmações explícitas por
+unidade. Nove modos cobrem presença, ausência, menção, múltiplas evidências,
+conflitos entre unidades, conflito na mesma unidade e assuntos diferentes na
+mesma unidade. Um terço dos cenários usa dois nomes de recurso inventados, um
+terço mistura recurso inventado e substantivo comum e outro usa dois termos
+comuns. Isso impede que a seleção dependa apenas de um vocabulário fechado de
+seis recursos. As frases afirmam presença/ausência; não rotulam intenção futura
+como implementação. Validação C preservada literalmente, sem teste reservado.
+
+A primeira geração binding foi preservada e não usada no treino; a versão
+binding-v2 força também comparações entre dois termos inventados no mesmo texto.
+Fonte definitiva: context-answers-binding-v2-2026-11-15, 35.081 linhas de treino
+e 377 de validação. SHA256:
+082c8a107b91e6ed49334b4544e0dec2385db51245af47d387e54ea85ee7f8e3.
+
+6.000 passos planejados, batch 4, lr 2e-5, avaliações a cada 500 passos, 50% de
+lotes documentais e 50% de conversa autoral, contexto 1.024, reserva de resposta
+256 e limite de 600 s no loop. Diretório: ai/runs/context-answers-d-2026-11-15.
+
+A avaliação inicial C foi reaproveitada explicitamente com --baseline-from.
+As verificações exigem pesos SHA256 iguais, mesma coorte inteira incluindo
+histórico/metadados, dados originais intactos, mesmos contexto/orçamento e código
+de modelo, prompt, tokenizer, função score e versão torch. Para o registro C,
+um sidecar documenta a verificação retrospectiva contra o commit cb81ffd; corpo
+de score e arquivos model/chat/tokenizer foram comparados byte a byte/por fonte.
+Nenhuma métrica foi reconstruída ou alterada. Novas execuções registram a
+impressão digital do protocolo automaticamente. Cache ausente/incompatível é
+recusado, sem reaproveitamento silencioso ou aprovação de candidato.
+
+Passaram 151 testes Python antes de iniciar D. A API não foi reconfigurada e
+nenhum checkpoint foi promovido. Os PDFs A, B e C foram renderizados e inspecionados.
