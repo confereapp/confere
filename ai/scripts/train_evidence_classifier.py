@@ -1,12 +1,13 @@
 """Ajusta o encoder próprio para relevância/estado por unidade, sem decoder JSON."""
 import argparse
+from collections import defaultdict
 import hashlib
 import json
 import math
 from pathlib import Path
 import time
 import torch
-from confere_ai.evidence_classifier import EvidenceClassifier, examples, unit_batch, response, READOUTS
+from confere_ai.evidence_classifier import EvidenceClassifier, examples, unit_batch, response, READOUTS, paired_indices
 from confere_ai.finetuning import configure_trainable
 from confere_ai.generative_selection import quality_key
 from confere_ai.grounding import judge
@@ -35,6 +36,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("data", "init-from", "run-dir"): parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--steps", type=int, default=8000)
+    parser.add_argument("--paired-queries", action="store_true")
     parser.add_argument("--readout", choices=READOUTS)
     parser.add_argument("--encoder-learning-rate", type=float, default=1e-5)
     parser.add_argument("--head-learning-rate", type=float, default=1e-4)
@@ -60,12 +62,16 @@ def main():
     train = examples([r for r in rows if r["split"] == "train"], tokenizer, backbone.config.block_size, readout=readout)
     validation = [r for r in rows if r["split"] == "validation"]
     val = examples(validation, tokenizer, backbone.config.block_size, readout=readout)
+    pools = defaultdict(list)
+    if args.paired_queries:
+        for i, item in enumerate(train): pools[item["source_key"]].append(i)
+    paired_pools = list(pools.values())
     generator = torch.Generator().manual_seed(42)
     optimizer = torch.optim.AdamW([dict(params=[p for p in model.backbone.parameters() if p.requires_grad], lr=args.encoder_learning_rate),
                                   dict(params=model.head.parameters(), lr=args.head_learning_rate)], weight_decay=.01)
     settings = dict(objective="document_classifier", readout=readout, frozen_embeddings=True,
                     encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5,
-                    checkpoint_selection="generated_family_quality", sampling="uniform_units", loss="unweighted_bce")
+                    checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", loss="unweighted_bce")
     args.run_dir.mkdir(parents=True)
     info = dict(data=str(args.data), dataset_fingerprint=digest, source=str(args.init_from),
                 source_sha256=hashlib.sha256(args.init_from.read_bytes()).hexdigest(), device=args.device,
@@ -83,7 +89,9 @@ def main():
     for step in range(args.steps + 1):
         if step:
             model.train()
-            indices = torch.randint(len(train), (8,), generator=generator).tolist(); items = [train[i] for i in indices]
+            indices = (paired_indices(train, paired_pools, 8, generator) if args.paired_queries
+                       else torch.randint(len(train), (8,), generator=generator).tolist())
+            items = [train[i] for i in indices]
             ids, lengths = unit_batch(items, args.device, backbone.config.block_size)
             labels = torch.tensor([item["labels"] for item in items], device=args.device)
             loss = torch.nn.functional.binary_cross_entropy_with_logits(model(ids, lengths), labels)

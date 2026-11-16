@@ -25,6 +25,18 @@ class EvidenceClassifierTests(unittest.TestCase):
         self.assertEqual(result["status"], "evidencia_insuficiente")
         with self.assertRaises(ValueError): predictor.predict_units("Testes", units * 2)
         with self.assertRaises(ValueError): EvidencePredictor(dict(checkpoint, settings={}), "cpu")
+    def test_paired_sampling_uses_same_source_and_opposing_targets_when_available(self):
+        from confere_ai.evidence_classifier import paired_indices
+        items = [dict(source_key="a", labels=[1., 0.]), dict(source_key="a", labels=[0., 1.]),
+                 dict(source_key="a", labels=[1., 0.]), dict(source_key="b", labels=[0., 0.])]
+        pools = [[0, 1, 2], [3]]; generator = torch.Generator().manual_seed(42)
+        for _ in range(30):
+            indices = paired_indices(items, pools, 8, generator)
+            for a, b in zip(indices[::2], indices[1::2]):
+                self.assertEqual(items[a]["source_key"], items[b]["source_key"])
+                if items[a]["source_key"] == "a": self.assertNotEqual(items[a]["labels"], items[b]["labels"])
+        with self.assertRaises(ValueError): paired_indices(items, pools, 3, generator)
+
     def test_suffix_query_is_after_source_and_training_matches_inference_encoding(self):
         tokenizer = ByteBPE([])
         readout = "suffix_query_decision_prefix_v1"

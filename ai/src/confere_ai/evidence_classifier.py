@@ -1,5 +1,6 @@
 """Cabeça de evidência por unidade; decisões semânticas continuam aprendidas."""
 import json
+import hashlib
 import torch
 from torch import nn
 from .grounding import prompt_for
@@ -55,10 +56,24 @@ def examples(rows, tokenizer, context_size, *, readout=READOUTS[0]):
         pointers = {(e["unit"], e["status"]) for e in target["evidence"]}
         for unit in row["units"]:
             labels = [float((unit["id"], status) in pointers) for status in ("atendido", "nao_atendido")]
-            result.append(dict(row_id=row["id"], unit=unit["id"], labels=labels,
+            result.append(dict(row_id=row["id"], unit=unit["id"], labels=labels, source_key=hashlib.sha256(unit["text"].encode()).hexdigest(),
                                ids=encode_unit(row["requirement"], unit["text"], tokenizer, context_size, prefix, readout=readout)))
     return result
 
+
+
+def paired_indices(items, pools, batch_size, generator):
+    if batch_size <= 0 or batch_size % 2: raise ValueError("Lote pareado exige tamanho positivo e par.")
+    if not pools: raise ValueError("Fontes pareadas vazias.")
+    result = []
+    for group in torch.randint(len(pools), (batch_size // 2,), generator=generator).tolist():
+        pool = pools[group]
+        first = pool[torch.randint(len(pool), (), generator=generator).item()]
+        alternatives = [i for i in pool if items[i]["labels"] != items[first]["labels"]]
+        choices = alternatives or pool
+        second = choices[torch.randint(len(choices), (), generator=generator).item()]
+        result.extend([first, second])
+    return result
 
 def unit_batch(items, device, context_size):
     lengths = [len(item["ids"]) for item in items]
