@@ -114,6 +114,8 @@ def create_report(run_dir, output=None):
         p("Seleção: média das losses de conversa e documentos, 50% para cada objetivo. A curva de validação continua mostrando a média por token. Gates gerativos separados continuam obrigatórios.")
     if info.get("settings", {}).get("checkpoint_selection") == "generated_family_quality":
         p("Seleção por respostas geradas em cada avaliação: prioriza formato válido e a pior família relativa ao limiar, depois as demais famílias. Loss não escolhe os pesos. Validação repetidamente consultada, sem teste cego; os gates finais continuam obrigatórios.")
+    if info.get("settings", {}).get("initial_candidate_generation_measured") is False:
+        p("A geração da base causal inicial não foi medida e essa base foi excluída da seleção. A referência comparativa foi avaliada separadamente; apenas candidatos ajustados e medidos podem ser selecionados.")
     if info.get("context_note"):
         p("Adaptação de contexto: " + str(info.get("source_context")) + " para " + str(config.get("block_size")) + " tokens; passo de origem " + str(info.get("source_step")) + ". " + info["context_note"])
     if info.get("previous_dataset_fingerprint"):

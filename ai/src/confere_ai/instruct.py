@@ -176,6 +176,9 @@ def run(args):
         if not all(conversation_pools.values()): raise ValueError("Exige famílias legadas e contextuais.")
     balanced_selection = getattr(args, "balanced_objective_selection", False)
     generative_selection = getattr(args, "generative_selection", False)
+    skip_initial_generation = getattr(args, "skip_initial_generation", False)
+    if skip_initial_generation and not generative_selection:
+        raise ValueError("Omitir a geração inicial exige seleção gerativa e referência comparativa.")
     selection_patience = getattr(args, "selection_patience", None)
     if selection_patience is not None and (not generative_selection or selection_patience <= 0):
         raise ValueError("Paciência positiva exige seleção gerativa.")
@@ -196,6 +199,8 @@ def run(args):
     if generative_selection and (not controlled_validation or any(not r["task"].startswith(("grounded_", "conversation_")) for r in controlled_validation)):
         raise ValueError("Seleção gerativa exige validação controlada por objetivo.")
     source = torch.load(args.init_from, map_location="cpu", weights_only=True)
+    if skip_initial_generation and source["settings"].get("objective") != "causal_lm":
+        raise ValueError("Omitir a geração inicial é restrito à base de linguagem ainda não ajustada.")
     evaluation_context=getattr(args,"evaluation_context",None) or (256 if generation_budget>64 else source["config"]["block_size"])
     if not 66<=evaluation_context<=source["config"]["block_size"]: raise ValueError("Contexto de avaliação inválido.")
     if source["settings"].get("objective") not in {"causal_lm", "instruction", "document_grounding", "conversation"}:
@@ -215,6 +220,8 @@ def run(args):
     evaluation_indices=torch.randperm(len(encoded_train),generator=torch.Generator().manual_seed(43)).tolist()[:128]
     train_eval=[encoded_train[index] for index in evaluation_indices]
     comparison = getattr(args, "compare_with", None)
+    if skip_initial_generation and not comparison:
+        raise ValueError("Informe uma referência comparativa explicitamente avaliada.")
     baseline_from = getattr(args, "baseline_from", None)
     if baseline_from:
         if comparison: raise ValueError("Cache e comparação alternativa não podem ser usados juntos.")
@@ -238,6 +245,7 @@ def run(args):
     settings["checkpoint_selection"] = "objective_mean" if balanced_selection else "token_mean"
     if generative_selection: settings["checkpoint_selection"] = "generated_family_quality"
     settings["selection_patience"] = selection_patience
+    settings["initial_candidate_generation_measured"] = not skip_initial_generation
     settings["conversation_sampling"] = "equal_legacy_context_then_uniform_family" if family_sampling else "uniform_examples"
     settings["public_fraction"]=public_fraction
     settings["document_fraction"]=document_fraction
@@ -299,6 +307,9 @@ def run(args):
         with (args.run_dir/"metrics.jsonl").open("a") as f: f.write(json.dumps(item)+"\n")
         print(json.dumps(item), flush=True)
         save_checkpoint(args.run_dir/"last.pt", model, optimizer, tokenizer, generator, step, fingerprint, settings)
+        if step == 0 and skip_initial_generation:
+            print("Base inicial não avaliada por geração e excluída da seleção; referência comparativa medida separadamente.", flush=True)
+            return
         if generative_selection:
             from .generative_selection import quality_key
             generation = (baseline if step == 0 and not comparison else
@@ -353,6 +364,8 @@ def run(args):
                "document_examples_processed":document_examples_processed,"document_tokens_processed":document_tokens_processed,
                "mps_allocated_bytes_max_observed": memory, "mps_driver_allocated_bytes_max_observed": driver_memory, "process_peak_rss_bytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*(1 if platform.system()=="Darwin" else 1024)}
     (args.run_dir/"summary.json").write_text(json.dumps(summary, indent=2))
+    if generative_selection and best_generation is None:
+        raise ValueError("Nenhum candidato ajustado teve avaliação gerativa completa.")
     selected = torch.load(args.run_dir/"best.pt", map_location="cpu", weights_only=True)
     model.load_state_dict(selected["model"]); model.eval()
     result = {"baseline": baseline, "selected": best_generation if generative_selection else score(model, tokenizer, controlled_validation, device,context_limit=evaluation_context, response_tokens=generation_budget), "selected_step": selected["step"], "test_examples_used": 0}
@@ -386,6 +399,7 @@ def main():
     parser.add_argument("--generative-selection", action="store_true", help="Selecionar por respostas geradas e pior família; loss continua registrada. Desenvolvimento, não teste cego.")
     parser.add_argument("--selection-patience", type=int, help="Encerrar após N avaliações gerativas consecutivas sem ganho.")
     parser.add_argument("--balanced-conversation-sampling", action="store_true", help="Lotes com 50% de famílias legadas e 50% contextuais; famílias equiprováveis em cada grupo.")
+    parser.add_argument("--skip-initial-generation", action="store_true", help="Excluir a base causal não ajustada da seleção; exige referência externa e seleção gerativa.")
     parser.add_argument("--human-fraction",type=float,default=0.)
     parser.add_argument("--public-fraction",type=float,default=0.)
     parser.add_argument("--document-fraction",type=float,default=0.,help="Fração de lotes documentais separados dos demais exemplos autorais.")

@@ -45,7 +45,8 @@ class GenerativeSelectionTests(unittest.TestCase):
             (root / "data.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
             args = SimpleNamespace(run_dir=root / "run", data=root / "data.jsonl", init_from=root / "source.pt",
                                    steps=3, batch_size=1, eval_every=1, learning_rate=.001, device="cpu",
-                                   evaluation_context=128, response_tokens=64, generative_selection=True, selection_patience=1)
+                                   evaluation_context=128, response_tokens=64, generative_selection=True, selection_patience=1,
+                                   skip_initial_generation=True, compare_with=root / "source.pt")
             before = dict(correct=0, total=1, samples=[dict(id="validation", task="conversation_guidance", exact_match=False)])
             after = dict(correct=1, total=1, samples=[dict(id="validation", task="conversation_guidance", exact_match=True,
                                                           prompt="olá", actual="Ok.", expected="Ok.")])
@@ -59,6 +60,7 @@ class GenerativeSelectionTests(unittest.TestCase):
             self.assertEqual(result["selected"], after)
             self.assertEqual(scoring.call_count, 3)
             self.assertTrue((args.run_dir / "generation-1.json").exists())
+            self.assertFalse((args.run_dir / "generation-0.json").exists())
             summary = json.loads((args.run_dir / "summary.json").read_text())
             self.assertEqual(summary["final_step"], 2)
             self.assertEqual(summary["stop_reason"], "selection_plateau")
