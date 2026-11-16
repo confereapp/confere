@@ -169,6 +169,9 @@ def run(args):
     train = [row for row in rows if row["split"] == "train"]
     validation = [row for row in rows if row["split"] == "validation"]
     family_sampling = getattr(args, "balanced_conversation_sampling", False)
+    first_token_weight=getattr(args,'first_token_weight',1.)
+    if not math.isfinite(first_token_weight) or first_token_weight<1 or (first_token_weight>1 and not family_sampling):
+        raise ValueError('Peso inicial finito >= 1 exige amostragem equilibrada de conversa.')
     conversation_pools = {"legacy": {}, "context": {}}
     if family_sampling:
         if any(not row["task"].startswith("conversation_") for row in train):
@@ -187,6 +190,15 @@ def run(args):
                 grouped.setdefault(text, []).append(i)
         presence_pools = [pool for pool in grouped.values() if len({train[i]["target"] for i in pool}) > 1]
         if not presence_pools: raise ValueError("Currículo não contém consultas contrastivas sobre o mesmo texto.")
+    comparison_pools=[]
+    if getattr(args,'paired_facts_focus',False):
+        if not family_sampling or args.batch_size%2 or presence_pools:raise ValueError('Comparações pareadas exigem conversa equilibrada, lote par e foco único.')
+        grouped={}
+        for i,row in enumerate(train):
+            key=row.get('scenario',{}).get('comparison_group')
+            if key is not None:grouped.setdefault(key,[]).append(i)
+        comparison_pools=[pool for pool in grouped.values() if len({train[i]['target'] for i in pool})>1]
+        if not comparison_pools:raise ValueError('Nenhuma comparação contrastiva no treino.')
     balanced_selection = getattr(args, "balanced_objective_selection", False)
     generative_selection = getattr(args, "generative_selection", False)
     skip_initial_generation = getattr(args, "skip_initial_generation", False)
@@ -264,7 +276,9 @@ def run(args):
     settings["human_sampling_policy"]="homogeneous_batches"
     settings["trainable_scope"] = "final_normalization_bias" if getattr(args, "train_norm_bias_only", False) else "selected_blocks" if last_blocks is not None else "all_parameters"
     settings["paired_presence_focus"] = bool(presence_pools)
+    settings['paired_facts_focus']=bool(comparison_pools)
     settings["training_loss_reduction"] = "example_mean" if family_sampling else "token_mean"
+    settings['first_token_weight']=first_token_weight
     if anchor_from:
         settings["anchor_checkpoint"] = str(anchor_from)
         settings["anchor_sha256"] = hashlib.sha256(Path(anchor_from).read_bytes()).hexdigest()
@@ -360,9 +374,9 @@ def run(args):
     record(0)
     for step in range(1, args.steps+1):
         model.train()
-        if presence_pools and torch.rand((), generator=generator).item() < .5:
+        if (presence_pools or comparison_pools) and torch.rand((), generator=generator).item() < .5:
             from .evidence_classifier import paired_indices
-            indices = paired_indices(train, presence_pools, args.batch_size, generator, label_key="target")
+            indices = paired_indices(train, presence_pools or comparison_pools, args.batch_size, generator, label_key="target")
         else:
             indices=(conversation_indices(conversation_pools, args.batch_size, generator) if family_sampling else
                      training_indices(len(train),humans,synthetic,args.batch_size,human_fraction,generator,public,public_fraction,documents,document_fraction))
@@ -370,7 +384,7 @@ def run(args):
         optimizer.zero_grad(set_to_none=True)
         logits = model(x)
         loss = (weighted_loss(logits, y, weight_batch(train_weights, indices, y.shape, device))
-                if train_weights is not None else example_mean_loss(logits, y) if family_sampling else F.cross_entropy(logits.flatten(0,1), y.flatten(), ignore_index=-100))
+                if train_weights is not None else example_mean_loss(logits, y,first_token_weight) if family_sampling else F.cross_entropy(logits.flatten(0,1), y.flatten(), ignore_index=-100))
         if anchor is not None:
             from .distillation import correct_teacher_kl
             with torch.no_grad(): anchor_logits = anchor(x)
@@ -438,7 +452,9 @@ def main():
     parser.add_argument("--generative-selection", action="store_true", help="Selecionar por respostas geradas e pior família; loss continua registrada. Desenvolvimento, não teste cego.")
     parser.add_argument("--selection-patience", type=int, help="Encerrar após N avaliações gerativas consecutivas sem ganho.")
     parser.add_argument("--paired-presence-focus", action="store_true", help="Metade dos lotes compara consultas de presença com respostas diferentes no mesmo texto; restante usa replay equilibrado.")
+    parser.add_argument('--paired-facts-focus',action='store_true',help='Metade dos lotes compara repetição e contradição dos mesmos valores de treino; restante usa replay equilibrado.')
     parser.add_argument("--balanced-conversation-sampling", action="store_true", help="Lotes com 50% de famílias legadas e 50% contextuais; famílias equiprováveis em cada grupo.")
+    parser.add_argument('--first-token-weight',type=float,default=1.,help='Peso inicial por resposta no treino equilibrado; avaliação completa continua sem pesos.')
     parser.add_argument("--skip-initial-generation", action="store_true", help="Excluir a base causal não ajustada da seleção; exige referência externa e seleção gerativa.")
     parser.add_argument("--human-fraction",type=float,default=0.)
     parser.add_argument("--public-fraction",type=float,default=0.)

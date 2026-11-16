@@ -46,7 +46,10 @@ def conversations(count=2400):
         facts={key:value for key,value in facts.items() if key in retained}
         changed = rng.choice(list(facts)); mode = i % 4
         if mode == 1: del facts[changed]
-        elif mode == 2: facts[changed].append(dict(nome="Mar", responsavel=b, prazo=200, linguagem="Pascal")[changed])
+        elif mode == 2:
+            alternatives=dict(nome=["Serra", "Brisa", "Vale", "Trilha", "Sol", "Cedro"],responsavel=[b],
+                              prazo=list(range(1,181)),linguagem=["Python", "Java", "Lua", "Ruby", "Go", "C", "Rust"])
+            facts[changed].append(rng.choice([v for v in alternatives[changed] if v!=facts[changed][0]]))
         elif mode == 3: facts[changed].append(facts[changed][0])
         sentences = [(FIELDS[k][0] if i % 2 else rng.choice(STATEMENTS[k])).format(v) for k, vs in facts.items() for v in vs]
         rng.shuffle(sentences); text = " ".join(sentences)
@@ -75,6 +78,28 @@ def conversations(count=2400):
             history.append([prompt, target])
     return rows
 
+
+
+def comparison_pairs(count=8000):
+    rng=random.Random(161135);rows=[]
+    values=dict(nome=['Serra','Brisa','Vale','Trilha','Sol','Cedro'],responsavel=NAMES,
+                prazo=list(range(1,181)),linguagem=['Python','Java','Lua','Ruby','Go','C','Rust'])
+    for i in range(count):
+        field=list(values)[i%4];first,second=rng.sample(values[field],2)
+        others=[k for k in values if k!=field];rng.shuffle(others)
+        background={k:[rng.choice(values[k])] for k in others[:rng.randrange(4)]}
+        forms={k:rng.choice(STATEMENTS[k]+[FIELDS[k][0]]) for k in values}
+        question=rng.choice(QUESTIONS[field]+FIELDS[field][1]);separator=rng.choice([' ','\n','\nPergunta: '])
+        header=rng.choice(['','Use apenas o texto para responder.\n','Contexto: '])
+        for j,items in enumerate([[first],[first,first],[first,second]]):
+            facts=dict(background,**{field:items})
+            sentences=[forms[k].format(v) for k,vs in facts.items() for v in vs];rng.shuffle(sentences)
+            group=f'comparison-{i}-{j}';kind='conflict' if j==2 else 'fact'
+            rows.append(dict(id=group,project_id=group,split='train',task='conversation_context_answer_'+kind,
+                             prompt=header+' '.join(sentences)+separator+question,target=answer(facts,field),history=[],turn_index=0,response_tokens=256,
+                             scenario=dict(facts=copy.deepcopy(facts),field=field,comparison_group=f'comparison-{i}'),
+                             provenance=dict(kind='synthetic_authored',note='Mesmo valor isolado, repetido e contraposto a outro valor da mesma distribuição. Apenas treino.')))
+    return rows
 
 
 def presence_pairs(count=1600):

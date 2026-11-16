@@ -118,6 +118,8 @@ def create_report(run_dir, output=None):
             p("Parâmetros treináveis: " + str(info["trainable_parameters"]) + "; últimos blocos explicitamente selecionados: " + str(info.get("settings", {}).get("train_last_blocks")) + " (None indica rede inteira).")
     if info.get("settings", {}).get("document_decision_weight", 1) > 1:
         p("Treino: peso " + str(info["settings"]["document_decision_weight"]) + " nos valores documentais status/unit; demais tokens-alvo com peso 1. Avaliação e seleção por loss continuam sem pesos.")
+    if info.get('settings',{}).get('first_token_weight',1)>1:
+        p('Treino: peso '+str(info['settings']['first_token_weight'])+' no primeiro token de cada resposta, normalizado por exemplo. Loss de avaliação e respostas completas continuam sem pesos.')
     if info.get("settings", {}).get("checkpoint_selection") == "objective_mean":
         p("Seleção: média das losses de conversa e documentos, 50% para cada objetivo. A curva de validação continua mostrando a média por token. Gates gerativos separados continuam obrigatórios.")
     if info.get("settings", {}).get("checkpoint_selection") == "generated_family_quality":

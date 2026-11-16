@@ -1,5 +1,6 @@
 """Peso extra nos valores documentais; o protocolo de avaliação não muda."""
 import re
+import math
 
 import torch
 from torch.nn import functional as F
@@ -41,8 +42,13 @@ def weight_batch(examples, indices, shape, device):
     return weights.to(device)
 
 
-def example_mean_loss(logits, labels):
+def example_mean_loss(logits, labels, first_token_weight=1.):
+    if not math.isfinite(first_token_weight) or first_token_weight<1:
+        raise ValueError('Peso do primeiro token deve ser finito e >= 1.')
     counts = (labels != -100).sum(-1)
     if (counts == 0).any(): raise ValueError("Cada exemplo deve conter tokens-alvo.")
     losses = F.cross_entropy(logits.transpose(1, 2), labels, ignore_index=-100, reduction="none")
-    return (losses.sum(-1) / counts).mean()
+    weights=(labels!=-100).to(logits.dtype)
+    first=(labels!=-100).long().argmax(-1)
+    weights[torch.arange(len(labels),device=labels.device),first]=first_token_weight
+    return ((losses*weights).sum(-1)/weights.sum(-1)).mean()

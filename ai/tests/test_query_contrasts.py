@@ -3,7 +3,7 @@ import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/"scripts"))
-from prepare_query_contrasts import conversations, documents, long_documents, intent_variations, presence_pairs
+from prepare_query_contrasts import conversations, documents, long_documents, intent_variations, presence_pairs, comparison_pairs
 from confere_ai.tokenizer import ByteBPE
 from confere_ai.grounding import judge
 from prepare_context_answers import answer
@@ -11,6 +11,19 @@ from prepare_lexical_binding import expected
 
 
 class QueryContrastTests(unittest.TestCase):
+    def test_repetition_and_contradiction_use_the_same_values_and_requested_field(self):
+        rows=comparison_pairs(100)
+        for a,b,c in zip(rows[::3],rows[1::3],rows[2::3]):
+            self.assertEqual(a['target'],b['target'])
+            self.assertNotEqual(b['target'],c['target'])
+            self.assertEqual(len({r['scenario']['comparison_group'] for r in [a,b,c]}),1)
+            for row in [a,b,c]:self.assertEqual(row['target'],answer(row['scenario']['facts'],row['scenario']['field']))
+    def test_conflict_values_share_the_factual_distribution_without_a_fixed_marker(self):
+        rows=[r for r in conversations(1200) if r['task'].endswith('conflict') and r['scenario']['field']=='prazo']
+        pairs=[r['scenario']['facts']['prazo'] for r in rows]
+        self.assertGreater(len({values[-1] for values in pairs}),20)
+        self.assertTrue(all(1<=v<=180 for values in pairs for v in values))
+        self.assertTrue(all(len(set(values))==2 for values in pairs))
     def test_sentence_units_do_not_inherit_another_sentences_evidence(self):
         rows=documents(40,topics=['consulta de obras','cadastro de animais','edição de visitas'],sentence_units=True)
         self.assertTrue(any(len(r['units'])>2 for r in rows))
