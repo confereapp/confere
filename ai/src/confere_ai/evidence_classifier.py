@@ -22,9 +22,20 @@ class EvidenceClassifier(nn.Module):
         return self.head(self.features(ids, lengths))
 
 
-def encode_unit(requirement, text, tokenizer, context_size):
+def decision_prefix(tokenizer):
+    choices = [tokenizer.encode(json.dumps(dict(status=status, evidence=[]), ensure_ascii=False))
+               for status in ("atendido", "nao_atendido", "evidencia_insuficiente")]
+    prefix = []
+    for values in zip(*choices):
+        if len(set(values)) != 1: break
+        prefix.append(values[0])
+    return prefix
+
+
+def encode_unit(requirement, text, tokenizer, context_size, prefix=None):
     prompt = prompt_for(requirement, [dict(id="page:1", text=text)], 2)
-    ids = [tokenizer.BOS] + tokenizer.encode(prompt) + [tokenizer.SEP]
+    prefix = decision_prefix(tokenizer) if prefix is None else prefix
+    ids = [tokenizer.BOS] + tokenizer.encode(prompt) + [tokenizer.SEP] + prefix
     if len(ids) > context_size:
         raise ValueError("Unidade excede o contexto; nenhum texto foi truncado.")
     return ids
@@ -32,6 +43,7 @@ def encode_unit(requirement, text, tokenizer, context_size):
 
 def examples(rows, tokenizer, context_size):
     result = []
+    prefix = decision_prefix(tokenizer)
     for row in rows:
         target = json.loads(row["target"])
         if row.get("grounding_schema") != 2: raise ValueError("Classificador exige contrato V2.")
@@ -39,7 +51,7 @@ def examples(rows, tokenizer, context_size):
         for unit in row["units"]:
             labels = [float((unit["id"], status) in pointers) for status in ("atendido", "nao_atendido")]
             result.append(dict(row_id=row["id"], unit=unit["id"], labels=labels,
-                               ids=encode_unit(row["requirement"], unit["text"], tokenizer, context_size)))
+                               ids=encode_unit(row["requirement"], unit["text"], tokenizer, context_size, prefix)))
     return result
 
 

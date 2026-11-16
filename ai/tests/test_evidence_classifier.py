@@ -4,12 +4,20 @@ import unittest
 from pathlib import Path
 import torch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from confere_ai.evidence_classifier import EvidenceClassifier, encode_unit, response
+from confere_ai.evidence_classifier import EvidenceClassifier, encode_unit, response, decision_prefix
 from confere_ai.model import GPT, GPTConfig
 from confere_ai.tokenizer import ByteBPE
 
 
 class EvidenceClassifierTests(unittest.TestCase):
+    def test_readout_prefix_contains_no_class_dependent_tokens(self):
+        tokenizer = ByteBPE.train([json.dumps(dict(status=s, evidence=[])) for s in
+                                   ("atendido", "nao_atendido", "evidencia_insuficiente")] * 4, 300)
+        prefix = decision_prefix(tokenizer)
+        self.assertTrue(prefix)
+        for status in ("atendido", "nao_atendido", "evidencia_insuficiente"):
+            ids = tokenizer.encode(json.dumps(dict(status=status, evidence=[])))
+            self.assertEqual(ids[:len(prefix)], prefix)
     def test_predicted_states_preserve_both_conflicts_and_never_invent_references(self):
         units = [dict(id="page:2"), dict(id="page:4")]
         result = json.loads(response(units, [[.9, .1], [.1, .9]]))

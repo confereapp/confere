@@ -73,9 +73,10 @@ def main():
             if best is None or key > best:
                 best, selected, selected_step = key, result, step
                 torch.save(dict(format_version=1, config=source["config"], merges=source["merges"], classifier=model.state_dict(),
-                                step=step, dataset_fingerprint=digest, settings=dict(objective="document_classifier", frozen_backbone=True)),
+                                step=step, dataset_fingerprint=digest, settings=dict(objective="document_classifier", frozen_backbone=True, readout="shared_json_decision_prefix_v1")),
                            args.run_dir / "best.pt")
     info = dict(method="frozen_backbone_linear_evidence_probe", data=str(args.data), dataset_fingerprint=digest,
+                readout="shared_json_decision_prefix_v1",
                 source=str(args.checkpoint), source_sha256=hashlib.sha256(args.checkpoint.read_bytes()).hexdigest(),
                 train_units=len(x), validation_units=len(v), test_examples_used=0, threshold=.5,
                 note="Referências e JSON são construídos a partir das unidades; somente relevância/estado são previstos. Desenvolvimento, não teste cego. Sem integração na API.")
