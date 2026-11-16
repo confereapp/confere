@@ -159,6 +159,9 @@ def run(args):
     validation = [row for row in rows if row["split"] == "validation"]
     balanced_selection = getattr(args, "balanced_objective_selection", False)
     generative_selection = getattr(args, "generative_selection", False)
+    selection_patience = getattr(args, "selection_patience", None)
+    if selection_patience is not None and (not generative_selection or selection_patience <= 0):
+        raise ValueError("Paciência positiva exige seleção gerativa.")
     if generative_selection and balanced_selection:
         raise ValueError("Escolha seleção gerativa ou seleção pela média das losses.")
     if balanced_selection and ({"conversation" if row["task"].startswith("conversation_") else "documents"
@@ -217,6 +220,7 @@ def run(args):
     settings["document_decision_weight"] = decision_weight
     settings["checkpoint_selection"] = "objective_mean" if balanced_selection else "token_mean"
     if generative_selection: settings["checkpoint_selection"] = "generated_family_quality"
+    settings["selection_patience"] = selection_patience
     settings["public_fraction"]=public_fraction
     settings["document_fraction"]=document_fraction
     schemas = {r.get("grounding_schema", 1) for r in rows if r["task"].startswith("grounded_")}
@@ -254,6 +258,8 @@ def run(args):
     if document_fraction and (not documents or not synthetic):raise ValueError("Mistura documental exige documentos e exemplos autorais não documentais.")
     started, best, processed, memory = time.perf_counter(), float("inf"), 0, 0
     best_quality = best_generation = None
+    stale_evaluations = 0
+    selection_plateau = False
     metrics = []
     driver_memory = 0
     human_examples_processed=0
@@ -263,7 +269,7 @@ def run(args):
     document_examples_processed=0
     document_tokens_processed=0
     def record(step):
-        nonlocal best, best_quality, best_generation
+        nonlocal best, best_quality, best_generation, stale_evaluations
         item = {"step": step, "train_loss": evaluate(model, train_eval, device),
                 **validation_losses(model, encoded_val, validation, device, balanced_selection),
                 "elapsed_seconds": time.perf_counter()-started}
@@ -284,7 +290,10 @@ def run(args):
             print(json.dumps(dict(generation_step=step, quality=quality, correct=generation["correct"], total=generation["total"])), flush=True)
             if best_quality is None or quality > best_quality:
                 best_quality, best_generation = quality, generation
+                stale_evaluations = 0
                 save_checkpoint(args.run_dir/"best.pt", model, optimizer, tokenizer, generator, step, fingerprint, settings)
+            else:
+                stale_evaluations += 1
             return
         selection_loss = item.get("selection_loss", item["validation_loss"])
         if selection_loss < best:
@@ -314,8 +323,11 @@ def run(args):
             driver_memory = max(driver_memory, torch.mps.driver_allocated_memory())
         timed_out=max_seconds is not None and time.perf_counter()-started>=max_seconds
         if step % args.eval_every == 0 or step == args.steps or timed_out: record(step)
+        if selection_patience is not None and stale_evaluations >= selection_patience:
+            selection_plateau = True
+            break
         if timed_out: break
-    summary = {"start_step": 0, "final_step": step,"stop_reason":"time_limit" if timed_out else "steps", "elapsed_seconds": time.perf_counter()-started,
+    summary = {"start_step": 0, "final_step": step,"stop_reason":"selection_plateau" if selection_plateau else "time_limit" if timed_out else "steps", "elapsed_seconds": time.perf_counter()-started,
                "tokens_processed": processed, "initial": metrics[0], "final": metrics[-1],
                "human_examples_processed":human_examples_processed,"human_tokens_processed":human_tokens_processed,
                "public_examples_processed":public_examples_processed,"public_tokens_processed":public_tokens_processed,
@@ -353,6 +365,7 @@ def main():
     parser.add_argument("--document-decision-weight", type=float, default=1., help="Peso dos valores status/unit no treino; avaliação continua sem pesos.")
     parser.add_argument("--balanced-objective-selection", action="store_true", help="Selecionar checkpoint pela média das losses de conversa e documentos (50% cada).")
     parser.add_argument("--generative-selection", action="store_true", help="Selecionar por respostas geradas e pior família; loss continua registrada. Desenvolvimento, não teste cego.")
+    parser.add_argument("--selection-patience", type=int, help="Encerrar após N avaliações gerativas consecutivas sem ganho.")
     parser.add_argument("--human-fraction",type=float,default=0.)
     parser.add_argument("--public-fraction",type=float,default=0.)
     parser.add_argument("--document-fraction",type=float,default=0.,help="Fração de lotes documentais separados dos demais exemplos autorais.")
