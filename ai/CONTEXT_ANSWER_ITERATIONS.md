@@ -274,3 +274,19 @@ do ciclo E. 4.000 passos planejados, avaliações a cada 500, limite 600 segundo
 Validação, seleção pela loss e avaliação gerativa permanecem sem pesos. Não há
 mudança no contrato nem na inferência da API; peso padrão 1 preserva o treino
 anterior. O ensaio testa documentos sem abandonar os gates de conversa.
+
+## Currículo G: continuidade de intenção
+
+A inspeção do corpus atual encontrou 197 exemplos de definição, mas zero turnos
+de exemplo após a definição. O banco autoral original já tinha esses alvos.
+Novo currículo repõe definição seguida de exemplo e escolha guiada em dois
+turnos, além de contrastar identidade, função, escopo, saudação, agradecimento
+e ausência de projeto em diferentes históricos. Não altera os dados documentais.
+São 3.000 linhas novas, total 38.081 de treino; mesmas 377 de validação, preservadas
+literalmente. As novas raízes são recusadas se coincidirem com uma formulação
+reservada; continuações existentes como "dê um exemplo" reaproveitam alvos
+autorais de treino. Grupos com conflito de contexto/alvo são descartados inteiros.
+Teste verifica sequência, alvos autorais e preservação da validação.
+Fonte context-answers-intent-2026-11-16, SHA256
+8de71ef39c4b3c64115fbb138bdfe6f1ca4872415b085a259c5d8fe86d9fc484.
+É um currículo controlado, sem alegação de fluência geral ou revisão independente.

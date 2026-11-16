@@ -1,0 +1,11 @@
+{
+  "source_sha256": "082c8a107b91e6ed49334b4544e0dec2385db51245af47d387e54ea85ee7f8e3",
+  "authored_sha256": "f076c8fa95b687beb515df0f57a6bdc9859e49d6cf945c93876d2562862408dc",
+  "dataset_sha256": "8de71ef39c4b3c64115fbb138bdfe6f1ca4872415b085a259c5d8fe86d9fc484",
+  "splits": {
+    "train": 38081,
+    "validation": 377
+  },
+  "added": 3000,
+  "note": "Somente treino alterado. Validação de desenvolvimento preservada; nenhum teste reservado usado para ajuste."
+}
