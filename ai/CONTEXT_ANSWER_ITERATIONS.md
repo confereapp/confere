@@ -356,3 +356,57 @@ optimizer reinicializado; não representa retomada do optimizer de qualquer orig
 Tensores incompatíveis/não finitos ou buffers inteiros divergentes são recusados.
 Mesmos 377 casos controlados e mesmos gates, baseline G preservado. A média não
 é presumida superior: precisa preservar os dois objetivos na geração.
+
+### Resultado I
+
+Média 50/50: 334/377 casos exatos, abaixo de G (337/377); ausências 10/12,
+memória 34/36, documentos 176/206. Houve regressões em estado de projeto e
+perfis documentais. A média foi rejeitada, sem adoção. Os pesos originais foram
+preservados; não há alegação de que combinar checkpoints retenha suas habilidades.
+
+## Comparação pelo fluxo completo e repetição do requisito
+
+C e G foram avaliados nos mesmos 18 documentos autorais / 36 requisitos, usando
+review_extracted, as mesmas unidades e o mesmo fracionamento da API textual.
+SHA256 da coorte: 7bca5d9de232aee793240711b5d3358f92ab65663028ce543a6ca4e59988ac64.
+C: 16/36 requisitos, 2/18 projetos inteiros, 66/86 chamadas locais corretas.
+G: 19/36 requisitos, 5/18 projetos inteiros, 69/86 chamadas locais corretas.
+Ambos: 36/36 formatos válidos e uma aprovação indevida. A mesma falha crítica
+persiste em requisito explicitamente ausente, confundido com outro recurso
+presente na mesma unidade. Citações são literais; isso não prova suporte semântico.
+Os traces completos e hashes estão preservados nos diretórios das execuções;
+a comparação compacta está em output/ai/context-complete-document-comparison-2026-11-16.json.
+É validação de desenvolvimento já inspecionada, não documento real ou teste cego.
+
+Uma ablação offline repetiu o requisito depois das unidades, preservando todo o
+texto original, alvos e referências, em todos os 206 casos documentais G.
+A hipótese de ajudar a associação pergunta/fonte foi refutada: 178/206 caiu para
+153/206. A saída tinha espaço para o alvo inteiro, sem truncar nenhuma fonte.
+A repetição foi rejeitada; nenhum prompt de produção foi alterado.
+
+## Estado após esta retomada
+
+F, G e H somam 12.000 atualizações e 1.659.492 tokens-alvo processados, incluindo
+repetições. G/best.pt é o candidato experimental com maior total desta retomada:
+337/377, mas permanece reprovado; não substitui o checkpoint da API ou do terminal.
+Em comparação com C: documentos 175/206 para 178/206, conversa legada 63/75 para
+67/75; contexto manteve 92/96 e >=90% em cada uma das cinco famílias. Os totais
+não escondem as falhas por perfil e o falso positivo no fluxo completo.
+
+O diagnóstico de linguagem natural G manteve 4/9 correspondências literais.
+A inspeção confirmou erros reais: Lia virou "Li.", prazo explícito não foi
+recuperado e documentação presente foi tratada como informação ausente. Algumas
+respostas inconclusivas não são perigosas, mas também não respondem corretamente.
+Os casos são desenvolvimento já inspecionado, não teste cego de conversa aberta.
+A meta de qualidade nos dois objetivos ainda não foi atingida.
+
+Nenhum contrato/prompt da API foi alterado nesta retomada. Sem teste HTTP
+autenticado novo, Insomnia, interface ou deploy. Os gates gerativos e a revisão
+humana obrigatória continuam. Checkpoints e dados privados foram preservados;
+todos os ensaios rejeitados estão documentados, sem promoção baseada em loss.
+
+Verificação final desta retomada: 162 testes Python passaram, incluindo execução
+MPS de gradientes, alinhamento dos pesos documentais, seleção por objetivo,
+continuidade dos diálogos e recusas de combinações incompatíveis. git diff --check
+sem erros. PDFs E corrigido, F, G e H renderizados e inspecionados. Autoria Git
+verificada como Guilherme Brasil, mensagens sem nomes ou atribuições a modelos.
