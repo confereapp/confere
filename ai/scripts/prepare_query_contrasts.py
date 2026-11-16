@@ -80,11 +80,12 @@ def documents(count=3600):
         elif i % 3 == 1:
             stem = a; a, b = "pré"+stem, "pós"+stem
         pos, neg = rng.choice(DOC_FORMS)
-        states = [(a, "atendido"), (b, "nao_atendido")]
-        if i % 6 == 1: states = [(a, "nao_atendido"), (b, "atendido")]
-        if i % 6 == 2: states.append((a, "nao_atendido"))
-        if i % 6 == 3: states = [(b, "nao_atendido")]
-        if i % 6 == 4: states = []
+        first, second = rng.sample(["atendido", "nao_atendido"], 2)
+        states = [(a, first), (b, second)]; mode = rng.randrange(6)
+        if mode == 1: states = [(a, second), (b, first)]
+        if mode == 2: states.append((a, second))
+        if mode == 3: states = [(b, second)]
+        if mode == 4: states = []
         rng.shuffle(states)
         filler = " A equipe registrou reuniões e distribuiu as tarefas da semana." * rng.randrange(7)
         text = " ".join((pos if status == "atendido" else neg).format(topic) for topic, status in states)
@@ -110,7 +111,12 @@ def long_documents(tokenizer, count=120):
     rng = random.Random(161132); rows = []; skipped = 0
     for i in range(count):
         for profile in PROFILES:
-            scene = scene_for("train", 700000+i, profile, rng, forms=DOC_FORMS)
+            topics = None
+            if i % 3:
+                a, b = [s.casefold() for s in names(rng)]
+                suffix = rng.choice(["ção", "mento", "dade", "ncia", "tura", "grafia"])
+                topics = [a+suffix, b+suffix] if i % 3 == 1 else ["pré"+a+suffix, "pós"+a+suffix]
+            scene = scene_for("train", 700000+i, profile, rng, forms=DOC_FORMS, topics=topics)
             local = local_rows(scene, tokenizer)
             if local is None:
                 skipped += 1
@@ -140,6 +146,7 @@ def intent_variations(source, count=3000):
     intents = {
         "hello": (["opa, podemos trocar ideia?", "opa, vamos bater papo?", "salve, vamos conversar?", "ei, bora trocar ideia?", "oi, podemos bater um papo?"], "Olá! Sou o Confere."),
         "function": (["o q tu faz?", "o q c faz aí?", "o q você consegue fazer?", "me diz o q tu faz aí", "qual é tua função aí?"], "Sou um experimento para apoiar a conferência de projetos."),
+        "praise": (["vlw por explicar", "vlw pela resposta", "valeu pela explicação", "obrigado pela explicação", "valeu por explicar isso"], "Valeu! Se quiser, podemos continuar."),
         "negation": (["to sem projeto agr", "tô sem nenhum trabalho de projeto", "não tenho nenhum projeto agr", "ainda to sem projeto", "por enquanto tô sem um projeto"], "Sem problema. Podemos conversar sem um projeto."),
     }
     for i in range(300):
@@ -150,6 +157,23 @@ def intent_variations(source, count=3000):
             rows.append(dict(id=group, project_id=group, split="train", task="conversation_slang_"+task,
                              prompt=prompt, target=target, history=copy.deepcopy(rng.choice(pool)["history"][-3:]), turn_index=0,
                              response_tokens=256, provenance=dict(kind="synthetic_authored", note="Intenção atual em históricos variados; formas de desenvolvimento sem copiar pedidos da validação.")))
+    for i in range(600):
+        group = f"intent-state-topic-{i}"; available = bool(i % 2)
+        seed = copy.deepcopy(rng.choice(pool)["history"][-rng.randint(2, 5):])
+        update = rng.choice(["retificando, agora já tenho um projeto", "corrigindo a situação: já tenho projeto", "atualização: tenho um projeto agora"]) if available else rng.choice(["retificando, continuo sem ter um projeto", "corrigindo a situação: ainda não tenho projeto", "atualização: por enquanto estou sem projeto"])
+        acknowledgement = "Entendi: agora você tem um projeto." if available else "Entendi: você ainda não tem um projeto."
+        state = "Você disse que tem um projeto." if available else "Você disse que ainda não tem um projeto."
+        topic = rng.choice(["música", "cinema", "jogos", "livros", "estudos", "viagens"])
+        turns = [("state", update, acknowledgement),
+                 ("state", rng.choice(["qual é a situação atual do projeto?", "me lembra como está a situação do meu projeto", "o que eu disse sobre ter um projeto?"]), state),
+                 ("topic", rng.choice(["quero que o assunto seja {}", "o tema que escolhi para conversar é {}", "vamos bater papo a respeito de {}"]).format(topic), f"Podemos conversar sobre {topic}."),
+                 ("topic", rng.choice(["do que estamos falando agora?", "sobre que tema estamos conversando neste momento?", "qual é o assunto da nossa conversa agora?"]), f"Estamos conversando sobre {topic}.")]
+        for j, (task, prompt, target) in enumerate(turns):
+            assert prompt.casefold() not in excluded
+            rows.append(dict(id=f"{group}-{j}", project_id=group, split="train", task="conversation_flow_"+task,
+                             prompt=prompt, target=target, history=copy.deepcopy(seed), turn_index=j, response_tokens=256,
+                             provenance=dict(kind="synthetic_authored", note="Mudanças de estado e tema em posições variadas; somente treino de desenvolvimento.")))
+            seed.append([prompt, target])
     # A mesma incerteza pede uma proposta no início e foco após as sugestões.
     proposal = "Sem problema. Podemos falar de objetivos, requisitos ou evidências."
     focus = "Vamos começar pelo tema do seu projeto. Qual é o tema?"

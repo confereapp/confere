@@ -60,3 +60,9 @@ class QueryContrastTests(unittest.TestCase):
             self.assertNotEqual(a["target"], b["target"])
             self.assertEqual(c["target"], "Seu nome é " + b["target"].removeprefix("Prazer, "))
             self.assertEqual(c["history"], [[a["prompt"], a["target"]], [b["prompt"], b["target"]]])
+
+    def test_resource_spelling_does_not_determine_polarity(self):
+        rows = documents(300)
+        near = [r for r in rows if r["scenario"]["feature"].startswith("pré")]
+        states = {e["status"] for r in near for e in json.loads(r["target"])["evidence"]}
+        self.assertEqual(states, {"atendido", "nao_atendido"})
