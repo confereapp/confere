@@ -1,0 +1,36 @@
+{
+  "run": "ai/runs/evidence-classifier-r-2026-11-16",
+  "summary": {
+    "final_step": 6000,
+    "selected_step": 0,
+    "stop_reason": "selection_plateau",
+    "elapsed_seconds": 1158.338684458,
+    "test_examples_used": 0
+  },
+  "selected_step": 0,
+  "quality": [
+    false,
+    0,
+    0.6666666666666666,
+    0.9628791687615217,
+    -6,
+    275
+  ],
+  "correct": 275,
+  "total": 294,
+  "diagnostic": {
+    "step": 2500,
+    "checkpoint_sha256": "38a127ca8a7001d5a278662a991205dc6451e14c07216a0ed50ac410dd3c8511",
+    "groups": {
+      "new_short": {
+        "correct": 63,
+        "total": 100
+      },
+      "new_long": {
+        "correct": 99,
+        "total": 100
+      }
+    }
+  },
+  "adopted": false
+}
