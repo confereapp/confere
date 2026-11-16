@@ -11,6 +11,23 @@ from confere_ai.tokenizer import ByteBPE
 
 
 class EvidenceClassifierTests(unittest.TestCase):
+    def test_sentence_predictions_preserve_original_alias_and_opposing_evidence(self):
+        from dataclasses import asdict
+        from confere_ai.evidence_classifier import sentence_parts
+        config=GPTConfig(vocab_size=260,block_size=512,width=16,layers=1,heads=2)
+        model=EvidenceClassifier(GPT(config))
+        ckpt=dict(config=asdict(config),merges=[],classifier=model.state_dict(),settings=dict(objective='document_classifier',readout='shared_json_decision_prefix_v1',unit_segmentation='sentences_v1'))
+        predictor=EvidencePredictor(ckpt,'cpu')
+        units=[dict(id='original:4',text='Há testes. Não há testes.'),dict(id='original:8',text='Outra informação.')]
+        with patch.object(predictor.model,'forward',return_value=torch.tensor([[9.,-9.],[-9.,9.],[-9.,-9.]])):
+            output=json.loads(predictor.predict_units('Testes',units))
+        self.assertEqual(output['status'],'evidencia_insuficiente')
+        self.assertEqual({e['unit'] for e in output['evidence']},{'original:4'})
+        self.assertEqual(len(output['evidence']),2)
+        text='Uma frase!  Outra.\nÚltima🙂'
+        self.assertEqual(''.join(sentence_parts(text)),text)
+        with self.assertRaises(ValueError): EvidencePredictor(dict(ckpt,settings=dict(ckpt['settings'],unit_segmentation='invalid')),'cpu')
+
     def test_predictor_uses_provided_units_without_parsing_or_inventing_aliases(self):
         from dataclasses import asdict
         config = GPTConfig(vocab_size=260, block_size=512, width=16, layers=1, heads=2)

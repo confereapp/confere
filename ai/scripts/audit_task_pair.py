@@ -69,7 +69,7 @@ def main():
             if predictor.config.block_size != 1024: raise ValueError("Contexto especializado incompatível.")
             validation_rows = [r for r in subset if r["split"] == "validation"]
             encoded = examples(validation_rows, predictor.tokenizer, predictor.config.block_size, readout=predictor.readout)
-            result = dict(selected=classifier_score(predictor.model, encoded, validation_rows, "mps", predictor.thresholds),
+            result = dict(selected=classifier_score(predictor.model, encoded, validation_rows, "mps", predictor.thresholds, predict_units=predictor.predict_units),
                           selected_step=checkpoint["step"], test_examples_used=0)
             del predictor
         else:

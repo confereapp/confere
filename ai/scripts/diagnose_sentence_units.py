@@ -37,8 +37,14 @@ def main():
     if args.output.exists(): parser.error("Saída deve ser nova.")
     torch.set_num_threads(4)
     ckpt = torch.load(args.checkpoint, map_location="cpu", weights_only=True)
-    model = GPT(GPTConfig(**ckpt["config"])).to("mps")
-    model.load_state_dict(ckpt["model"]); model.eval()
+    config=GPTConfig(**ckpt["config"])
+    classifier=None
+    if ckpt['settings'].get('objective')=='document_classifier':
+        from confere_ai.evidence_classifier import EvidencePredictor
+        classifier=EvidencePredictor(ckpt,'mps')
+    else:
+        model = GPT(config).to("mps")
+        model.load_state_dict(ckpt["model"]); model.eval()
     tokenizer = ByteBPE(ckpt["merges"])
     def predict(ids):
         generated = model.generate(torch.tensor([ids], device="mps"), 256, tokenizer.EOS)
@@ -53,8 +59,8 @@ def main():
         correct = false_positive = valid = calls = 0
         for scene in cases:
             document = scene["document"] if mode == "whole" else split_document(scene["document"])
-            result = review_extracted([document], scene["requirements"], tokenizer, model.config.block_size, predict,
-                                      schema_version=2, response_tokens=256)
+            result = review_extracted([document], scene["requirements"], tokenizer, config.block_size, None if classifier else predict,
+                                      schema_version=2, response_tokens=256, predict_units=classifier.predict_units if classifier else None)
             for row, expected in zip(result["requirements"], scene["expected"]):
                 passed = row["model_outputs_valid"] and row["status"] == expected["status"] and row["conflicting_evidence"] == expected["conflicting_evidence"]
                 correct += passed; valid += row["model_outputs_valid"]

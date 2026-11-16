@@ -29,18 +29,19 @@ def training_errors(model, train, device):
 
 
 @torch.no_grad()
-def score(model, encoded, rows, device, thresholds=(.5, .5)):
+def score(model, encoded, rows, device, thresholds=(.5, .5), *, predict_units=None):
     model.eval(); probabilities = []
-    for offset in range(0, len(encoded), 8):
+    for offset in range(0, len(encoded) if predict_units is None else 0, 8):
         ids, lengths = unit_batch(encoded[offset:offset+8], device, model.backbone.config.block_size)
         probabilities.extend(model.evidence_scores(model(ids, lengths)).cpu().tolist())
     results = []; offset = 0
     for row in rows:
         count = len(row["units"])
-        raw = response(row["units"], probabilities[offset:offset+count], thresholds); offset += count
+        raw = (predict_units(row['requirement'],row['units']) if predict_units else
+               response(row["units"], probabilities[offset:offset+count], thresholds)); offset += count
         results.append(dict(id=row["id"], task=row["task"], prompt=row["prompt"], expected=row["target"], actual=raw,
                             evaluation_profile=row.get("evaluation_profile", "default"), **judge(raw, row)))
-    assert offset == len(probabilities)
+    assert predict_units is not None or offset == len(probabilities)
     return dict(correct=sum(r["exact_match"] for r in results), total=len(results), samples=results)
 
 
@@ -93,6 +94,11 @@ def main():
     settings = dict(objective="document_classifier", state_mode=state_mode, readout=readout, frozen_embeddings=True, require_perfect_validation=args.require_perfect_validation,
                     encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5, eval_every=args.eval_every,
                     checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", error_replay=args.error_replay, initial_train_errors=len(hard), loss="categorical_ce" if state_mode==STATE_MODES[1] else "unweighted_bce")
+    settings['unit_segmentation']=source['settings'].get('unit_segmentation','whole_unit_v1')
+    predictor=None
+    if settings['unit_segmentation']=='sentences_v1':
+        from confere_ai.evidence_classifier import EvidencePredictor
+        predictor=EvidencePredictor(source,args.device);predictor.model=model
     args.run_dir.mkdir(parents=True)
     info = dict(data=str(args.data), dataset_fingerprint=digest, source=str(args.init_from),
                 source_sha256=hashlib.sha256(args.init_from.read_bytes()).hexdigest(), device=args.device,
@@ -124,7 +130,7 @@ def main():
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1., error_if_nonfinite=True); optimizer.step()
         if step % args.eval_every == 0 or step == args.steps:
             checkpoint(step, "last.pt")
-            result = score(model, val, validation, args.device); key = quality_key(result)
+            result = score(model, val, validation, args.device, predict_units=predictor.predict_units if predictor else None); key = quality_key(result)
             if baseline is None: baseline = result
             (args.run_dir / f"evaluation-{step}.json").write_text(json.dumps(dict(quality=key, result=result), ensure_ascii=False, indent=2))
             print(json.dumps(dict(step=step, correct=result["correct"], total=result["total"], quality=key,

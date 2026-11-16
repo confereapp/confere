@@ -31,6 +31,7 @@ def main():
     payload = args.checkpoint.read_bytes(); checkpoint = torch.load(BytesIO(payload), map_location="cpu", weights_only=True)
     predictor = EvidencePredictor(checkpoint, args.device); torch.set_num_threads(4)
     if predictor.model.state_mode != STATE_MODES[0]: p.error("Limiares aplicam-se somente às cabeças binárias.")
+    if predictor.segmentation != 'whole_unit_v1': p.error('Calibração exige representação por unidade inteira.')
     rows, digest = load_instructions(args.data); rows = [r for r in rows if r["split"] == "validation"]
     if not rows or any(not r["task"].startswith("grounded_") for r in rows): p.error("Exige validação documental.")
     encoded = examples(rows, predictor.tokenizer, predictor.config.block_size, readout=predictor.readout); probabilities = []

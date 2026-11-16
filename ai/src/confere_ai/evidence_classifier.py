@@ -1,6 +1,7 @@
 """Cabeça de evidência por unidade; decisões semânticas continuam aprendidas."""
 import json
 import hashlib
+import re
 import torch
 from torch import nn
 from .grounding import prompt_for
@@ -9,6 +10,14 @@ from .model import GPT, GPTConfig
 
 STATE_MODES = ("independent_binary", "categorical_four_state")
 READOUTS = ("shared_json_decision_prefix_v1", "suffix_query_decision_prefix_v1")
+
+
+def sentence_parts(text):
+    # shortcut: regex preserva o texto, mas abreviações exigem segmentação linguística antes de uso geral.
+    starts=[0]+[m.end() for m in re.finditer(r"[.!?]\s+(?=[A-ZÁÉÍÓÚÂÊÔÃÕÇ🙂])",text)]
+    result=[text[a:b] for a,b in zip(starts,starts[1:]+[len(text)])]
+    assert ''.join(result)==text
+    return result
 
 
 class EvidenceClassifier(nn.Module):
@@ -140,6 +149,8 @@ class EvidencePredictor:
         self.thresholds = settings.get("thresholds", [.5, .5])
         response([], [], self.thresholds)
         self.readout = settings["readout"]
+        self.segmentation=settings.get('unit_segmentation','whole_unit_v1')
+        if self.segmentation not in {'whole_unit_v1','sentences_v1'}: raise ValueError('Segmentação de unidade não suportada.')
         self.tokenizer = ByteBPE(checkpoint["merges"])
         self.config = GPTConfig(**checkpoint["config"])
         if self.tokenizer.vocab_size != self.config.vocab_size: raise ValueError("Tokenizer incompatível.")
@@ -151,6 +162,14 @@ class EvidencePredictor:
     def predict_units(self, requirement, units):
         if not units or len(units) > 4 or len({u["id"] for u in units}) != len(units):
             raise ValueError("Informe de uma a quatro unidades distintas.")
-        items = [dict(ids=encode_unit(requirement, u["text"], self.tokenizer, self.config.block_size, readout=self.readout)) for u in units]
-        ids, lengths = unit_batch(items, self.device, self.config.block_size)
-        return response(units, self.model.evidence_scores(self.model(ids, lengths)).cpu().tolist(), self.thresholds)
+        parts=[sentence_parts(u['text']) if self.segmentation=='sentences_v1' else [u['text']] for u in units]
+        items = [dict(ids=encode_unit(requirement, text, self.tokenizer, self.config.block_size, readout=self.readout)) for group in parts for text in group]
+        predictions=[]
+        for offset in range(0,len(items),8):
+            ids,lengths=unit_batch(items[offset:offset+8],self.device,self.config.block_size)
+            predictions.extend(self.model.evidence_scores(self.model(ids,lengths)).cpu().tolist())
+        probabilities=[];offset=0
+        for group in parts:
+            values=predictions[offset:offset+len(group)];offset+=len(group)
+            probabilities.append([max(v[i] for v in values) for i in range(2)])
+        return response(units, probabilities, self.thresholds)
