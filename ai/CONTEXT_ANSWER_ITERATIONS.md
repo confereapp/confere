@@ -1141,3 +1141,20 @@ Auditoria de 44 execuções ancestrais sem hits de oito palavras normalizadas do
 pares reservados; não exclui paráfrases nem acessos não registrados. O próximo
 corpus precisa de consultas idênticas com relações diferentes anotadas e mais
 documentos/revisão humana. Detalhes em research/relation-pilot-df-2026-11-17.md.
+
+DG/DH usam matriz editorial com 65 consultas x três parágrafos (195 pares),
+mantendo mudança de rótulo para a mesma consulta dentro de cada split. Uma
+consulta constante foi excluída sem alterar rótulos. Treino 90 pares/cinco
+documentos; desenvolvimento 51/três; reserva nova 54/três, sem inferência.
+Replay: 501 linhas autorais de projetos inteiros + 410 de validação antiga.
+Não há treino novo com NLI público. As duplas de treino agora podem fixar a
+consulta e mudar trecho/rótulo. DG (295554 parâmetros na cabeça) e DH (linear,
+4614) têm encoder congelado e orçamento de 1000 passos, seed 42. Ambos escolhem
+a origem, passo zero. No último ponto não selecionado: DG 86/90 treino vs25/51
+desenvolvimento, DH90/90 vs21/51. Consultas inteiras: 2/17 e1/17, respectivamente.
+Reduzir capacidade não resolveu memorização. Avaliador bloqueia reserva antes
+de carregar preditor quando validação/retenção não passam; chamada real de DH
+foi bloqueada, sem criar pasta de resultados. Métrica de resumo corrigida para
+exigir também evidências; DF tinha 521/861 acertos completos NLI, não523/861
+coincidências de status. A seleção antiga já era estrita. 260 testes passaram.
+Detalhes em research/paragraph-matrix-dg-dh-2026-11-17.md. Nenhuma promoção/API.

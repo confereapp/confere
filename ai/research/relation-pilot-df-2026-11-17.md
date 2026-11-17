@@ -35,12 +35,19 @@ iniciado após a reprovação.
   Barreiras: piso por família, falsas aprovações, superar controles e preservar
   cada acerto antigo. Nenhuma média entre domínios libera promoção.
 
-## Resultado do teste interno
+## Coincidências de status do teste interno (resumo histórico)
 
 | Avaliação | Origem | Candidato | Só consulta | Só trecho |
 | --- | ---: | ---: | ---: | ---: |
 | NLI, 861 pares | 322 | 523 | 586 | 284 |
 | Acadêmico, 9 pares | 2 | 1 | 5 | 3 |
+
+Correção posterior do resumo: esses números contam coincidência de status.
+Exigindo também o conjunto correto de evidências, os acertos NLI são 322 na
+origem e 521 no candidato; nos nove pares acadêmicos, zero e um. A seleção já
+usava resposta completa e não muda. O resumo do avaliador foi corrigido com
+regressão para inconclusivo acompanhado de evidências incorretas. Rastro:
+`output/ai/relation-df-metric-correction-2026-11-17.json`.
 
 O controle que ignora a evidência supera o candidato nos dois domínios. Isso
 mostra que o aumento de acertos não é uma demonstração suficiente de compreensão

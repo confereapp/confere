@@ -1,0 +1,31 @@
+{
+  "source_trace": "ai/data/private/relation-test-df-2026-11-17/test.json",
+  "new_inference_executed": false,
+  "groups": {
+    "source": {
+      "public_nli_": {
+        "complete_response_correct": 322,
+        "status_only_correct": 322,
+        "total": 861
+      },
+      "academic_paragraph_": {
+        "complete_response_correct": 0,
+        "status_only_correct": 2,
+        "total": 9
+      }
+    },
+    "candidate": {
+      "public_nli_": {
+        "complete_response_correct": 521,
+        "status_only_correct": 523,
+        "total": 861
+      },
+      "academic_paragraph_": {
+        "complete_response_correct": 1,
+        "status_only_correct": 1,
+        "total": 9
+      }
+    }
+  },
+  "note": "Os diagnósticos antigos contavam coincidência de status. Uma resposta inconclusiva com evidências conflitantes incorretas não é acerto completo. A seleção já usava acerto completo; a correção do resumo não muda a reprovação."
+}

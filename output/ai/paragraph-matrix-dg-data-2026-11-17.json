@@ -1,0 +1,72 @@
+{
+  "dataset_sha256": "e06fab4e81239ac4e67c878032e3e736f2789a67ca65d8792248738977a72960",
+  "annotations_sha256": "05a8c8ede955c55ec19f767d764b9d607f1884b01a20fd8cc7e5d56de73b2d43",
+  "source_sha256": "33d32022638a4ad252420d44544585279903a83637a974c6fe6c2e53f1c7b294",
+  "replay_sha256": "8b2077ee03c706d4017d98acb94eefb796d7adbcb21cd0666a2f15a7409225cc",
+  "replay_train_rows": 501,
+  "replay_validation_rows": 410,
+  "counts": {
+    "train:academic_paragraph_atendido": 19,
+    "train:academic_paragraph_evidencia_insuficiente": 50,
+    "train:academic_paragraph_nao_atendido": 21,
+    "validation:academic_paragraph_atendido": 9,
+    "validation:academic_paragraph_evidencia_insuficiente": 34,
+    "validation:academic_paragraph_nao_atendido": 8,
+    "test:academic_paragraph_atendido": 10,
+    "test:academic_paragraph_evidencia_insuficiente": 34,
+    "test:academic_paragraph_nao_atendido": 10
+  },
+  "query_controls": {
+    "train": {
+      "queries": 30,
+      "pairs": 90,
+      "constant_label_queries": 0,
+      "max_query_only_correct": 60
+    },
+    "validation": {
+      "queries": 17,
+      "pairs": 51,
+      "constant_label_queries": 0,
+      "max_query_only_correct": 34
+    },
+    "test": {
+      "queries": 18,
+      "pairs": 54,
+      "constant_label_queries": 0,
+      "max_query_only_correct": 36
+    }
+  },
+  "documents": {
+    "train": [
+      "faquad:ESTAGIO_PROFISSIONAL",
+      "faquad:MONOGRAFIA",
+      "faquad:POSCOMP",
+      "faquad:TCC",
+      "faquad:UFMS"
+    ],
+    "validation": [
+      "faquad:COMPUTADOR",
+      "faquad:EXERCICIOS_DOMICILIARES",
+      "faquad:MONITORIA_DE_ENSINO"
+    ],
+    "test": [
+      "faquad:FAPDF",
+      "faquad:PESQUISA",
+      "faquad:RES_APROVEITAMENTO_DE_ESTUDOS"
+    ]
+  },
+  "exclusions": [
+    {
+      "title": "EXERCICIOS_DOMICILIARES",
+      "query": "q2",
+      "reason": "Todos os parágrafos contradizem esta consulta; excluída do conjunto balanceado, sem alterar rótulos para fabricar contraste."
+    }
+  ],
+  "random_negatives": false,
+  "all_matrix_pairs_fit": true,
+  "independent_human_review": false,
+  "reused_evaluation_is_development": true,
+  "public_nli_train_used": false,
+  "tccs_used": false,
+  "note": "Matriz editorial revisada localmente. Reserva nova por três títulos; não prova generalização. Fonte e arquitetura próprias preservadas, sem promoção."
+}

@@ -1,0 +1,7 @@
+{
+  "rule": "Sequências normalizadas de oito palavras da reserva versus corpora de ancestralidade; sem inferência do candidato.",
+  "heldout_rows_with_hits": 0,
+  "hits": {},
+  "test_predictions_executed": false,
+  "limitation": "Ausência de hits não exclui paráfrases ou acessos não registrados."
+}

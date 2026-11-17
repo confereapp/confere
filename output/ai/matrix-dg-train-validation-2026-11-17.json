@@ -1,0 +1,35 @@
+{
+  "train": {
+    "correct": 86,
+    "total": 90,
+    "query_groups": {
+      "total": 30,
+      "informative": 30,
+      "all_pairs_correct": 27
+    },
+    "confusion": {
+      "('atendido', 'atendido')": 19,
+      "('evidencia_insuficiente', 'evidencia_insuficiente')": 49,
+      "('nao_atendido', 'evidencia_insuficiente')": 3,
+      "('nao_atendido', 'nao_atendido')": 18,
+      "('evidencia_insuficiente', 'atendido')": 1
+    }
+  },
+  "validation": {
+    "correct": 25,
+    "total": 51,
+    "query_groups": {
+      "total": 17,
+      "informative": 17,
+      "all_pairs_correct": 2
+    },
+    "confusion": {
+      "('atendido', 'atendido')": 7,
+      "('evidencia_insuficiente', 'evidencia_insuficiente')": 18,
+      "('nao_atendido', 'atendido')": 5,
+      "('evidencia_insuficiente', 'atendido')": 16,
+      "('nao_atendido', 'evidencia_insuficiente')": 3,
+      "('atendido', 'evidencia_insuficiente')": 2
+    }
+  }
+}

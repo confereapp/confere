@@ -1,0 +1,20 @@
+{
+  "train": {
+    "correct": 90,
+    "total": 90,
+    "query_groups": {
+      "total": 30,
+      "informative": 30,
+      "all_pairs_correct": 30
+    }
+  },
+  "validation": {
+    "correct": 21,
+    "total": 51,
+    "query_groups": {
+      "total": 17,
+      "informative": 17,
+      "all_pairs_correct": 1
+    }
+  }
+}

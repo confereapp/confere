@@ -1,0 +1,119 @@
+{
+  "experiments": {
+    "nonlinear": {
+      "run": "ai/runs/evidence-matrix-dg-2026-11-17",
+      "dataset_sha256": "e06fab4e81239ac4e67c878032e3e736f2789a67ca65d8792248738977a72960",
+      "source_sha256": "be69550369939272b56cddcef4f7972fa41714c7c2c9921f1f79acbf727d9700",
+      "selected_step": 0,
+      "quality": [
+        false,
+        0,
+        0.09803921568627451,
+        0.8878730270887132,
+        -19,
+        405
+      ],
+      "last_step_diagnostic": {
+        "train": {
+          "correct": 86,
+          "total": 90,
+          "query_groups": {
+            "total": 30,
+            "informative": 30,
+            "all_pairs_correct": 27
+          },
+          "confusion": {
+            "('atendido', 'atendido')": 19,
+            "('evidencia_insuficiente', 'evidencia_insuficiente')": 49,
+            "('nao_atendido', 'evidencia_insuficiente')": 3,
+            "('nao_atendido', 'nao_atendido')": 18,
+            "('evidencia_insuficiente', 'atendido')": 1
+          }
+        },
+        "validation": {
+          "correct": 25,
+          "total": 51,
+          "query_groups": {
+            "total": 17,
+            "informative": 17,
+            "all_pairs_correct": 2
+          },
+          "confusion": {
+            "('atendido', 'atendido')": 7,
+            "('evidencia_insuficiente', 'evidencia_insuficiente')": 18,
+            "('nao_atendido', 'atendido')": 5,
+            "('evidencia_insuficiente', 'atendido')": 16,
+            "('nao_atendido', 'evidencia_insuficiente')": 3,
+            "('atendido', 'evidencia_insuficiente')": 2
+          }
+        }
+      },
+      "validation_gate_passed": false,
+      "adopted": false,
+      "script_sha256_at_execution": "b5ef5923e5f1745a0e0e70b00f9abb3107e8746fc3e76a7ce0ff2c74ed8ed3a7",
+      "head_parameters": 295554
+    },
+    "linear": {
+      "run": "ai/runs/evidence-matrix-linear-dh-2026-11-17",
+      "dataset_sha256": "e06fab4e81239ac4e67c878032e3e736f2789a67ca65d8792248738977a72960",
+      "source_sha256": "be69550369939272b56cddcef4f7972fa41714c7c2c9921f1f79acbf727d9700",
+      "selected_step": 0,
+      "quality": [
+        false,
+        0,
+        0.09803921568627451,
+        0.8878730270887132,
+        -19,
+        405
+      ],
+      "last_step_diagnostic": {
+        "train": {
+          "correct": 90,
+          "total": 90,
+          "query_groups": {
+            "total": 30,
+            "informative": 30,
+            "all_pairs_correct": 30
+          }
+        },
+        "validation": {
+          "correct": 21,
+          "total": 51,
+          "query_groups": {
+            "total": 17,
+            "informative": 17,
+            "all_pairs_correct": 1
+          }
+        }
+      },
+      "validation_gate_passed": false,
+      "adopted": false,
+      "script_sha256_at_execution": "0f2bfc9ae3a08b4050acbff695d9115434092cc643bef62188943617078558d8",
+      "head_parameters": 4614
+    }
+  },
+  "tests_passed": 260,
+  "reserved_test_predictions_executed": false,
+  "reserved_test_rows": 54,
+  "reserved_test_titles": [
+    "faquad:FAPDF",
+    "faquad:PESQUISA",
+    "faquad:RES_APROVEITAMENTO_DE_ESTUDOS"
+  ],
+  "guard_exercised": true,
+  "guard_exit_code": 1,
+  "output_directory_absent": true,
+  "original_artifacts_preserved": true,
+  "default_api_changed": false,
+  "http_verified": false,
+  "independent_human_review": false,
+  "note": "Dois controles reprovados em desenvolvimento. Os diagnósticos de treino/validação são do último passo, não do ponto selecionado. Reserva ainda sem inferência. Melhor selecionado: origem sem ajuste, passo zero.",
+  "guard_script_sha256_verified": "fca8da61642b97bbfe6b505c5b9dfd4d961fcdbb4035b00b1fe822b6ddc6f0bd",
+  "exposure_check": {
+    "rule": "Sequências normalizadas de oito palavras da reserva versus corpora de ancestralidade; sem inferência do candidato.",
+    "heldout_rows_with_hits": 0,
+    "hits": {},
+    "test_predictions_executed": false,
+    "limitation": "Ausência de hits não exclui paráfrases ou acessos não registrados."
+  }
+}
