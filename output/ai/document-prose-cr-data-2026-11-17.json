@@ -1,0 +1,13 @@
+{
+  "base_sha256": "8b2077ee03c706d4017d98acb94eefb796d7adbcb21cd0666a2f15a7409225cc",
+  "dataset_sha256": "21736b60d89a84e8e29225e276435417a1654970d2dfc0f9dad8ec5f61377fd5",
+  "counts": {
+    "train": 8000,
+    "validation": 570
+  },
+  "replay_rows": 5000,
+  "real_documents_used": false,
+  "external_weights_used": false,
+  "original_validation_unchanged": true,
+  "note": "Títulos, redações e tópicos reservados na validação nova. Supervisão autoral explícita por unidade; não rotula automaticamente parágrafos reais como negativos. Desenvolvimento, não teste cego."
+}

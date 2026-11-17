@@ -1019,3 +1019,25 @@ ausência de evidência falsa. Dez testes focados passaram; páginas citadas e
 página vazia foram reinspecionadas. JSON bruto privado e resumo sem texto
 integral registrado em output/ai/real-documents-cq-2026-11-17.json.
 API e pesos padrão intactos; anotações continuam sem revisão humana independente.
+
+
+## Correção de relevância documental em prosa — 17/11
+
+A inspeção de CQ isolou decisões por frase: para o requisito de proteção
+de acesso, uma frase sobre qualidade e consistência visual recebeu escore
+negativo de 0,999207. Uma frase sobre arquitetura multi-tenant recebeu
+positivo 0,986738 e negativo 0,593972. Cabeçalhos fictícios curtos, em contraste,
+foram rejeitados com escores da ordem de 1e-5. Isso refuta a hipótese de que
+basta eliminar cabeçalhos: a falha é semântica fora da distribuição, ampliada
+pela união de evidências ao longo do documento. Não foi alterada a regra de
+conflito nem criada uma lista de frases proibidas.
+CR prepara contraste autoral em prosa técnica, com a mesma fonte respondendo
+a consultas diferentes e supervisão por unidade. Corpos irrelevantes e planos
+futuros não viram evidências; afirmações e negações explícitas têm rótulos
+construídos. Treino: 3000 exemplos novos e 5000 de replay da origem, com as
+410 avaliações anteriores intactas mais 160 reservadas por tópicos e redações
+distintos. Nenhum texto dos TCCs, pesos externos ou serviço pago foi usado.
+O ajuste de 2000 passos parte de CI, com seleção somente na validação
+autoral. A avaliação inicial marcou 455/570, com 16 falsos positivos e
+reprovação por família. Os TCCs já inspecionados seguem desenvolvimento;
+não serão tratados como teste cego após esta investigação.
