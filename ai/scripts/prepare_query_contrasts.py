@@ -13,6 +13,7 @@ from confere_ai.tokenizer import ByteBPE
 from confere_ai.training_data import encode_sample
 from prepare_context_answers import answer, FIELDS, NAMES
 from prepare_natural_answers import STATEMENTS, FEATURES
+from prepare_natural_answers import QUESTIONS as NATURAL_QUESTIONS
 from evaluate_context_smoke import CASES
 from prepare_lexical_binding import FORMS, WORDS, expected
 from expand_context_answers import names
@@ -34,6 +35,9 @@ QUESTIONS = {
     "prazo": ["Quantos dias constam para a entrega?", "Qual quantidade de dias foi indicada?", "Em quantos dias deve ser entregue?"],
     "linguagem": ["Que linguagem consta no registro?", "Em qual linguagem foi programado?", "O texto apresenta qual linguagem?"],
 }
+for field in QUESTIONS:
+    QUESTIONS[field]=list(dict.fromkeys(QUESTIONS[field]+NATURAL_QUESTIONS[field]))
+QUESTIONS['prazo']+=['Quantos dias foram informados?','Quantos dias foram mencionados?','Qual duração consta no texto?']
 
 
 def conversations(count=2400):

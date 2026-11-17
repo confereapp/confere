@@ -53,6 +53,7 @@ def main():
     parser.add_argument("--categorical-states", action="store_true")
     parser.add_argument("--require-perfect-validation", action="store_true")
     parser.add_argument("--paired-queries", action="store_true")
+    parser.add_argument('--train-embeddings',action='store_true')
     parser.add_argument("--error-replay", action="store_true", help="Metade de cada lote revisita erros medidos somente no treino inicial.")
     parser.add_argument("--readout", choices=READOUTS)
     parser.add_argument("--encoder-learning-rate", type=float, default=1e-5)
@@ -76,7 +77,7 @@ def main():
         if source_mode == STATE_MODES[0] and state_mode == STATE_MODES[1]: load_binary_as_categorical(model, source["classifier"])
         else: model.load_state_dict(source["classifier"])
     model.to(args.device)
-    configure_trainable(model.backbone, model.backbone.config.layers)
+    configure_trainable(model.backbone,None if args.train_embeddings else model.backbone.config.layers)
     tokenizer = ByteBPE(source["merges"])
     readout = args.readout or source["settings"].get("readout", READOUTS[0])
     train = examples([r for r in rows if r["split"] == "train"], tokenizer, backbone.config.block_size, readout=readout)
@@ -91,7 +92,7 @@ def main():
     if args.error_replay: print(json.dumps(dict(train_error_units=len(hard),train_units=len(train))),flush=True)
     optimizer = torch.optim.AdamW([dict(params=[p for p in model.backbone.parameters() if p.requires_grad], lr=args.encoder_learning_rate),
                                   dict(params=model.head.parameters(), lr=args.head_learning_rate)], weight_decay=.01)
-    settings = dict(objective="document_classifier", state_mode=state_mode, readout=readout, frozen_embeddings=True, require_perfect_validation=args.require_perfect_validation,
+    settings = dict(objective="document_classifier", state_mode=state_mode, readout=readout, frozen_embeddings=not args.train_embeddings, require_perfect_validation=args.require_perfect_validation,
                     encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5, eval_every=args.eval_every,
                     checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", error_replay=args.error_replay, initial_train_errors=len(hard), loss="categorical_ce" if state_mode==STATE_MODES[1] else "unweighted_bce")
     settings['unit_segmentation']=source['settings'].get('unit_segmentation','whole_unit_v1')
