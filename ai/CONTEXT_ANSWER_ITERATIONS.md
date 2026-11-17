@@ -996,3 +996,26 @@ também considerando qualquer resposta alternativa anotada. A seleção por
 família reteve o passo zero, embora a soma do passo 250 fosse maior.
 Não há ganho extrativo demonstrado; loss menor não foi usada como aprovação.
 PDF de três páginas renderizado e inspecionado. API e pesos padrão intactos.
+
+
+## Avaliação em dois TCCs reais — 17/11
+
+CQ executou o pipeline documental completo com CI congelado, sem treino ou
+upload. Os PDFs pesquisáveis existentes (10 e 60 páginas) e os 18 critérios
+editoriais foram registrados por hash antes da inferência; os pesos permaneceram
+idênticos. Os documentos já eram conhecidos, logo não é teste final cego.
+Foram processados 128 + 758 lotes; cobertura contígua do texto extraído e
+citações literais passaram na auditoria. As âncoras editoriais estão presentes
+na extração após normalizar apenas espaços, sem alterar os textos de entrada.
+Todos os 18 resultados foram inconclusivos com conflitos detectados. Apenas
+2/8 e 2/10 status coincidem com o checklist; não são aprovações semânticas.
+A página 2 vazia do segundo PDF bloqueou conclusões nas dez consultas; foi
+preservada. Mesmo além desse bloqueio, há conflitos e evidências irrelevantes.
+Inspeção: a consulta sobre percentuais de commits recebeu a folha de rosto
+como evidência positiva; isso não sustenta o requisito. A consulta de proteção
+de acesso encontrou a âncora de 2FA, mas foi anulada por outras classificações
+opostas. Nenhum falso positivo final de status atendido, o que não prova
+ausência de evidência falsa. Dez testes focados passaram; páginas citadas e
+página vazia foram reinspecionadas. JSON bruto privado e resumo sem texto
+integral registrado em output/ai/real-documents-cq-2026-11-17.json.
+API e pesos padrão intactos; anotações continuam sem revisão humana independente.
