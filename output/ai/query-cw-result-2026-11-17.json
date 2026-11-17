@@ -1,0 +1,510 @@
+{
+  "selected_step": 1000,
+  "quality": [
+    false,
+    0,
+    0.2037037037037037,
+    0.6372653605986938,
+    -57,
+    458
+  ],
+  "accepted": false,
+  "adopted": false,
+  "real_documents": {
+    "checkpoint_sha256": "f8e770162545f87bf1317e17a4abed91da6190dd19a5a4e4283169509a0f06d7",
+    "projects": [
+      {
+        "project": "maua-2240",
+        "pages": 10,
+        "text_characters": 15201,
+        "requirements": 8,
+        "status_matches": 2,
+        "false_positive": 0,
+        "invalid_requirements": 0,
+        "conflicts": 8,
+        "blocked_by_missing_text": 0,
+        "batches": 128,
+        "elapsed_seconds": 3.4976157500000014,
+        "contiguous_coverage_verified": true,
+        "literal_quotes_verified": true,
+        "annotation_checks": [
+          {
+            "id": "maua-2240-R1",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-2240-R2",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-2240-R3",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-2240-R4",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-2240-R5",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-2240-R6",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-2240-R7",
+            "quotes_found": [
+              true,
+              true
+            ]
+          },
+          {
+            "id": "maua-2240-R8",
+            "quotes_found": [
+              true
+            ]
+          }
+        ],
+        "judgments": [
+          {
+            "id": "maua-2240-R1",
+            "requirement": "O relatório deve identificar uma limitação do sistema legado.",
+            "expected": "atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [],
+            "batches": 16,
+            "evidence_count": 19,
+            "annotated_quote_hits": 1,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-2240-R2",
+            "requirement": "O relatório deve identificar as tecnologias de backend, banco de dados e frontend.",
+            "expected": "atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [],
+            "batches": 16,
+            "evidence_count": 18,
+            "annotated_quote_hits": 1,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-2240-R3",
+            "requirement": "O relatório deve explicar como a arquitetura proposta atende múltiplos clientes.",
+            "expected": "atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [],
+            "batches": 16,
+            "evidence_count": 17,
+            "annotated_quote_hits": 1,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-2240-R4",
+            "requirement": "O relatório deve descrever um mecanismo de proteção de acesso.",
+            "expected": "atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [],
+            "batches": 16,
+            "evidence_count": 19,
+            "annotated_quote_hits": 1,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-2240-R5",
+            "requirement": "O relatório deve apresentar resultados quantitativos de testes SUS já realizados.",
+            "expected": "evidencia_insuficiente",
+            "actual": "evidencia_insuficiente",
+            "status_match": true,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [],
+            "batches": 16,
+            "evidence_count": 20,
+            "annotated_quote_hits": 0,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-2240-R6",
+            "requirement": "O relatório deve apresentar medições do ganho real de eficiência operacional.",
+            "expected": "evidencia_insuficiente",
+            "actual": "evidencia_insuficiente",
+            "status_match": true,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [],
+            "batches": 16,
+            "evidence_count": 22,
+            "annotated_quote_hits": 0,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-2240-R7",
+            "requirement": "O relatório deve informar que a implantação final em produção já foi concluída.",
+            "expected": "nao_atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [],
+            "batches": 16,
+            "evidence_count": 24,
+            "annotated_quote_hits": 2,
+            "annotated_quotes": 2,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-2240-R8",
+            "requirement": "O relatório deve identificar uma ferramenta utilizada na prototipação da interface.",
+            "expected": "atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [],
+            "batches": 16,
+            "evidence_count": 19,
+            "annotated_quote_hits": 0,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          }
+        ]
+      },
+      {
+        "project": "maua-329",
+        "pages": 60,
+        "text_characters": 71630,
+        "requirements": 10,
+        "status_matches": 2,
+        "false_positive": 0,
+        "invalid_requirements": 0,
+        "conflicts": 10,
+        "blocked_by_missing_text": 10,
+        "batches": 758,
+        "elapsed_seconds": 16.960698124999997,
+        "contiguous_coverage_verified": true,
+        "literal_quotes_verified": true,
+        "annotation_checks": [
+          {
+            "id": "maua-329-R1",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-329-R2",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-329-R3",
+            "quotes_found": [
+              true,
+              true
+            ]
+          },
+          {
+            "id": "maua-329-R4",
+            "quotes_found": [
+              true,
+              true,
+              true
+            ]
+          },
+          {
+            "id": "maua-329-R5",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-329-R6",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-329-R7",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-329-R8",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-329-R9",
+            "quotes_found": [
+              true
+            ]
+          },
+          {
+            "id": "maua-329-R10",
+            "quotes_found": [
+              true
+            ]
+          }
+        ],
+        "judgments": [
+          {
+            "id": "maua-329-R1",
+            "requirement": "O relatório deve declarar o escopo dos sistemas usados na comparação.",
+            "expected": "atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [
+              {
+                "document_id": "doc:1",
+                "unit": "page:2"
+              }
+            ],
+            "batches": 75,
+            "evidence_count": 115,
+            "annotated_quote_hits": 1,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-329-R2",
+            "requirement": "O relatório deve explicar o uso de critérios de aceite nas histórias de usuário.",
+            "expected": "atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [
+              {
+                "document_id": "doc:1",
+                "unit": "page:2"
+              }
+            ],
+            "batches": 75,
+            "evidence_count": 101,
+            "annotated_quote_hits": 0,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-329-R3",
+            "requirement": "O relatório deve descrever a sequência de compilação, testes e implantação.",
+            "expected": "atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [
+              {
+                "document_id": "doc:1",
+                "unit": "page:2"
+              }
+            ],
+            "batches": 75,
+            "evidence_count": 118,
+            "annotated_quote_hits": 2,
+            "annotated_quotes": 2,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-329-R4",
+            "requirement": "O relatório deve identificar tecnologias de nuvem, backend e frontend.",
+            "expected": "atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [
+              {
+                "document_id": "doc:1",
+                "unit": "page:2"
+              }
+            ],
+            "batches": 75,
+            "evidence_count": 107,
+            "annotated_quote_hits": 3,
+            "annotated_quotes": 3,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-329-R5",
+            "requirement": "O relatório deve apresentar percentuais de commits de correção para os dois sistemas.",
+            "expected": "atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [
+              {
+                "document_id": "doc:1",
+                "unit": "page:2"
+              }
+            ],
+            "batches": 75,
+            "evidence_count": 113,
+            "annotated_quote_hits": 1,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-329-R6",
+            "requirement": "O relatório deve discutir limitações da comparação entre os sistemas.",
+            "expected": "atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [
+              {
+                "document_id": "doc:1",
+                "unit": "page:2"
+              }
+            ],
+            "batches": 74,
+            "evidence_count": 105,
+            "annotated_quote_hits": 1,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-329-R7",
+            "requirement": "A bibliografia deve estar livre de mensagens de erro de campos de referência.",
+            "expected": "nao_atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [
+              {
+                "document_id": "doc:1",
+                "unit": "page:2"
+              }
+            ],
+            "batches": 75,
+            "evidence_count": 109,
+            "annotated_quote_hits": 1,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-329-R8",
+            "requirement": "Os indicadores da Figura 9 devem representar observações reais coletadas da equipe.",
+            "expected": "nao_atendido",
+            "actual": "evidencia_insuficiente",
+            "status_match": false,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [
+              {
+                "document_id": "doc:1",
+                "unit": "page:2"
+              }
+            ],
+            "batches": 75,
+            "evidence_count": 88,
+            "annotated_quote_hits": 0,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-329-R9",
+            "requirement": "O relatório deve fornecer evidência suficiente de que somente a metodologia causou a diferença de resultados.",
+            "expected": "evidencia_insuficiente",
+            "actual": "evidencia_insuficiente",
+            "status_match": true,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [
+              {
+                "document_id": "doc:1",
+                "unit": "page:2"
+              }
+            ],
+            "batches": 79,
+            "evidence_count": 126,
+            "annotated_quote_hits": 0,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          },
+          {
+            "id": "maua-329-R10",
+            "requirement": "O relatório deve apresentar uma análise de sensibilidade dos percentuais a tamanhos diferentes de amostra.",
+            "expected": "evidencia_insuficiente",
+            "actual": "evidencia_insuficiente",
+            "status_match": true,
+            "false_positive": false,
+            "valid": true,
+            "conflict": true,
+            "missing_text_units": [
+              {
+                "document_id": "doc:1",
+                "unit": "page:2"
+              }
+            ],
+            "batches": 80,
+            "evidence_count": 108,
+            "annotated_quote_hits": 0,
+            "annotated_quotes": 1,
+            "note": "Coincidência de status e âncoras são métricas separadas; citações adicionais não têm semântica auditada."
+          }
+        ]
+      }
+    ],
+    "training_executed": false,
+    "adopted": false,
+    "independent_human_review": false,
+    "note": "PDFs reais conhecidos com OCR; checklist autoral e rótulos editoriais, não rubrica oficial. Status correto isolado não prova evidência correta. Sem promoção ou avaliação HTTP."
+  }
+}

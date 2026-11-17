@@ -1,0 +1,74 @@
+[
+  {
+    "checkpoint": "ai/runs/evidence-calibrated-ci-2026-11-17/best.pt",
+    "step": 1000,
+    "cases": [
+      {
+        "requirement": "O projeto deve incluir backup.",
+        "expected": "nao_atendido",
+        "actual": "nao_atendido",
+        "correct": true
+      },
+      {
+        "requirement": "O relatório deve registrar a ausência de backup.",
+        "expected": "atendido",
+        "actual": "evidencia_insuficiente",
+        "correct": false
+      },
+      {
+        "requirement": "O relatório deve mencionar backup.",
+        "expected": "atendido",
+        "actual": "nao_atendido",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "checkpoint": "ai/runs/evidence-query-cw-2026-11-17/best.pt",
+    "step": 1000,
+    "cases": [
+      {
+        "requirement": "O projeto deve incluir backup.",
+        "expected": "nao_atendido",
+        "actual": "nao_atendido",
+        "correct": true
+      },
+      {
+        "requirement": "O relatório deve registrar a ausência de backup.",
+        "expected": "atendido",
+        "actual": "nao_atendido",
+        "correct": false
+      },
+      {
+        "requirement": "O relatório deve mencionar backup.",
+        "expected": "atendido",
+        "actual": "nao_atendido",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "checkpoint": "ai/runs/evidence-query-cw-2026-11-17/last.pt",
+    "step": 2000,
+    "cases": [
+      {
+        "requirement": "O projeto deve incluir backup.",
+        "expected": "nao_atendido",
+        "actual": "nao_atendido",
+        "correct": true
+      },
+      {
+        "requirement": "O relatório deve registrar a ausência de backup.",
+        "expected": "atendido",
+        "actual": "nao_atendido",
+        "correct": false
+      },
+      {
+        "requirement": "O relatório deve mencionar backup.",
+        "expected": "atendido",
+        "actual": "nao_atendido",
+        "correct": false
+      }
+    ]
+  }
+]

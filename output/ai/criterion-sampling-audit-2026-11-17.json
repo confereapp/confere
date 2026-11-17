@@ -1,0 +1,9 @@
+{
+  "train_units": 27707,
+  "unique_sources": 7376,
+  "criterion_informative_units": 5600,
+  "criterion_informative_sources": 56,
+  "informative_fraction_uniform_units": 0.2021149889919515,
+  "informative_sources_fraction_uniform_source": 0.007592190889370932,
+  "note": "Source-uniform sampling gives each repeated clause only one source slot; these are group-selection bounds, not measured per-pair label frequencies."
+}

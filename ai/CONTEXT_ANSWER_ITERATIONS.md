@@ -1077,3 +1077,22 @@ O outro ensaio antigo S não é afetado: sua validação por unidade inteira
 usava diretamente os exemplos codificados na leitura selecionada.
 CW repete o mesmo controle com a avaliação corrigida. Pesos e API padrão
 continuam intactos. As tentativas rejeitadas não foram apagadas.
+
+CW com a correção confirmou baseline diferente (300/750), selecionando
+1000 passos (458/750); o final 2000 marcou 502/750, mas piorou a pior família.
+A repetição dos PDFs manteve conflitos e 2/8 + 2/10 coincidências de status;
+o controle sobre menção/ausência também continuou errado. CW não foi promovido.
+CX ensaiou mais passos e embeddings treináveis, mas foi interrompido após
+3000 passos avaliados sem superar a origem, preservando artefatos, após a
+auditoria de amostragem revelar um mecanismo mais direto.
+
+O corpus CU contém 27707 unidades e 7376 textos únicos. As unidades
+informativas dos critérios novos são 5600 (20,21% das unidades), concentradas
+em apenas 56 fontes (0,759% das fontes únicas). O sorteio por fonte dava
+menos de 1% das escolhas de grupos a essas fontes; duplicar consultas sobre
+o mesmo texto não aumentava a exposição a esses critérios. Essas frações
+não são uma medição da frequência por par de rótulos.
+CY repete CU a partir dos mesmos pesos CR, com o mesmo corpus, taxas e
+3000 passos, usando a amostragem uniforme por unidade já disponível, sem
+amostragem por fonte. Isso isola a alimentação do treino. Nenhuma regra de
+resposta ou filtro lexical foi integrado à API. Suíte completa: 235 testes.
