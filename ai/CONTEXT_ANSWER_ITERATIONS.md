@@ -989,3 +989,10 @@ em evidência de requisito atendido. A origem própria BR permanece preservada.
 Piloto: 500 passos, taxa 1e-5, 25% de lotes públicos, ancoragem na própria
 origem e seleção por geração, incluindo a referência no passo zero.
 Suíte Python: 228 testes aprovados. Sem alterações na API ou promoção.
+
+CP encerrou 500 passos. Casos anteriores: 234/252 na origem, 235/252 no
+passo 250 e 229/252 no passo 500. FaQuAD reservado: 0/111 em todos os pontos,
+também considerando qualquer resposta alternativa anotada. A seleção por
+família reteve o passo zero, embora a soma do passo 250 fosse maior.
+Não há ganho extrativo demonstrado; loss menor não foi usada como aprovação.
+PDF de três páginas renderizado e inspecionado. API e pesos padrão intactos.

@@ -1,0 +1,75 @@
+{
+  "results": [
+    {
+      "step": 0,
+      "counts": {
+        "previous": [
+          234,
+          252
+        ],
+        "faquad_reserved": [
+          0,
+          111
+        ]
+      },
+      "any_annotated_answer_exact": 0,
+      "quality": [
+        false,
+        0,
+        0.0,
+        0.9701646090534979,
+        0,
+        234
+      ]
+    },
+    {
+      "step": 250,
+      "counts": {
+        "previous": [
+          235,
+          252
+        ],
+        "faquad_reserved": [
+          0,
+          111
+        ]
+      },
+      "any_annotated_answer_exact": 0,
+      "quality": [
+        false,
+        0,
+        0.0,
+        0.9685479129923574,
+        0,
+        235
+      ]
+    },
+    {
+      "step": 500,
+      "counts": {
+        "previous": [
+          229,
+          252
+        ],
+        "faquad_reserved": [
+          0,
+          111
+        ]
+      },
+      "any_annotated_answer_exact": 0,
+      "quality": [
+        false,
+        0,
+        0.0,
+        0.9585905349794237,
+        0,
+        229
+      ]
+    }
+  ],
+  "selected_step": 0,
+  "adopted": false,
+  "external_weights_used": false,
+  "api_changed": false,
+  "note": "Development pilot. Exact-match first answer and supplementary any-annotated-answer check. No QA improvement; family selection retained source, not aggregate-best step250."
+}
