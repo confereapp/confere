@@ -1,0 +1,8 @@
+{
+  "source_sha256": "f2fb6a177854360194a5a915c8d075a1e714e09869c0428b3005b1c9b41893f8",
+  "dataset_sha256": "1b37fdb2fd2f364a0a5f2984862e92cc243ea488fa3f6ac8fb6370b0bf82b3ef",
+  "added_train": 9221,
+  "added_development": 72,
+  "original_validation": 252,
+  "note": "Original validation preserved; CA now explicitly development in separate families. New independent cohort required after freezing."
+}

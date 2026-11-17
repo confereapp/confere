@@ -1,0 +1,73 @@
+{
+  "local_correct": 407,
+  "local_total": 410,
+  "local_passed": true,
+  "quality": [
+    true,
+    0,
+    1.0,
+    1.0,
+    0,
+    407
+  ],
+  "promoted": false,
+  "full": {
+    "original": {
+      "checkpoint": "ai/runs/evidence-calibrated-ci-2026-11-17/best.pt",
+      "checkpoint_sha256": "be69550369939272b56cddcef4f7972fa41714c7c2c9921f1f79acbf727d9700",
+      "prediction_type": "unit_classifier",
+      "step": 1000,
+      "cases_sha256": "7bca5d9de232aee793240711b5d3358f92ab65663028ce543a6ca4e59988ac64",
+      "correct_requirements": 36,
+      "total_requirements": 36,
+      "valid_requirements": 36,
+      "false_positive": 0,
+      "exact_local_calls": 86,
+      "total_local_calls": 86,
+      "complete_projects": 18,
+      "total_projects": 18,
+      "cohort_kind": "development",
+      "test_examples_used": 0,
+      "adopted": false,
+      "note": "Documentos autorais da validação de desenvolvimento; sobrepõem os lotes locais da avaliação. Sem teste cego ou documento real."
+    },
+    "previous-extra": {
+      "checkpoint": "ai/runs/evidence-calibrated-ci-2026-11-17/best.pt",
+      "checkpoint_sha256": "be69550369939272b56cddcef4f7972fa41714c7c2c9921f1f79acbf727d9700",
+      "prediction_type": "unit_classifier",
+      "step": 1000,
+      "cases_sha256": "294e85082f34a6f1761de7387929d0f071c7655359183714adb753a41ae3a90e",
+      "correct_requirements": 36,
+      "total_requirements": 36,
+      "valid_requirements": 36,
+      "false_positive": 0,
+      "exact_local_calls": 88,
+      "total_local_calls": 88,
+      "complete_projects": 18,
+      "total_projects": 18,
+      "cohort_kind": "development",
+      "test_examples_used": 0,
+      "adopted": false,
+      "note": "Documentos autorais da validação de desenvolvimento; sobrepõem os lotes locais da avaliação. Sem teste cego ou documento real."
+    },
+    "new-development": {
+      "checkpoint": "ai/runs/evidence-calibrated-ci-2026-11-17/best.pt",
+      "checkpoint_sha256": "be69550369939272b56cddcef4f7972fa41714c7c2c9921f1f79acbf727d9700",
+      "prediction_type": "unit_classifier",
+      "step": 1000,
+      "cases_sha256": "7e4ec1f1847441f21b33895c1eb188b1eac5fe702ac35fe77bcbdf3f0a7347b9",
+      "correct_requirements": 46,
+      "total_requirements": 48,
+      "valid_requirements": 48,
+      "false_positive": 0,
+      "exact_local_calls": 113,
+      "total_local_calls": 116,
+      "complete_projects": 22,
+      "total_projects": 24,
+      "cohort_kind": "development",
+      "test_examples_used": 0,
+      "adopted": false,
+      "note": "Documentos autorais da validação de desenvolvimento; sobrepõem os lotes locais da avaliação. Sem teste cego ou documento real."
+    }
+  }
+}

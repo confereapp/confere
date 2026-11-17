@@ -1,0 +1,419 @@
+{
+  "last_6000": {
+    "previous_252": {
+      "correct": 245,
+      "total": 252,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            4,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            2,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            2,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            3,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            3,
+            3
+          ],
+          "conversation_slang_negation": [
+            3,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            4,
+            4
+          ],
+          "conversation_context_answer_fact": [
+            23,
+            24
+          ],
+          "conversation_context_answer_missing": [
+            12,
+            12
+          ],
+          "conversation_context_answer_conflict": [
+            12,
+            12
+          ],
+          "conversation_context_answer_support": [
+            12,
+            12
+          ],
+          "conversation_context_answer_memory": [
+            36,
+            36
+          ],
+          "conversation_context_answer_natural": [
+            9,
+            9
+          ],
+          "conversation_context_answer_independent_support": [
+            33,
+            36
+          ],
+          "conversation_context_answer_independent_fact": [
+            12,
+            12
+          ],
+          "conversation_context_answer_independent_conflict": [
+            6,
+            6
+          ],
+          "conversation_context_answer_independent_missing": [
+            6,
+            6
+          ],
+          "conversation_context_answer_independent_memory": [
+            12,
+            12
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      }
+    },
+    "ca_development_72": {
+      "correct": 69,
+      "total": 72,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_context_answer_independent_support": [
+            34,
+            36
+          ],
+          "conversation_context_answer_independent_fact": [
+            12,
+            12
+          ],
+          "conversation_context_answer_independent_conflict": [
+            5,
+            6
+          ],
+          "conversation_context_answer_independent_missing": [
+            6,
+            6
+          ],
+          "conversation_context_answer_independent_memory": [
+            12,
+            12
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      }
+    }
+  },
+  "best_1000": {
+    "previous_252": {
+      "correct": 245,
+      "total": 252,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_repair": [
+            2,
+            2
+          ],
+          "conversation_definition": [
+            4,
+            4
+          ],
+          "conversation_capability": [
+            3,
+            3
+          ],
+          "conversation_memory": [
+            3,
+            3
+          ],
+          "conversation_repeat": [
+            4,
+            4
+          ],
+          "conversation_clarify": [
+            3,
+            3
+          ],
+          "conversation_wellbeing": [
+            2,
+            2
+          ],
+          "conversation_composed": [
+            2,
+            2
+          ],
+          "conversation_misunderstanding": [
+            1,
+            1
+          ],
+          "conversation_closure": [
+            1,
+            1
+          ],
+          "conversation_flow_greeting": [
+            2,
+            2
+          ],
+          "conversation_flow_acknowledgement": [
+            2,
+            2
+          ],
+          "conversation_flow_identity": [
+            3,
+            3
+          ],
+          "conversation_flow_negation": [
+            3,
+            3
+          ],
+          "conversation_flow_switch": [
+            2,
+            3
+          ],
+          "conversation_flow_closure": [
+            2,
+            2
+          ],
+          "conversation_flow_state": [
+            4,
+            4
+          ],
+          "conversation_flow_topic": [
+            2,
+            4
+          ],
+          "conversation_flow_repair": [
+            1,
+            1
+          ],
+          "conversation_insufficient": [
+            1,
+            1
+          ],
+          "conversation_identity": [
+            1,
+            1
+          ],
+          "conversation_slang_hello": [
+            3,
+            3
+          ],
+          "conversation_slang_identity": [
+            3,
+            3
+          ],
+          "conversation_slang_function": [
+            3,
+            3
+          ],
+          "conversation_slang_scope": [
+            3,
+            3
+          ],
+          "conversation_slang_praise": [
+            3,
+            3
+          ],
+          "conversation_slang_negation": [
+            3,
+            3
+          ],
+          "conversation_social_context": [
+            1,
+            1
+          ],
+          "conversation_social": [
+            1,
+            1
+          ],
+          "conversation_guidance": [
+            4,
+            4
+          ],
+          "conversation_context_answer_fact": [
+            23,
+            24
+          ],
+          "conversation_context_answer_missing": [
+            12,
+            12
+          ],
+          "conversation_context_answer_conflict": [
+            12,
+            12
+          ],
+          "conversation_context_answer_support": [
+            12,
+            12
+          ],
+          "conversation_context_answer_memory": [
+            36,
+            36
+          ],
+          "conversation_context_answer_natural": [
+            9,
+            9
+          ],
+          "conversation_context_answer_independent_support": [
+            33,
+            36
+          ],
+          "conversation_context_answer_independent_fact": [
+            12,
+            12
+          ],
+          "conversation_context_answer_independent_conflict": [
+            6,
+            6
+          ],
+          "conversation_context_answer_independent_missing": [
+            6,
+            6
+          ],
+          "conversation_context_answer_independent_memory": [
+            12,
+            12
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      }
+    },
+    "ca_development_72": {
+      "correct": 69,
+      "total": 72,
+      "acceptance": {
+        "passed": false,
+        "counts": {
+          "conversation_context_answer_independent_support": [
+            34,
+            36
+          ],
+          "conversation_context_answer_independent_fact": [
+            12,
+            12
+          ],
+          "conversation_context_answer_independent_conflict": [
+            5,
+            6
+          ],
+          "conversation_context_answer_independent_missing": [
+            6,
+            6
+          ],
+          "conversation_context_answer_independent_memory": [
+            12,
+            12
+          ]
+        },
+        "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+        "scope": "Não valida conversa aberta."
+      }
+    }
+  },
+  "adopted": false
+}

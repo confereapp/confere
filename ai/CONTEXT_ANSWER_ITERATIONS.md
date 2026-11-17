@@ -893,3 +893,27 @@ Correção da interpretação: 11/12 em memória equivale a 91,7% e passa o piso
 de 90%. Na combinação CE sobre CA, somente conflitos (5/6) bloqueiam a
 conversa. O ajuste CD de nomes busca melhoria adicional, não é condição
 necessária para satisfazer o piso de memória. Os resultados brutos não mudaram.
+
+## Validação do ajuste de memória e seleção pela combinação — 17/11
+
+CD terminou 6000 passos. Seus checkpoints selecionado (1000) e final (6000)
+foram avaliados com o roteamento completo. Ambos corrigem o nome de CA e
+marcam memória 12/12, mas reprovam o legado: troca de assunto 2/3 e tópico
+2/4 nos casos anteriores. Foram rejeitados; memória 11/12 da origem AQ já
+passa o piso. As três páginas do relatório nativo CD foram verificadas.
+
+O treinador do classificador agora aceita um decoder factual próprio,
+validado contra configuração e tokenizer, e seleciona pelos resultados do
+roteamento completo. A avaliação declara learned_type_fusion_v2. Um teste
+verifica a execução dos dois decoders e o modo incompatível; 227 testes
+Python passaram. CG iniciou 12000 passos solicitados com 9221 novos exemplos
+numéricos contrastivos e 324 avaliações, mantendo CA explicitamente como
+desenvolvimento em famílias separadas. Pedidos completos reservados foram
+excluídos do treino. Nenhum peso padrão foi alterado.
+
+CI calibrou CC/1000 para limiares 0,3/0,5: 407/410 e todos os pisos locais
+passaram, sem falsos positivos. O fluxo completo passou 36/36 originais e
+36/36 da coorte extra; na coorte ampliada marcou 46/48, sem falsos positivos,
+com 113/116 lotes exatos. Ainda falham tail_conflict e scope_long: 7/8 por
+perfil, abaixo de 90%. Não houve aprovação conjunta ou promoção. CC e CG
+continuam em execução; nova coorte independente será exigida após congelamento.
