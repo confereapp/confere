@@ -1,0 +1,62 @@
+{
+  "protocol": "document_sentence_components_v1",
+  "dataset_sha256": "053e51835b9cfdf82800bc6473ddc80b91f07130205222682b4d3f590f99e66e",
+  "annotations_sha256": "6ef668fb67e619426a256807e524dff26f030d6d8738d66c4b7a0966f1202ea5",
+  "nli_train_sha256": "49af0412e6e199c8b340dd2c596e7480afb89c60dedd7d982fbb278c23338ce6",
+  "qa_train_sha256": "33d32022638a4ad252420d44544585279903a83637a974c6fe6c2e53f1c7b294",
+  "source_checkpoint_sha256": "be69550369939272b56cddcef4f7972fa41714c7c2c9921f1f79acbf727d9700",
+  "counts": {
+    "train:public_nli_evidencia_insuficiente": 2177,
+    "validation:public_nli_nao_atendido": 255,
+    "validation:public_nli_atendido": 260,
+    "train:public_nli_atendido": 2185,
+    "train:public_nli_nao_atendido": 2188,
+    "test:public_nli_nao_atendido": 291,
+    "test:public_nli_evidencia_insuficiente": 288,
+    "validation:public_nli_evidencia_insuficiente": 264,
+    "test:public_nli_atendido": 282,
+    "train:academic_paragraph_atendido": 15,
+    "train:academic_paragraph_nao_atendido": 15,
+    "train:academic_paragraph_evidencia_insuficiente": 15,
+    "validation:academic_paragraph_atendido": 6,
+    "validation:academic_paragraph_nao_atendido": 6,
+    "validation:academic_paragraph_evidencia_insuficiente": 6,
+    "test:academic_paragraph_atendido": 3,
+    "test:academic_paragraph_nao_atendido": 3,
+    "test:academic_paragraph_evidencia_insuficiente": 3
+  },
+  "documents": {
+    "train": [
+      "faquad:ESTAGIO_PROFISSIONAL",
+      "faquad:MONOGRAFIA",
+      "faquad:POSCOMP",
+      "faquad:TCC",
+      "faquad:UFMS"
+    ],
+    "validation": [
+      "faquad:EXERCICIOS_DOMICILIARES",
+      "faquad:MONITORIA_DE_ENSINO"
+    ],
+    "test": [
+      "faquad:COMPUTADOR"
+    ]
+  },
+  "components": 2426,
+  "duplicates_removed": 0,
+  "rejected": {},
+  "label_mapping": {
+    "0": "nao_atendido",
+    "1": "atendido",
+    "2": "evidencia_insuficiente"
+  },
+  "split_uses_labels": false,
+  "near_duplicate_rule": "Jaccard de conjuntos de tokens >= .8 em qualquer lado; componentes transitivos; títulos inteiros agrupados",
+  "official_test_used": false,
+  "tccs_used": false,
+  "independent_human_review": false,
+  "limitations": [
+    "Similaridade lexical não detecta toda paráfrase.",
+    "Anotações locais editoriais não possuem segunda revisão humana.",
+    "Inferência pública é auxiliar; não comprova qualidade em TCCs."
+  ]
+}

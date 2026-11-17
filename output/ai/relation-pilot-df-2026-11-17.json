@@ -1,0 +1,174 @@
+{
+  "freeze": {
+    "ai/data/private/document-relations-df-v2-2026-11-17/examples.jsonl": "053e51835b9cfdf82800bc6473ddc80b91f07130205222682b4d3f590f99e66e",
+    "ai/runs/evidence-relations-df-2026-11-17/probe.pt": "7d036d75bc7fef8900c2e3281e94b3080209b3d7b3ca29242cdbab7ab31d6d33",
+    "ai/data/private/document-control-cc-2026-11-17/examples.jsonl": "8b2077ee03c706d4017d98acb94eefb796d7adbcb21cd0666a2f15a7409225cc",
+    "ai/runs/evidence-relations-df-2026-11-17/source.pt": "24b50a1234417ad8a3a1282362fd1a36e5dcbc8eff13cf851f66a3bf06d432aa"
+  },
+  "diagnostics": {
+    "source": {
+      "public_nli_nao_atendido": {
+        "correct": 24,
+        "total": 291,
+        "false_approval": 39
+      },
+      "public_nli_evidencia_insuficiente": {
+        "correct": 240,
+        "total": 288,
+        "false_approval": 36
+      },
+      "public_nli_atendido": {
+        "correct": 58,
+        "total": 282,
+        "false_approval": 0
+      },
+      "academic_paragraph_atendido": {
+        "correct": 0,
+        "total": 3,
+        "false_approval": 0
+      },
+      "academic_paragraph_nao_atendido": {
+        "correct": 0,
+        "total": 3,
+        "false_approval": 1
+      },
+      "academic_paragraph_evidencia_insuficiente": {
+        "correct": 2,
+        "total": 3,
+        "false_approval": 0
+      }
+    },
+    "candidate": {
+      "public_nli_nao_atendido": {
+        "correct": 130,
+        "total": 291,
+        "false_approval": 49
+      },
+      "public_nli_evidencia_insuficiente": {
+        "correct": 226,
+        "total": 288,
+        "false_approval": 41
+      },
+      "public_nli_atendido": {
+        "correct": 167,
+        "total": 282,
+        "false_approval": 0
+      },
+      "academic_paragraph_atendido": {
+        "correct": 1,
+        "total": 3,
+        "false_approval": 0
+      },
+      "academic_paragraph_nao_atendido": {
+        "correct": 0,
+        "total": 3,
+        "false_approval": 2
+      },
+      "academic_paragraph_evidencia_insuficiente": {
+        "correct": 0,
+        "total": 3,
+        "false_approval": 3
+      }
+    },
+    "query_only": {
+      "public_nli_nao_atendido": {
+        "correct": 196,
+        "total": 291,
+        "false_approval": 46
+      },
+      "public_nli_evidencia_insuficiente": {
+        "correct": 212,
+        "total": 288,
+        "false_approval": 45
+      },
+      "public_nli_atendido": {
+        "correct": 178,
+        "total": 282,
+        "false_approval": 0
+      },
+      "academic_paragraph_atendido": {
+        "correct": 2,
+        "total": 3,
+        "false_approval": 0
+      },
+      "academic_paragraph_nao_atendido": {
+        "correct": 1,
+        "total": 3,
+        "false_approval": 1
+      },
+      "academic_paragraph_evidencia_insuficiente": {
+        "correct": 2,
+        "total": 3,
+        "false_approval": 1
+      }
+    },
+    "body_only": {
+      "public_nli_nao_atendido": {
+        "correct": 111,
+        "total": 291,
+        "false_approval": 90
+      },
+      "public_nli_evidencia_insuficiente": {
+        "correct": 92,
+        "total": 288,
+        "false_approval": 85
+      },
+      "public_nli_atendido": {
+        "correct": 81,
+        "total": 282,
+        "false_approval": 0
+      },
+      "academic_paragraph_atendido": {
+        "correct": 2,
+        "total": 3,
+        "false_approval": 0
+      },
+      "academic_paragraph_nao_atendido": {
+        "correct": 1,
+        "total": 3,
+        "false_approval": 2
+      },
+      "academic_paragraph_evidencia_insuficiente": {
+        "correct": 0,
+        "total": 3,
+        "false_approval": 2
+      }
+    }
+  },
+  "public_test_rows": 861,
+  "editorial_test_rows": 9,
+  "legacy": {
+    "baseline_correct": 407,
+    "candidate_correct": 331,
+    "total": 410,
+    "no_case_regression": false
+  },
+  "strict_relation_gate_passed": false,
+  "shortcut_gate": {
+    "public_nli_": {
+      "correct": {
+        "source": 322,
+        "candidate": 523,
+        "query_only": 586,
+        "body_only": 284
+      },
+      "total": 861,
+      "passed": false
+    },
+    "academic_paragraph_": {
+      "correct": {
+        "source": 2,
+        "candidate": 1,
+        "query_only": 5,
+        "body_only": 3
+      },
+      "total": 9,
+      "passed": false
+    }
+  },
+  "gates_passed": false,
+  "adopted": false,
+  "promotable": false,
+  "test_selection_used": false,
+  "note": "Teste agrupado interno executado uma vez após seleção por validação. Se orientar nova iteração, passa a desenvolvimento. Anotações editoriais sem revisão humana independente. Controles NB são diagnósticos, não prova de compreensão. Não promove nem testa HTTP."
+}

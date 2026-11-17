@@ -1,0 +1,7 @@
+{
+  "rule": "Qualquer sequência normalizada de oito palavras em contexto/consulta reservados e texto/prompt/alvo dos corpora de ancestralidade. Indicador de exposição, não prova de vazamento de rótulo.",
+  "heldout_rows_with_hits": 0,
+  "hits": {},
+  "source_checkpoint": "ai/runs/evidence-calibrated-ci-2026-11-17/best.pt",
+  "limitations": "Não detecta todas as paráfrases; registros de treino não provam todos os acessos históricos."
+}

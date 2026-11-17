@@ -1,0 +1,531 @@
+{
+  "chain": [
+    {
+      "run": "ai/runs/evidence-calibrated-ci-2026-11-17",
+      "data": "ai/data/private/document-control-cc-2026-11-17/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/evidence-classifier-cc-2026-11-17/best.pt"
+    },
+    {
+      "run": "ai/runs/evidence-classifier-cc-2026-11-17",
+      "data": "ai/data/private/document-control-cc-2026-11-17/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/evidence-calibrated-au-2026-11-16/best.pt"
+    },
+    {
+      "run": "ai/runs/evidence-calibrated-au-2026-11-16",
+      "data": "ai/data/private/document-sentences-as-2026-11-16/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/evidence-classifier-as-2026-11-16/best.pt"
+    },
+    {
+      "run": "ai/runs/evidence-classifier-as-2026-11-16",
+      "data": "ai/data/private/document-sentences-as-2026-11-16/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/evidence-sentences-al-2026-11-16/best.pt"
+    },
+    {
+      "run": "ai/runs/evidence-sentences-al-2026-11-16",
+      "data": null,
+      "source": "ai/runs/evidence-classifier-y-2026-11-16/best.pt"
+    },
+    {
+      "run": "ai/runs/evidence-classifier-y-2026-11-16",
+      "data": "ai/data/private/query-documents-y-2026-11-16/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/evidence-classifier-v-2026-11-16/best.pt"
+    },
+    {
+      "run": "ai/runs/evidence-classifier-v-2026-11-16",
+      "data": "ai/data/private/query-documents-v-2026-11-16/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/evidence-classifier-t-2026-11-16/best.pt"
+    },
+    {
+      "run": "ai/runs/evidence-classifier-t-2026-11-16",
+      "data": "ai/data/private/query-documents-t-2026-11-16/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/evidence-classifier-finetune-2026-11-16/best.pt"
+    },
+    {
+      "run": "ai/runs/evidence-classifier-finetune-2026-11-16",
+      "data": "ai/data/private/task-documents-open-k-2026-11-16/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/evidence-head-decision-probe-2026-11-16/best.pt"
+    },
+    {
+      "run": "ai/runs/evidence-head-decision-probe-2026-11-16",
+      "data": "ai/data/private/task-documents-open-k-2026-11-16/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/context-answers-g-2026-11-16/best.pt"
+    },
+    {
+      "run": "ai/runs/context-answers-g-2026-11-16",
+      "data": "ai/data/private/context-answers-intent-2026-11-16/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/context-answers-f-2026-11-16/best.pt"
+    },
+    {
+      "run": "ai/runs/context-answers-f-2026-11-16",
+      "data": "ai/data/private/context-answers-binding-v2-2026-11-15/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/context-answers-c-2026-11-15/best.pt"
+    },
+    {
+      "run": "ai/runs/context-answers-c-2026-11-15",
+      "data": "ai/data/private/context-answers-natural-v2-2026-11-15/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/context-answers-b-2026-11-15/last.pt"
+    },
+    {
+      "run": "ai/runs/context-answers-b-2026-11-15",
+      "data": "ai/data/private/context-answers-contrasts-2026-11-15/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/context-answers-a-2026-11-15/best.pt"
+    },
+    {
+      "run": "ai/runs/context-answers-a-2026-11-15",
+      "data": "ai/data/private/context-answers-2026-11-15/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/hf-diverse-2026-11-15/best.pt"
+    },
+    {
+      "run": "ai/runs/hf-diverse-2026-11-15",
+      "data": "ai/data/private/hf-diverse-2026-11-15/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/hf-pilot-filtered-2026-11-15/best.pt"
+    },
+    {
+      "run": "ai/runs/hf-pilot-filtered-2026-11-15",
+      "data": "ai/data/private/hf-pilot-filtered-2026-11-15/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/api-batches-2026-11-11/last.pt"
+    },
+    {
+      "run": "ai/runs/api-batches-2026-11-11",
+      "data": "ai/data/private/api-batches-2026-11-11/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/evidence-intensive-bucketed-2026-11-11/best.pt"
+    },
+    {
+      "run": "ai/runs/evidence-intensive-bucketed-2026-11-11",
+      "data": "ai/data/private/evidence-intensive-ready-2026-11-11/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/evidence-robustness-2026-11-11/best.pt"
+    },
+    {
+      "run": "ai/runs/evidence-robustness-2026-11-11",
+      "data": "ai/data/private/evidence-robustness-2026-11-11/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/multiple-evidence-v2-2026-11-11/best.pt"
+    },
+    {
+      "run": "ai/runs/multiple-evidence-v2-2026-11-11",
+      "data": "ai/data/private/multiple-evidence-v2-2026-11-11/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/multiple-evidence-2026-11-11/best.pt"
+    },
+    {
+      "run": "ai/runs/multiple-evidence-2026-11-11",
+      "data": "ai/data/private/multiple-evidence-2026-11-11/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/document-long-contrasts-2026-11-04/best.pt"
+    },
+    {
+      "run": "ai/runs/document-long-contrasts-2026-11-04",
+      "data": "ai/data/private/document-long-contrasts-v2-2026-11-04/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/document-long-2026-11-04/best.pt"
+    },
+    {
+      "run": "ai/runs/document-long-2026-11-04",
+      "data": "ai/data/private/document-long-v2-2026-11-04/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/document-paired-2026-11-03/last.pt"
+    },
+    {
+      "run": "ai/runs/document-paired-2026-11-03",
+      "data": "ai/data/private/document-paired-2026-11-03/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/document-lexical-refine-2026-11-03/best.pt"
+    },
+    {
+      "run": "ai/runs/document-lexical-refine-2026-11-03",
+      "data": "ai/data/private/document-lexical-2026-11-03/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/document-lexical-2026-11-03/best.pt"
+    },
+    {
+      "run": "ai/runs/document-lexical-2026-11-03",
+      "data": "ai/data/private/document-lexical-2026-11-03/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/document-contrasts-2026-11-03/best.pt"
+    },
+    {
+      "run": "ai/runs/document-contrasts-2026-11-03",
+      "data": "ai/data/private/document-contrasts-2026-11-03/examples.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/grounding-transfer-2026-11-03/best.pt"
+    },
+    {
+      "run": "ai/runs/grounding-transfer-2026-11-03",
+      "data": "ai/data/authored/grounding.jsonl",
+      "kinds": [
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-informal-2026-11-03/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-informal-2026-11-03",
+      "data": "ai/data/private/conversation-informal-safe-2026-11-03/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-flow-restarts-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-flow-restarts-2026-11-02",
+      "data": "ai/data/private/conversation-flow-restarts-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-flow-public-smallbatch-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/conversation-flow-public-smallbatch-2026-11-02",
+      "data": "ai/data/private/conversation-flow-public-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-flow-public-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-flow-public-2026-11-02",
+      "data": "ai/data/private/conversation-flow-public-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-flow-expanded-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/conversation-flow-expanded-2026-11-02",
+      "data": "ai/data/private/conversation-flow-expanded-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-flow-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/conversation-flow-2026-11-02",
+      "data": "ai/data/private/conversation-flow-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-identity-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-identity-2026-11-02",
+      "data": "ai/data/private/conversation-identity-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-uncertainty-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-uncertainty-2026-11-02",
+      "data": "ai/data/private/conversation-uncertainty-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-contrasts-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-contrasts-2026-11-02",
+      "data": "ai/data/private/conversation-contrasts-weighted-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-robust-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/conversation-robust-2026-11-02",
+      "data": "ai/data/private/conversation-robust-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-curriculum-1024-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/conversation-curriculum-1024-2026-11-02",
+      "data": "ai/data/private/conversation-curriculum-1024-verified/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/foundation-1024-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/foundation-1024-2026-11-02",
+      "data": "ai/data/private/wikipedia-pt-10k/articles.jsonl",
+      "kinds": [
+        "unspecified"
+      ],
+      "source": "ai/runs/portuguese-expanded-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/portuguese-expanded-2026-11-02",
+      "data": "ai/data/private/wikipedia-pt-expanded/articles.jsonl",
+      "kinds": [
+        "unspecified"
+      ],
+      "source": "ai/runs/portuguese-continue-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/portuguese-continue-2026-11-02",
+      "data": "ai/data/private/wikipedia-pt-pilot/articles.jsonl",
+      "kinds": [
+        "unspecified"
+      ],
+      "source": "ai/runs/portuguese-base-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/portuguese-base-2026-11-02",
+      "data": "ai/data/private/wikipedia-pt-pilot/articles.jsonl",
+      "kinds": [
+        "unspecified"
+      ],
+      "source": null
+    }
+  ],
+  "public_corpora": [
+    {
+      "run": "ai/runs/hf-diverse-2026-11-15",
+      "data": "ai/data/private/hf-diverse-2026-11-15/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/hf-pilot-filtered-2026-11-15/best.pt"
+    },
+    {
+      "run": "ai/runs/hf-pilot-filtered-2026-11-15",
+      "data": "ai/data/private/hf-pilot-filtered-2026-11-15/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/api-batches-2026-11-11/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-informal-2026-11-03",
+      "data": "ai/data/private/conversation-informal-safe-2026-11-03/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-flow-restarts-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-flow-restarts-2026-11-02",
+      "data": "ai/data/private/conversation-flow-restarts-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-flow-public-smallbatch-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/conversation-flow-public-smallbatch-2026-11-02",
+      "data": "ai/data/private/conversation-flow-public-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-flow-public-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-flow-public-2026-11-02",
+      "data": "ai/data/private/conversation-flow-public-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "public_model_generated",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-flow-expanded-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/conversation-flow-expanded-2026-11-02",
+      "data": "ai/data/private/conversation-flow-expanded-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-flow-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/conversation-flow-2026-11-02",
+      "data": "ai/data/private/conversation-flow-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-identity-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-identity-2026-11-02",
+      "data": "ai/data/private/conversation-identity-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-uncertainty-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-uncertainty-2026-11-02",
+      "data": "ai/data/private/conversation-uncertainty-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-contrasts-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/conversation-contrasts-2026-11-02",
+      "data": "ai/data/private/conversation-contrasts-weighted-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-robust-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/conversation-robust-2026-11-02",
+      "data": "ai/data/private/conversation-robust-1024/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/conversation-curriculum-1024-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/conversation-curriculum-1024-2026-11-02",
+      "data": "ai/data/private/conversation-curriculum-1024-verified/examples.jsonl",
+      "kinds": [
+        "human_openassistant",
+        "synthetic_authored"
+      ],
+      "source": "ai/runs/foundation-1024-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/foundation-1024-2026-11-02",
+      "data": "ai/data/private/wikipedia-pt-10k/articles.jsonl",
+      "kinds": [
+        "unspecified"
+      ],
+      "source": "ai/runs/portuguese-expanded-2026-11-02/best.pt"
+    },
+    {
+      "run": "ai/runs/portuguese-expanded-2026-11-02",
+      "data": "ai/data/private/wikipedia-pt-expanded/articles.jsonl",
+      "kinds": [
+        "unspecified"
+      ],
+      "source": "ai/runs/portuguese-continue-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/portuguese-continue-2026-11-02",
+      "data": "ai/data/private/wikipedia-pt-pilot/articles.jsonl",
+      "kinds": [
+        "unspecified"
+      ],
+      "source": "ai/runs/portuguese-base-2026-11-02/last.pt"
+    },
+    {
+      "run": "ai/runs/portuguese-base-2026-11-02",
+      "data": "ai/data/private/wikipedia-pt-pilot/articles.jsonl",
+      "kinds": [
+        "unspecified"
+      ],
+      "source": null
+    }
+  ],
+  "missing_metadata": [],
+  "limitation": "Auditoria de metadados de ajuste; não prova ausência de texto no corpus bruto de pré-treino."
+}

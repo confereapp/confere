@@ -1128,3 +1128,16 @@ O controle conhecido de backup agora distingue inclusão, ausência e menção.
 Ambos mantêm 18 conflitos nos PDFs: 2/8 e 2/10 coincidências, sem promoção.
 Revisão de DA: R1/R4 têm suporte pertinente alternativo; R3 aprova sem explicar
 múltiplos clientes. Detalhes em research/document-correction-2026-11-17.md.
+
+DF executa a etapa de relações com documentos/componentes lexicais separados,
+âncoras literais e proveniência verificada. Há 8190 pares públicos de inferência
+e 72 pares editoriais sobre 24 parágrafos acadêmicos, sem os dois TCCs. A reserva
+acadêmica é só um documento, explicitamente insuficiente para provar generalização.
+Encoder CI congelado, parágrafos inteiros, 1000 passos; validação seleciona 250.
+Teste interno único congelado: NLI 523/861 contra 322/861 da origem; controle
+só consulta 586/861. Acadêmico 1/9, com cinco falsas aprovações. Regressão antiga
+407/410 -> 331/410. Reprovado por qualidade, atalhos e retenção; nenhuma promoção.
+Auditoria de 44 execuções ancestrais sem hits de oito palavras normalizadas dos
+pares reservados; não exclui paráfrases nem acessos não registrados. O próximo
+corpus precisa de consultas idênticas com relações diferentes anotadas e mais
+documentos/revisão humana. Detalhes em research/relation-pilot-df-2026-11-17.md.
