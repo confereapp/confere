@@ -786,3 +786,22 @@ com um falso positivo e não recuperou a qualidade. Não foi promovida.
 A seleção de erros de treino foi corrigida para respeitar os limiares da
 origem calibrada; antes usava 0,5 fixo. Um teste cobre a diferença.
 Os 222 testes Python passaram. BS, BR e BT seguem em execução.
+
+## Exposição ao corpus ampliado — continuação de 17/11
+
+A auditoria de amostragem de BS encontrou 291122 unidades e 86688 grupos de
+texto. Destes, 1049 contêm atesta (1,21%) e 2989 são premissas públicas (3,45%).
+A amostragem uniforme por fonte sorteia quatro grupos por lote; esses percentuais
+são probabilidades teóricas, não a cobertura medida das execuções.
+
+BS foi substituído após a avaliação completa do passo 3000. O melhor candidato
+continuou no passo zero (403/410); o checkpoint 3000 acertou 399/410, com um
+falso positivo. O passo final após essa avaliação e o tempo total não foram
+inferidos. Os arquivos anteriores permanecem no disco.
+
+BV parte desse último checkpoint salvo para 50000 passos solicitados, avaliação
+a cada 2500 e paciência de 20 avaliações. Isso amplia a exposição em vez de
+encerrar outra tentativa antes de uma quantidade equivalente ao corpus. O
+otimizador reinicia, conforme o treinador registra. Não há promessa de melhora:
+os mesmos critérios, revisão de documentos completos e novo teste independente
+continuam necessários. Os valores planejados não são contagens executadas.

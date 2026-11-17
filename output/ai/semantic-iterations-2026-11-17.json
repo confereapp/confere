@@ -1076,6 +1076,30 @@
         386
       ],
       "training_steps": 0
+    },
+    {
+      "run": "evidence-classifier-bs-2026-11-17",
+      "finished": true,
+      "promoted": false,
+      "correct": 403,
+      "total": 410,
+      "selected_step": 0,
+      "quality": [
+        false,
+        0,
+        0.9444444444444444,
+        0.9967320261437908,
+        0,
+        403
+      ],
+      "summary": {
+        "stop_reason": "interrupted_for_extended_training",
+        "last_complete_evaluation_step": 3000,
+        "last_checkpoint_step": 3000,
+        "selected_step": 0,
+        "final_training_step_recorded": false,
+        "note": "Substituída por treino longo para ampliar exposição ao corpus. Nenhum passo final ou tempo total foi inferido; nenhum checkpoint foi promovido."
+      }
     }
   ],
   "note": "Experimental development results only; classification probe accuracy is separate from generated response quality. No promotion."

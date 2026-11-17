@@ -1,0 +1,23 @@
+{
+  "run": "evidence-classifier-bv-2026-11-17",
+  "source": "ai/runs/evidence-classifier-bs-2026-11-17/last.pt",
+  "source_sha256": "a8c36cc0164afe16fcb71dc6ec1c5f89ede68b6d2e8da140fd7bc36df6753fab",
+  "source_checkpoint_step": 3000,
+  "data": "ai/data/private/document-attestation-bs-2026-11-17/examples.jsonl",
+  "dataset_sha256": "eccabfcde7db0f35d3dae3257817c7c397de91ef5f97f3ccb0c766e8fd7eb490",
+  "requested_steps": 50000,
+  "batch_size": 8,
+  "eval_every": 2500,
+  "selection_patience": 20,
+  "encoder_learning_rate": 3e-06,
+  "head_learning_rate": 1e-05,
+  "train_embeddings": true,
+  "paired_queries": true,
+  "require_perfect_validation": true,
+  "optimizer_reset": true,
+  "device": "mps",
+  "planned_example_draws": 400000,
+  "planned_group_draws": 200000,
+  "training_source_groups": 86688,
+  "note": "Planned draws are not empirical coverage or quality. Longer exposure experiment; strict gates and fresh independent evaluation still required. Original accepted candidates preserved; no promotion."
+}

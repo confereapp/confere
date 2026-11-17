@@ -1,0 +1,28 @@
+{
+  "dataset_sha256": "eccabfcde7db0f35d3dae3257817c7c397de91ef5f97f3ccb0c766e8fd7eb490",
+  "unit_counts": {
+    "(0, 0)": 177814,
+    "(1, 0)": 55507,
+    "(0, 1)": 53371,
+    "(1, 1)": 4430
+  },
+  "source_groups": 86688,
+  "group_label_sets": {
+    "[(0, 0)]": 41226,
+    "[(1, 0)]": 1351,
+    "[(0, 0), (0, 1)]": 12379,
+    "[(0, 0), (1, 0)]": 14023,
+    "[(0, 1)]": 1318,
+    "[(1, 1)]": 289,
+    "[(0, 1), (1, 0)]": 9703,
+    "[(0, 1), (1, 1)]": 1594,
+    "[(1, 0), (1, 1)]": 1654,
+    "[(0, 0), (1, 1)]": 880,
+    "[(0, 0), (0, 1), (1, 0)]": 2271
+  },
+  "attestation_groups": 1049,
+  "public_nli_groups": 2989,
+  "attestation_sampling_fraction": 0.012100867478774455,
+  "public_sampling_fraction": 0.03447997416020672,
+  "note": "Source-uniform paired sampling draws four groups per batch. Counts describe training only, not quality or empirical coverage."
+}
