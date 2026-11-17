@@ -53,14 +53,17 @@ def audit(result, documents, candidates):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--checkpoint',type=Path,required=True)
+    mode=p.add_mutually_exclusive_group(required=True)
+    mode.add_argument('--checkpoint',type=Path)
+    mode.add_argument('--conditioned-probe',type=Path)
     p.add_argument('--candidates',type=Path,nargs='+',required=True)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--device',choices=['mps','cpu'],default='mps')
     a=p.parse_args()
     if a.output.exists():p.error('Saída deve ser nova.')
     a.output.mkdir(parents=True)
-    checkpoint_hash=digest(a.checkpoint)
+    checkpoint_path=a.checkpoint or a.conditioned_probe
+    checkpoint_hash=digest(checkpoint_path)
     prepared=[];freeze=[]
     for path in a.candidates:
         rows=[json.loads(line) for line in path.read_text().splitlines() if line.strip()]
@@ -74,13 +77,18 @@ def main():
         prepared.append((path,rows,documents,annotation_checks))
         freeze.append(dict(candidates=str(path),candidates_sha256=digest(path),
                            sources=[dict(path=str(path.parent/n),sha256=d['sha256']) for n,d in zip(names,documents)]))
-    (a.output/'freeze.json').write_text(json.dumps(dict(checkpoint=str(a.checkpoint),checkpoint_sha256=checkpoint_hash,
+    (a.output/'freeze.json').write_text(json.dumps(dict(checkpoint=str(checkpoint_path),checkpoint_sha256=checkpoint_hash,
+        method='experimental_conditioned_probe' if a.conditioned_probe else 'native',
         inputs=freeze,training_executed=False,cohort_kind='known_real_development',script_sha256=digest(Path(__file__))),indent=2))
     summaries=[]
     for path,rows,documents,checks in prepared:
         started=time.perf_counter()
-        result=review_documents(documents,[r['requirement']['text'] for r in rows],a.checkpoint,a.device)
-        assert result['model']['sha256']==checkpoint_hash==digest(a.checkpoint)
+        if a.conditioned_probe:
+            from probe_conditioned_evidence import review_conditioned
+            result=review_conditioned(documents,[r['requirement']['text'] for r in rows],checkpoint_path,a.device)
+        else:
+            result=review_documents(documents,[r['requirement']['text'] for r in rows],checkpoint_path,a.device)
+        assert result['model']['sha256']==checkpoint_hash==digest(checkpoint_path)
         judgments=audit(result,documents,rows)
         name=path.parent.name
         payload=dict(project=name,annotation_checks=checks,judgments=judgments,trace=result)
