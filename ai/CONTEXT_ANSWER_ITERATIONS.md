@@ -1041,3 +1041,23 @@ O ajuste de 2000 passos parte de CI, com seleção somente na validação
 autoral. A avaliação inicial marcou 455/570, com 16 falsos positivos e
 reprovação por família. Os TCCs já inspecionados seguem desenvolvimento;
 não serão tratados como teste cego após esta investigação.
+
+CR encerrou em 2000 passos: controles anteriores 407/410 → 400/410;
+prosa nova 48/160 → 89/160; falsos positivos novos 16 → 10. Apesar do ganho
+local, os TCCs mantiveram todos os 18 resultados inconclusivos e conflitos.
+CS (filtro lexical experimental com CI) reduziu citações, mas piorou status
+coincidentes para 1/8 e 2/10; foi rejeitado. CT (pesos próprios BV anteriormente
+treinados com InferBR) também manteve 2/8 e 2/10 com conflitos em todos.
+Nenhum desses ensaios alterou os pesos padrão ou a API.
+
+O controle seguinte isolou uma distinção de tarefa: diante de “O projeto não
+inclui backup.”, CI acerta o critério de presença, mas responde não atendido
+à exigência de mencionar backup, embora a menção esteja presente; também não
+reconhece a exigência de registrar a ausência. O treino antigo supervisionava
+presença de recursos, não todos os critérios sobre conteúdo de relatórios.
+CU introduz contrastes do mesmo texto sob critérios de presença, ausência e
+menção. Duas afirmações opostas geram conflito para presença/ausência, mas
+ambas satisfazem uma exigência de mera menção. Os alvos são derivados desse
+critério explícito, sem copiar textos dos TCCs. Há 6000 exemplos novos mais
+4000 de replay; as 570 avaliações anteriores são preservadas e 180 controles
+novos usam tópicos e redações reservados. O ajuste parte de CR; sem promoção.

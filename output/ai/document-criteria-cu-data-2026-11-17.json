@@ -1,0 +1,13 @@
+{
+  "base_sha256": "21736b60d89a84e8e29225e276435417a1654970d2dfc0f9dad8ec5f61377fd5",
+  "dataset_sha256": "f5ff98549616f923a417b6f6a2ffaf65b49e69523a583aece85a7b916339e766",
+  "counts": {
+    "train": 10000,
+    "validation": 750
+  },
+  "original_validation_unchanged": true,
+  "real_documents_used": false,
+  "external_weights_used": false,
+  "script_sha256": "59c8ebef0184b6f2c93a6aeb7345158c3471aa9f243b70bcf7dda414277594bf",
+  "note": "Contrastes de critério documental. Validação conhecida de desenvolvimento, não teste cego. Nenhum TCC usado como treino."
+}
