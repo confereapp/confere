@@ -82,14 +82,26 @@ def main():
     p.add_argument('--length-normalized',action='store_true')
     p.add_argument('--fresh-head',action='store_true')
     p.add_argument('--label-smoothing',type=float,default=0.)
+    p.add_argument('--classifier-from',type=Path)
+    p.add_argument('--steps',type=int,default=3000)
+    p.add_argument('--eval-every',type=int,default=500)
+    p.add_argument('--patience',type=int,default=6)
     a=p.parse_args()
     if a.run_dir.exists():p.error('Saída deve ser nova.')
     if not 0<=a.label_smoothing<=.5:p.error('Suavização deve estar entre zero e 0,5.')
+    if min(a.steps,a.eval_every,a.patience)<=0:p.error('Passos e intervalos devem ser positivos.')
+    if a.classifier_from and a.fresh_head:p.error('Escolha classificação preservada ou cabeça nova.')
     torch.set_num_threads(4);torch.manual_seed(42)
     raw=a.encoder.read_bytes();source=torch.load(a.encoder,map_location='cpu',weights_only=True)
     decoder_source=torch.load(a.decoder,map_location='cpu',weights_only=True)
     if source['config']!=decoder_source['config'] or source['merges']!=decoder_source['merges']:p.error('Origens incompatíveis.')
     head=None if a.fresh_head else torch.load(a.head,map_location='cpu',weights_only=True)['head'];classifier=Classifier(source,head).to('mps')
+    if a.classifier_from:
+        previous=json.loads((a.classifier_from.parent/'run.json').read_text())
+        if previous['encoder_sha256']!=hashlib.sha256(raw).hexdigest():p.error('Encoder/tokenizer de origem diferente.')
+        state=torch.load(a.classifier_from,map_location='cpu',weights_only=True)
+        if state.get('objective')!='experimental_conversation_router' or state.get('promotable') is not False:p.error('Estado experimental incompatível.')
+        classifier.load_state_dict(state['classifier'])
     decoder=GPT(GPTConfig(**source['config'])).to('mps');decoder.load_state_dict(decoder_source['model']);decoder.eval().requires_grad_(False)
     tokenizer=ByteBPE(source['merges']);rows,digest=load_instructions(a.data)
     train=[r for r in rows if r['split']=='train'];validation=[r for r in rows if r['split']=='validation']
@@ -108,12 +120,18 @@ def main():
     info['training_class_counts']={key:len(value) for key,value in state_pools.items()}
     info['length_normalized']=a.length_normalized
     info['head_initialization']='random' if a.fresh_head else 'frozen_source_probe'
+    if a.classifier_from:
+        info['head_initialization']='continued_experimental_classifier'
+        info['classifier_from']=dict(path=str(a.classifier_from),sha256=hashlib.sha256(a.classifier_from.read_bytes()).hexdigest())
+    info['optimizer_reset']=True
+    info['evaluation_protocol']='learned_state_fusion_v1' if a.fusion else 'learned_state_router_v1'
+    info.update(steps=a.steps,eval_every=a.eval_every,patience=a.patience)
     info['label_smoothing']=a.label_smoothing
     info['parameter_kind']='class_log_probability_weight' if a.fusion else 'confidence_threshold'
     info.update(encoder=str(a.encoder),decoder=str(a.decoder),head=str(a.head))
     (a.run_dir/'run.json').write_text(json.dumps(info,ensure_ascii=False,indent=2))
     best=None;stale=0
-    for step in range(3001):
+    for step in range(a.steps+1):
         if step:
             classifier.train()
             if a.balanced_states:
@@ -124,21 +142,24 @@ def main():
             loss=torch.nn.functional.cross_entropy(classifier(ids,lengths),labels,label_smoothing=a.label_smoothing)
             if not torch.isfinite(loss):raise ValueError('Loss não finita.')
             optimizer.zero_grad(set_to_none=True);loss.backward();torch.nn.utils.clip_grad_norm_(classifier.parameters(),1.,error_if_nonfinite=True);optimizer.step()
-        if step%500==0:
+        if step%a.eval_every==0 or step==a.steps:
             classifier.eval();results=[]
             for threshold in ([.5,1.,2.] if a.fusion else [.5,.8,.95]):
                 adapter=FusionDecoder if a.fusion else RoutedDecoder
                 predictor=adapter(decoder,classifier,tokenizer,threshold);predictor.length_normalized=a.length_normalized
                 with torch.no_grad():result=score(predictor,tokenizer,validation,'mps',1024,256)
+                result['criterion']='Respostas completas do pipeline experimental com histórico gerado: classificação aprendida e decoder local; '+('seleção por probabilidades conjuntas, com candidatos do decoder e verbalizadores de estado.' if a.fusion else 'verbalização de estados e decoder greedy nos demais casos.')+' Igualdade exata após strip, orçamento 256. Não é avaliação de decoder greedy isolado ou de qualidade geral.'
                 key=quality_key(result);results.append(dict(threshold=threshold,quality=key,result=result))
                 print(json.dumps(dict(step=step,threshold=threshold,correct=result['correct'],total=result['total'],quality=key)),flush=True)
             selected=max(results,key=lambda r:r['quality']);(a.run_dir/f'evaluation-{step}.json').write_text(json.dumps(results,ensure_ascii=False))
             if best is None or selected['quality']>best:
                 best=selected['quality'];stale=0
-                torch.save(dict(classifier={k:v.detach().cpu() for k,v in classifier.state_dict().items()},step=step,objective='experimental_conversation_router',threshold=selected['threshold'],promotable=False),a.run_dir/'probe.pt')
+                temporary=a.run_dir/'probe.pt.tmp'
+                torch.save(dict(classifier={k:v.detach().cpu() for k,v in classifier.state_dict().items()},step=step,objective='experimental_conversation_router',threshold=selected['threshold'],promotable=False),temporary)
+                temporary.replace(a.run_dir/'probe.pt')
                 (a.run_dir/'evaluation.json').write_text(json.dumps(dict(selected=selected,step=step,promotable=False),ensure_ascii=False,indent=2))
             else:stale+=1
-            if best[0] or stale>=6:break
+            if best[0] or stale>=a.patience:break
     (a.run_dir/'summary.json').write_text(json.dumps(dict(final_step=step,quality=best,promotable=False),indent=2))
 
 
