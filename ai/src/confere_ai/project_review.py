@@ -1,5 +1,9 @@
 """Varredura experimental de arquivos completos, com cobertura e citações rastreáveis."""
 import hashlib
+import math
+import re
+import unicodedata
+from collections import Counter
 from io import BytesIO
 from pathlib import Path
 
@@ -59,7 +63,51 @@ def batches_for(documents, requirement, tokenizer, context_size, schema_version=
     return batches
 
 
-def review_extracted(documents, requirements, tokenizer, context_size, predict, schema_version=1, response_tokens=RESPONSE_TOKENS, *, predict_units=None):
+def terms(text):
+    plain = unicodedata.normalize("NFKD", text.lower()).encode("ascii", "ignore").decode()
+    # ponytail: prefixo de 5 letras como radical; trocar por stemmer RSLP se a recuperação falhar por flexão.
+    return [w[:5] for w in re.findall(r"[a-z0-9]+", plain) if len(w) > 2]
+
+
+def bm25_rank(query, texts, k1=1.5, b=.75):
+    """Índices de `texts` do mais ao menos relevante para `query`; empate mantém a ordem do documento."""
+    docs = [Counter(terms(t)) for t in texts]
+    if not docs: return []
+    average = sum(sum(d.values()) for d in docs)/len(docs) or 1
+    frequency = Counter(w for d in docs for w in d)
+    def score(d):
+        size = sum(d.values())
+        return sum(math.log(1+(len(docs)-frequency[w]+.5)/(frequency[w]+.5)) * d[w]*(k1+1)/(d[w]+k1*(1-b+b*size/average))
+                   for w in set(terms(query)) if w in d)
+    scores = [score(d) for d in docs]
+    return sorted(range(len(texts)), key=lambda i: -scores[i])
+
+
+def retrieve(batches, requirement, tokenizer, context_size, schema_version, response_tokens, top_k):
+    """Mantém só os `top_k` trechos mais relevantes e os reagrupa em lotes que cabem no contexto."""
+    parts = [p for batch in batches for p in batch]
+    chosen = sorted(bm25_rank(requirement, [p["text"] for p in parts])[:top_k])
+    regrouped = []
+    for part in (parts[i] for i in chosen):
+        group = (regrouped[-1] if regrouped else []) + [part]
+        units = [dict(id=f"page:{i+1}", text=p["text"]) for i, p in enumerate(group)]
+        if (regrouped and len(group) <= MAX_UNITS
+                and len(input_ids(requirement, units, tokenizer, schema_version))+response_tokens <= context_size):
+            regrouped[-1] = group
+        else:
+            regrouped.append([part])
+    return regrouped
+
+
+def majority(evidence):
+    """Status com maioria estrita entre as evidências recuperadas; empate ou nenhuma evidência é inconclusivo."""
+    counts = Counter(e["model_status"] for e in evidence)
+    top, votes = counts.most_common(1)[0] if counts else ("evidencia_insuficiente", 0)
+    return top if votes*2 > sum(counts.values()) else "evidencia_insuficiente"
+
+
+def review_extracted(documents, requirements, tokenizer, context_size, predict, schema_version=1, response_tokens=RESPONSE_TOKENS, *, predict_units=None, top_k=None):
+    """`top_k`: classifica só os trechos mais relevantes (BM25) e decide por maioria; texto ausente vira aviso, não veto."""
     if (predict is None) == (predict_units is None) or (predict_units is not None and schema_version != 2):
         raise ValueError("Informe um único preditor; classificação por unidade exige V2.")
     if not documents or not requirements or any(not isinstance(r, str) or not r.strip() for r in requirements):
@@ -70,6 +118,9 @@ def review_extracted(documents, requirements, tokenizer, context_size, predict, 
         raise ValueError("Nenhum texto utilizável foi extraído dos arquivos.")
     # Planejar todos os requisitos antes da primeira inferência evita trabalho parcial oculto.
     plans = [batches_for(documents, r, tokenizer, context_size, schema_version, response_tokens) for r in requirements]
+    if top_k is not None:
+        if top_k < 1: raise ValueError("top_k deve ser positivo.")
+        plans = [retrieve(b, r, tokenizer, context_size, schema_version, response_tokens, top_k) for r, b in zip(requirements, plans)]
     missing = [dict(document_id=f"doc:{i}", unit=u["id"]) for i,d in enumerate(documents,1)
                for u in d["units"] if not u["text"].strip(" |")]
     results = []
@@ -99,11 +150,15 @@ def review_extracted(documents, requirements, tokenizer, context_size, predict, 
                               valid_format=resolved["valid_format"], reference_valid=resolved["reference_valid"],
                               proposed_status=status, sources=mapping))
         conflict = len(statuses)>1
-        status = next(iter(statuses)) if len(statuses)==1 and valid and not missing else "evidencia_insuficiente"
+        if top_k is not None:
+            status = majority(evidence) if valid else "evidencia_insuficiente"
+        else:
+            status = next(iter(statuses)) if len(statuses)==1 and valid and not missing else "evidencia_insuficiente"
         results.append(dict(id=f"R{number}", requirement=requirement, status=status,
                             requires_human_review=True, conflicting_evidence=conflict, model_outputs_valid=valid,
                             evidence=evidence, calls=calls,
-                            coverage=dict(scope="all_extracted_text", all_extracted_text_processed=True,
+                            coverage=dict(scope="all_extracted_text" if top_k is None else f"bm25_top_{top_k}",
+                                          all_extracted_text_processed=top_k is None,
                                           text_characters=sum(len(u["text"]) for d in documents for u in d["units"] if u["text"].strip(" |")),
                                           processed_characters=sum(p["char_end"]-p["char_start"] for batch in batches for p in batch),
                                           batches=len(batches), units_without_text=missing)))
@@ -114,11 +169,11 @@ def review_extracted(documents, requirements, tokenizer, context_size, predict, 
                          for i,d in enumerate(documents,1)], requirements=results)
 
 
-def review_files(paths, requirements, checkpoint_path, device="auto"):
-    return review_documents([extract_document(path) for path in paths], requirements, checkpoint_path, device)
+def review_files(paths, requirements, checkpoint_path, device="auto", top_k=None):
+    return review_documents([extract_document(path) for path in paths], requirements, checkpoint_path, device, top_k)
 
 
-def review_documents(documents, requirements, checkpoint_path, device="auto"):
+def review_documents(documents, requirements, checkpoint_path, device="auto", top_k=None):
     import torch
     from .model import GPT, GPTConfig
     from .tokenizer import ByteBPE
@@ -139,7 +194,7 @@ def review_documents(documents, requirements, checkpoint_path, device="auto"):
         from .evidence_classifier import EvidencePredictor
         predictor = EvidencePredictor(checkpoint, target)
         result = review_extracted(documents, requirements, tokenizer, config.block_size, None, 2, 256,
-                                  predict_units=predictor.predict_units)
+                                  predict_units=predictor.predict_units, top_k=top_k)
         metadata.update(inference_kind="unit_classifier", fragment_token_reserve=256)
     else:
         model = GPT(config).to(target); model.load_state_dict(checkpoint["model"]); model.eval()
@@ -148,7 +203,7 @@ def review_documents(documents, requirements, checkpoint_path, device="auto"):
         def predict(ids):
             output = model.generate(torch.tensor([ids],device=target),response_tokens,tokenizer.EOS)
             return tokenizer.decode(output[0,len(ids):].tolist())
-        result = review_extracted(documents, requirements, tokenizer, config.block_size, predict, schema_version, response_tokens)
+        result = review_extracted(documents, requirements, tokenizer, config.block_size, predict, schema_version, response_tokens, top_k=top_k)
         metadata["response_tokens"] = response_tokens
     result["model"] = metadata
     return result

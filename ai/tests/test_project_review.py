@@ -30,6 +30,29 @@ class ProjectReviewTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             review_extracted([doc], ["Testes"], ByteBPE([]), 512, lambda ids:"", 2, 64, predict_units=predict)
 
+    def test_top_k_retrieval_ignores_irrelevant_pages_and_missing_text(self):
+        from confere_ai.evidence_classifier import response
+        doc = dict(name="a.pdf", sha256="x", format="pdf", warnings=[], units=[
+            dict(id="page:1", text="Folha de rosto da universidade."),
+            dict(id="page:2", text="O sistema usa autenticação de dois fatores."),
+            dict(id="page:3", text=""),
+            dict(id="page:4", text="Sumário e agradecimentos.")])
+        seen = []
+        def predict(requirement, units):
+            seen.extend(u["text"] for u in units)
+            # Classificador ruidoso: marca oposto em tudo que não cita autenticação.
+            return response(units, [[.9, .1] if "autentica" in u["text"] else [.1, .9] for u in units])
+        row = review_extracted([doc], ["Autenticação de dois fatores"], ByteBPE([]), 512, None, 2, 64,
+                               predict_units=predict, top_k=1)["requirements"][0]
+        self.assertEqual(seen, ["O sistema usa autenticação de dois fatores."])
+        self.assertEqual(row["status"], "atendido")
+        self.assertEqual(row["coverage"]["units_without_text"], [dict(document_id="doc:1", unit="page:3")])
+        self.assertFalse(row["coverage"]["all_extracted_text_processed"])
+        tie = review_extracted([doc], ["Autenticação de dois fatores"], ByteBPE([]), 512, None, 2, 64,
+                               predict_units=predict, top_k=2)["requirements"][0]
+        self.assertEqual(tie["status"], "evidencia_insuficiente")
+        self.assertTrue(tie["conflicting_evidence"])
+
     def test_checkpoint_loader_accepts_classifier_without_decoder_and_records_real_kind(self):
         from dataclasses import asdict
         from unittest.mock import patch
