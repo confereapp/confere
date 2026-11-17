@@ -41,7 +41,7 @@ def main():
     if not isinstance(topics,list) or any(not isinstance(t,str) or not t.strip() for t in topics) or len(set(topics))<2:
         p.error('Recursos distintos e não vazios são obrigatórios.')
     added=documents(8000,topics=topics,forms=FORMS,sentence_units=True)
-    for row in added:row.update(id='polarity-aw-'+row['id'],project_id='polarity-aw-'+row['project_id'])
+    for row in added:row.update(id=a.output.name+'-'+row['id'],project_id=a.output.name+'-'+row['project_id'])
     seen={r['prompt'].strip().casefold():r for r in rows};retained=[];skipped=0
     for row in added:
         key=row['prompt'].strip().casefold();previous=seen.get(key)
@@ -51,6 +51,7 @@ def main():
             skipped+=1;continue
         seen[key]=row;retained.append(row)
     result=rows+retained
+    assert len({r['id'] for r in result})==len(result)
     assert [r for r in result if r['split']!='train']==[r for r in rows if r['split']!='train']
     a.output.mkdir(parents=True);f=a.output/'examples.jsonl'
     f.write_text(''.join(json.dumps(r,ensure_ascii=False)+'\n' for r in result))
