@@ -1005,6 +1005,77 @@
           12
         ]
       }
+    },
+    {
+      "run": "evidence-classifier-bp-2026-11-17",
+      "finished": true,
+      "promoted": false,
+      "correct": 403,
+      "total": 410,
+      "selected_step": 0,
+      "quality": [
+        false,
+        0,
+        0.9444444444444444,
+        0.9967320261437908,
+        0,
+        403
+      ],
+      "summary": {
+        "final_step": 6000,
+        "selected_step": 0,
+        "stop_reason": "selection_plateau",
+        "elapsed_seconds": 1060.67386225,
+        "test_examples_used": 0
+      }
+    },
+    {
+      "run": "conversation-fusion-bq-2026-11-17",
+      "finished": true,
+      "promoted": false,
+      "correct": 242,
+      "total": 252,
+      "selected_step": 0,
+      "quality": [
+        false,
+        0,
+        0.8024691358024691,
+        0.9951821740439626,
+        0,
+        242
+      ],
+      "summary": {
+        "stop_reason": "interrupted_for_paired_presence_training",
+        "last_complete_evaluation_step": 4000,
+        "selected_step": 0,
+        "quality": [
+          false,
+          0,
+          0.8024691358024691,
+          0.9951821740439626,
+          0,
+          242
+        ],
+        "promotable": false,
+        "note": "Interrupção deliberada para substituir amostragem sem pares pelo contraste entre consultas sobre o mesmo corpo. Nenhum passo posterior foi medido ou exportado; tempo final não registrado."
+      }
+    },
+    {
+      "run": "evidence-calibrated-bu-2026-11-17",
+      "finished": true,
+      "promoted": false,
+      "correct": 386,
+      "total": 410,
+      "selected_step": 6000,
+      "quality": [
+        false,
+        0,
+        0.6790123456790124,
+        0.9522029031832955,
+        -1,
+        386
+      ],
+      "training_steps": 0
     }
   ],
   "note": "Experimental development results only; classification probe accuracy is separate from generated response quality. No promotion."

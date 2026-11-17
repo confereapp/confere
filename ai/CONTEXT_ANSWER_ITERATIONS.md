@@ -779,3 +779,10 @@ e BT estão pendentes. Nenhum deles é aprovado só pelo acerto agregado.
 
 Os 221 testes Python passaram; os commits desta retomada mantêm a autoria
 normal, sem atribuições adicionais. Nenhum peso padrão da API foi alterado.
+
+BP encerrou no passo 6000 por platô, preservando o passo zero (403/410).
+Os pesos do passo 6000 acertaram 382/410; a calibração BU chegou a 386/410
+com um falso positivo e não recuperou a qualidade. Não foi promovida.
+A seleção de erros de treino foi corrigida para respeitar os limiares da
+origem calibrada; antes usava 0,5 fixo. Um teste cobre a diferença.
+Os 222 testes Python passaram. BS, BR e BT seguem em execução.
