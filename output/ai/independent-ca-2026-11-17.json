@@ -1,0 +1,100 @@
+{
+  "freeze": {
+    "source_run": "ai/runs/conversation-fusion-bx-2026-11-17",
+    "files": {
+      "classifier.pt": {
+        "source": "ai/runs/conversation-fusion-bx-2026-11-17/probe.pt",
+        "sha256": "115e2d36ec33f38c46367484de366e2e9c1869716730e10f4a67a6e5c8b0e1ed"
+      },
+      "encoder.pt": {
+        "source": "ai/runs/conversation-class-probe-bc-2026-11-16/source.pt",
+        "sha256": "058bf4e46c370c698033a96b30ecfd9554cf07c51a58a3fc7fd830ea7d0e5151"
+      },
+      "decoder.pt": {
+        "source": "ai/runs/conversation-independent-aq-2026-11-16/source.pt",
+        "sha256": "7dde83a57b3c38db364ac9bc202be807ad9e77e788120f665a84115865806b24"
+      }
+    },
+    "frozen_at": "2026-11-17T09:31:10.432143+00:00",
+    "threshold": 2.0,
+    "length_normalized": true,
+    "protocol": "learned_state_fusion_v1",
+    "protocol_sha256": "9e54465e43329a23c1c5e4d65d2d641d2862d2475abf364eae4845fc381777cd",
+    "promotable": false
+  },
+  "manifest": {
+    "freeze": {
+      "source_run": "ai/runs/conversation-fusion-bx-2026-11-17",
+      "files": {
+        "classifier.pt": {
+          "source": "ai/runs/conversation-fusion-bx-2026-11-17/probe.pt",
+          "sha256": "115e2d36ec33f38c46367484de366e2e9c1869716730e10f4a67a6e5c8b0e1ed"
+        },
+        "encoder.pt": {
+          "source": "ai/runs/conversation-class-probe-bc-2026-11-16/source.pt",
+          "sha256": "058bf4e46c370c698033a96b30ecfd9554cf07c51a58a3fc7fd830ea7d0e5151"
+        },
+        "decoder.pt": {
+          "source": "ai/runs/conversation-independent-aq-2026-11-16/source.pt",
+          "sha256": "7dde83a57b3c38db364ac9bc202be807ad9e77e788120f665a84115865806b24"
+        }
+      },
+      "frozen_at": "2026-11-17T09:31:10.432143+00:00",
+      "threshold": 2.0,
+      "length_normalized": true,
+      "protocol": "learned_state_fusion_v1",
+      "protocol_sha256": "9e54465e43329a23c1c5e4d65d2d641d2862d2475abf364eae4845fc381777cd",
+      "promotable": false
+    },
+    "cases_sha256": "375d3c65090e9216532211337ec0af8d92d5bd6f6c92216c62d91841155665b8",
+    "counts": {
+      "conversation_context_answer_independent_support": 36,
+      "conversation_context_answer_independent_fact": 12,
+      "conversation_context_answer_independent_conflict": 6,
+      "conversation_context_answer_independent_missing": 6,
+      "conversation_context_answer_independent_memory": 12
+    },
+    "note": "Authored only after freezing. Full contexts excluded against training, development and prepared unused replay. No human independent review or claim of unseen vocabulary. No weights changed."
+  },
+  "correct": 59,
+  "total": 72,
+  "acceptance": {
+    "passed": false,
+    "counts": {
+      "conversation_context_answer_independent_support": [
+        34,
+        36
+      ],
+      "conversation_context_answer_independent_fact": [
+        3,
+        12
+      ],
+      "conversation_context_answer_independent_conflict": [
+        5,
+        6
+      ],
+      "conversation_context_answer_independent_missing": [
+        6,
+        6
+      ],
+      "conversation_context_answer_independent_memory": [
+        11,
+        12
+      ]
+    },
+    "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+    "scope": "Não valida conversa aberta."
+  },
+  "quality": [
+    false,
+    0,
+    0.2777777777777778,
+    0.8407407407407408,
+    0,
+    59
+  ],
+  "test_examples_used": 72,
+  "independent_at_first_evaluation": true,
+  "subsequent_use": "development",
+  "promoted": false
+}

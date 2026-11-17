@@ -1,0 +1,22 @@
+{
+  "source_sha256": "f2fb6a177854360194a5a915c8d075a1e714e09869c0428b3005b1c9b41893f8",
+  "dataset_sha256": "c836e255aa61452a50b1e6235553c1884ee9c4fc5a80d53574d6116addd6de05",
+  "generator_sha256": "afb68bcdf7261fcb9c0840a5aaf68677dc0911ab8d736201fb88fd06f9689191",
+  "generation_groups": 4000,
+  "counts": {
+    "added_train": 24000
+  },
+  "splits": {
+    "validation": 252,
+    "train": 256843
+  },
+  "prepositions": [
+    "de",
+    "por",
+    "para",
+    "com",
+    "em"
+  ],
+  "validation_unchanged": true,
+  "note": "Vocabulário e construções de desenvolvimento conhecidos. Consultas completas reservadas excluídas; treino anterior preservado. Novo teste independente após congelamento continua obrigatório."
+}

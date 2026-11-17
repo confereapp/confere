@@ -1,0 +1,4345 @@
+{
+  "results": [
+    {
+      "name": "preserved",
+      "path": "ai/runs/evidence-calibrated-au-2026-11-16/best.pt",
+      "sha256": "eff36b5646a3e0a8c9a3bc28abe705bae15bfb9f8ccc6ac00f675cfa7ca461cc",
+      "step": 500,
+      "counts": {
+        "training_topic/simple": [
+          4,
+          4
+        ],
+        "training_topic/training_noun": [
+          4,
+          4
+        ],
+        "training_topic/training_exists": [
+          2,
+          4
+        ],
+        "training_topic/development_frame": [
+          2,
+          4
+        ],
+        "invented_topic/simple": [
+          4,
+          4
+        ],
+        "invented_topic/training_noun": [
+          4,
+          4
+        ],
+        "invented_topic/training_exists": [
+          2,
+          4
+        ],
+        "invented_topic/development_frame": [
+          2,
+          4
+        ],
+        "development_cancellation/simple": [
+          4,
+          4
+        ],
+        "development_cancellation/training_noun": [
+          4,
+          4
+        ],
+        "development_cancellation/training_exists": [
+          2,
+          4
+        ],
+        "development_cancellation/development_frame": [
+          2,
+          4
+        ],
+        "development_versioning/simple": [
+          4,
+          4
+        ],
+        "development_versioning/training_noun": [
+          4,
+          4
+        ],
+        "development_versioning/training_exists": [
+          2,
+          4
+        ],
+        "development_versioning/development_frame": [
+          2,
+          4
+        ],
+        "diagnostic_blocking/simple": [
+          4,
+          4
+        ],
+        "diagnostic_blocking/training_noun": [
+          4,
+          4
+        ],
+        "diagnostic_blocking/training_exists": [
+          2,
+          4
+        ],
+        "diagnostic_blocking/development_frame": [
+          2,
+          4
+        ]
+      },
+      "samples": [
+        {
+          "kind": "training_topic",
+          "frame": "simple",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cadastro de visitantes."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9924154281616211,
+              2.0218088536694268e-08
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "simple",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto não inclui cadastro de visitantes."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              5.524613243323984e-06,
+              0.9439300298690796
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "simple",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              2.6545533273747424e-06,
+              2.0127099276123772e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "simple",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cadastro de visitantes."
+            },
+            {
+              "id": "page:2",
+              "text": "O projeto não inclui cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9924154281616211,
+              2.0218088536694268e-08
+            ],
+            [
+              5.524613243323984e-06,
+              0.9439300298690796
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_noun",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cadastro de visitantes."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9916132688522339,
+              3.164345253026113e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_noun",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a indisponibilidade de cadastro de visitantes."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.0016624403651803732,
+              0.9730484485626221
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_noun",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              9.639964446250815e-06,
+              3.03228290476909e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_noun",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cadastro de visitantes."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta a indisponibilidade de cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9916132688522339,
+              3.164345253026113e-05
+            ],
+            [
+              0.0016624403651803732,
+              0.9730484485626221
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_exists",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cadastro de visitantes."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.12312490493059158,
+              0.4192962944507599
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_exists",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que não existe cadastro de visitantes."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              1.700813118077349e-05,
+              0.29839518666267395
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_exists",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              3.577027382561937e-05,
+              9.18247025083474e-08
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_exists",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cadastro de visitantes."
+            },
+            {
+              "id": "page:2",
+              "text": "A documentação atesta que não existe cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.12312490493059158,
+              0.4192962944507599
+            ],
+            [
+              1.700813118077349e-05,
+              0.29839518666267395
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "training_topic",
+          "frame": "development_frame",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cadastro de visitantes está disponível."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.46442675590515137,
+              0.9550192356109619
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "training_topic",
+          "frame": "development_frame",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cadastro de visitantes está indisponível."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.005596592556685209,
+              0.9954380393028259
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "development_frame",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cadastro de visitantes está disponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.0003871165099553764,
+              2.1665885014954256e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "development_frame",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cadastro de visitantes está disponível."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta que cadastro de visitantes está indisponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.46442675590515137,
+              0.9550192356109619
+            ],
+            [
+              0.005596592556685209,
+              0.9954380393028259
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "simple",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui taluma de narivi."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9765287041664124,
+              2.6147139564614008e-08
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "simple",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto não inclui taluma de narivi."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              3.1781130473973462e-06,
+              0.9622504711151123
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "simple",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              2.431594339213916e-06,
+              6.950739361855085e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "simple",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui taluma de narivi."
+            },
+            {
+              "id": "page:2",
+              "text": "O projeto não inclui taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9765287041664124,
+              2.6147139564614008e-08
+            ],
+            [
+              3.1781130473973462e-06,
+              0.9622504711151123
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_noun",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de taluma de narivi."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.5798267126083374,
+              4.268893098924309e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_noun",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a indisponibilidade de taluma de narivi."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.0006393409566953778,
+              0.6096821427345276
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_noun",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              1.2114567653043196e-05,
+              1.4121332014838117e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_noun",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de taluma de narivi."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta a indisponibilidade de taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.5798267126083374,
+              4.268893098924309e-05
+            ],
+            [
+              0.0006393409566953778,
+              0.6096821427345276
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_exists",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe taluma de narivi."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.014446710236370564,
+              0.07379070669412613
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_exists",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que não existe taluma de narivi."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              1.9093367882305756e-06,
+              0.9501078724861145
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_exists",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              5.488785609486513e-05,
+              3.6957592897124414e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_exists",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe taluma de narivi."
+            },
+            {
+              "id": "page:2",
+              "text": "A documentação atesta que não existe taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.014446710236370564,
+              0.07379070669412613
+            ],
+            [
+              1.9093367882305756e-06,
+              0.9501078724861145
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "development_frame",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que taluma de narivi está disponível."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.03523273393511772,
+              0.38690558075904846
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "development_frame",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que taluma de narivi está indisponível."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.00047812770935706794,
+              0.8841555714607239
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "development_frame",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que taluma de narivi está disponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.0003600201744120568,
+              1.8420951164443977e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "development_frame",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que taluma de narivi está disponível."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta que taluma de narivi está indisponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.03523273393511772,
+              0.38690558075904846
+            ],
+            [
+              0.00047812770935706794,
+              0.8841555714607239
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "simple",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cancelamento de reservas."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9950258135795593,
+              1.025551114253176e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "simple",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto não inclui cancelamento de reservas."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              1.3667536222783383e-06,
+              0.9874910116195679
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "simple",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              2.994098167619086e-06,
+              2.9360583084780956e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "simple",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cancelamento de reservas."
+            },
+            {
+              "id": "page:2",
+              "text": "O projeto não inclui cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9950258135795593,
+              1.025551114253176e-06
+            ],
+            [
+              1.3667536222783383e-06,
+              0.9874910116195679
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_noun",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cancelamento de reservas."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9979907274246216,
+              0.0004764677141793072
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_noun",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a indisponibilidade de cancelamento de reservas."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.0024813534691929817,
+              0.9983088970184326
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_noun",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              2.421136923658196e-05,
+              1.596863626218692e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_noun",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cancelamento de reservas."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta a indisponibilidade de cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9979907274246216,
+              0.0004764677141793072
+            ],
+            [
+              0.0024813534691929817,
+              0.9983088970184326
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_exists",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cancelamento de reservas."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.08795179426670074,
+              0.9524794220924377
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_exists",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que não existe cancelamento de reservas."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              5.7564575399737805e-05,
+              0.8242591023445129
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_exists",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              5.144093302078545e-05,
+              1.9507754132064292e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_exists",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cancelamento de reservas."
+            },
+            {
+              "id": "page:2",
+              "text": "A documentação atesta que não existe cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.08795179426670074,
+              0.9524794220924377
+            ],
+            [
+              5.7564575399737805e-05,
+              0.8242591023445129
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "development_frame",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cancelamento de reservas está disponível."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.7533044219017029,
+              0.9916331768035889
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "development_frame",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cancelamento de reservas está indisponível."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.0691821500658989,
+              0.9734079837799072
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "development_frame",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cancelamento de reservas está disponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.0006338955136016011,
+              2.1486662262759637e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "development_frame",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cancelamento de reservas está disponível."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta que cancelamento de reservas está indisponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.7533044219017029,
+              0.9916331768035889
+            ],
+            [
+              0.0691821500658989,
+              0.9734079837799072
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "simple",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui versionamento de arquivos."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9952423572540283,
+              1.265142515194384e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "simple",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto não inclui versionamento de arquivos."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              2.1317549908417277e-05,
+              0.9779685139656067
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "simple",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.00017517272499389946,
+              1.736587250888988e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "simple",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui versionamento de arquivos."
+            },
+            {
+              "id": "page:2",
+              "text": "O projeto não inclui versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9952423572540283,
+              1.265142515194384e-07
+            ],
+            [
+              2.1317549908417277e-05,
+              0.9779685139656067
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_noun",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de versionamento de arquivos."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.995499312877655,
+              4.96838656545151e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_noun",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a indisponibilidade de versionamento de arquivos."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              7.641284901183099e-05,
+              0.9992824196815491
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_noun",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.00010904767987085506,
+              8.41349844904471e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_noun",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de versionamento de arquivos."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta a indisponibilidade de versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.995499312877655,
+              4.96838656545151e-05
+            ],
+            [
+              7.641284901183099e-05,
+              0.9992824196815491
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_exists",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe versionamento de arquivos."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.007652819622308016,
+              0.9947583079338074
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_exists",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que não existe versionamento de arquivos."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.0003867583582177758,
+              0.8149750828742981
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_exists",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.0003638248017523438,
+              2.86772774416022e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_exists",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe versionamento de arquivos."
+            },
+            {
+              "id": "page:2",
+              "text": "A documentação atesta que não existe versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.007652819622308016,
+              0.9947583079338074
+            ],
+            [
+              0.0003867583582177758,
+              0.8149750828742981
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "development_frame",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que versionamento de arquivos está disponível."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.0028358986601233482,
+              0.9999585151672363
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "development_frame",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que versionamento de arquivos está indisponível."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              1.1350827662681695e-05,
+              0.999813973903656
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "development_frame",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que versionamento de arquivos está disponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.001896430621854961,
+              1.0721346370701212e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "development_frame",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que versionamento de arquivos está disponível."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta que versionamento de arquivos está indisponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.0028358986601233482,
+              0.9999585151672363
+            ],
+            [
+              1.1350827662681695e-05,
+              0.999813973903656
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "simple",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui bloqueio de perfis."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9953966736793518,
+              4.85521809423517e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "simple",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto não inclui bloqueio de perfis."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              1.2749342204187997e-06,
+              0.9981485605239868
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "simple",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              9.228308954334352e-06,
+              4.592149707605131e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "simple",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui bloqueio de perfis."
+            },
+            {
+              "id": "page:2",
+              "text": "O projeto não inclui bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9953966736793518,
+              4.85521809423517e-07
+            ],
+            [
+              1.2749342204187997e-06,
+              0.9981485605239868
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_noun",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de bloqueio de perfis."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9624798893928528,
+              0.00034024572232738137
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_noun",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a indisponibilidade de bloqueio de perfis."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              9.655296162236482e-05,
+              0.9983581900596619
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_noun",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              2.3592700017616153e-05,
+              3.093840405199444e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_noun",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de bloqueio de perfis."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta a indisponibilidade de bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9624798893928528,
+              0.00034024572232738137
+            ],
+            [
+              9.655296162236482e-05,
+              0.9983581900596619
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_exists",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe bloqueio de perfis."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.005595281720161438,
+              0.9749666452407837
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_exists",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que não existe bloqueio de perfis."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              9.774647651283885e-07,
+              0.9964444041252136
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_exists",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              7.649172766832635e-05,
+              1.5681740478612483e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_exists",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe bloqueio de perfis."
+            },
+            {
+              "id": "page:2",
+              "text": "A documentação atesta que não existe bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.005595281720161438,
+              0.9749666452407837
+            ],
+            [
+              9.774647651283885e-07,
+              0.9964444041252136
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "development_frame",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que bloqueio de perfis está disponível."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.0010290060890838504,
+              0.9979344606399536
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "development_frame",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que bloqueio de perfis está indisponível."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              1.3156835848349147e-05,
+              0.9990993738174438
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "development_frame",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que bloqueio de perfis está disponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.0008595203398726881,
+              4.5347514969762415e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "development_frame",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que bloqueio de perfis está disponível."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta que bloqueio de perfis está indisponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.0010290060890838504,
+              0.9979344606399536
+            ],
+            [
+              1.3156835848349147e-05,
+              0.9990993738174438
+            ]
+          ],
+          "correct": false
+        }
+      ]
+    },
+    {
+      "name": "extended_snapshot",
+      "path": "tmp/bv-attestation-transfer-source.pt",
+      "sha256": "aaafe0ff904ac2a3c99ca61173c8ec08132bdaf08a5ebd7b74359aa55ca186ae",
+      "step": 12500,
+      "counts": {
+        "training_topic/simple": [
+          4,
+          4
+        ],
+        "training_topic/training_noun": [
+          4,
+          4
+        ],
+        "training_topic/training_exists": [
+          4,
+          4
+        ],
+        "training_topic/development_frame": [
+          4,
+          4
+        ],
+        "invented_topic/simple": [
+          4,
+          4
+        ],
+        "invented_topic/training_noun": [
+          4,
+          4
+        ],
+        "invented_topic/training_exists": [
+          4,
+          4
+        ],
+        "invented_topic/development_frame": [
+          4,
+          4
+        ],
+        "development_cancellation/simple": [
+          4,
+          4
+        ],
+        "development_cancellation/training_noun": [
+          4,
+          4
+        ],
+        "development_cancellation/training_exists": [
+          4,
+          4
+        ],
+        "development_cancellation/development_frame": [
+          4,
+          4
+        ],
+        "development_versioning/simple": [
+          2,
+          4
+        ],
+        "development_versioning/training_noun": [
+          2,
+          4
+        ],
+        "development_versioning/training_exists": [
+          2,
+          4
+        ],
+        "development_versioning/development_frame": [
+          2,
+          4
+        ],
+        "diagnostic_blocking/simple": [
+          4,
+          4
+        ],
+        "diagnostic_blocking/training_noun": [
+          4,
+          4
+        ],
+        "diagnostic_blocking/training_exists": [
+          4,
+          4
+        ],
+        "diagnostic_blocking/development_frame": [
+          2,
+          4
+        ]
+      },
+      "samples": [
+        {
+          "kind": "training_topic",
+          "frame": "simple",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cadastro de visitantes."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9995933175086975,
+              1.8782287725116475e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "simple",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto não inclui cadastro de visitantes."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              8.34834008855978e-06,
+              0.9780504703521729
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "simple",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              1.1894526323885657e-05,
+              3.1610397854819894e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "simple",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cadastro de visitantes."
+            },
+            {
+              "id": "page:2",
+              "text": "O projeto não inclui cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9995933175086975,
+              1.8782287725116475e-07
+            ],
+            [
+              8.34834008855978e-06,
+              0.9780504703521729
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_noun",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cadastro de visitantes."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.998528242111206,
+              8.01311671239091e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_noun",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a indisponibilidade de cadastro de visitantes."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              9.12714881451393e-07,
+              0.9997188448905945
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_noun",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              1.6174495613086037e-05,
+              4.3974334403174e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_noun",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cadastro de visitantes."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta a indisponibilidade de cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.998528242111206,
+              8.01311671239091e-06
+            ],
+            [
+              9.12714881451393e-07,
+              0.9997188448905945
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_exists",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cadastro de visitantes."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9975676536560059,
+              3.359772017574869e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_exists",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que não existe cadastro de visitantes."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              7.484266461688094e-06,
+              0.991640567779541
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_exists",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              7.327272760448977e-05,
+              0.00013901352940592915
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "training_exists",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cadastro de visitantes."
+            },
+            {
+              "id": "page:2",
+              "text": "A documentação atesta que não existe cadastro de visitantes."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9975676536560059,
+              3.359772017574869e-05
+            ],
+            [
+              7.484266461688094e-06,
+              0.991640567779541
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "development_frame",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cadastro de visitantes está disponível."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9976990818977356,
+              3.561873018043116e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "development_frame",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cadastro de visitantes está indisponível."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.00020113454957026988,
+              0.9987751841545105
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "development_frame",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cadastro de visitantes está disponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.00035578335518948734,
+              0.0001976799248950556
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "training_topic",
+          "frame": "development_frame",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cadastro de visitantes.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cadastro de visitantes está disponível."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta que cadastro de visitantes está indisponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9976990818977356,
+              3.561873018043116e-05
+            ],
+            [
+              0.00020113454957026988,
+              0.9987751841545105
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "simple",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui taluma de narivi."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.994920551776886,
+              2.7636858135338116e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "simple",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto não inclui taluma de narivi."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              3.5182092688046396e-05,
+              0.9393543601036072
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "simple",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              2.248622513434384e-05,
+              0.00012794388749171048
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "simple",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui taluma de narivi."
+            },
+            {
+              "id": "page:2",
+              "text": "O projeto não inclui taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.994920551776886,
+              2.7636858135338116e-07
+            ],
+            [
+              3.5182092688046396e-05,
+              0.9393543601036072
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_noun",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de taluma de narivi."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.8314208388328552,
+              0.0010532691376283765
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_noun",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a indisponibilidade de taluma de narivi."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              4.2123151615669485e-06,
+              0.9661891460418701
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_noun",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              4.2547317207208835e-06,
+              7.093943168001715e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_noun",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de taluma de narivi."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta a indisponibilidade de taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.8314208388328552,
+              0.0010532691376283765
+            ],
+            [
+              4.2123151615669485e-06,
+              0.9661891460418701
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_exists",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe taluma de narivi."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.926517903804779,
+              0.0021413604263216257
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_exists",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que não existe taluma de narivi."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              1.9866474758600816e-05,
+              0.9121813774108887
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_exists",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              1.6047171811806038e-05,
+              3.018991492353962e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "training_exists",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe taluma de narivi."
+            },
+            {
+              "id": "page:2",
+              "text": "A documentação atesta que não existe taluma de narivi."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.926517903804779,
+              0.0021413604263216257
+            ],
+            [
+              1.9866474758600816e-05,
+              0.9121813774108887
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "development_frame",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que taluma de narivi está disponível."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9706089496612549,
+              0.0005995220853947103
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "development_frame",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que taluma de narivi está indisponível."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              6.280822708504274e-05,
+              0.9106395244598389
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "development_frame",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que taluma de narivi está disponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.0002597148122731596,
+              4.8536610847804695e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "invented_topic",
+          "frame": "development_frame",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir taluma de narivi.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que taluma de narivi está disponível."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta que taluma de narivi está indisponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9706089496612549,
+              0.0005995220853947103
+            ],
+            [
+              6.280822708504274e-05,
+              0.9106395244598389
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "simple",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cancelamento de reservas."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9998088479042053,
+              2.765294198070478e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "simple",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto não inclui cancelamento de reservas."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              2.6356794933235506e-06,
+              0.8989948630332947
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "simple",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              1.3663544450537302e-05,
+              9.030914952745661e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "simple",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui cancelamento de reservas."
+            },
+            {
+              "id": "page:2",
+              "text": "O projeto não inclui cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9998088479042053,
+              2.765294198070478e-07
+            ],
+            [
+              2.6356794933235506e-06,
+              0.8989948630332947
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_noun",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cancelamento de reservas."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9982518553733826,
+              2.7915690225199796e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_noun",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a indisponibilidade de cancelamento de reservas."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              8.801989679341204e-06,
+              0.9989769458770752
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_noun",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              4.451250788406469e-06,
+              1.0281479262630455e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_noun",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de cancelamento de reservas."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta a indisponibilidade de cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9982518553733826,
+              2.7915690225199796e-05
+            ],
+            [
+              8.801989679341204e-06,
+              0.9989769458770752
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_exists",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cancelamento de reservas."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9988290667533875,
+              2.865140231733676e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_exists",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que não existe cancelamento de reservas."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              2.4344009943888523e-05,
+              0.7625380158424377
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_exists",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              6.394720003299881e-06,
+              3.025987280125264e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "training_exists",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe cancelamento de reservas."
+            },
+            {
+              "id": "page:2",
+              "text": "A documentação atesta que não existe cancelamento de reservas."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9988290667533875,
+              2.865140231733676e-05
+            ],
+            [
+              2.4344009943888523e-05,
+              0.7625380158424377
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "development_frame",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cancelamento de reservas está disponível."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9987332224845886,
+              2.5512028514640406e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "development_frame",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cancelamento de reservas está indisponível."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.0010591339087113738,
+              0.9916436076164246
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "development_frame",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cancelamento de reservas está disponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.00133410410489887,
+              9.418917034054175e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_cancellation",
+          "frame": "development_frame",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir cancelamento de reservas.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que cancelamento de reservas está disponível."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta que cancelamento de reservas está indisponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9987332224845886,
+              2.5512028514640406e-05
+            ],
+            [
+              0.0010591339087113738,
+              0.9916436076164246
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "simple",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui versionamento de arquivos."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.08679826557636261,
+              8.159184972100775e-07
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "simple",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto não inclui versionamento de arquivos."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              1.352615583982697e-07,
+              0.9862566590309143
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "simple",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              5.060633338871412e-05,
+              1.4880994058330543e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "simple",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui versionamento de arquivos."
+            },
+            {
+              "id": "page:2",
+              "text": "O projeto não inclui versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.08679826557636261,
+              8.159184972100775e-07
+            ],
+            [
+              1.352615583982697e-07,
+              0.9862566590309143
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_noun",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de versionamento de arquivos."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.5055304169654846,
+              0.0003355221706442535
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_noun",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a indisponibilidade de versionamento de arquivos."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              5.275561761663994e-06,
+              0.008531272411346436
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_noun",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              3.511899194563739e-06,
+              5.881798642803915e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_noun",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de versionamento de arquivos."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta a indisponibilidade de versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.5055304169654846,
+              0.0003355221706442535
+            ],
+            [
+              5.275561761663994e-06,
+              0.008531272411346436
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_exists",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe versionamento de arquivos."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9807320237159729,
+              6.850304089311976e-06
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_exists",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que não existe versionamento de arquivos."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              6.842116999905556e-05,
+              0.023267777636647224
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_exists",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.0006169515545479953,
+              9.116905130213127e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "training_exists",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe versionamento de arquivos."
+            },
+            {
+              "id": "page:2",
+              "text": "A documentação atesta que não existe versionamento de arquivos."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9807320237159729,
+              6.850304089311976e-06
+            ],
+            [
+              6.842116999905556e-05,
+              0.023267777636647224
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "development_frame",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que versionamento de arquivos está disponível."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.21961164474487305,
+              0.00016524891543667763
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "development_frame",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que versionamento de arquivos está indisponível."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              8.44144778966438e-06,
+              0.9054158329963684
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "development_frame",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que versionamento de arquivos está disponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.0007162385154515505,
+              2.7324227630742826e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "development_versioning",
+          "frame": "development_frame",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir versionamento de arquivos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que versionamento de arquivos está disponível."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta que versionamento de arquivos está indisponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.21961164474487305,
+              0.00016524891543667763
+            ],
+            [
+              8.44144778966438e-06,
+              0.9054158329963684
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "simple",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui bloqueio de perfis."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9998093247413635,
+              5.405385081758141e-07
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "simple",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto não inclui bloqueio de perfis."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              1.298640199820511e-06,
+              0.9989420771598816
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "simple",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              6.327722076093778e-06,
+              5.6730837968643755e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "simple",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O projeto inclui bloqueio de perfis."
+            },
+            {
+              "id": "page:2",
+              "text": "O projeto não inclui bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9998093247413635,
+              5.405385081758141e-07
+            ],
+            [
+              1.298640199820511e-06,
+              0.9989420771598816
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_noun",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de bloqueio de perfis."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.8786216974258423,
+              0.0010655568912625313
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_noun",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a indisponibilidade de bloqueio de perfis."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              6.093060278544726e-07,
+              0.9998121857643127
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_noun",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              1.0508880450288416e-06,
+              1.9574696125346236e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_noun",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta a disponibilidade de bloqueio de perfis."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta a indisponibilidade de bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.8786216974258423,
+              0.0010655568912625313
+            ],
+            [
+              6.093060278544726e-07,
+              0.9998121857643127
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_exists",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe bloqueio de perfis."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "atendido",
+          "probabilities": [
+            [
+              0.9994620680809021,
+              0.00018119213928002864
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_exists",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que não existe bloqueio de perfis."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              1.3115292176735238e-06,
+              0.9973503351211548
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_exists",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              1.1153460945934057e-05,
+              3.9065591408871114e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "training_exists",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "A documentação atesta que existe bloqueio de perfis."
+            },
+            {
+              "id": "page:2",
+              "text": "A documentação atesta que não existe bloqueio de perfis."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.9994620680809021,
+              0.00018119213928002864
+            ],
+            [
+              1.3115292176735238e-06,
+              0.9973503351211548
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "development_frame",
+          "polarity": "positive",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que bloqueio de perfis está disponível."
+            }
+          ],
+          "expected": "atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}]}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              0.16505196690559387,
+              0.043657850474119186
+            ]
+          ],
+          "correct": false
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "development_frame",
+          "polarity": "negative",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que bloqueio de perfis está indisponível."
+            }
+          ],
+          "expected": "nao_atendido",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"nao_atendido\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              9.883739267024794e-07,
+              0.9960730075836182
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "development_frame",
+          "polarity": "unrelated",
+          "requirement": "O projeto deve incluir consulta de equipamentos.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que bloqueio de perfis está disponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+          "actual": "evidencia_insuficiente",
+          "probabilities": [
+            [
+              1.6115725884446874e-05,
+              2.2239817553781904e-05
+            ]
+          ],
+          "correct": true
+        },
+        {
+          "kind": "diagnostic_blocking",
+          "frame": "development_frame",
+          "polarity": "conflict",
+          "requirement": "O projeto deve incluir bloqueio de perfis.",
+          "units": [
+            {
+              "id": "page:1",
+              "text": "O relatório atesta que bloqueio de perfis está disponível."
+            },
+            {
+              "id": "page:2",
+              "text": "O relatório atesta que bloqueio de perfis está indisponível."
+            }
+          ],
+          "expected": "evidencia_insuficiente",
+          "document": "diagnostic.txt",
+          "grounding_schema": 2,
+          "target": "{\"status\": \"evidencia_insuficiente\", \"evidence\": [{\"unit\": \"page:1\", \"status\": \"atendido\"}, {\"unit\": \"page:2\", \"status\": \"nao_atendido\"}]}",
+          "actual": "nao_atendido",
+          "probabilities": [
+            [
+              0.16505196690559387,
+              0.043657850474119186
+            ],
+            [
+              9.883739267024794e-07,
+              0.9960730075836182
+            ]
+          ],
+          "correct": false
+        }
+      ]
+    }
+  ],
+  "note": "Diagnostic probes using training, invented and known development vocabulary/syntax. Exact status and all evidence pointers required, including both sides of conflict. Not independent evaluation; no weights changed or gold supplied to inference."
+}

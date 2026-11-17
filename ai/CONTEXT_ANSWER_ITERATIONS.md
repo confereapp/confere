@@ -837,3 +837,26 @@ nessa família. BX continua a partir desse checkpoint salvo, com 32000 passos
 solicitados, avaliação a cada 4000 e os mesmos contrastes pareados. O otimizador
 reinicia. O pipeline permanece experimental e não está integrado à API.
 Os números do plano BX são planejados; não representam treino já concluído.
+
+## Primeiro congelamento aprovado em desenvolvimento — 17/11
+
+BX encerrou no passo 24000 com 249/252 e suporte 33/36; todas as demais
+famílias passaram integralmente. Encoder, decoder e classificador foram
+congelados em conversation-independent-ca antes de construir 72 casos novos.
+A primeira avaliação CA reprovou: suporte 34/36, fatos 3/12, conflito 5/6,
+ausentes 6/6 e memória 11/12. Essa coorte passa agora a desenvolvimento;
+qualquer consulta posterior não será apresentada como teste independente.
+O candidato não foi promovido nem integrado à API.
+
+BV concluiu 50000 passos sem superar a seleção do passo 2500 (400/410),
+já reprovada pelo fluxo completo em BW. O aumento de exposição não resolveu
+a revisão documental. A remoção de espaços nas bordas piorou a avaliação
+do snapshot 12500 de 389 para 387; a codificação foi preservada. A interpolação
+de pesos locais também não superou AU. Provas isoladas de construções com
+atesta não equivalem ao resultado no fluxo completo.
+
+O gerador de qualificadores foi ampliado e o corpus BZ está preparado,
+com 24000 novas consultas de treino e os mesmos 252 casos de validação.
+BZ ainda não foi usado para treinar BX. Os 225 testes Python passaram.
+Uma comparação de decoders próprios sobre CA, já desenvolvimento, está
+em andamento para investigar erros de cópia de números e nomes.

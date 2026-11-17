@@ -1,0 +1,39 @@
+{
+  "source_sha256": "aaafe0ff904ac2a3c99ca61173c8ec08132bdaf08a5ebd7b74359aa55ca186ae",
+  "step": 12500,
+  "baseline_quality": [
+    false,
+    0,
+    0.7936507936507936,
+    0.9685631009160421,
+    0,
+    389
+  ],
+  "trimmed_quality": [
+    false,
+    0,
+    0.7807807807807808,
+    0.9651626416332298,
+    0,
+    387
+  ],
+  "changed": [
+    {
+      "id": "development-newphrases-api-test-7111601-middle_evidence-r0-b0",
+      "expected": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+      "raw": "{\"status\": \"nao_atendido\", \"evidence\": [{\"status\": \"nao_atendido\", \"unit\": \"page:1\"}]}",
+      "trimmed": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+      "raw_correct": true,
+      "trimmed_correct": false
+    },
+    {
+      "id": "development-newphrases-api-test-7111603-scope_long-r1-b1",
+      "expected": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+      "raw": "{\"status\": \"atendido\", \"evidence\": [{\"status\": \"atendido\", \"unit\": \"page:1\"}]}",
+      "trimmed": "{\"status\": \"evidencia_insuficiente\", \"evidence\": []}",
+      "raw_correct": true,
+      "trimmed_correct": false
+    }
+  ],
+  "note": "Controlled development-only experiment: same frozen weights, queries, units and thresholds; strip applied only to text encoded for the classifier. Original units and references unchanged. No production code or checkpoint modified."
+}
