@@ -16,6 +16,14 @@ from confere_ai.model import GPT, GPTConfig
 from confere_ai.tokenizer import ByteBPE
 
 
+def validation_predictor(source, model, readout, device):
+    from confere_ai.evidence_classifier import EvidencePredictor
+    effective=dict(source,settings=dict(source['settings'],readout=readout))
+    predictor=EvidencePredictor(effective,device)
+    predictor.model=model
+    return predictor
+
+
 @torch.no_grad()
 def training_errors(model, train, device, thresholds=(.5, .5)):
     response([], [], thresholds)
@@ -104,8 +112,7 @@ def main():
     response([],[],settings['thresholds'])
     predictor=None
     if settings['unit_segmentation']=='sentences_v1':
-        from confere_ai.evidence_classifier import EvidencePredictor
-        predictor=EvidencePredictor(source,args.device);predictor.model=model
+        predictor=validation_predictor(source,model,readout,args.device)
     args.run_dir.mkdir(parents=True)
     info = dict(data=str(args.data), dataset_fingerprint=digest, source=str(args.init_from),
                 source_sha256=hashlib.sha256(args.init_from.read_bytes()).hexdigest(), device=args.device,

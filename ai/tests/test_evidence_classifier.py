@@ -11,6 +11,25 @@ from confere_ai.tokenizer import ByteBPE
 
 
 class EvidenceClassifierTests(unittest.TestCase):
+    def test_validation_uses_selected_readout_when_source_uses_another_protocol(self):
+        from dataclasses import asdict
+        from train_evidence_classifier import validation_predictor
+        config=GPTConfig(vocab_size=260,block_size=512,width=16,layers=1,heads=2)
+        model=EvidenceClassifier(GPT(config))
+        source=dict(config=asdict(config),merges=[],classifier=model.state_dict(),settings=dict(
+            objective='document_classifier',readout='shared_json_decision_prefix_v1',unit_segmentation='sentences_v1'))
+        selected='suffix_query_decision_prefix_v1'
+        predictor=validation_predictor(source,model,selected,'cpu')
+        self.assertIs(predictor.model,model)
+        self.assertEqual(source['settings']['readout'],'shared_json_decision_prefix_v1')
+        for readout in [selected,source['settings']['readout']]:
+            predictor=validation_predictor(source,model,readout,'cpu')
+            with patch.object(model,'forward',return_value=torch.tensor([[9.,-9.]])) as forward:
+                predictor.predict_units('Backup',[dict(id='page:1',text='Há testes.')])
+            ids,lengths=forward.call_args.args
+            expected_ids=encode_unit('Backup','Há testes.',predictor.tokenizer,512,readout=readout)
+            self.assertEqual(ids[0,:lengths[0]].tolist(),expected_ids)
+
     def test_sentence_predictions_preserve_original_alias_and_opposing_evidence(self):
         from dataclasses import asdict
         from confere_ai.evidence_classifier import sentence_parts
