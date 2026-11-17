@@ -3,7 +3,7 @@ import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/"scripts"))
-from prepare_query_contrasts import conversations, documents, long_documents, intent_variations, presence_pairs, comparison_pairs
+from prepare_query_contrasts import conversations, documents, long_documents, intent_variations, presence_pairs, comparison_pairs,scoped_conversations
 from confere_ai.tokenizer import ByteBPE
 from confere_ai.grounding import judge
 from prepare_context_answers import answer
@@ -11,6 +11,17 @@ from prepare_lexical_binding import expected
 
 
 class QueryContrastTests(unittest.TestCase):
+    def test_numeric_noise_does_not_supply_a_missing_deadline_and_membership_can_reverse(self):
+        rows=scoped_conversations(10)
+        for offset in range(0,len(rows),10):
+            group=rows[offset:offset+10];numeric=group[:4]
+            self.assertEqual(numeric[0]['target'],'Não tenho informação suficiente para responder.')
+            self.assertEqual(numeric[1]['target'],numeric[2]['target'])
+            self.assertEqual(numeric[3]['target'],'Há informações conflitantes no texto.')
+            self.assertTrue(all(r['scenario']['noise']==numeric[0]['scenario']['noise'] for r in numeric))
+            for a,b in zip(group[4:7],group[7:]):
+                self.assertEqual(a['scenario']['queried'],b['scenario']['queried'])
+                if a['target']!='Não tenho informação suficiente para responder.':self.assertNotEqual(a['target'],b['target'])
     def test_repetition_and_contradiction_use_the_same_values_and_requested_field(self):
         rows=comparison_pairs(100)
         for a,b,c in zip(rows[::3],rows[1::3],rows[2::3]):

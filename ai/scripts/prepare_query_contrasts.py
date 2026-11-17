@@ -106,6 +106,36 @@ def comparison_pairs(count=8000):
     return rows
 
 
+def scoped_conversations(count=4000):
+    rng=random.Random(171101);rows=[]
+    def add(group,prompt,target,scenario):
+        if 'positive' in scenario:kind='support'
+        elif not scenario['facts'].get('prazo'):kind='missing'
+        elif len(set(scenario['facts']['prazo']))>1:kind='conflict'
+        else:kind='fact'
+        rows.append(dict(id=group,project_id=group,split='train',task='conversation_context_answer_'+kind,
+                         prompt=prompt,target=target,history=[],turn_index=0,response_tokens=256,scenario=scenario,
+                         provenance=dict(kind='synthetic_authored',note='Escopo da consulta com números distratores ou recursos compostos inéditos; somente treino.')))
+    for i in range(count):
+        a,b=rng.sample(range(1,181),2)
+        noise=[rng.choice(['A equipe tem {} integrantes.','O relatório contém {} páginas.','Foram planejadas {} reuniões.','O código tem {} módulos.']).format(rng.randint(1,180)) for _ in range(rng.randint(1,4))]
+        form=rng.choice(STATEMENTS['prazo']+[FIELDS['prazo'][0]]);question=rng.choice(QUESTIONS['prazo']+FIELDS['prazo'][1]);separator=rng.choice([' ','\n'])
+        for j,values in enumerate([[],[a],[a,a],[a,b]]):
+            sentences=noise+[form.format(v) for v in values];rng.shuffle(sentences);facts=dict(prazo=values)
+            add(f'numeric-scope-{i}-{j}',' '.join(sentences)+separator+question,answer(facts,'prazo'),dict(facts=facts,field='prazo',noise=list(noise)))
+        left,right=[v.casefold() for v in names(rng)];x,y=[v.casefold() for v in names(rng)]
+        features=[left+' de '+x,left+' de '+y,right+' de '+x];positive,negative,missing=rng.sample(features,3)
+        for swap in range(2):
+            yes,no=(positive,negative) if not swap else (negative,positive)
+            statements=[f'O projeto inclui {yes}.',f'O projeto não inclui {no}.'];rng.shuffle(statements)
+            text=' '.join(statements)
+            if i%2:text+=f' A equipe discutiu {missing}, sem confirmar a implementação.'
+            for j,feature in enumerate(features):
+                target='Sim.' if feature==yes else 'Não.' if feature==no else 'Não tenho informação suficiente para responder.'
+                add(f'open-scope-{i}-{swap}-{j}',text+separator+f'O projeto inclui {feature}?',target,dict(positive=yes,negative=no,queried=feature,missing=missing))
+    return rows
+
+
 def presence_pairs(count=1600):
     rng = random.Random(161134); rows = []
     excluded = {c["message"] for c in CASES}

@@ -20,7 +20,8 @@ class Classifier(torch.nn.Module):
     def __init__(self,source,head):
         super().__init__();self.encoder=GPT(GPTConfig(**source['config']))
         self.encoder.load_state_dict(source['model']);self.encoder.head=torch.nn.Identity()
-        self.head=torch.nn.Linear(source['config']['width'],6);self.head.load_state_dict(head)
+        self.head=torch.nn.Linear(source['config']['width'],6)
+        if head is not None:self.head.load_state_dict(head)
     def forward(self,ids,lengths):
         return self.head(self.encoder(ids)[torch.arange(len(ids),device=ids.device),lengths-1])
 
@@ -79,13 +80,16 @@ def main():
     p.add_argument('--fusion',action='store_true')
     p.add_argument('--balanced-states',action='store_true')
     p.add_argument('--length-normalized',action='store_true')
+    p.add_argument('--fresh-head',action='store_true')
+    p.add_argument('--label-smoothing',type=float,default=0.)
     a=p.parse_args()
     if a.run_dir.exists():p.error('Saída deve ser nova.')
+    if not 0<=a.label_smoothing<=.5:p.error('Suavização deve estar entre zero e 0,5.')
     torch.set_num_threads(4);torch.manual_seed(42)
     raw=a.encoder.read_bytes();source=torch.load(a.encoder,map_location='cpu',weights_only=True)
     decoder_source=torch.load(a.decoder,map_location='cpu',weights_only=True)
     if source['config']!=decoder_source['config'] or source['merges']!=decoder_source['merges']:p.error('Origens incompatíveis.')
-    head=torch.load(a.head,map_location='cpu',weights_only=True)['head'];classifier=Classifier(source,head).to('mps')
+    head=None if a.fresh_head else torch.load(a.head,map_location='cpu',weights_only=True)['head'];classifier=Classifier(source,head).to('mps')
     decoder=GPT(GPTConfig(**source['config'])).to('mps');decoder.load_state_dict(decoder_source['model']);decoder.eval().requires_grad_(False)
     tokenizer=ByteBPE(source['merges']);rows,digest=load_instructions(a.data)
     train=[r for r in rows if r['split']=='train'];validation=[r for r in rows if r['split']=='validation']
@@ -97,13 +101,14 @@ def main():
         pools[category].setdefault(row['task'],[]).append(i)
         state_pools[semantic_class(row)].append(i)
     if a.balanced_states and set(state_pools)!=set(range(6)):p.error('Todos os seis estados de treino são obrigatórios.')
-    optimizer=torch.optim.AdamW([dict(params=classifier.encoder.parameters(),lr=1e-6),dict(params=classifier.head.parameters(),lr=1e-4)],weight_decay=.01)
+    optimizer=torch.optim.AdamW([dict(params=classifier.encoder.parameters(),lr=1e-6),dict(params=classifier.head.parameters(),lr=1e-3 if a.fresh_head else 1e-4)],weight_decay=.01)
     generator=torch.Generator().manual_seed(42);a.run_dir.mkdir(parents=True)
     info=dict(method='experimental_lm_class_fusion' if a.fusion else 'experimental_learned_state_router',data=str(a.data),dataset_fingerprint=digest,encoder_sha256=hashlib.sha256(raw).hexdigest(),decoder_sha256=hashlib.sha256(a.decoder.read_bytes()).hexdigest(),head_sha256=hashlib.sha256(a.head.read_bytes()).hexdigest(),test_examples_used=0,promotable=False,note='Classificação aprendida e decoder próprio congelado. Fusão usa probabilidades dos dois modelos e candidatos gerados, sem extrair respostas do texto por regras. Avaliação por respostas completas com histórico gerado. Sem integração na API.')
-    (a.run_dir/'run.json').write_text(json.dumps(info,ensure_ascii=False,indent=2))
     info['sampling']='uniform_semantic_class_per_example' if a.balanced_states else 'uniform_legacy_context_family'
     info['training_class_counts']={key:len(value) for key,value in state_pools.items()}
     info['length_normalized']=a.length_normalized
+    info['head_initialization']='random' if a.fresh_head else 'frozen_source_probe'
+    info['label_smoothing']=a.label_smoothing
     info['parameter_kind']='class_log_probability_weight' if a.fusion else 'confidence_threshold'
     info.update(encoder=str(a.encoder),decoder=str(a.decoder),head=str(a.head))
     (a.run_dir/'run.json').write_text(json.dumps(info,ensure_ascii=False,indent=2))
@@ -116,7 +121,7 @@ def main():
             else:indices=conversation_indices(pools,8,generator)
             ids,lengths=unit_batch([encoded[i] for i in indices],'mps',1024)
             labels=torch.tensor([semantic_class(train[i]) for i in indices],device='mps')
-            loss=torch.nn.functional.cross_entropy(classifier(ids,lengths),labels)
+            loss=torch.nn.functional.cross_entropy(classifier(ids,lengths),labels,label_smoothing=a.label_smoothing)
             if not torch.isfinite(loss):raise ValueError('Loss não finita.')
             optimizer.zero_grad(set_to_none=True);loss.backward();torch.nn.utils.clip_grad_norm_(classifier.parameters(),1.,error_if_nonfinite=True);optimizer.step()
         if step%500==0:
