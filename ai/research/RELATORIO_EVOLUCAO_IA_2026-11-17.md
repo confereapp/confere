@@ -1,7 +1,9 @@
 # Relatório de evolução do modelo de IA do Confere
 
-**Data de referência:** 17 de novembro de 2026  
-**Situação:** experimental; meta de qualidade ainda não atingida.  
+**Data de referência:** 17 de novembro de 2026
+
+**Situação:** experimental; meta de qualidade ainda não atingida.
+
 **Escopo:** treinamento local, conversa contextual, análise de requisitos e integração com a API.
 
 ## 1. Resumo executivo
