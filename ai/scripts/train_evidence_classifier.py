@@ -23,6 +23,11 @@ def validation_predictor(source, model, readout, device):
     return predictor
 
 
+def query_sampling_view(items, rows):
+    queries={row['id']:row['requirement'] for row in rows}
+    return [dict(item,source_key=hashlib.sha256(queries[item['row_id']].encode()).hexdigest()) for item in items]
+
+
 @torch.no_grad()
 def training_errors(model, train, device, thresholds=(.5, .5)):
     response([], [], thresholds)
@@ -64,6 +69,8 @@ def main():
     parser.add_argument("--paired-queries", action="store_true", help="Primeira unidade uniforme; segunda consulta da mesma fonte com rótulo diferente quando disponível.")
     parser.add_argument('--bidirectional-encoder',action='store_true')
     parser.add_argument('--train-embeddings',action='store_true')
+    parser.add_argument('--paragraph-units',action='store_true')
+    parser.add_argument('--pair-by-query',action='store_true')
     parser.add_argument("--error-replay", action="store_true", help="Metade de cada lote revisita erros medidos somente no treino inicial.")
     parser.add_argument("--readout", choices=READOUTS)
     parser.add_argument("--encoder-learning-rate", type=float, default=1e-5)
@@ -94,7 +101,8 @@ def main():
     train = examples([r for r in rows if r["split"] == "train"], tokenizer, backbone.config.block_size, readout=readout)
     validation = [r for r in rows if r["split"] == "validation"]
     val = examples(validation, tokenizer, backbone.config.block_size, readout=readout)
-    paired_pools = unit_weighted_query_pools(train) if args.paired_queries else []
+    sampling_items=query_sampling_view(train,rows) if args.pair_by_query else train
+    paired_pools = unit_weighted_query_pools(sampling_items) if args.paired_queries or args.pair_by_query else []
     generator = torch.Generator().manual_seed(42)
     error_thresholds=source['settings'].get('thresholds',[.5,.5])
     hard = training_errors(model,train,args.device,error_thresholds) if args.error_replay else []
@@ -105,6 +113,8 @@ def main():
                     encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5, eval_every=args.eval_every,
                     checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_unit_then_opposite_label" if args.paired_queries else "uniform_units", error_replay=args.error_replay, initial_train_errors=len(hard), loss="categorical_ce" if state_mode==STATE_MODES[1] else "unweighted_bce")
     settings['unit_segmentation']=source['settings'].get('unit_segmentation','whole_unit_v1')
+    if args.paragraph_units:settings['unit_segmentation']='whole_unit_v1'
+    if args.pair_by_query:settings['sampling']='paired_units_uniform_then_same_query_other_label'
     settings['attention_mode']=attention_mode
     settings['thresholds']=source['settings'].get('thresholds',[.5,.5])
     if args.error_replay:settings['training_error_thresholds']=list(error_thresholds)
@@ -131,7 +141,7 @@ def main():
     for step in range(args.steps + 1):
         if step:
             model.train()
-            indices = (paired_indices(train, paired_pools, 8, generator) if args.paired_queries
+            indices = (paired_indices(sampling_items, paired_pools, 8, generator) if paired_pools
                        else torch.randint(len(train), (8,), generator=generator).tolist())
             if hard: indices[:4]=[hard[i] for i in torch.randint(len(hard),(4,),generator=generator).tolist()]
             items = [train[i] for i in indices]

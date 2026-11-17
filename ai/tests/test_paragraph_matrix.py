@@ -55,6 +55,10 @@ class MatrixTests(unittest.TestCase):
             self.assertNotEqual(items[a]['labels'],items[b]['labels'])
         self.assertEqual(items[0]['source_key'],'0')
         self.assertIs(sampling_view(items,lookup,False),items)
+        from train_evidence_classifier import query_sampling_view
+        rows=[dict(id=str(i),requirement=lookup[str(i),'page:1'][0]) for i in range(4)]
+        native=query_sampling_view(items,rows)
+        self.assertEqual([i['source_key'] for i in native],[i['source_key'] for i in view])
 
 
 if __name__=='__main__':unittest.main()
