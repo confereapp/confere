@@ -3,12 +3,29 @@ from pathlib import Path
 import unittest
 import torch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
-from probe_conversation_routing import RoutedDecoder,FusionDecoder,presence_pools,TypeSelectedDecoder
+from probe_conversation_routing import RoutedDecoder,FusionDecoder,presence_pools,TypeSelectedDecoder,evaluation_decoder
 from confere_ai.evidence_classifier import paired_indices
 from confere_ai.tokenizer import ByteBPE
 
 
 class ConversationRoutingTests(unittest.TestCase):
+    def test_evaluation_uses_the_same_selected_decoder_pipeline(self):
+        tokenizer=ByteBPE([]);state=[0]
+        def classifier(ids,lengths):
+            logits=torch.full((1,6),-20.);logits[0,state[0]]=20.;return logits
+        class Decoder:
+            config=1
+            def __init__(self,text):self.text=text
+            def generate(self,prompt,budget,eos):return torch.cat([prompt,torch.tensor([tokenizer.encode(self.text)+[eos]])],-1)
+            def __call__(self,ids):return torch.zeros(len(ids),ids.shape[1],tokenizer.vocab_size)
+        legacy,factual=Decoder('Olá.'),Decoder('42 dias.')
+        model=evaluation_decoder(legacy,classifier,tokenizer,2.,fusion=True,length_normalized=True,factual=factual)
+        prompt=torch.tensor([[1,2]])
+        self.assertEqual(tokenizer.decode(model.generate(prompt,256,tokenizer.EOS)[0,2:].tolist()),'42 dias.')
+        state[0]=5
+        self.assertEqual(tokenizer.decode(model.generate(prompt,256,tokenizer.EOS)[0,2:].tolist()),'Olá.')
+        with self.assertRaises(ValueError):evaluation_decoder(legacy,classifier,tokenizer,2.,fusion=False,length_normalized=True,factual=factual)
+
     def test_learned_type_selects_factual_decoder_and_preserves_other_types(self):
         state=[0]
         def classifier(prompt,lengths):

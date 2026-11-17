@@ -102,10 +102,20 @@ class FusionDecoder(RoutedDecoder):
         return torch.cat([prompt,torch.tensor([selected],device=prompt.device)],-1)
 
 
+def evaluation_decoder(decoder,classifier,tokenizer,threshold,*,fusion,length_normalized,factual=None):
+    if factual is not None and not fusion:raise ValueError('Decoder factual exige fusão.')
+    adapter=FusionDecoder if fusion else RoutedDecoder
+    legacy=adapter(decoder,classifier,tokenizer,threshold);legacy.length_normalized=length_normalized
+    if factual is None:return legacy
+    facts=FusionDecoder(factual,classifier,tokenizer,threshold);facts.length_normalized=length_normalized
+    return TypeSelectedDecoder(facts,legacy)
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for key in ['encoder','head','decoder','data','run-dir']:p.add_argument('--'+key,type=Path,required=True)
     p.add_argument('--fusion',action='store_true')
+    p.add_argument('--factual-decoder',type=Path)
     p.add_argument('--balanced-states',action='store_true')
     p.add_argument('--paired-presence',action='store_true')
     p.add_argument('--length-normalized',action='store_true')
@@ -116,6 +126,7 @@ def main():
     p.add_argument('--eval-every',type=int,default=500)
     p.add_argument('--patience',type=int,default=6)
     a=p.parse_args()
+    if a.factual_decoder and not a.fusion:p.error('Decoder factual exige fusão.')
     if a.run_dir.exists():p.error('Saída deve ser nova.')
     if not 0<=a.label_smoothing<=.5:p.error('Suavização deve estar entre zero e 0,5.')
     if min(a.steps,a.eval_every,a.patience)<=0:p.error('Passos e intervalos devem ser positivos.')
@@ -132,6 +143,11 @@ def main():
         if state.get('objective')!='experimental_conversation_router' or state.get('promotable') is not False:p.error('Estado experimental incompatível.')
         classifier.load_state_dict(state['classifier'])
     decoder=GPT(GPTConfig(**source['config'])).to('mps');decoder.load_state_dict(decoder_source['model']);decoder.eval().requires_grad_(False)
+    factual=None
+    if a.factual_decoder:
+        factual_source=torch.load(a.factual_decoder,map_location='cpu',weights_only=True)
+        if factual_source['config']!=source['config'] or factual_source['merges']!=source['merges']:p.error('Decoder factual incompatível.')
+        factual=GPT(GPTConfig(**source['config'])).to('mps');factual.load_state_dict(factual_source['model']);factual.eval().requires_grad_(False)
     tokenizer=ByteBPE(source['merges']);rows,digest=load_instructions(a.data)
     train=[r for r in rows if r['split']=='train'];validation=[r for r in rows if r['split']=='validation']
     if any(not r['task'].startswith('conversation_') for r in rows):p.error('Somente conversa.')
@@ -157,6 +173,10 @@ def main():
         info['classifier_from']=dict(path=str(a.classifier_from),sha256=hashlib.sha256(a.classifier_from.read_bytes()).hexdigest())
     info['optimizer_reset']=True
     info['evaluation_protocol']='learned_state_fusion_v1' if a.fusion else 'learned_state_router_v1'
+    if factual is not None:
+        info['method']='experimental_type_selected_fusion'
+        info['evaluation_protocol']='learned_type_fusion_v2'
+        info['factual_decoder']=dict(path=str(a.factual_decoder),sha256=hashlib.sha256(a.factual_decoder.read_bytes()).hexdigest())
     info.update(steps=a.steps,eval_every=a.eval_every,patience=a.patience)
     info['label_smoothing']=a.label_smoothing
     info['parameter_kind']='class_log_probability_weight' if a.fusion else 'confidence_threshold'
@@ -178,10 +198,10 @@ def main():
         if step%a.eval_every==0 or step==a.steps:
             classifier.eval();results=[]
             for threshold in ([.5,1.,2.] if a.fusion else [.5,.8,.95]):
-                adapter=FusionDecoder if a.fusion else RoutedDecoder
-                predictor=adapter(decoder,classifier,tokenizer,threshold);predictor.length_normalized=a.length_normalized
+                predictor=evaluation_decoder(decoder,classifier,tokenizer,threshold,fusion=a.fusion,length_normalized=a.length_normalized,factual=factual)
                 with torch.no_grad():result=score(predictor,tokenizer,validation,'mps',1024,256)
                 result['criterion']='Respostas completas do pipeline experimental com histórico gerado: classificação aprendida e decoder local; '+('seleção por probabilidades conjuntas, com candidatos do decoder e verbalizadores de estado.' if a.fusion else 'verbalização de estados e decoder greedy nos demais casos.')+' Igualdade exata após strip, orçamento 256. Não é avaliação de decoder greedy isolado ou de qualidade geral.'
+                if factual is not None:result['criterion']+=' O tipo aprendido seleciona o decoder factual ou legado.'
                 key=quality_key(result);results.append(dict(threshold=threshold,quality=key,result=result))
                 print(json.dumps(dict(step=step,threshold=threshold,correct=result['correct'],total=result['total'],quality=key)),flush=True)
             selected=max(results,key=lambda r:r['quality']);(a.run_dir/f'evaluation-{step}.json').write_text(json.dumps(results,ensure_ascii=False))
