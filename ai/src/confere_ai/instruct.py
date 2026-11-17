@@ -285,6 +285,7 @@ def run(args):
     if semantic_auxiliary:
         settings['semantic_auxiliary_initialization']='random_new_training_only_head'
         settings['semantic_auxiliary_weight']=.1
+        settings['semantic_auxiliary_learning_rate']=.0003
     if anchor_from:
         settings["anchor_checkpoint"] = str(anchor_from)
         settings["anchor_sha256"] = hashlib.sha256(Path(anchor_from).read_bytes()).hexdigest()
@@ -321,8 +322,10 @@ def run(args):
     info["mps_generation_padding_multiple"] = 128 if device == "mps" else None
     (args.run_dir/"run.json").write_text(json.dumps(info, ensure_ascii=False, indent=2))
     semantic_head=torch.nn.Linear(model.config.width,6).to(device) if semantic_auxiliary else None
-    parameters=[p for p in model.parameters() if p.requires_grad]+(list(semantic_head.parameters()) if semantic_head is not None else [])
-    optimizer = torch.optim.AdamW(parameters, lr=args.learning_rate, weight_decay=.01)
+    model_parameters=[p for p in model.parameters() if p.requires_grad]
+    parameters=model_parameters+(list(semantic_head.parameters()) if semantic_head is not None else [])
+    groups=([dict(params=model_parameters),dict(params=semantic_head.parameters(),lr=.0003)] if semantic_head is not None else parameters)
+    optimizer = torch.optim.AdamW(groups, lr=args.learning_rate, weight_decay=.01)
     generator = torch.Generator().manual_seed(42)
     def checkpoint(filename,step):
         path=args.run_dir/filename
