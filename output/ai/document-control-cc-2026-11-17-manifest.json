@@ -1,0 +1,10 @@
+{
+  "source_sha256": "eccabfcde7db0f35d3dae3257817c7c397de91ef5f97f3ccb0c766e8fd7eb490",
+  "dataset_sha256": "8b2077ee03c706d4017d98acb94eefb796d7adbcb21cd0666a2f15a7409225cc",
+  "removed_public_train": 8190,
+  "splits": {
+    "train": 127145,
+    "validation": 410
+  },
+  "note": "Control omitting public NLI; original evaluation and authored training retained. No causal conclusion before results."
+}

@@ -1,0 +1,10 @@
+{
+  "source_sha256": "f2fb6a177854360194a5a915c8d075a1e714e09869c0428b3005b1c9b41893f8",
+  "dataset_sha256": "600755a39095408c6d63cbed05f064df15af1cf7d21928660dc180170023ec4e",
+  "added_train": 5504,
+  "splits": {
+    "validation": 252,
+    "train": 27809
+  },
+  "note": "Legacy decoder component only; final adoption requires evaluation through combined routing. Known CA vocabulary, no independent quality claim."
+}

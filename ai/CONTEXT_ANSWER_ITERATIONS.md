@@ -866,3 +866,25 @@ classificador BX congelado. Ainda falham conflito (5/6) e memória (11/12);
 suporte permanece 34/36 e ausentes 6/6. A combinação precisa ser reavaliada
 nos 252 casos anteriores antes de qualquer adoção. CA já é desenvolvimento
 nessa comparação, e será necessário outro teste novo após o próximo congelamento.
+
+## Roteamento aprendido entre decoders — continuação de 17/11
+
+O decoder BR sozinho reprovou a coorte anterior por memória 32/36. O roteamento
+pelo tipo aprendido (fatos para BR, demais tipos para AQ) passou os critérios
+dos 252 casos anteriores: 248/252, memória 36/36 e fatos 23/24. Não preservou
+cada acerto individual; preservou os pisos por família e o legado. Em CA, já
+desenvolvimento, marcou 68/72: fatos 12/12, suporte 34/36, ausentes 6/6,
+conflito 5/6 e memória 11/12. Não há aprovação conjunta nem promoção.
+
+TypeSelectedDecoder foi implementado no protótipo e reavaliado como CE.
+Um teste verifica todos os seis tipos aprendidos e rejeita componentes
+incompatíveis; os 226 testes Python passaram. O runtime da API não foi alterado.
+
+CD iniciou um ajuste do decoder legado AQ com 5504 novas linhas de cópia
+de nomes e ancoragem na própria origem. As histórias completas da avaliação
+foram excluídas, e a validação anterior permanece intacta. A seleção por loss
+desse componente não autoriza adoção: deve ser medido pelo roteamento completo.
+
+CC iniciou um controle documental a partir de AU, retirando apenas os 8190
+pares públicos do corpus BS e preservando os 410 casos de validação. Não há
+conclusão causal antes do término. Ambos os treinos seguem em andamento.
