@@ -6,7 +6,7 @@ from pathlib import Path
 import torch
 from collections import defaultdict
 from confere_ai.chat import prepare_prompt
-from confere_ai.evidence_classifier import unit_batch
+from confere_ai.evidence_classifier import unit_batch,paired_indices
 from confere_ai.generative_selection import quality_key
 from confere_ai.instruct import load_instructions,score,conversation_indices
 from confere_ai.model import GPT,GPTConfig
@@ -14,6 +14,19 @@ from confere_ai.semantic_auxiliary import semantic_class
 from confere_ai.tokenizer import ByteBPE
 
 STATES={1:'Não tenho informação suficiente para responder.',2:'Há informações conflitantes no texto.',3:'Sim.',4:'Não.'}
+
+
+def presence_pools(rows):
+    grouped=defaultdict(list)
+    for i,row in enumerate(rows):
+        if row['split']!='train':raise ValueError('Consultas pareadas usam somente treino.')
+        group=row.get('scenario',{}).get('paired_presence_group')
+        if group is not None:grouped[group].append(i)
+    if any(len({rows[i]['scenario'].get('text') for i in pool})!=1 or not rows[pool[0]]['scenario'].get('text') for pool in grouped.values()):
+        raise ValueError('Grupo pareado precisa preservar o mesmo texto.')
+    pools=[pool for pool in grouped.values() if len({rows[i]['target'] for i in pool})>1]
+    if not pools:raise ValueError('Não há consultas pareadas com respostas distintas.')
+    return pools
 
 
 class Classifier(torch.nn.Module):
@@ -79,6 +92,7 @@ def main():
     for key in ['encoder','head','decoder','data','run-dir']:p.add_argument('--'+key,type=Path,required=True)
     p.add_argument('--fusion',action='store_true')
     p.add_argument('--balanced-states',action='store_true')
+    p.add_argument('--paired-presence',action='store_true')
     p.add_argument('--length-normalized',action='store_true')
     p.add_argument('--fresh-head',action='store_true')
     p.add_argument('--label-smoothing',type=float,default=0.)
@@ -106,6 +120,7 @@ def main():
     tokenizer=ByteBPE(source['merges']);rows,digest=load_instructions(a.data)
     train=[r for r in rows if r['split']=='train'];validation=[r for r in rows if r['split']=='validation']
     if any(not r['task'].startswith('conversation_') for r in rows):p.error('Somente conversa.')
+    paired=presence_pools(train) if a.paired_presence else []
     encoded=[];pools={'legacy':{},'context':{}};state_pools=defaultdict(list)
     for i,row in enumerate(train):
         ids,dropped=prepare_prompt(row['history'],row['prompt'],tokenizer,1024,256,'conversation');assert not dropped
@@ -117,6 +132,8 @@ def main():
     generator=torch.Generator().manual_seed(42);a.run_dir.mkdir(parents=True)
     info=dict(method='experimental_lm_class_fusion' if a.fusion else 'experimental_learned_state_router',data=str(a.data),dataset_fingerprint=digest,encoder_sha256=hashlib.sha256(raw).hexdigest(),decoder_sha256=hashlib.sha256(a.decoder.read_bytes()).hexdigest(),head_sha256=hashlib.sha256(a.head.read_bytes()).hexdigest(),test_examples_used=0,promotable=False,note='Classificação aprendida e decoder próprio congelado. Fusão usa probabilidades dos dois modelos e candidatos gerados, sem extrair respostas do texto por regras. Avaliação por respostas completas com histórico gerado. Sem integração na API.')
     info['sampling']='uniform_semantic_class_per_example' if a.balanced_states else 'uniform_legacy_context_family'
+    info['paired_presence_groups']=len(paired)
+    info['paired_presence_fraction']=.5 if paired else 0.
     info['training_class_counts']={key:len(value) for key,value in state_pools.items()}
     info['length_normalized']=a.length_normalized
     info['head_initialization']='random' if a.fresh_head else 'frozen_source_probe'
@@ -137,6 +154,7 @@ def main():
             if a.balanced_states:
                 indices=[state_pools[state][torch.randint(len(state_pools[state]),(),generator=generator).item()] for state in torch.randint(6,(8,),generator=generator).tolist()]
             else:indices=conversation_indices(pools,8,generator)
+            if paired:indices[:4]=paired_indices(train,paired,4,generator,label_key='target')
             ids,lengths=unit_batch([encoded[i] for i in indices],'mps',1024)
             labels=torch.tensor([semantic_class(train[i]) for i in indices],device='mps')
             loss=torch.nn.functional.cross_entropy(classifier(ids,lengths),labels,label_smoothing=a.label_smoothing)

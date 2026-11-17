@@ -1,0 +1,535 @@
+{
+  "source_run": "ai/runs/conversation-fusion-bm-2026-11-17",
+  "checkpoint_sha256": "7694775b42118bf6ee9a2d1790b8d0ba193151f3494564e117aeae621b309712",
+  "class_counts": {
+    "conversation_repair": [
+      2,
+      2
+    ],
+    "conversation_definition": [
+      4,
+      4
+    ],
+    "conversation_capability": [
+      3,
+      3
+    ],
+    "conversation_memory": [
+      3,
+      3
+    ],
+    "conversation_repeat": [
+      4,
+      4
+    ],
+    "conversation_clarify": [
+      3,
+      3
+    ],
+    "conversation_wellbeing": [
+      2,
+      2
+    ],
+    "conversation_composed": [
+      2,
+      2
+    ],
+    "conversation_misunderstanding": [
+      1,
+      1
+    ],
+    "conversation_closure": [
+      1,
+      1
+    ],
+    "conversation_flow_greeting": [
+      2,
+      2
+    ],
+    "conversation_flow_acknowledgement": [
+      2,
+      2
+    ],
+    "conversation_flow_identity": [
+      3,
+      3
+    ],
+    "conversation_flow_negation": [
+      3,
+      3
+    ],
+    "conversation_flow_switch": [
+      3,
+      3
+    ],
+    "conversation_flow_closure": [
+      2,
+      2
+    ],
+    "conversation_flow_state": [
+      4,
+      4
+    ],
+    "conversation_flow_topic": [
+      4,
+      4
+    ],
+    "conversation_flow_repair": [
+      1,
+      1
+    ],
+    "conversation_insufficient": [
+      1,
+      1
+    ],
+    "conversation_identity": [
+      1,
+      1
+    ],
+    "conversation_slang_hello": [
+      3,
+      3
+    ],
+    "conversation_slang_identity": [
+      3,
+      3
+    ],
+    "conversation_slang_function": [
+      3,
+      3
+    ],
+    "conversation_slang_scope": [
+      3,
+      3
+    ],
+    "conversation_slang_praise": [
+      3,
+      3
+    ],
+    "conversation_slang_negation": [
+      3,
+      3
+    ],
+    "conversation_social_context": [
+      1,
+      1
+    ],
+    "conversation_social": [
+      1,
+      1
+    ],
+    "conversation_guidance": [
+      4,
+      4
+    ],
+    "conversation_context_answer_fact": [
+      24,
+      24
+    ],
+    "conversation_context_answer_missing": [
+      12,
+      12
+    ],
+    "conversation_context_answer_conflict": [
+      12,
+      12
+    ],
+    "conversation_context_answer_support": [
+      12,
+      12
+    ],
+    "conversation_context_answer_memory": [
+      36,
+      36
+    ],
+    "conversation_context_answer_natural": [
+      7,
+      9
+    ],
+    "conversation_context_answer_independent_support": [
+      24,
+      36
+    ],
+    "conversation_context_answer_independent_fact": [
+      12,
+      12
+    ],
+    "conversation_context_answer_independent_conflict": [
+      6,
+      6
+    ],
+    "conversation_context_answer_independent_missing": [
+      6,
+      6
+    ],
+    "conversation_context_answer_independent_memory": [
+      12,
+      12
+    ]
+  },
+  "classification_errors": [
+    {
+      "id": "development-natural-5",
+      "prompt": "Qual nome devo usar agora?",
+      "expected_class": 0,
+      "predicted_class": 5,
+      "probabilities": [
+        0.026468494907021523,
+        0.03221612051129341,
+        0.017440300434827805,
+        0.017089063301682472,
+        0.016455387696623802,
+        0.8903307318687439
+      ],
+      "pipeline_response": "Seu nome é Rui."
+    },
+    {
+      "id": "development-natural-6",
+      "prompt": "Como você se chama?",
+      "expected_class": 0,
+      "predicted_class": 5,
+      "probabilities": [
+        0.01897302456200123,
+        0.016924967989325523,
+        0.014440394006669521,
+        0.017931735143065453,
+        0.015101850032806396,
+        0.9166280627250671
+      ],
+      "pipeline_response": "Sou o Confere."
+    },
+    {
+      "id": "development-independent-aq-5",
+      "prompt": "O projeto não inclui filtros de busca, mas inclui pagamentos por cartão. O projeto inclui histórico de acessos?",
+      "expected_class": 1,
+      "predicted_class": 4,
+      "probabilities": [
+        0.019136279821395874,
+        0.22671520709991455,
+        0.017028115689754486,
+        0.010065975598990917,
+        0.70548015832901,
+        0.021574201062321663
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-6",
+      "prompt": "O projeto contém relatórios de compras, mas não contém pagamentos por cartão. O projeto inclui relatórios de compras?",
+      "expected_class": 3,
+      "predicted_class": 4,
+      "probabilities": [
+        0.2044200748205185,
+        0.12504778802394867,
+        0.01152106374502182,
+        0.2279142141342163,
+        0.40679317712783813,
+        0.02430369332432747
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-7",
+      "prompt": "O projeto contém relatórios de compras, mas não contém pagamentos por cartão. O projeto inclui pagamentos por cartão?",
+      "expected_class": 4,
+      "predicted_class": 1,
+      "probabilities": [
+        0.013988534919917583,
+        0.9272170662879944,
+        0.012122761458158493,
+        0.0073602995835244656,
+        0.02960767038166523,
+        0.009703685529530048
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-11",
+      "prompt": "O projeto inclui relatórios de compras. O projeto não inclui filtros de busca. O projeto inclui histórico de acessos?",
+      "expected_class": 1,
+      "predicted_class": 4,
+      "probabilities": [
+        0.017270445823669434,
+        0.05719444528222084,
+        0.007370749954134226,
+        0.00811112392693758,
+        0.8936419486999512,
+        0.016411220654845238
+      ],
+      "pipeline_response": "Não."
+    },
+    {
+      "id": "development-independent-aq-12",
+      "prompt": "O projeto não inclui filtros de busca, mas inclui avaliações de produtos. O projeto inclui avaliações de produtos?",
+      "expected_class": 3,
+      "predicted_class": 4,
+      "probabilities": [
+        0.03351220488548279,
+        0.16723887622356415,
+        0.025596221908926964,
+        0.052916791290044785,
+        0.6852700710296631,
+        0.03546586260199547
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-14",
+      "prompt": "O projeto não inclui filtros de busca, mas inclui avaliações de produtos. O projeto inclui histórico de acessos?",
+      "expected_class": 1,
+      "predicted_class": 4,
+      "probabilities": [
+        0.01852334849536419,
+        0.10280660539865494,
+        0.011840682476758957,
+        0.012015114538371563,
+        0.8321520090103149,
+        0.022662313655018806
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-15",
+      "prompt": "O projeto contém avaliações de produtos, mas não contém filtros de busca. O projeto inclui avaliações de produtos?",
+      "expected_class": 3,
+      "predicted_class": 4,
+      "probabilities": [
+        0.029474308714270592,
+        0.15655750036239624,
+        0.05847837030887604,
+        0.10103112459182739,
+        0.5992726683616638,
+        0.055186059325933456
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-22",
+      "prompt": "O projeto não inclui avaliações de produtos, mas inclui reservas de salas. O projeto inclui avaliações de produtos?",
+      "expected_class": 4,
+      "predicted_class": 1,
+      "probabilities": [
+        0.019509674981236458,
+        0.7751060128211975,
+        0.029469169676303864,
+        0.025765705853700638,
+        0.1200030967593193,
+        0.030146373435854912
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-23",
+      "prompt": "O projeto não inclui avaliações de produtos, mas inclui reservas de salas. O projeto inclui filtros de busca?",
+      "expected_class": 1,
+      "predicted_class": 4,
+      "probabilities": [
+        0.054877620190382004,
+        0.05567214637994766,
+        0.018579598516225815,
+        0.011663000099360943,
+        0.8482059836387634,
+        0.01100163720548153
+      ],
+      "pipeline_response": "Não."
+    },
+    {
+      "id": "development-independent-aq-25",
+      "prompt": "O projeto contém filtros de busca, mas não contém avaliações de produtos. O projeto inclui avaliações de produtos?",
+      "expected_class": 4,
+      "predicted_class": 1,
+      "probabilities": [
+        0.030764298513531685,
+        0.8290752172470093,
+        0.02383408136665821,
+        0.01565627008676529,
+        0.06959597766399384,
+        0.031074175611138344
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-32",
+      "prompt": "O projeto não inclui pagamentos por cartão, mas inclui edição de comentários. O projeto inclui relatórios de compras?",
+      "expected_class": 1,
+      "predicted_class": 3,
+      "probabilities": [
+        0.031214015558362007,
+        0.11416381597518921,
+        0.024899525567889214,
+        0.5183749198913574,
+        0.29187870025634766,
+        0.019469060003757477
+      ],
+      "pipeline_response": "Sim."
+    },
+    {
+      "id": "development-independent-aq-35",
+      "prompt": "O projeto contém filtros de busca, mas não contém edição de comentários. O projeto inclui histórico de acessos?",
+      "expected_class": 1,
+      "predicted_class": 4,
+      "probabilities": [
+        0.028993403539061546,
+        0.3518608808517456,
+        0.01848451979458332,
+        0.014044323936104774,
+        0.5565658211708069,
+        0.03005104325711727
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    }
+  ],
+  "pipeline_errors": [
+    {
+      "id": "development-independent-aq-1",
+      "prompt": "O projeto inclui histórico de acessos. O projeto não inclui alertas por mensagem. O projeto inclui alertas por mensagem?",
+      "expected_class": 4,
+      "predicted_class": 4,
+      "probabilities": [
+        0.02281743288040161,
+        0.21576544642448425,
+        0.033623624593019485,
+        0.04033712297677994,
+        0.6506174802780151,
+        0.03683880716562271
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-6",
+      "prompt": "O projeto contém relatórios de compras, mas não contém pagamentos por cartão. O projeto inclui relatórios de compras?",
+      "expected_class": 3,
+      "predicted_class": 4,
+      "probabilities": [
+        0.2044200748205185,
+        0.12504778802394867,
+        0.01152106374502182,
+        0.2279142141342163,
+        0.40679317712783813,
+        0.02430369332432747
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-7",
+      "prompt": "O projeto contém relatórios de compras, mas não contém pagamentos por cartão. O projeto inclui pagamentos por cartão?",
+      "expected_class": 4,
+      "predicted_class": 1,
+      "probabilities": [
+        0.013988534919917583,
+        0.9272170662879944,
+        0.012122761458158493,
+        0.0073602995835244656,
+        0.02960767038166523,
+        0.009703685529530048
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-11",
+      "prompt": "O projeto inclui relatórios de compras. O projeto não inclui filtros de busca. O projeto inclui histórico de acessos?",
+      "expected_class": 1,
+      "predicted_class": 4,
+      "probabilities": [
+        0.017270445823669434,
+        0.05719444528222084,
+        0.007370749954134226,
+        0.00811112392693758,
+        0.8936419486999512,
+        0.016411220654845238
+      ],
+      "pipeline_response": "Não."
+    },
+    {
+      "id": "development-independent-aq-12",
+      "prompt": "O projeto não inclui filtros de busca, mas inclui avaliações de produtos. O projeto inclui avaliações de produtos?",
+      "expected_class": 3,
+      "predicted_class": 4,
+      "probabilities": [
+        0.03351220488548279,
+        0.16723887622356415,
+        0.025596221908926964,
+        0.052916791290044785,
+        0.6852700710296631,
+        0.03546586260199547
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-15",
+      "prompt": "O projeto contém avaliações de produtos, mas não contém filtros de busca. O projeto inclui avaliações de produtos?",
+      "expected_class": 3,
+      "predicted_class": 4,
+      "probabilities": [
+        0.029474308714270592,
+        0.15655750036239624,
+        0.05847837030887604,
+        0.10103112459182739,
+        0.5992726683616638,
+        0.055186059325933456
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-22",
+      "prompt": "O projeto não inclui avaliações de produtos, mas inclui reservas de salas. O projeto inclui avaliações de produtos?",
+      "expected_class": 4,
+      "predicted_class": 1,
+      "probabilities": [
+        0.019509674981236458,
+        0.7751060128211975,
+        0.029469169676303864,
+        0.025765705853700638,
+        0.1200030967593193,
+        0.030146373435854912
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-23",
+      "prompt": "O projeto não inclui avaliações de produtos, mas inclui reservas de salas. O projeto inclui filtros de busca?",
+      "expected_class": 1,
+      "predicted_class": 4,
+      "probabilities": [
+        0.054877620190382004,
+        0.05567214637994766,
+        0.018579598516225815,
+        0.011663000099360943,
+        0.8482059836387634,
+        0.01100163720548153
+      ],
+      "pipeline_response": "Não."
+    },
+    {
+      "id": "development-independent-aq-25",
+      "prompt": "O projeto contém filtros de busca, mas não contém avaliações de produtos. O projeto inclui avaliações de produtos?",
+      "expected_class": 4,
+      "predicted_class": 1,
+      "probabilities": [
+        0.030764298513531685,
+        0.8290752172470093,
+        0.02383408136665821,
+        0.01565627008676529,
+        0.06959597766399384,
+        0.031074175611138344
+      ],
+      "pipeline_response": "Não tenho informação suficiente para responder."
+    },
+    {
+      "id": "development-independent-aq-32",
+      "prompt": "O projeto não inclui pagamentos por cartão, mas inclui edição de comentários. O projeto inclui relatórios de compras?",
+      "expected_class": 1,
+      "predicted_class": 3,
+      "probabilities": [
+        0.031214015558362007,
+        0.11416381597518921,
+        0.024899525567889214,
+        0.5183749198913574,
+        0.29187870025634766,
+        0.019469060003757477
+      ],
+      "pipeline_response": "Sim."
+    }
+  ],
+  "note": "Classification audit using the selected pipeline generated histories. Class accuracy is not response quality; development only, no weights changed."
+}

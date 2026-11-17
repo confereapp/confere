@@ -3,11 +3,25 @@ from pathlib import Path
 import unittest
 import torch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
-from probe_conversation_routing import RoutedDecoder,FusionDecoder
+from probe_conversation_routing import RoutedDecoder,FusionDecoder,presence_pools
+from confere_ai.evidence_classifier import paired_indices
 from confere_ai.tokenizer import ByteBPE
 
 
 class ConversationRoutingTests(unittest.TestCase):
+    def test_paired_sampling_changes_the_answer_for_the_same_training_body(self):
+        rows=[dict(split='train',target=target,scenario=dict(paired_presence_group=group,text='body-'+group))
+              for group in ['a','b'] for target in ['Sim.','Não.','Não tenho informação suficiente para responder.']]
+        pools=presence_pools(rows)
+        indices=paired_indices(rows,pools,8,torch.Generator().manual_seed(3),label_key='target')
+        for a,b in zip(indices[::2],indices[1::2]):
+            self.assertEqual(rows[a]['scenario'],rows[b]['scenario'])
+            self.assertNotEqual(rows[a]['target'],rows[b]['target'])
+        rows[0]['split']='validation'
+        with self.assertRaises(ValueError):presence_pools(rows)
+        rows[0]['split']='train';rows[0]['scenario']['text']='outro corpo'
+        with self.assertRaises(ValueError):presence_pools(rows)
+
     def test_fusion_scores_candidates_with_language_and_learned_state_probabilities(self):
         tokenizer=ByteBPE([])
         class Decoder:
