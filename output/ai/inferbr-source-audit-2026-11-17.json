@@ -1,0 +1,17 @@
+{
+  "dataset": "hapaxlegomenon/InferBR",
+  "revision": "304b2ca358c4f315a908b69d3d0c607ee101176d",
+  "license_declared_by_card": "MIT",
+  "card_sha256": "70e793d3720c876d49f651878507bce1f635c8a4aab8f46caaab45b48d995923",
+  "source": "https://huggingface.co/datasets/hapaxlegomenon/InferBR/resolve/304b2ca358c4f315a908b69d3d0c607ee101176d/README.md",
+  "paper": "https://aclanthology.org/2024.lrec-main.793/",
+  "training_files_downloaded": true,
+  "note": "Semiautomatic and automatic generation, manually revised according to the publication. Not human-authored dialogue. No integration or training yet.",
+  "used_in_training": false,
+  "train_sha256": "49af0412e6e199c8b340dd2c596e7480afb89c60dedd7d982fbb278c23338ce6",
+  "train_rows": 8190,
+  "license_upstream_revision": "b6c5e0b27e52477bbc5433d130b0a0e825cf74dc",
+  "license_sha256": "b1cd6172bf8061abcbd7917e9246ddeded210339482e802e3413b74cc7e0de38",
+  "test_downloaded": false,
+  "validation_downloaded": false
+}

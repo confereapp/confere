@@ -1,0 +1,9 @@
+{
+  "source_sha256": "7402a191c9f9327282ec579874fad416ad9f1568634f2f3fa953d6eaa1053aee",
+  "dataset_sha256": "f2fb6a177854360194a5a915c8d075a1e714e09869c0428b3005b1c9b41893f8",
+  "replaced_train": 40000,
+  "added_train": 80000,
+  "train": 232843,
+  "validation": 252,
+  "note": "Combina atributos numericos e nao numericos. Mesma distribuicao para prazos e numeros distratores, com faixas curtas e amplas. Recursos abertos e vocabulario conhecido, verbos e consultas variados. Avaliacao conhecida continua desenvolvimento; nenhum pedido completo copiado."
+}

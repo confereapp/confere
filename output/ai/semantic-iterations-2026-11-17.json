@@ -1,0 +1,1011 @@
+{
+  "results": [
+    {
+      "run": "conversation-fusion-bg-2026-11-16",
+      "finished": true,
+      "promoted": false,
+      "correct": 228,
+      "total": 252,
+      "selected_step": 2500,
+      "quality": [
+        false,
+        0,
+        0.0,
+        0.9655224330021077,
+        0,
+        228
+      ]
+    },
+    {
+      "run": "conversation-fusion-bh-2026-11-16",
+      "finished": true,
+      "promoted": false,
+      "correct": 229,
+      "total": 252,
+      "selected_step": 1500,
+      "quality": [
+        false,
+        0,
+        0.0,
+        0.9662752183077387,
+        0,
+        229
+      ]
+    },
+    {
+      "run": "conversation-fusion-bi-2026-11-16",
+      "finished": true,
+      "promoted": false,
+      "correct": 226,
+      "total": 252,
+      "selected_step": 1500,
+      "quality": [
+        false,
+        0,
+        0.0,
+        0.9655224330021077,
+        0,
+        226
+      ]
+    },
+    {
+      "run": "conversation-fusion-bj-2026-11-17",
+      "finished": true,
+      "promoted": false,
+      "correct": 233,
+      "total": 252,
+      "selected_step": 2500,
+      "quality": [
+        false,
+        0,
+        0.5555555555555556,
+        0.9795242396868413,
+        0,
+        233
+      ]
+    },
+    {
+      "run": "conversation-fusion-bm-2026-11-17",
+      "finished": true,
+      "promoted": false,
+      "correct": 242,
+      "total": 252,
+      "selected_step": 14000,
+      "quality": [
+        false,
+        0,
+        0.8024691358024691,
+        0.9951821740439626,
+        0,
+        242
+      ]
+    },
+    {
+      "run": "conversation-routing-bf-2026-11-16",
+      "finished": true,
+      "promoted": false,
+      "correct": 223,
+      "total": 252,
+      "selected_step": 0,
+      "quality": [
+        false,
+        0,
+        0.5864197530864198,
+        0.9760614272809394,
+        0,
+        223
+      ]
+    },
+    {
+      "run": "evidence-classifier-bb-2026-11-16",
+      "finished": true,
+      "promoted": false,
+      "correct": 403,
+      "total": 410,
+      "selected_step": 0,
+      "quality": [
+        false,
+        0,
+        0.9444444444444444,
+        0.9967320261437908,
+        0,
+        403
+      ]
+    },
+    {
+      "run": "evidence-classifier-bk-2026-11-17",
+      "finished": true,
+      "promoted": false,
+      "correct": 399,
+      "total": 410,
+      "selected_step": 4000,
+      "quality": [
+        false,
+        0,
+        0.888888888888889,
+        0.9906629318394025,
+        0,
+        399
+      ]
+    },
+    {
+      "run": "task-conversation-ba-2026-11-16",
+      "finished": true,
+      "promoted": false,
+      "correct": 218,
+      "total": 252,
+      "selected_step": 1000,
+      "quality": null,
+      "passed": false,
+      "families": {
+        "conversation_repair": [
+          2,
+          2
+        ],
+        "conversation_definition": [
+          4,
+          4
+        ],
+        "conversation_capability": [
+          3,
+          3
+        ],
+        "conversation_memory": [
+          3,
+          3
+        ],
+        "conversation_repeat": [
+          4,
+          4
+        ],
+        "conversation_clarify": [
+          3,
+          3
+        ],
+        "conversation_wellbeing": [
+          2,
+          2
+        ],
+        "conversation_composed": [
+          2,
+          2
+        ],
+        "conversation_misunderstanding": [
+          1,
+          1
+        ],
+        "conversation_closure": [
+          1,
+          1
+        ],
+        "conversation_flow_greeting": [
+          2,
+          2
+        ],
+        "conversation_flow_acknowledgement": [
+          2,
+          2
+        ],
+        "conversation_flow_identity": [
+          3,
+          3
+        ],
+        "conversation_flow_negation": [
+          3,
+          3
+        ],
+        "conversation_flow_switch": [
+          3,
+          3
+        ],
+        "conversation_flow_closure": [
+          2,
+          2
+        ],
+        "conversation_flow_state": [
+          4,
+          4
+        ],
+        "conversation_flow_topic": [
+          4,
+          4
+        ],
+        "conversation_flow_repair": [
+          1,
+          1
+        ],
+        "conversation_insufficient": [
+          1,
+          1
+        ],
+        "conversation_identity": [
+          1,
+          1
+        ],
+        "conversation_slang_hello": [
+          3,
+          3
+        ],
+        "conversation_slang_identity": [
+          3,
+          3
+        ],
+        "conversation_slang_function": [
+          3,
+          3
+        ],
+        "conversation_slang_scope": [
+          3,
+          3
+        ],
+        "conversation_slang_praise": [
+          3,
+          3
+        ],
+        "conversation_slang_negation": [
+          3,
+          3
+        ],
+        "conversation_social_context": [
+          1,
+          1
+        ],
+        "conversation_social": [
+          1,
+          1
+        ],
+        "conversation_guidance": [
+          4,
+          4
+        ],
+        "conversation_context_answer_fact": [
+          24,
+          24
+        ],
+        "conversation_context_answer_missing": [
+          12,
+          12
+        ],
+        "conversation_context_answer_conflict": [
+          12,
+          12
+        ],
+        "conversation_context_answer_support": [
+          12,
+          12
+        ],
+        "conversation_context_answer_memory": [
+          27,
+          36
+        ],
+        "conversation_context_answer_natural": [
+          9,
+          9
+        ],
+        "conversation_context_answer_independent_support": [
+          16,
+          36
+        ],
+        "conversation_context_answer_independent_fact": [
+          12,
+          12
+        ],
+        "conversation_context_answer_independent_conflict": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_missing": [
+          1,
+          6
+        ],
+        "conversation_context_answer_independent_memory": [
+          12,
+          12
+        ]
+      }
+    },
+    {
+      "run": "task-conversation-bd-2026-11-16",
+      "finished": true,
+      "promoted": false,
+      "correct": 212,
+      "total": 252,
+      "selected_step": 1500,
+      "quality": null,
+      "passed": false,
+      "families": {
+        "conversation_repair": [
+          2,
+          2
+        ],
+        "conversation_definition": [
+          4,
+          4
+        ],
+        "conversation_capability": [
+          3,
+          3
+        ],
+        "conversation_memory": [
+          3,
+          3
+        ],
+        "conversation_repeat": [
+          4,
+          4
+        ],
+        "conversation_clarify": [
+          3,
+          3
+        ],
+        "conversation_wellbeing": [
+          2,
+          2
+        ],
+        "conversation_composed": [
+          2,
+          2
+        ],
+        "conversation_misunderstanding": [
+          1,
+          1
+        ],
+        "conversation_closure": [
+          1,
+          1
+        ],
+        "conversation_flow_greeting": [
+          2,
+          2
+        ],
+        "conversation_flow_acknowledgement": [
+          2,
+          2
+        ],
+        "conversation_flow_identity": [
+          3,
+          3
+        ],
+        "conversation_flow_negation": [
+          3,
+          3
+        ],
+        "conversation_flow_switch": [
+          3,
+          3
+        ],
+        "conversation_flow_closure": [
+          2,
+          2
+        ],
+        "conversation_flow_state": [
+          4,
+          4
+        ],
+        "conversation_flow_topic": [
+          4,
+          4
+        ],
+        "conversation_flow_repair": [
+          1,
+          1
+        ],
+        "conversation_insufficient": [
+          1,
+          1
+        ],
+        "conversation_identity": [
+          1,
+          1
+        ],
+        "conversation_slang_hello": [
+          3,
+          3
+        ],
+        "conversation_slang_identity": [
+          3,
+          3
+        ],
+        "conversation_slang_function": [
+          3,
+          3
+        ],
+        "conversation_slang_scope": [
+          3,
+          3
+        ],
+        "conversation_slang_praise": [
+          3,
+          3
+        ],
+        "conversation_slang_negation": [
+          3,
+          3
+        ],
+        "conversation_social_context": [
+          1,
+          1
+        ],
+        "conversation_social": [
+          1,
+          1
+        ],
+        "conversation_guidance": [
+          4,
+          4
+        ],
+        "conversation_context_answer_fact": [
+          17,
+          24
+        ],
+        "conversation_context_answer_missing": [
+          12,
+          12
+        ],
+        "conversation_context_answer_conflict": [
+          12,
+          12
+        ],
+        "conversation_context_answer_support": [
+          12,
+          12
+        ],
+        "conversation_context_answer_memory": [
+          28,
+          36
+        ],
+        "conversation_context_answer_natural": [
+          6,
+          9
+        ],
+        "conversation_context_answer_independent_support": [
+          19,
+          36
+        ],
+        "conversation_context_answer_independent_fact": [
+          12,
+          12
+        ],
+        "conversation_context_answer_independent_conflict": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_missing": [
+          1,
+          6
+        ],
+        "conversation_context_answer_independent_memory": [
+          12,
+          12
+        ]
+      }
+    },
+    {
+      "run": "task-conversation-be-2026-11-16",
+      "finished": true,
+      "promoted": false,
+      "correct": 219,
+      "total": 252,
+      "selected_step": 4000,
+      "quality": null,
+      "passed": false,
+      "families": {
+        "conversation_repair": [
+          2,
+          2
+        ],
+        "conversation_definition": [
+          4,
+          4
+        ],
+        "conversation_capability": [
+          3,
+          3
+        ],
+        "conversation_memory": [
+          3,
+          3
+        ],
+        "conversation_repeat": [
+          4,
+          4
+        ],
+        "conversation_clarify": [
+          3,
+          3
+        ],
+        "conversation_wellbeing": [
+          2,
+          2
+        ],
+        "conversation_composed": [
+          2,
+          2
+        ],
+        "conversation_misunderstanding": [
+          1,
+          1
+        ],
+        "conversation_closure": [
+          1,
+          1
+        ],
+        "conversation_flow_greeting": [
+          2,
+          2
+        ],
+        "conversation_flow_acknowledgement": [
+          2,
+          2
+        ],
+        "conversation_flow_identity": [
+          3,
+          3
+        ],
+        "conversation_flow_negation": [
+          3,
+          3
+        ],
+        "conversation_flow_switch": [
+          3,
+          3
+        ],
+        "conversation_flow_closure": [
+          2,
+          2
+        ],
+        "conversation_flow_state": [
+          4,
+          4
+        ],
+        "conversation_flow_topic": [
+          4,
+          4
+        ],
+        "conversation_flow_repair": [
+          1,
+          1
+        ],
+        "conversation_insufficient": [
+          1,
+          1
+        ],
+        "conversation_identity": [
+          1,
+          1
+        ],
+        "conversation_slang_hello": [
+          3,
+          3
+        ],
+        "conversation_slang_identity": [
+          3,
+          3
+        ],
+        "conversation_slang_function": [
+          3,
+          3
+        ],
+        "conversation_slang_scope": [
+          3,
+          3
+        ],
+        "conversation_slang_praise": [
+          3,
+          3
+        ],
+        "conversation_slang_negation": [
+          3,
+          3
+        ],
+        "conversation_social_context": [
+          1,
+          1
+        ],
+        "conversation_social": [
+          1,
+          1
+        ],
+        "conversation_guidance": [
+          2,
+          4
+        ],
+        "conversation_context_answer_fact": [
+          21,
+          24
+        ],
+        "conversation_context_answer_missing": [
+          12,
+          12
+        ],
+        "conversation_context_answer_conflict": [
+          12,
+          12
+        ],
+        "conversation_context_answer_support": [
+          12,
+          12
+        ],
+        "conversation_context_answer_memory": [
+          28,
+          36
+        ],
+        "conversation_context_answer_natural": [
+          8,
+          9
+        ],
+        "conversation_context_answer_independent_support": [
+          22,
+          36
+        ],
+        "conversation_context_answer_independent_fact": [
+          12,
+          12
+        ],
+        "conversation_context_answer_independent_conflict": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_missing": [
+          1,
+          6
+        ],
+        "conversation_context_answer_independent_memory": [
+          12,
+          12
+        ]
+      }
+    },
+    {
+      "run": "task-conversation-bl-2026-11-17",
+      "finished": true,
+      "promoted": false,
+      "correct": 233,
+      "total": 252,
+      "selected_step": 6000,
+      "passed": false,
+      "families": {
+        "conversation_repair": [
+          2,
+          2
+        ],
+        "conversation_definition": [
+          4,
+          4
+        ],
+        "conversation_capability": [
+          3,
+          3
+        ],
+        "conversation_memory": [
+          3,
+          3
+        ],
+        "conversation_repeat": [
+          4,
+          4
+        ],
+        "conversation_clarify": [
+          3,
+          3
+        ],
+        "conversation_wellbeing": [
+          2,
+          2
+        ],
+        "conversation_composed": [
+          2,
+          2
+        ],
+        "conversation_misunderstanding": [
+          1,
+          1
+        ],
+        "conversation_closure": [
+          1,
+          1
+        ],
+        "conversation_flow_greeting": [
+          2,
+          2
+        ],
+        "conversation_flow_acknowledgement": [
+          2,
+          2
+        ],
+        "conversation_flow_identity": [
+          3,
+          3
+        ],
+        "conversation_flow_negation": [
+          3,
+          3
+        ],
+        "conversation_flow_switch": [
+          3,
+          3
+        ],
+        "conversation_flow_closure": [
+          2,
+          2
+        ],
+        "conversation_flow_state": [
+          4,
+          4
+        ],
+        "conversation_flow_topic": [
+          4,
+          4
+        ],
+        "conversation_flow_repair": [
+          1,
+          1
+        ],
+        "conversation_insufficient": [
+          1,
+          1
+        ],
+        "conversation_identity": [
+          1,
+          1
+        ],
+        "conversation_slang_hello": [
+          3,
+          3
+        ],
+        "conversation_slang_identity": [
+          3,
+          3
+        ],
+        "conversation_slang_function": [
+          3,
+          3
+        ],
+        "conversation_slang_scope": [
+          3,
+          3
+        ],
+        "conversation_slang_praise": [
+          3,
+          3
+        ],
+        "conversation_slang_negation": [
+          3,
+          3
+        ],
+        "conversation_social_context": [
+          1,
+          1
+        ],
+        "conversation_social": [
+          1,
+          1
+        ],
+        "conversation_guidance": [
+          4,
+          4
+        ],
+        "conversation_context_answer_fact": [
+          24,
+          24
+        ],
+        "conversation_context_answer_missing": [
+          12,
+          12
+        ],
+        "conversation_context_answer_conflict": [
+          12,
+          12
+        ],
+        "conversation_context_answer_support": [
+          12,
+          12
+        ],
+        "conversation_context_answer_memory": [
+          34,
+          36
+        ],
+        "conversation_context_answer_natural": [
+          9,
+          9
+        ],
+        "conversation_context_answer_independent_support": [
+          20,
+          36
+        ],
+        "conversation_context_answer_independent_fact": [
+          12,
+          12
+        ],
+        "conversation_context_answer_independent_conflict": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_missing": [
+          5,
+          6
+        ],
+        "conversation_context_answer_independent_memory": [
+          12,
+          12
+        ]
+      }
+    },
+    {
+      "run": "task-conversation-bo-2026-11-17",
+      "finished": true,
+      "promoted": false,
+      "correct": 235,
+      "total": 252,
+      "selected_step": 500,
+      "passed": false,
+      "families": {
+        "conversation_repair": [
+          2,
+          2
+        ],
+        "conversation_definition": [
+          4,
+          4
+        ],
+        "conversation_capability": [
+          3,
+          3
+        ],
+        "conversation_memory": [
+          3,
+          3
+        ],
+        "conversation_repeat": [
+          4,
+          4
+        ],
+        "conversation_clarify": [
+          3,
+          3
+        ],
+        "conversation_wellbeing": [
+          2,
+          2
+        ],
+        "conversation_composed": [
+          2,
+          2
+        ],
+        "conversation_misunderstanding": [
+          1,
+          1
+        ],
+        "conversation_closure": [
+          1,
+          1
+        ],
+        "conversation_flow_greeting": [
+          2,
+          2
+        ],
+        "conversation_flow_acknowledgement": [
+          2,
+          2
+        ],
+        "conversation_flow_identity": [
+          3,
+          3
+        ],
+        "conversation_flow_negation": [
+          3,
+          3
+        ],
+        "conversation_flow_switch": [
+          3,
+          3
+        ],
+        "conversation_flow_closure": [
+          2,
+          2
+        ],
+        "conversation_flow_state": [
+          4,
+          4
+        ],
+        "conversation_flow_topic": [
+          4,
+          4
+        ],
+        "conversation_flow_repair": [
+          1,
+          1
+        ],
+        "conversation_insufficient": [
+          1,
+          1
+        ],
+        "conversation_identity": [
+          1,
+          1
+        ],
+        "conversation_slang_hello": [
+          3,
+          3
+        ],
+        "conversation_slang_identity": [
+          3,
+          3
+        ],
+        "conversation_slang_function": [
+          3,
+          3
+        ],
+        "conversation_slang_scope": [
+          3,
+          3
+        ],
+        "conversation_slang_praise": [
+          3,
+          3
+        ],
+        "conversation_slang_negation": [
+          3,
+          3
+        ],
+        "conversation_social_context": [
+          1,
+          1
+        ],
+        "conversation_social": [
+          1,
+          1
+        ],
+        "conversation_guidance": [
+          4,
+          4
+        ],
+        "conversation_context_answer_fact": [
+          24,
+          24
+        ],
+        "conversation_context_answer_missing": [
+          12,
+          12
+        ],
+        "conversation_context_answer_conflict": [
+          12,
+          12
+        ],
+        "conversation_context_answer_support": [
+          12,
+          12
+        ],
+        "conversation_context_answer_memory": [
+          34,
+          36
+        ],
+        "conversation_context_answer_natural": [
+          9,
+          9
+        ],
+        "conversation_context_answer_independent_support": [
+          22,
+          36
+        ],
+        "conversation_context_answer_independent_fact": [
+          12,
+          12
+        ],
+        "conversation_context_answer_independent_conflict": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_missing": [
+          5,
+          6
+        ],
+        "conversation_context_answer_independent_memory": [
+          12,
+          12
+        ]
+      }
+    }
+  ],
+  "note": "Experimental development results only; classification probe accuracy is separate from generated response quality. No promotion."
+}

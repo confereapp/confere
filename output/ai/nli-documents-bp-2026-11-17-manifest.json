@@ -1,0 +1,26 @@
+{
+  "source": "https://huggingface.co/datasets/hapaxlegomenon/InferBR",
+  "revision": "304b2ca358c4f315a908b69d3d0c607ee101176d",
+  "train_sha256": "49af0412e6e199c8b340dd2c596e7480afb89c60dedd7d982fbb278c23338ce6",
+  "license_sha256": "b1cd6172bf8061abcbd7917e9246ddeded210339482e802e3413b74cc7e0de38",
+  "base_sha256": "4f6e4f440f591c25b4ffb1950a60772a0a6f21bcb367a0fbbd3cb32a8445338e",
+  "dataset_sha256": "7e04f28a068807f249c6ab0b3ae270c121a637c21f0132ae2dbf6dd872a46b9b",
+  "counts": {
+    "added_2": 2729,
+    "added_0": 2734,
+    "added_1": 2727
+  },
+  "splits": {
+    "train": 122337,
+    "validation": 410
+  },
+  "label_mapping": {
+    "0": "nao_atendido",
+    "1": "atendido",
+    "2": "evidencia_insuficiente"
+  },
+  "test_used": false,
+  "official_validation_used": false,
+  "local_validation_unchanged": true,
+  "note": "Inferência textual como supervisão semântica auxiliar; não são documentos de projetos reais. Só premissas de uma sentença para alinhar à segmentação. Sem pesos externos."
+}

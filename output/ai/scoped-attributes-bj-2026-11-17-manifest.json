@@ -1,0 +1,8 @@
+{
+  "source_sha256": "40ee63651cf8eb04ad76a9455d0ccc74ec9f65276a96df367da13d7918bcccc1",
+  "dataset_sha256": "7402a191c9f9327282ec579874fad416ad9f1568634f2f3fa953d6eaa1053aee",
+  "added_train": 40000,
+  "train": 192843,
+  "validation": 252,
+  "note": "Numeros de outros atributos nao fornecem prazo. Recursos compostos abertos compartilham partes e invertem polaridade. Coortes reprovadas continuam desenvolvimento; nenhum pedido completo de avaliacao no treino."
+}

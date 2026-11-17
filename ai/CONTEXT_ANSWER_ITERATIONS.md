@@ -715,3 +715,42 @@ sintética, sem provar login real ou qualidade geral.
 Os relatórios de encerramento identificam a interrupção deliberada de AV e AO.
 Nenhuma medição incompleta foi usada para selecionar pesos. Evidências compactas
 em `output/ai/comparison-iterations-2026-11-16.json` e manifestos correspondentes.
+
+## Escopo da consulta e supervisão semântica — 17/11
+
+BA terminou em 218/252; as duas tentativas com cabeça auxiliar usada somente
+no treino, BD e BE, selecionaram 212/252 e 219/252. A cabeça não é exportada
+como inferência nativa. Esses resultados não atingiram os critérios.
+
+A expansão BJ separou prazos de números distratores e consultas sobre recursos
+compostos. O decoder BL selecionou 233/252: suporte novo 20/36, informação
+ausente nova 5/6 e memória contextual antiga 34/36. As demais famílias passaram.
+BO ampliou verbos, posições, recursos e combinações de atributos; selecionou
+235/252 no passo 500, com suporte novo 22/36, ausentes 5/6 e memória 34/36.
+O mínimo para suporte novo é 33/36. Vocabulário conhecido agora participa do
+treino; as 252 consultas completas permanecem separadas, mas não são teste cego.
+
+O pipeline experimental BM combina classificação aprendida com candidatos do
+decoder próprio. Selecionou 242/252 no passo 14000: 26/36 em suporte novo e
+acerto integral nas demais famílias. Não é geração greedy nativa, não está
+integrado à API e permanece explicitamente não promovível. As descrições do
+protocolo nos artefatos identificam essa diferença. BQ continua esse experimento
+com o corpus BO; o resultado ainda está pendente.
+
+Na revisão documental, BK selecionou 399/410, sem falsos positivos; sua calibração
+BN chegou a 400/410, ainda abaixo de AU (403/410 local e 41/48 no fluxo completo).
+A auditoria refutou a hipótese de que a palavra que aparecia somente em negativos:
+havia 400 exemplos positivos e 400 negativos entre as unidades examinadas.
+
+BP inicia um piloto com InferBR, revisão fixa registrada no manifesto, licença
+MIT preservada e 8190 pares apenas do split oficial de treino. A origem usa
+geração semiautomática/automática com revisão na publicação, sem revisão local;
+não foi marcada como diálogo humano nem como exemplo autoral. Os rótulos são
+0 contradição, 1 confirmação e 2 neutro; neutro não vira ausência explícita.
+A validação documental de 410 casos é preservada; teste e validação oficiais
+não foram usados. A adequação dessa supervisão à revisão de projetos é experimental.
+
+Os 219 testes Python passaram. Os relatórios BA, BD, BE, BL e BO tiveram todas
+as páginas verificadas visualmente. Nenhum peso padrão foi promovido. As metas
+por família, documentos completos e novas coortes independentes após o próximo
+congelamento continuam obrigatórias.
