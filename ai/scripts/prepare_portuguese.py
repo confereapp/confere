@@ -1,4 +1,4 @@
-"""Amostra local da Wikipédia pt via API pública, sem baixar pesos de modelo."""
+"""Amostra local da Wikipédia pt via API pública ou parquet do mesmo dataset, sem baixar pesos de modelo."""
 
 import argparse
 import hashlib
@@ -54,7 +54,11 @@ def main():
     parser.add_argument("--rows", type=int, default=1000)
     parser.add_argument("--max-chars", type=int, default=8000)
     parser.add_argument("--resume-download", action="store_true", help="Reusar páginas locais de um download incompleto.")
+    parser.add_argument("--parquet-dir", type=Path, help="Pasta com os parquets de 20231101.pt e SOURCE_CARD.md já baixados.")
+    parser.add_argument("--max-total-chars", type=int, default=1_200_000_000)
     args = parser.parse_args()
+    if args.parquet_dir:
+        return from_parquet(args, parser)
     if not 100 <= args.rows <= 10000 or not 1000 <= args.max_chars <= 50000:
         parser.error("Use 100–10000 linhas e 1000–50000 caracteres por artigo.")
     if args.output.exists() and (not args.resume_download or (args.output / "manifest.json").exists()):
@@ -104,6 +108,48 @@ def main():
     }
     (args.output / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2))
     print(json.dumps(manifest, ensure_ascii=False, indent=2))
+
+
+def from_parquet(args, parser):
+    import pyarrow.parquet as pq
+    files = sorted(args.parquet_dir.glob("train-*.parquet"))
+    if not files or not (args.parquet_dir / "SOURCE_CARD.md").exists():
+        parser.error("Pasta parquet sem arquivos train-*.parquet ou SOURCE_CARD.md.")
+    if args.output.exists():
+        parser.error("A saída já existe; escolha outra para preservar snapshots.")
+    rows, ids, hashes = [], set(), set()
+    for path in files:
+        for record in pq.read_table(path, columns=["id", "url", "title", "text"]).to_pylist():
+            row = prepare_row(record, args.max_chars)
+            if row is None or row["id"] in ids or row["normalized_source_sha256"] in hashes:
+                continue
+            ids.add(row["id"]); hashes.add(row["normalized_source_sha256"]); rows.append(row)
+        print(f"{path.name}: artigos aceitos até agora {len(rows)}", flush=True)
+    # Amostra determinística e espalhada: ordem pelo hash do ID, até o limite de caracteres.
+    rows.sort(key=lambda row: hashlib.sha256(row["id"].encode()).hexdigest())
+    kept, total = [], 0
+    for row in rows:
+        if total >= args.max_total_chars: break
+        kept.append(row); total += len(row["text"])
+    args.output.mkdir(parents=True)
+    (args.output / "SOURCE_CARD.md").write_bytes((args.parquet_dir / "SOURCE_CARD.md").read_bytes())
+    target = args.output / "articles.jsonl"
+    with target.open("w", encoding="utf-8") as handle:
+        for row in kept: handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+    manifest = {
+        "schema_version": 1, "source": SOURCE, "config": "20231101.pt",
+        "captured_utc": datetime.now(timezone.utc).isoformat(),
+        "license_urls": LICENSES, "license_note": "Card da Wikimedia declara CC BY-SA 3.0 e GFDL; URLs e atribuição preservadas. Não redistribuir como conteúdo autoral do Confere.",
+        "selection": "Parquets completos do dataset; artigos ordenados pelo SHA-256 do ID até o limite de caracteres.",
+        "parquet_sha256": {path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in files},
+        "articles_available": len(rows), "documents": len(kept), "max_chars_per_article": args.max_chars,
+        "max_total_chars": args.max_total_chars, "splits": dict(Counter(row["split"] for row in kept)),
+        "characters": total, "snapshot_sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
+        "source_card_sha256": hashlib.sha256((args.output / "SOURCE_CARD.md").read_bytes()).hexdigest(),
+        "split_policy": "SHA-256 do ID do artigo, 90/5/5; deduplicação exata normalizada antes dos splits. Sem deduplicação semântica.",
+    }
+    (args.output / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2))
+    print(json.dumps({k: v for k, v in manifest.items() if k != "parquet_sha256"}, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
