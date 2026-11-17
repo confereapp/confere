@@ -860,3 +860,9 @@ com 24000 novas consultas de treino e os mesmos 252 casos de validação.
 BZ ainda não foi usado para treinar BX. Os 225 testes Python passaram.
 Uma comparação de decoders próprios sobre CA, já desenvolvimento, está
 em andamento para investigar erros de cópia de números e nomes.
+
+A comparação terminou: o decoder BR corrigiu os 12/12 fatos de CA, com
+classificador BX congelado. Ainda falham conflito (5/6) e memória (11/12);
+suporte permanece 34/36 e ausentes 6/6. A combinação precisa ser reavaliada
+nos 252 casos anteriores antes de qualquer adoção. CA já é desenvolvimento
+nessa comparação, e será necessário outro teste novo após o próximo congelamento.

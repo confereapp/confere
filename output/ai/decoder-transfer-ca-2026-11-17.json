@@ -1,0 +1,3035 @@
+[
+  {
+    "decoder": "ai/runs/task-conversation-bo-2026-11-17/best.pt",
+    "sha256": "15ad8e078b0ce0aa2112af38325acd6b181693548b4cb85194a1709a2d53fa77",
+    "result": {
+      "correct": 65,
+      "total": 72,
+      "samples": [
+        {
+          "id": "independent-ca-0",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui agendamento de visitas. O projeto não inclui pesquisa por categoria. O projeto inclui agendamento de visitas?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-0",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-1",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui agendamento de visitas. O projeto não inclui pesquisa por categoria. O projeto inclui pesquisa por categoria?",
+          "expected": "Não.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-1",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-2",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui agendamento de visitas. O projeto não inclui pesquisa por categoria. O projeto inclui consulta de protocolos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-2",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-3",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui envio de comprovantes, mas inclui exportação de planilhas. O projeto inclui exportação de planilhas?",
+          "expected": "Sim.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-3",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-4",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui envio de comprovantes, mas inclui exportação de planilhas. O projeto inclui envio de comprovantes?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-4",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-5",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui envio de comprovantes, mas inclui exportação de planilhas. O projeto inclui emissão de recibos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-5",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-6",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém controle de estoque, mas não contém reserva de equipamentos. O projeto inclui controle de estoque?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-6",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-7",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém controle de estoque, mas não contém reserva de equipamentos. O projeto inclui reserva de equipamentos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-7",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-8",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém controle de estoque, mas não contém reserva de equipamentos. O projeto inclui acesso por biometria?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-8",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-9",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui assinatura de documentos. O projeto não inclui notificações por aplicativo. O projeto inclui assinatura de documentos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-9",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-10",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui assinatura de documentos. O projeto não inclui notificações por aplicativo. O projeto inclui notificações por aplicativo?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-10",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-11",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui assinatura de documentos. O projeto não inclui notificações por aplicativo. O projeto inclui sincronização de agendas?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-11",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-12",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui consulta de protocolos, mas inclui pesquisa por categoria. O projeto inclui pesquisa por categoria?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-12",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-13",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui consulta de protocolos, mas inclui pesquisa por categoria. O projeto inclui consulta de protocolos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-13",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-14",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui consulta de protocolos, mas inclui pesquisa por categoria. O projeto inclui agendamento de visitas?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-14",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-15",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém envio de comprovantes, mas não contém emissão de recibos. O projeto inclui envio de comprovantes?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-15",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-16",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém envio de comprovantes, mas não contém emissão de recibos. O projeto inclui emissão de recibos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-16",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-17",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém envio de comprovantes, mas não contém emissão de recibos. O projeto inclui exportação de planilhas?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-17",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-18",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui reserva de equipamentos. O projeto não inclui acesso por biometria. O projeto inclui reserva de equipamentos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-18",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-19",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui reserva de equipamentos. O projeto não inclui acesso por biometria. O projeto inclui acesso por biometria?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-19",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-20",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui reserva de equipamentos. O projeto não inclui acesso por biometria. O projeto inclui controle de estoque?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-20",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-21",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui sincronização de agendas, mas inclui notificações por aplicativo. O projeto inclui notificações por aplicativo?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-21",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-22",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui sincronização de agendas, mas inclui notificações por aplicativo. O projeto inclui sincronização de agendas?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-22",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-23",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui sincronização de agendas, mas inclui notificações por aplicativo. O projeto inclui assinatura de documentos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-23",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-24",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém consulta de protocolos, mas não contém agendamento de visitas. O projeto inclui consulta de protocolos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-24",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-25",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém consulta de protocolos, mas não contém agendamento de visitas. O projeto inclui agendamento de visitas?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-25",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-26",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém consulta de protocolos, mas não contém agendamento de visitas. O projeto inclui pesquisa por categoria?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-26",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-27",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui emissão de recibos. O projeto não inclui exportação de planilhas. O projeto inclui emissão de recibos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-27",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-28",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui emissão de recibos. O projeto não inclui exportação de planilhas. O projeto inclui exportação de planilhas?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-28",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-29",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui emissão de recibos. O projeto não inclui exportação de planilhas. O projeto inclui envio de comprovantes?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-29",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-30",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui controle de estoque, mas inclui acesso por biometria. O projeto inclui acesso por biometria?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-30",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-31",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui controle de estoque, mas inclui acesso por biometria. O projeto inclui controle de estoque?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-31",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-32",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui controle de estoque, mas inclui acesso por biometria. O projeto inclui reserva de equipamentos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-32",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-33",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém sincronização de agendas, mas não contém assinatura de documentos. O projeto inclui sincronização de agendas?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-33",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-34",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém sincronização de agendas, mas não contém assinatura de documentos. O projeto inclui assinatura de documentos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-34",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-35",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém sincronização de agendas, mas não contém assinatura de documentos. O projeto inclui notificações por aplicativo?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-35",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-36",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 23 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "23 dias.",
+          "actual": "Olá! Sou o Confere.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-36",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-37",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 23 dias. Quantos dias foram informados?",
+          "expected": "23 dias.",
+          "actual": "23 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-37",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-38",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 47 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "47 dias.",
+          "actual": "47 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-38",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-39",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 47 dias. Quantos dias foram informados?",
+          "expected": "47 dias.",
+          "actual": "47 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-39",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-40",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 68 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "68 dias.",
+          "actual": "88 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-40",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-41",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 68 dias. Quantos dias foram informados?",
+          "expected": "68 dias.",
+          "actual": "68 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-41",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-42",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 94 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "94 dias.",
+          "actual": "94 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-42",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-43",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 94 dias. Quantos dias foram informados?",
+          "expected": "94 dias.",
+          "actual": "94 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-43",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-44",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 117 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "117 dias.",
+          "actual": "1 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-44",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-45",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 117 dias. Quantos dias foram informados?",
+          "expected": "117 dias.",
+          "actual": "117 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-45",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-46",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 139 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "139 dias.",
+          "actual": "139 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-46",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-47",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 139 dias. Quantos dias foram informados?",
+          "expected": "139 dias.",
+          "actual": "139 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-47",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-48",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 19 dias. O prazo informado é de 32 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-48",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-49",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 19 integrantes. O relatório contém 32 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-49",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-50",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 43 dias. O prazo informado é de 57 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-50",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-51",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 43 integrantes. O relatório contém 57 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-51",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-52",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 66 dias. O prazo informado é de 81 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-52",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-53",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 66 integrantes. O relatório contém 81 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-53",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-54",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 92 dias. O prazo informado é de 105 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-54",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-55",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 92 integrantes. O relatório contém 105 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-55",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-56",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 119 dias. O prazo informado é de 136 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "136 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-56",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-57",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 119 integrantes. O relatório contém 136 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-57",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-58",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 148 dias. O prazo informado é de 163 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-58",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-59",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 148 integrantes. O relatório contém 163 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-59",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-60",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Livia.",
+          "actual": "Seu nome é Livia.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Livia.",
+              "Prazer, Livia."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-60",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-61",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Tiago.",
+          "actual": "Seu nome é Tiago.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Tiago.",
+              "Prazer, Tiago."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-61",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-62",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Cecilia.",
+          "actual": "Seu nome é Cislia.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Cecilia.",
+              "Prazer, Cecilia."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-62",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-63",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Murilo.",
+          "actual": "Seu nome é Murilo.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Murilo.",
+              "Prazer, Murilo."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-63",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-64",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Bianca.",
+          "actual": "Seu nome é Bianca.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Bianca.",
+              "Prazer, Bianca."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-64",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-65",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Caio.",
+          "actual": "Seu nome é Caio.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Caio.",
+              "Prazer, Caio."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-65",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-66",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Leticia.",
+          "actual": "Seu nome é Leticia.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Leticia.",
+              "Prazer, Leticia."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-66",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-67",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Otavio.",
+          "actual": "Seu nome é Otavio.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Otavio.",
+              "Prazer, Otavio."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-67",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-68",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Rita.",
+          "actual": "Seu nome é Rita.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Rita.",
+              "Prazer, Rita."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-68",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-69",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Vitor.",
+          "actual": "Seu nome é Vitor.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Vitor.",
+              "Prazer, Vitor."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-69",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-70",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Luiza.",
+          "actual": "Seu nome é Luiza.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Luiza.",
+              "Prazer, Luiza."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-70",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-71",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Sergio.",
+          "actual": "Seu nome é Sergio.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Sergio.",
+              "Prazer, Sergio."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-71",
+          "turn_index": 0,
+          "exact_match": true
+        }
+      ],
+      "criterion": "Experimental frozen classifier plus alternate own decoder. Former independent CA cohort now development; not a new independent test."
+    },
+    "acceptance": {
+      "passed": false,
+      "counts": {
+        "conversation_context_answer_independent_support": [
+          34,
+          36
+        ],
+        "conversation_context_answer_independent_fact": [
+          9,
+          12
+        ],
+        "conversation_context_answer_independent_conflict": [
+          5,
+          6
+        ],
+        "conversation_context_answer_independent_missing": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_memory": [
+          11,
+          12
+        ]
+      },
+      "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+      "scope": "Não valida conversa aberta."
+    },
+    "promoted": false
+  },
+  {
+    "decoder": "ai/runs/task-conversation-br-2026-11-17/best.pt",
+    "sha256": "17eecb4eaafa6cb1142b1e66a1ae01a13e806538c23c7d2315ba4bdbbf45e194",
+    "result": {
+      "correct": 68,
+      "total": 72,
+      "samples": [
+        {
+          "id": "independent-ca-0",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui agendamento de visitas. O projeto não inclui pesquisa por categoria. O projeto inclui agendamento de visitas?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-0",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-1",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui agendamento de visitas. O projeto não inclui pesquisa por categoria. O projeto inclui pesquisa por categoria?",
+          "expected": "Não.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-1",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-2",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui agendamento de visitas. O projeto não inclui pesquisa por categoria. O projeto inclui consulta de protocolos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-2",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-3",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui envio de comprovantes, mas inclui exportação de planilhas. O projeto inclui exportação de planilhas?",
+          "expected": "Sim.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-3",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-4",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui envio de comprovantes, mas inclui exportação de planilhas. O projeto inclui envio de comprovantes?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-4",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-5",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui envio de comprovantes, mas inclui exportação de planilhas. O projeto inclui emissão de recibos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-5",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-6",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém controle de estoque, mas não contém reserva de equipamentos. O projeto inclui controle de estoque?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-6",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-7",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém controle de estoque, mas não contém reserva de equipamentos. O projeto inclui reserva de equipamentos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-7",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-8",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém controle de estoque, mas não contém reserva de equipamentos. O projeto inclui acesso por biometria?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-8",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-9",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui assinatura de documentos. O projeto não inclui notificações por aplicativo. O projeto inclui assinatura de documentos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-9",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-10",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui assinatura de documentos. O projeto não inclui notificações por aplicativo. O projeto inclui notificações por aplicativo?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-10",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-11",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui assinatura de documentos. O projeto não inclui notificações por aplicativo. O projeto inclui sincronização de agendas?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-11",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-12",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui consulta de protocolos, mas inclui pesquisa por categoria. O projeto inclui pesquisa por categoria?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-12",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-13",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui consulta de protocolos, mas inclui pesquisa por categoria. O projeto inclui consulta de protocolos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-13",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-14",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui consulta de protocolos, mas inclui pesquisa por categoria. O projeto inclui agendamento de visitas?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-14",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-15",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém envio de comprovantes, mas não contém emissão de recibos. O projeto inclui envio de comprovantes?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-15",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-16",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém envio de comprovantes, mas não contém emissão de recibos. O projeto inclui emissão de recibos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-16",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-17",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém envio de comprovantes, mas não contém emissão de recibos. O projeto inclui exportação de planilhas?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-17",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-18",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui reserva de equipamentos. O projeto não inclui acesso por biometria. O projeto inclui reserva de equipamentos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-18",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-19",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui reserva de equipamentos. O projeto não inclui acesso por biometria. O projeto inclui acesso por biometria?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-19",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-20",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui reserva de equipamentos. O projeto não inclui acesso por biometria. O projeto inclui controle de estoque?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-20",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-21",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui sincronização de agendas, mas inclui notificações por aplicativo. O projeto inclui notificações por aplicativo?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-21",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-22",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui sincronização de agendas, mas inclui notificações por aplicativo. O projeto inclui sincronização de agendas?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-22",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-23",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui sincronização de agendas, mas inclui notificações por aplicativo. O projeto inclui assinatura de documentos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-23",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-24",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém consulta de protocolos, mas não contém agendamento de visitas. O projeto inclui consulta de protocolos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-24",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-25",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém consulta de protocolos, mas não contém agendamento de visitas. O projeto inclui agendamento de visitas?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-25",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-26",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém consulta de protocolos, mas não contém agendamento de visitas. O projeto inclui pesquisa por categoria?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-26",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-27",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui emissão de recibos. O projeto não inclui exportação de planilhas. O projeto inclui emissão de recibos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-27",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-28",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui emissão de recibos. O projeto não inclui exportação de planilhas. O projeto inclui exportação de planilhas?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-28",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-29",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui emissão de recibos. O projeto não inclui exportação de planilhas. O projeto inclui envio de comprovantes?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-29",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-30",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui controle de estoque, mas inclui acesso por biometria. O projeto inclui acesso por biometria?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-30",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-31",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui controle de estoque, mas inclui acesso por biometria. O projeto inclui controle de estoque?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-31",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-32",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui controle de estoque, mas inclui acesso por biometria. O projeto inclui reserva de equipamentos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-32",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-33",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém sincronização de agendas, mas não contém assinatura de documentos. O projeto inclui sincronização de agendas?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-33",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-34",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém sincronização de agendas, mas não contém assinatura de documentos. O projeto inclui assinatura de documentos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-34",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-35",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém sincronização de agendas, mas não contém assinatura de documentos. O projeto inclui notificações por aplicativo?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-35",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-36",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 23 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "23 dias.",
+          "actual": "23 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-36",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-37",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 23 dias. Quantos dias foram informados?",
+          "expected": "23 dias.",
+          "actual": "23 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-37",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-38",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 47 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "47 dias.",
+          "actual": "47 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-38",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-39",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 47 dias. Quantos dias foram informados?",
+          "expected": "47 dias.",
+          "actual": "47 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-39",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-40",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 68 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "68 dias.",
+          "actual": "68 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-40",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-41",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 68 dias. Quantos dias foram informados?",
+          "expected": "68 dias.",
+          "actual": "68 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-41",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-42",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 94 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "94 dias.",
+          "actual": "94 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-42",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-43",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 94 dias. Quantos dias foram informados?",
+          "expected": "94 dias.",
+          "actual": "94 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-43",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-44",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 117 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "117 dias.",
+          "actual": "117 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-44",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-45",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 117 dias. Quantos dias foram informados?",
+          "expected": "117 dias.",
+          "actual": "117 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-45",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-46",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 139 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "139 dias.",
+          "actual": "139 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-46",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-47",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 139 dias. Quantos dias foram informados?",
+          "expected": "139 dias.",
+          "actual": "139 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-47",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-48",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 19 dias. O prazo informado é de 32 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-48",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-49",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 19 integrantes. O relatório contém 32 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-49",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-50",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 43 dias. O prazo informado é de 57 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-50",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-51",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 43 integrantes. O relatório contém 57 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-51",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-52",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 66 dias. O prazo informado é de 81 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-52",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-53",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 66 integrantes. O relatório contém 81 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-53",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-54",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 92 dias. O prazo informado é de 105 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-54",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-55",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 92 integrantes. O relatório contém 105 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-55",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-56",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 119 dias. O prazo informado é de 136 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "136 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-56",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-57",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 119 integrantes. O relatório contém 136 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-57",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-58",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 148 dias. O prazo informado é de 163 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-58",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-59",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 148 integrantes. O relatório contém 163 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-59",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-60",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Livia.",
+          "actual": "Seu nome é Livia.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Livia.",
+              "Prazer, Livia."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-60",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-61",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Tiago.",
+          "actual": "Seu nome é Tiago.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Tiago.",
+              "Prazer, Tiago."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-61",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-62",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Cecilia.",
+          "actual": "Seu nome é Cislia.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Cecilia.",
+              "Prazer, Cecilia."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-62",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-63",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Murilo.",
+          "actual": "Seu nome é Murilo.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Murilo.",
+              "Prazer, Murilo."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-63",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-64",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Bianca.",
+          "actual": "Seu nome é Bianca.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Bianca.",
+              "Prazer, Bianca."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-64",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-65",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Caio.",
+          "actual": "Seu nome é Caio.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Caio.",
+              "Prazer, Caio."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-65",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-66",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Leticia.",
+          "actual": "Seu nome é Leticia.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Leticia.",
+              "Prazer, Leticia."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-66",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-67",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Otavio.",
+          "actual": "Seu nome é Otavio.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Otavio.",
+              "Prazer, Otavio."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-67",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-68",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Rita.",
+          "actual": "Seu nome é Rita.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Rita.",
+              "Prazer, Rita."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-68",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-69",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Vitor.",
+          "actual": "Seu nome é Vitor.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Vitor.",
+              "Prazer, Vitor."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-69",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-70",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Luiza.",
+          "actual": "Seu nome é Luiza.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Luiza.",
+              "Prazer, Luiza."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-70",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-71",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Sergio.",
+          "actual": "Seu nome é Sergio.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Sergio.",
+              "Prazer, Sergio."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-71",
+          "turn_index": 0,
+          "exact_match": true
+        }
+      ],
+      "criterion": "Experimental frozen classifier plus alternate own decoder. Former independent CA cohort now development; not a new independent test."
+    },
+    "acceptance": {
+      "passed": false,
+      "counts": {
+        "conversation_context_answer_independent_support": [
+          34,
+          36
+        ],
+        "conversation_context_answer_independent_fact": [
+          12,
+          12
+        ],
+        "conversation_context_answer_independent_conflict": [
+          5,
+          6
+        ],
+        "conversation_context_answer_independent_missing": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_memory": [
+          11,
+          12
+        ]
+      },
+      "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+      "scope": "Não valida conversa aberta."
+    },
+    "promoted": false
+  },
+  {
+    "decoder": "ai/runs/task-conversation-bl-2026-11-17/best.pt",
+    "sha256": "334d20692e4504c211e599a716ff9dbfd45e20d7bcd72c17af8e9f34de2224fc",
+    "result": {
+      "correct": 65,
+      "total": 72,
+      "samples": [
+        {
+          "id": "independent-ca-0",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui agendamento de visitas. O projeto não inclui pesquisa por categoria. O projeto inclui agendamento de visitas?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-0",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-1",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui agendamento de visitas. O projeto não inclui pesquisa por categoria. O projeto inclui pesquisa por categoria?",
+          "expected": "Não.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-1",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-2",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui agendamento de visitas. O projeto não inclui pesquisa por categoria. O projeto inclui consulta de protocolos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-2",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-3",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui envio de comprovantes, mas inclui exportação de planilhas. O projeto inclui exportação de planilhas?",
+          "expected": "Sim.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-3",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-4",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui envio de comprovantes, mas inclui exportação de planilhas. O projeto inclui envio de comprovantes?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-4",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-5",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui envio de comprovantes, mas inclui exportação de planilhas. O projeto inclui emissão de recibos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-5",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-6",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém controle de estoque, mas não contém reserva de equipamentos. O projeto inclui controle de estoque?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-6",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-7",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém controle de estoque, mas não contém reserva de equipamentos. O projeto inclui reserva de equipamentos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-7",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-8",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém controle de estoque, mas não contém reserva de equipamentos. O projeto inclui acesso por biometria?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-8",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-9",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui assinatura de documentos. O projeto não inclui notificações por aplicativo. O projeto inclui assinatura de documentos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-9",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-10",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui assinatura de documentos. O projeto não inclui notificações por aplicativo. O projeto inclui notificações por aplicativo?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-10",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-11",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui assinatura de documentos. O projeto não inclui notificações por aplicativo. O projeto inclui sincronização de agendas?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-11",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-12",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui consulta de protocolos, mas inclui pesquisa por categoria. O projeto inclui pesquisa por categoria?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-12",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-13",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui consulta de protocolos, mas inclui pesquisa por categoria. O projeto inclui consulta de protocolos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-13",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-14",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui consulta de protocolos, mas inclui pesquisa por categoria. O projeto inclui agendamento de visitas?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-14",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-15",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém envio de comprovantes, mas não contém emissão de recibos. O projeto inclui envio de comprovantes?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-15",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-16",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém envio de comprovantes, mas não contém emissão de recibos. O projeto inclui emissão de recibos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-16",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-17",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém envio de comprovantes, mas não contém emissão de recibos. O projeto inclui exportação de planilhas?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-17",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-18",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui reserva de equipamentos. O projeto não inclui acesso por biometria. O projeto inclui reserva de equipamentos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-18",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-19",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui reserva de equipamentos. O projeto não inclui acesso por biometria. O projeto inclui acesso por biometria?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-19",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-20",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui reserva de equipamentos. O projeto não inclui acesso por biometria. O projeto inclui controle de estoque?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-20",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-21",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui sincronização de agendas, mas inclui notificações por aplicativo. O projeto inclui notificações por aplicativo?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-21",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-22",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui sincronização de agendas, mas inclui notificações por aplicativo. O projeto inclui sincronização de agendas?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-22",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-23",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui sincronização de agendas, mas inclui notificações por aplicativo. O projeto inclui assinatura de documentos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-23",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-24",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém consulta de protocolos, mas não contém agendamento de visitas. O projeto inclui consulta de protocolos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-24",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-25",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém consulta de protocolos, mas não contém agendamento de visitas. O projeto inclui agendamento de visitas?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-25",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-26",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém consulta de protocolos, mas não contém agendamento de visitas. O projeto inclui pesquisa por categoria?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-26",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-27",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui emissão de recibos. O projeto não inclui exportação de planilhas. O projeto inclui emissão de recibos?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-27",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-28",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui emissão de recibos. O projeto não inclui exportação de planilhas. O projeto inclui exportação de planilhas?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-28",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-29",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto inclui emissão de recibos. O projeto não inclui exportação de planilhas. O projeto inclui envio de comprovantes?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-29",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-30",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui controle de estoque, mas inclui acesso por biometria. O projeto inclui acesso por biometria?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-30",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-31",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui controle de estoque, mas inclui acesso por biometria. O projeto inclui controle de estoque?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-31",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-32",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto não inclui controle de estoque, mas inclui acesso por biometria. O projeto inclui reserva de equipamentos?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-32",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-33",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém sincronização de agendas, mas não contém assinatura de documentos. O projeto inclui sincronização de agendas?",
+          "expected": "Sim.",
+          "actual": "Sim.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-33",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-34",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém sincronização de agendas, mas não contém assinatura de documentos. O projeto inclui assinatura de documentos?",
+          "expected": "Não.",
+          "actual": "Não.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-34",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-35",
+          "task": "conversation_context_answer_independent_support",
+          "prompt": "O projeto contém sincronização de agendas, mas não contém assinatura de documentos. O projeto inclui notificações por aplicativo?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-35",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-36",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 23 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "23 dias.",
+          "actual": "Olá! Sou o Confere.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-36",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-37",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 23 dias. Quantos dias foram informados?",
+          "expected": "23 dias.",
+          "actual": "23 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-37",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-38",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 47 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "47 dias.",
+          "actual": "47 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-38",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-39",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 47 dias. Quantos dias foram informados?",
+          "expected": "47 dias.",
+          "actual": "47 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-39",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-40",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 68 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "68 dias.",
+          "actual": "88 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-40",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-41",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 68 dias. Quantos dias foram informados?",
+          "expected": "68 dias.",
+          "actual": "68 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-41",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-42",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 94 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "94 dias.",
+          "actual": "94 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-42",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-43",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 94 dias. Quantos dias foram informados?",
+          "expected": "94 dias.",
+          "actual": "94 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-43",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-44",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 117 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "117 dias.",
+          "actual": "1 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-44",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-45",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 117 dias. Quantos dias foram informados?",
+          "expected": "117 dias.",
+          "actual": "117 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-45",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-46",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "A entrega está prevista para daqui a 139 dias. A equipe tem 8 integrantes. Qual é o prazo informado?",
+          "expected": "139 dias.",
+          "actual": "139 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-46",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-47",
+          "task": "conversation_context_answer_independent_fact",
+          "prompt": "O projeto usa Java. O prazo informado é de 139 dias. Quantos dias foram informados?",
+          "expected": "139 dias.",
+          "actual": "139 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-47",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-48",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 19 dias. O prazo informado é de 32 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-48",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-49",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 19 integrantes. O relatório contém 32 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-49",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-50",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 43 dias. O prazo informado é de 57 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-50",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-51",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 43 integrantes. O relatório contém 57 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-51",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-52",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 66 dias. O prazo informado é de 81 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-52",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-53",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 66 integrantes. O relatório contém 81 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-53",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-54",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 92 dias. O prazo informado é de 105 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-54",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-55",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 92 integrantes. O relatório contém 105 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-55",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-56",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 119 dias. O prazo informado é de 136 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "136 dias.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-56",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-57",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 119 integrantes. O relatório contém 136 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-57",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-58",
+          "task": "conversation_context_answer_independent_conflict",
+          "prompt": "A equipe tem 5 integrantes. O prazo informado é de 148 dias. O prazo informado é de 163 dias. Qual é o prazo informado?",
+          "expected": "Há informações conflitantes no texto.",
+          "actual": "Há informações conflitantes no texto.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-58",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-59",
+          "task": "conversation_context_answer_independent_missing",
+          "prompt": "O projeto usa Python. A equipe tem 148 integrantes. O relatório contém 163 páginas. Qual é o prazo informado?",
+          "expected": "Não tenho informação suficiente para responder.",
+          "actual": "Não tenho informação suficiente para responder.",
+          "history_used": [],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-59",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-60",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Livia.",
+          "actual": "Seu nome é Livia.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Livia.",
+              "Prazer, Livia."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-60",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-61",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Tiago.",
+          "actual": "Seu nome é Tiago.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Tiago.",
+              "Prazer, Tiago."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-61",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-62",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Cecilia.",
+          "actual": "Seu nome é Cislia.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Cecilia.",
+              "Prazer, Cecilia."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-62",
+          "turn_index": 0,
+          "exact_match": false
+        },
+        {
+          "id": "independent-ca-63",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Murilo.",
+          "actual": "Seu nome é Murilo.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Murilo.",
+              "Prazer, Murilo."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-63",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-64",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Bianca.",
+          "actual": "Seu nome é Bianca.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Bianca.",
+              "Prazer, Bianca."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-64",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-65",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Caio.",
+          "actual": "Seu nome é Caio.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Caio.",
+              "Prazer, Caio."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-65",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-66",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Leticia.",
+          "actual": "Seu nome é Leticia.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Leticia.",
+              "Prazer, Leticia."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-66",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-67",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Otavio.",
+          "actual": "Seu nome é Otavio.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Otavio.",
+              "Prazer, Otavio."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-67",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-68",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Rita.",
+          "actual": "Seu nome é Rita.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Rita.",
+              "Prazer, Rita."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-68",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-69",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Vitor.",
+          "actual": "Seu nome é Vitor.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Vitor.",
+              "Prazer, Vitor."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-69",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-70",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Luiza.",
+          "actual": "Seu nome é Luiza.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Luiza.",
+              "Prazer, Luiza."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-70",
+          "turn_index": 0,
+          "exact_match": true
+        },
+        {
+          "id": "independent-ca-71",
+          "task": "conversation_context_answer_independent_memory",
+          "prompt": "Depois da correção, como eu me chamo?",
+          "expected": "Seu nome é Sergio.",
+          "actual": "Seu nome é Sergio.",
+          "history_used": [
+            [
+              "Pode me chamar de Marina.",
+              "Prazer, Marina."
+            ],
+            [
+              "Corrigindo: meu nome é Sergio.",
+              "Prazer, Sergio."
+            ]
+          ],
+          "dropped_turns": 0,
+          "project_id": "independent-ca-71",
+          "turn_index": 0,
+          "exact_match": true
+        }
+      ],
+      "criterion": "Experimental frozen classifier plus alternate own decoder. Former independent CA cohort now development; not a new independent test."
+    },
+    "acceptance": {
+      "passed": false,
+      "counts": {
+        "conversation_context_answer_independent_support": [
+          34,
+          36
+        ],
+        "conversation_context_answer_independent_fact": [
+          9,
+          12
+        ],
+        "conversation_context_answer_independent_conflict": [
+          5,
+          6
+        ],
+        "conversation_context_answer_independent_missing": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_memory": [
+          11,
+          12
+        ]
+      },
+      "description": "Conversas sintéticas: ao menos 90% nas famílias contextuais e 80% nas demais, com histórico gerado pelo modelo.",
+      "scope": "Não valida conversa aberta."
+    },
+    "promoted": false
+  }
+]
