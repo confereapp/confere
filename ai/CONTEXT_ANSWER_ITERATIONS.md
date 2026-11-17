@@ -754,3 +754,28 @@ Os 219 testes Python passaram. Os relatórios BA, BD, BE, BL e BO tiveram todas
 as páginas verificadas visualmente. Nenhum peso padrão foi promovido. As metas
 por família, documentos completos e novas coortes independentes após o próximo
 congelamento continuam obrigatórias.
+
+## Auditoria de vocabulário e próxima comparação pareada — 17/11
+
+A auditoria de BK2 contou zero unidades de treino com atesta e 20 na validação.
+Isso é uma lacuna observada, sem provar causalidade. BS acrescenta quatro pares
+positivos/negativos com esse verbo, em construções diferentes da moldura de
+diagnóstico, preservando a validação e os corpora anteriores. O corpus contém
+135335 exemplos de treino e os mesmos 410 de validação, incluindo os pares
+públicos de inferência de BP. BS usa AU como origem e ainda está em execução.
+
+Em BM, nove dos dez erros de resposta já tinham classificação errada. Duas
+diferenças adicionais de classe entre fato e memória delegam ao mesmo decoder
+e não implicam erro de resposta. BQ não superou a origem até a avaliação completa
+4000 e foi interrompido para testar consultas pareadas. O último passo de treino
+executado após essa avaliação não foi registrado; o checkpoint selecionado
+permaneceu no passo zero, com 242/252. Nenhum tempo final foi inferido.
+
+BT mantém metade do lote com consultas sobre o mesmo texto e respostas distintas;
+a outra metade preserva a amostragem por estado. Os grupos são exclusivamente
+de treino e exigem o mesmo corpo. BR ajusta a rede nativa inteira, com ancoragem
+na origem própria, para testar o limite dos blocos antes congelados. BP, BS, BR
+e BT estão pendentes. Nenhum deles é aprovado só pelo acerto agregado.
+
+Os 221 testes Python passaram; os commits desta retomada mantêm a autoria
+normal, sem atribuições adicionais. Nenhum peso padrão da API foi alterado.
