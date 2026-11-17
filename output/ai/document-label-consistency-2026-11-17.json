@@ -1,0 +1,8 @@
+{
+  "dataset_sha256": "eccabfcde7db0f35d3dae3257817c7c397de91ef5f97f3ccb0c766e8fd7eb490",
+  "training_units": 291122,
+  "unique_model_inputs": 220392,
+  "contradictory_inputs": 0,
+  "conflicts": [],
+  "note": "Exact requirement and unit text; normalized alias page:1, as in the classifier encoder. Training only; no model inference or evaluation cases used."
+}

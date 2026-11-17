@@ -815,3 +815,18 @@ BT selecionou provisoriamente o passo 8000 com 244/252: suporte novo 28/36,
 acerto integral nas demais famílias. Precisa de pelo menos 33/36 em suporte.
 Essa é uma medição intermediária do pipeline experimental, não de geração
 greedy nativa. BT e o treino documental longo BV continuam em execução.
+
+## Checagem do fluxo completo durante o ciclo longo — 17/11
+
+BV/2500 selecionou 400/410, sem falsos positivos locais. Falham positivos
+35/40, negativos 33/37 e conflitos 6/7. A calibração BW preservou os limiares
+0,3/0,1 e não alterou o resultado. No documento completo, BW marcou 38/48,
+com um falso positivo: um conflito em tail_conflict perdeu a evidência negativa
+e terminou como atendido. Formato válido 48/48; isso não substitui correção
+semântica. O checkpoint permanece reprovado e o treino longo continua.
+
+A auditoria das 291122 unidades de treino encontrou 220392 entradas distintas
+para requisito e texto da unidade, sem entradas exatamente iguais com rótulos
+conflitantes. Isso refuta essa hipótese específica; não prova qualidade
+semântica das anotações públicas nem generalização. Não foram usados exemplos
+de avaliação nessa auditoria. Evidência em document-label-consistency.
