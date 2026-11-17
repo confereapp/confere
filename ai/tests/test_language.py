@@ -40,6 +40,17 @@ class LanguageTests(unittest.TestCase):
             self.assertEqual(tokenizer.encode(text), expected)
             self.assertEqual(tokenizer.decode(expected), text)
 
+    def test_word_bpe_chunked_encoding_matches_whole_text(self):
+        text = "ação e informação:  ababab\naaaaaa Português.\t" * 30
+        tokenizer = ByteBPE.train_words([text], 400)
+        self.assertTrue(tokenizer.chunked)
+        self.assertFalse(ByteBPE.train([text], 400).chunked)
+        rng = random.Random(7)
+        for sample in [text[i:i + 90] for i in range(0, 600, 13)] + ["", "  ", "\n\nx"] + \
+                ["".join(rng.choice("aab ação\n\t Português: ") for _ in range(120)) for _ in range(100)]:
+            self.assertEqual(tokenizer.encode(sample), tokenizer.encode_whole(sample))
+            self.assertEqual(tokenizer.decode(tokenizer.encode(sample)), sample)
+
     def test_tokenizer_fits_training_documents_only(self):
         rows = [{"split": "train", "text": "abcabc " * 50}, {"split": "validation", "text": "ZZZZZZ" * 1000}, {"split": "test", "text": "YYYYYY" * 1000}]
         actual = fit_language_tokenizer(rows, 280, 1000, 42)

@@ -33,6 +33,9 @@ def run(args):
     rows, fingerprint = load_corpus(args.data)
     settings = {key: getattr(args, key) for key in ("seed", "batch_size", "learning_rate", "block_size", "vocab_size", "tokenizer_chars", "eval_blocks")}
     settings["objective"] = "causal_lm"
+    # Opções novas só entram nas configurações quando usadas: retomadas antigas continuam comparáveis.
+    if args.tokenizer_kind != "bytes": settings["tokenizer_kind"] = args.tokenizer_kind
+    if args.schedule != "constant": settings.update(schedule=args.schedule, warmup_steps=args.warmup_steps)
     source_path=args.resume or init_from
     checkpoint = torch.load(source_path, map_location="cpu", weights_only=True) if source_path else None
     previous_fingerprint = None
@@ -53,7 +56,7 @@ def run(args):
         if init_from and args.vocab_size!=tokenizer.vocab_size: raise ValueError("Inicialização preserva o vocabulário do checkpoint.")
     else:
         print("Treinando BPE somente na amostra de artigos de treino...", flush=True)
-        tokenizer = fit_language_tokenizer(rows, args.vocab_size, args.tokenizer_chars, args.seed)
+        tokenizer = fit_language_tokenizer(rows, args.vocab_size, args.tokenizer_chars, args.seed, args.tokenizer_kind)
     print("Tokenizando treino e validação; artigos de teste ficam fora...", flush=True)
     train_examples = language_windows(rows, tokenizer, args.block_size, "train")
     validation_examples = language_windows(rows, tokenizer, args.block_size, "validation")
@@ -117,6 +120,11 @@ def run(args):
         indices = torch.randint(len(train_examples), (args.batch_size,), generator=generator).tolist()
         x, y = batch(train_examples, indices, device, model.config.block_size)
         optimizer.zero_grad(set_to_none=True)
+        if args.schedule == "cosine":
+            # Aquecimento linear e decaimento cosseno até 10% da taxa no último passo planejado.
+            ratio = step/args.warmup_steps if step < args.warmup_steps else \
+                .1 + .45*(1+math.cos(math.pi*(step-args.warmup_steps)/max(1, args.steps-args.warmup_steps)))
+            for group in optimizer.param_groups: group["lr"] = args.learning_rate*ratio
         loss = F.cross_entropy(model(x).flatten(0, 1), y.flatten(), ignore_index=-100)
         if not torch.isfinite(loss).item():
             raise ValueError("Loss não finita; último checkpoint preservado.")
@@ -159,6 +167,10 @@ def main():
     parser.add_argument("--block-size", type=int, default=256)
     parser.add_argument("--vocab-size", type=int, default=1024)
     parser.add_argument("--tokenizer-chars", type=int, default=128000)
+    parser.add_argument("--tokenizer-kind", choices=["bytes", "words"], default="bytes",
+                        help="words: BPE por palavras, sem fusões entre palavras; adequado a vocabulários grandes.")
+    parser.add_argument("--schedule", choices=["constant", "cosine"], default="constant")
+    parser.add_argument("--warmup-steps", type=int, default=500)
     parser.add_argument("--eval-every", type=int, default=200)
     parser.add_argument("--eval-blocks", type=int, default=32)
     parser.add_argument("--learning-rate", type=float, default=0.0003)

@@ -3,6 +3,8 @@
 import hashlib
 import json
 import random
+from array import array
+from collections.abc import Sequence
 from pathlib import Path
 
 from .tokenizer import ByteBPE
@@ -30,9 +32,16 @@ def load_corpus(path):
     return rows, fingerprint
 
 
-def fit_language_tokenizer(rows, vocab_size, max_chars, seed):
+def fit_language_tokenizer(rows, vocab_size, max_chars, seed, kind="bytes"):
     documents = [row for row in rows if row["split"] == "train"]
     random.Random(seed).shuffle(documents)
+    if kind == "words":
+        # Artigos inteiros até o limite; o BPE por palavras conta trechos únicos, não percorre bytes repetidos.
+        pieces, remaining = [], max_chars
+        for row in documents:
+            if remaining <= 0: break
+            pieces.append(row["text"][:remaining]); remaining -= len(pieces[-1])
+        return ByteBPE.train_words(pieces, vocab_size)
     pieces, remaining = [], max_chars
     for row in documents:
         # Amostra distribuída por artigos; o BPE didático não percorre o corpus todo.
@@ -57,14 +66,33 @@ def validate_expansion(previous, current):
             raise ValueError("Expansão exige preservar artigos anteriores, textos e splits.")
 
 
+class TokenWindows(Sequence):
+    """Janelas (entrada, alvo) guardadas num vetor compacto; evita milhões de listas Python."""
+
+    def __init__(self):
+        self.tokens, self.starts, self.ends = array("I"), array("Q"), array("Q")
+
+    def __len__(self):
+        return len(self.starts)
+
+    def __getitem__(self, index):
+        start, end = self.starts[index], self.ends[index]
+        return self.tokens[start:end-1].tolist(), self.tokens[start+1:end].tolist()
+
+    def __eq__(self, other):
+        return list(self) == list(other)
+
+
 def language_windows(rows, tokenizer, block_size, split):
-    result = []
+    result = TokenWindows()
     for row in rows:
         if row["split"] != split:
             continue
+        offset = len(result.tokens)
         sequence = [tokenizer.BOS] + tokenizer.encode(row["text"]) + [tokenizer.EOS]
+        result.tokens.extend(sequence)
         for start in range(0, len(sequence) - 1, block_size):
-            window = sequence[start:start + block_size + 1]
-            if len(window) > 1:
-                result.append((window[:-1], window[1:]))
+            end = min(start + block_size + 1, len(sequence))
+            if end - start > 1:
+                result.starts.append(offset + start); result.ends.append(offset + end)
     return result
