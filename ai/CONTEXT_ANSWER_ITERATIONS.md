@@ -805,3 +805,13 @@ encerrar outra tentativa antes de uma quantidade equivalente ao corpus. O
 otimizador reinicia, conforme o treinador registra. Não há promessa de melhora:
 os mesmos critérios, revisão de documentos completos e novo teste independente
 continuam necessários. Os valores planejados não são contagens executadas.
+
+BR encerrou os 12000 passos e selecionou o passo 8000: 234/252, com suporte
+novo 25/36, memória antiga 32/36 e naturais 8/9. Esses três grupos não passam;
+fatos antigos 22/24 passam o piso de 90%. O relatório teve suas três páginas
+verificadas visualmente. Não foi promovido.
+
+BT selecionou provisoriamente o passo 8000 com 244/252: suporte novo 28/36,
+acerto integral nas demais famílias. Precisa de pelo menos 33/36 em suporte.
+Essa é uma medição intermediária do pipeline experimental, não de geração
+greedy nativa. BT e o treino documental longo BV continuam em execução.

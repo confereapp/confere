@@ -1100,6 +1100,230 @@
         "final_training_step_recorded": false,
         "note": "Substituída por treino longo para ampliar exposição ao corpus. Nenhum passo final ou tempo total foi inferido; nenhum checkpoint foi promovido."
       }
+    },
+    {
+      "run": "task-conversation-br-2026-11-17",
+      "finished": true,
+      "promoted": false,
+      "correct": 234,
+      "total": 252,
+      "selected_step": 8000,
+      "passed": false,
+      "families": {
+        "conversation_repair": [
+          2,
+          2
+        ],
+        "conversation_definition": [
+          4,
+          4
+        ],
+        "conversation_capability": [
+          3,
+          3
+        ],
+        "conversation_memory": [
+          3,
+          3
+        ],
+        "conversation_repeat": [
+          4,
+          4
+        ],
+        "conversation_clarify": [
+          3,
+          3
+        ],
+        "conversation_wellbeing": [
+          2,
+          2
+        ],
+        "conversation_composed": [
+          2,
+          2
+        ],
+        "conversation_misunderstanding": [
+          1,
+          1
+        ],
+        "conversation_closure": [
+          1,
+          1
+        ],
+        "conversation_flow_greeting": [
+          2,
+          2
+        ],
+        "conversation_flow_acknowledgement": [
+          2,
+          2
+        ],
+        "conversation_flow_identity": [
+          3,
+          3
+        ],
+        "conversation_flow_negation": [
+          3,
+          3
+        ],
+        "conversation_flow_switch": [
+          3,
+          3
+        ],
+        "conversation_flow_closure": [
+          2,
+          2
+        ],
+        "conversation_flow_state": [
+          4,
+          4
+        ],
+        "conversation_flow_topic": [
+          4,
+          4
+        ],
+        "conversation_flow_repair": [
+          1,
+          1
+        ],
+        "conversation_insufficient": [
+          1,
+          1
+        ],
+        "conversation_identity": [
+          1,
+          1
+        ],
+        "conversation_slang_hello": [
+          3,
+          3
+        ],
+        "conversation_slang_identity": [
+          3,
+          3
+        ],
+        "conversation_slang_function": [
+          3,
+          3
+        ],
+        "conversation_slang_scope": [
+          3,
+          3
+        ],
+        "conversation_slang_praise": [
+          3,
+          3
+        ],
+        "conversation_slang_negation": [
+          3,
+          3
+        ],
+        "conversation_social_context": [
+          1,
+          1
+        ],
+        "conversation_social": [
+          1,
+          1
+        ],
+        "conversation_guidance": [
+          4,
+          4
+        ],
+        "conversation_context_answer_fact": [
+          22,
+          24
+        ],
+        "conversation_context_answer_missing": [
+          12,
+          12
+        ],
+        "conversation_context_answer_conflict": [
+          12,
+          12
+        ],
+        "conversation_context_answer_support": [
+          12,
+          12
+        ],
+        "conversation_context_answer_memory": [
+          32,
+          36
+        ],
+        "conversation_context_answer_natural": [
+          8,
+          9
+        ],
+        "conversation_context_answer_independent_support": [
+          25,
+          36
+        ],
+        "conversation_context_answer_independent_fact": [
+          12,
+          12
+        ],
+        "conversation_context_answer_independent_conflict": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_missing": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_memory": [
+          12,
+          12
+        ]
+      },
+      "summary": {
+        "start_step": 0,
+        "final_step": 12000,
+        "stop_reason": "steps",
+        "elapsed_seconds": 1649.521432,
+        "tokens_processed": 1074821,
+        "initial": {
+          "step": 0,
+          "train_loss": 0.05614698250335124,
+          "validation_loss": 0.017309051333364814,
+          "elapsed_seconds": 2.9783296660000076,
+          "mps_allocated_bytes": 94617600,
+          "mps_driver_allocated_bytes": 160890880
+        },
+        "final": {
+          "step": 12000,
+          "train_loss": 0.029349067016661935,
+          "validation_loss": 0.01741641918902976,
+          "elapsed_seconds": 1631.5066055,
+          "mps_allocated_bytes": 331205376,
+          "mps_driver_allocated_bytes": 1857519616
+        },
+        "human_examples_processed": 0,
+        "human_tokens_processed": 0,
+        "public_examples_processed": 0,
+        "public_tokens_processed": 0,
+        "document_examples_processed": 0,
+        "document_tokens_processed": 0,
+        "mps_allocated_bytes_max_observed": 340131584,
+        "mps_driver_allocated_bytes_max_observed": 1907818496,
+        "process_peak_rss_bytes": 1705525248
+      }
+    },
+    {
+      "run": "conversation-fusion-bt-2026-11-17",
+      "finished": false,
+      "promoted": false,
+      "captured_selection_step": 8000,
+      "correct": 244,
+      "total": 252,
+      "quality": [
+        false,
+        0,
+        0.8641975308641975,
+        0.9966877446552243,
+        0,
+        244
+      ],
+      "note": "Snapshot durante execução; não representa resultado final."
     }
   ],
   "note": "Experimental development results only; classification probe accuracy is separate from generated response quality. No promotion."
