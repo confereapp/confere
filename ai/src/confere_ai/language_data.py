@@ -84,7 +84,8 @@ class TokenWindows(Sequence):
         return list(self) == list(other)
 
 
-def language_windows(rows, tokenizer, block_size, split):
+def language_windows(rows, tokenizer, block_size, split, pack=False):
+    """`pack`: janelas contínuas sobre artigos concatenados (BOS/EOS separam); sem padding desperdiçado."""
     result = TokenWindows()
     for row in rows:
         if row["split"] != split:
@@ -96,4 +97,8 @@ def language_windows(rows, tokenizer, block_size, split):
             end = min(start + block_size + 1, len(sequence))
             if end - start > 1:
                 result.starts.append(offset + start); result.ends.append(offset + end)
+    if pack:
+        total = len(result.tokens)
+        result.starts = array("Q", range(0, total - 1, block_size))
+        result.ends = array("Q", (min(start + block_size + 1, total) for start in result.starts))
     return result

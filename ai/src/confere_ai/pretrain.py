@@ -35,6 +35,7 @@ def run(args):
     settings["objective"] = "causal_lm"
     # Opções novas só entram nas configurações quando usadas: retomadas antigas continuam comparáveis.
     if args.tokenizer_kind != "bytes": settings["tokenizer_kind"] = args.tokenizer_kind
+    if args.pack: settings["pack"] = True
     if args.schedule != "constant": settings.update(schedule=args.schedule, warmup_steps=args.warmup_steps)
     source_path=args.resume or init_from
     checkpoint = torch.load(source_path, map_location="cpu", weights_only=True) if source_path else None
@@ -58,8 +59,8 @@ def run(args):
         print("Treinando BPE somente na amostra de artigos de treino...", flush=True)
         tokenizer = fit_language_tokenizer(rows, args.vocab_size, args.tokenizer_chars, args.seed, args.tokenizer_kind)
     print("Tokenizando treino e validação; artigos de teste ficam fora...", flush=True)
-    train_examples = language_windows(rows, tokenizer, args.block_size, "train")
-    validation_examples = language_windows(rows, tokenizer, args.block_size, "validation")
+    train_examples = language_windows(rows, tokenizer, args.block_size, "train", args.pack)
+    validation_examples = language_windows(rows, tokenizer, args.block_size, "validation", args.pack)
     if not train_examples or not validation_examples:
         raise ValueError("Não há janelas suficientes para treino e validação.")
     evaluation_generator = torch.Generator().manual_seed(args.seed + 1)
@@ -169,6 +170,7 @@ def main():
     parser.add_argument("--tokenizer-chars", type=int, default=128000)
     parser.add_argument("--tokenizer-kind", choices=["bytes", "words"], default="bytes",
                         help="words: BPE por palavras, sem fusões entre palavras; adequado a vocabulários grandes.")
+    parser.add_argument("--pack", action="store_true", help="Concatenar artigos em janelas cheias; janelas cruzam artigos.")
     parser.add_argument("--schedule", choices=["constant", "cosine"], default="constant")
     parser.add_argument("--warmup-steps", type=int, default=500)
     parser.add_argument("--eval-every", type=int, default=200)

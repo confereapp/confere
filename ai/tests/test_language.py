@@ -62,6 +62,12 @@ class LanguageTests(unittest.TestCase):
         windows = language_windows(rows, ByteBPE(), 3, "train")
         self.assertEqual(windows, [([256, 97, 98], [97, 98, 99]), ([99, 100, 101], [100, 101, 257]), ([256, 118, 119], [118, 119, 120]), ([120, 121, 122], [121, 122, 257])])
 
+    def test_packed_windows_fill_context_and_keep_splits(self):
+        rows = [{"text": "abcde", "split": "train"}, {"text": "vwxyz", "split": "train"}, {"text": "secret", "split": "test"}]
+        windows = language_windows(rows, ByteBPE(), 4, "train", pack=True)
+        self.assertEqual(windows, [([256, 97, 98, 99], [97, 98, 99, 100]), ([100, 101, 257, 256], [101, 257, 256, 118]),
+                                   ([118, 119, 120, 121], [119, 120, 121, 122]), ([122], [257])])
+
     def test_language_prompt_does_not_inject_supervised_separator(self):
         ids, dropped = prepare_prompt([], "A ciência é", ByteBPE(), 256, 64, "causal_lm")
         self.assertEqual(ids, [256] + ByteBPE().encode("A ciência é"))
