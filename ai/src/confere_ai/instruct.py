@@ -29,6 +29,10 @@ def load_instructions(path):
         public=row["provenance"]["kind"]=="public_model_generated"
         nli=row['provenance']['kind']=='public_reviewed_nli'
         qa=row['provenance']['kind']=='public_extractive_qa'
+        paragraph=row['provenance']['kind']=='public_paragraph_criterion'
+        if paragraph:
+            from .paragraph_source import validate_provenance
+            validate_provenance(row)
         if (row['provenance']['kind']=='synthetic_authored'
                 and row['task'].startswith('grounded_')
                 and isinstance(row.get('scenario'),dict)
@@ -45,7 +49,7 @@ def load_instructions(path):
             raise ValueError("Proveniência pública não rastreável.")
         if human and (row["provenance"].get("source") not in {"https://huggingface.co/datasets/OpenAssistant/oasst1","https://huggingface.co/datasets/OpenAssistant/oasst2"} or row["provenance"].get("license")!="Apache-2.0" or not row["provenance"].get("revision")):
             raise ValueError("Proveniência humana não rastreável.")
-        if row["split"] not in {"train", "validation", "test"} or row["provenance"]["kind"] not in {"synthetic_authored","human_openassistant","public_model_generated","public_reviewed_nli","public_extractive_qa"}:
+        if row["split"] not in {"train", "validation", "test"} or row["provenance"]["kind"] not in {"synthetic_authored","human_openassistant","public_model_generated","public_reviewed_nli","public_extractive_qa","public_paragraph_criterion"}:
             raise ValueError("Split ou proveniência inválida.")
         conversational = "history" in row
         if conversational:
@@ -69,6 +73,8 @@ def load_instructions(path):
                 or row["task"] != "grounded_" + json.loads(row["target"])["status"]
                 or not judge(row["target"], row)["exact_match"]):
                 raise ValueError("Alvo documental ou referência inválida.")
+    from .relation_partition import verify_partition
+    verify_partition(rows)
     if not all(any(row["split"] == split for row in rows) for split in ("train", "validation")):
         raise ValueError("Treino e validação são obrigatórios.")
     return rows, hashlib.sha256(path.read_bytes()).hexdigest()

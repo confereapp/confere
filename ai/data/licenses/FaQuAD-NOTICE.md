@@ -19,3 +19,8 @@ por título dentro do treino oficial, exclusão de contextos cruzados,
 duplicatas e exemplos que não cabem inteiros. Sem revisão humana local.
 Validação oficial não baixada; nenhum peso externo utilizado.
 O corpus auxiliar não prova atendimento de requisitos nem confiabilidade geral.
+
+Adaptação de relações v1: parágrafos originais preservados, proposições e rótulos
+editoriais locais (suporte, contradição, informação insuficiente), com âncora
+literal e justificativa. Não são rótulos oficiais do FaQuAD nem anotações
+humanas independentes. Documentos agrupados por título entre splits.

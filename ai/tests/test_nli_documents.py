@@ -45,3 +45,20 @@ class NliDocumentsTests(unittest.TestCase):
             row['target']=json.dumps(dict(status='atendido',evidence=[dict(status='atendido',unit='page:99')]))
             path.write_text('\n'.join(json.dumps(r) for r in [row,fixture]))
             with self.assertRaises(ValueError):load_instructions(path)
+
+    def test_grouped_source_requires_tracked_component_and_loader_blocks_leakage(self):
+        from prepare_relation_documents import assign_partitions
+        first=self.row(1);second=self.row(2)
+        second['requirement']='A pessoa está ouvindo música.'
+        from confere_ai.grounding import prompt_for
+        second['prompt']=prompt_for(second['requirement'],second['units'],2)
+        rows=assign_partitions([first,second])
+        for row in rows: validate_provenance(row)
+        bad=copy.deepcopy(rows[0]);bad['provenance']['component_sha256']='changed'
+        with self.assertRaises(ValueError): validate_provenance(bad)
+        rows[0]['split']='train';rows[1]['split']='validation'
+        # Mesmo que os IDs de projeto sejam falsificados, o texto compartilhado denuncia vazamento.
+        rows[1]['project_id']='f'*64;rows[1]['provenance']['component_sha256']='f'*64
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'data.jsonl';path.write_text('\n'.join(json.dumps(r) for r in rows))
+            with self.assertRaisesRegex(ValueError,'atravessa splits'): load_instructions(path)

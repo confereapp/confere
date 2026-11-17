@@ -8,7 +8,13 @@ STATES = {0: 'nao_atendido', 1: 'atendido', 2: 'evidencia_insuficiente'}
 
 def validate_provenance(row):
     p = row['provenance']
-    if (row['split'] != 'train' or not row['task'].startswith('grounded_')
+    grouped = p.get('partition_protocol') == 'document_sentence_components_v1'
+    if grouped and (not isinstance(p.get('component_sha256'),str)
+                    or len(p['component_sha256']) != 64
+                    or any(c not in '0123456789abcdef' for c in p['component_sha256'])
+                    or row['project_id'] != p['component_sha256']):
+        raise ValueError('Componente de inferência pública não rastreável.')
+    if ((row['split'] != 'train' and not grouped) or not row['task'].startswith('grounded_')
             or p.get('source') != SOURCE or p.get('revision') != REVISION
             or p.get('license') != 'MIT' or p.get('train_sha256') != TRAIN_SHA256
             or p.get('license_sha256') != LICENSE_SHA256 or not p.get('source_row_id')
