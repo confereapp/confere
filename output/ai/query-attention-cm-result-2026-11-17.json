@@ -1,0 +1,24 @@
+{
+  "summary": {
+    "final_step": 6000,
+    "quality": [
+      true,
+      0,
+      1.0,
+      1.0,
+      0,
+      407
+    ],
+    "promotable": false
+  },
+  "selected_step": 0,
+  "quality": [
+    true,
+    0,
+    1.0,
+    1.0,
+    0,
+    407
+  ],
+  "promoted": false
+}

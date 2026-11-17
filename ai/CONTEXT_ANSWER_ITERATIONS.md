@@ -958,3 +958,17 @@ a atenção recebe gradientes, com preservação do professor próprio nos bits
 de treino em que ele acerta. O objetivo é experimentar uma leitura contextual
 mais flexível; o resultado não está garantido. O artefato é não promovível e
 o loader da API não foi alterado. Receitas e hashes foram preservados.
+
+CL e CM encerraram os 6000 passos; ambos retiveram a origem no passo zero
+(407/410). CM usou a consulta restrita aos tokens do requisito e as chaves
+restritas ao corpo, sem mudar os IDs de entrada. A triagem de consolidação
+dos resultados locais armazenados não encontrou aprovação completa em
+nenhum ponto dos dois ensaios. Não é uma nova execução do pipeline com
+pesos intermediários, que não foram retidos; os limites estão registrados.
+
+CN iniciou outra leitura experimental: correspondência por embeddings dos
+tokens e valores com contexto local bidirecional aprendido, para permitir
+que predicados depois do nome do recurso contribuam à decisão. Encoder e
+cabeça de origem permanecem congelados. Atenção e módulo de contexto são
+treinados; uma nota inicial estreita foi corrigida no manifesto, sem alterar
+os pesos ou a receita executada. Todos esses artefatos são não promovíveis.

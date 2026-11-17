@@ -1,0 +1,21 @@
+{
+  "data": "ai/data/private/document-control-cc-2026-11-17/examples.jsonl",
+  "dataset_fingerprint": "8b2077ee03c706d4017d98acb94eefb796d7adbcb21cd0666a2f15a7409225cc",
+  "source": "ai/runs/evidence-calibrated-ci-2026-11-17/best.pt",
+  "source_sha256": "be69550369939272b56cddcef4f7972fa41714c7c2c9921f1f79acbf727d9700",
+  "script_sha256": "7839bb46773c4570db20687b7948ceb7d9a67e90ca9a2ead3d05079d9af05dd8",
+  "objective": "experimental_local_query_attention",
+  "promotable": false,
+  "frozen_encoder_and_base_head": true,
+  "steps": 6000,
+  "eval_every": 500,
+  "batch_size": 8,
+  "learning_rate": 0.0001,
+  "teacher_weight": 1.0,
+  "test_examples_used": 0,
+  "note": "Raw-token requirement/body matching and learned local context. Frozen encoder and base head. Original recipe note saying only attention was too narrow; optimizer also trains the context module. No default or loader changed.",
+  "trained_modules": [
+    "attention",
+    "context"
+  ]
+}

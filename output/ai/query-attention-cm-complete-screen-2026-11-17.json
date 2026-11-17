@@ -1,0 +1,1123 @@
+{
+  "results": [
+    {
+      "step": 0,
+      "local_quality": [
+        true,
+        0,
+        1.0,
+        1.0,
+        0,
+        407
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          6,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          6,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          8,
+          8
+        ],
+        "new-development/scope_long": [
+          7,
+          8
+        ],
+        "new-development/tail_conflict": [
+          7,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          8,
+          8
+        ],
+        "new-development/mention_long": [
+          8,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 500,
+      "local_quality": [
+        false,
+        0,
+        0.37037037037037035,
+        0.9295570079883805,
+        0,
+        393
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          4,
+          6
+        ],
+        "previous-extra/scope_long": [
+          4,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          3,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          4,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          2,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          7,
+          8
+        ],
+        "new-development/scope_long": [
+          8,
+          8
+        ],
+        "new-development/tail_conflict": [
+          6,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          8,
+          8
+        ],
+        "new-development/mention_long": [
+          7,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 1000,
+      "local_quality": [
+        false,
+        0,
+        0.9523809523809523,
+        0.9955648926237162,
+        0,
+        404
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          6,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          6,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          7,
+          8
+        ],
+        "new-development/scope_long": [
+          7,
+          8
+        ],
+        "new-development/tail_conflict": [
+          7,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          7,
+          8
+        ],
+        "new-development/mention_long": [
+          7,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 1500,
+      "local_quality": [
+        false,
+        0,
+        0.9722222222222222,
+        0.9983660130718954,
+        0,
+        405
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          6,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          6,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          7,
+          8
+        ],
+        "new-development/scope_long": [
+          7,
+          8
+        ],
+        "new-development/tail_conflict": [
+          6,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          8,
+          8
+        ],
+        "new-development/mention_long": [
+          7,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 2000,
+      "local_quality": [
+        false,
+        0,
+        0.9523809523809523,
+        0.9955648926237162,
+        0,
+        403
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          6,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          6,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          6,
+          8
+        ],
+        "new-development/scope_long": [
+          7,
+          8
+        ],
+        "new-development/tail_conflict": [
+          6,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          7,
+          8
+        ],
+        "new-development/mention_long": [
+          7,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 2500,
+      "local_quality": [
+        false,
+        0,
+        0.9722222222222222,
+        0.9983660130718954,
+        0,
+        404
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          6,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          6,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          6,
+          8
+        ],
+        "new-development/scope_long": [
+          7,
+          8
+        ],
+        "new-development/tail_conflict": [
+          6,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          8,
+          8
+        ],
+        "new-development/mention_long": [
+          7,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 3000,
+      "local_quality": [
+        false,
+        0,
+        0.7407407407407407,
+        0.9706919804959021,
+        0,
+        398
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          4,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          5,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          5,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          5,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          7,
+          8
+        ],
+        "new-development/scope_long": [
+          6,
+          8
+        ],
+        "new-development/tail_conflict": [
+          6,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          7,
+          8
+        ],
+        "new-development/mention_long": [
+          7,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 3500,
+      "local_quality": [
+        false,
+        0,
+        0.9444444444444444,
+        0.9967320261437908,
+        0,
+        403
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          6,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          6,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          6,
+          8
+        ],
+        "new-development/scope_long": [
+          6,
+          8
+        ],
+        "new-development/tail_conflict": [
+          7,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          8,
+          8
+        ],
+        "new-development/mention_long": [
+          7,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 4000,
+      "local_quality": [
+        false,
+        0,
+        0.9523809523809523,
+        0.9955648926237162,
+        0,
+        403
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          6,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          6,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          6,
+          8
+        ],
+        "new-development/scope_long": [
+          7,
+          8
+        ],
+        "new-development/tail_conflict": [
+          6,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          7,
+          8
+        ],
+        "new-development/mention_long": [
+          7,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 4500,
+      "local_quality": [
+        false,
+        0,
+        0.9523809523809523,
+        0.9971988795518207,
+        0,
+        404
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          6,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          6,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          6,
+          8
+        ],
+        "new-development/scope_long": [
+          8,
+          8
+        ],
+        "new-development/tail_conflict": [
+          6,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          7,
+          8
+        ],
+        "new-development/mention_long": [
+          7,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 5000,
+      "local_quality": [
+        true,
+        0,
+        1.0,
+        1.0,
+        0,
+        407
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          6,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          6,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          6,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          7,
+          8
+        ],
+        "new-development/scope_long": [
+          8,
+          8
+        ],
+        "new-development/tail_conflict": [
+          7,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          8,
+          8
+        ],
+        "new-development/mention_long": [
+          8,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 5500,
+      "local_quality": [
+        false,
+        0,
+        0.7407407407407407,
+        0.9714960058097312,
+        0,
+        399
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          4,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          5,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          5,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          4,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          7,
+          8
+        ],
+        "new-development/scope_long": [
+          7,
+          8
+        ],
+        "new-development/tail_conflict": [
+          7,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          8,
+          8
+        ],
+        "new-development/mention_long": [
+          7,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    },
+    {
+      "step": 6000,
+      "local_quality": [
+        false,
+        0,
+        0.7407407407407407,
+        0.9686948853615519,
+        0,
+        397
+      ],
+      "full_profiles": {
+        "original/scope_short": [
+          6,
+          6
+        ],
+        "original/scope_long": [
+          6,
+          6
+        ],
+        "original/tail_conflict": [
+          6,
+          6
+        ],
+        "original/middle_evidence": [
+          6,
+          6
+        ],
+        "original/short_conflict": [
+          6,
+          6
+        ],
+        "original/mention_long": [
+          6,
+          6
+        ],
+        "previous-extra/scope_short": [
+          6,
+          6
+        ],
+        "previous-extra/scope_long": [
+          4,
+          6
+        ],
+        "previous-extra/tail_conflict": [
+          5,
+          6
+        ],
+        "previous-extra/middle_evidence": [
+          5,
+          6
+        ],
+        "previous-extra/short_conflict": [
+          4,
+          6
+        ],
+        "previous-extra/mention_long": [
+          6,
+          6
+        ],
+        "new-development/scope_short": [
+          6,
+          8
+        ],
+        "new-development/scope_long": [
+          7,
+          8
+        ],
+        "new-development/tail_conflict": [
+          7,
+          8
+        ],
+        "new-development/middle_evidence": [
+          8,
+          8
+        ],
+        "new-development/short_conflict": [
+          7,
+          8
+        ],
+        "new-development/mention_long": [
+          7,
+          8
+        ]
+      },
+      "all_complete_correct": false
+    }
+  ],
+  "note": "Screen from stored deterministic local outputs and verified complete-document consolidation. Baseline checked per requirement against actual CI runs. Trained non-selected states were not saved; any promising point needs reproducible weights and real pipeline verification. Development only."
+}
