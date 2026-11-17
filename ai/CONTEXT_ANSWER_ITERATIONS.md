@@ -917,3 +917,22 @@ passaram, sem falsos positivos. O fluxo completo passou 36/36 originais e
 com 113/116 lotes exatos. Ainda falham tail_conflict e scope_long: 7/8 por
 perfil, abaixo de 90%. Não houve aprovação conjunta ou promoção. CC e CG
 continuam em execução; nova coorte independente será exigida após congelamento.
+
+## Segundo teste pós-congelamento da conversa — 17/11
+
+CG selecionou o passo 12000 com 316/324, passando todos os pisos das famílias
+de desenvolvimento. A combinação inteira foi congelada em CJ: classificador,
+encoder, decoder factual e decoder legado, com hashes e instante anteriores
+à criação dos casos. A coorte nova foi excluída por contexto completo contra
+os corpora CG, BZ e CD. Não há alegação de vocabulário inteiramente inédito.
+
+A primeira avaliação CJ reprovou: suporte 25/36, fatos 12/12, conflitos 4/6,
+ausentes 6/6 e memória 8/12; total 55/72. Memória aqui é 66,7% e realmente
+não passa, diferentemente dos 11/12 anteriores. CJ agora é desenvolvimento;
+consultas posteriores não serão apresentadas como novo teste independente.
+Não houve promoção ou integração desses candidatos no runtime da API.
+
+CC concluiu 20000 passos; o melhor snapshot e a calibração CI permanecem
+preservados. A conversa ainda precisa generalizar a relação entre a pergunta
+e os trechos relevantes, especialmente em recursos novos e valores próximos.
+Mais acertos nas coortes consultadas não substituem essa evidência nova.

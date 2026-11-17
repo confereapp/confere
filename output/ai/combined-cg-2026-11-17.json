@@ -1,0 +1,26 @@
+{
+  "selected_step": 12000,
+  "quality": [
+    true,
+    0,
+    1.0,
+    1.0,
+    0,
+    316
+  ],
+  "correct": 316,
+  "total": 324,
+  "summary": {
+    "final_step": 12000,
+    "quality": [
+      true,
+      0,
+      1.0,
+      1.0,
+      0,
+      316
+    ],
+    "promotable": false
+  },
+  "promoted": false
+}
