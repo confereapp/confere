@@ -1,0 +1,21 @@
+{
+  "run": "conversation-fusion-bx-2026-11-17",
+  "source": "ai/runs/conversation-fusion-bt-2026-11-17/probe.pt",
+  "source_sha256": "0ebf9292bec6d83b143897ba0a0461c164cc9903210ee8128122dd6d826bffc2",
+  "source_step": 14000,
+  "data": "ai/data/private/rich-scopes-bo-2026-11-17/examples.jsonl",
+  "dataset_sha256": "f2fb6a177854360194a5a915c8d075a1e714e09869c0428b3005b1c9b41893f8",
+  "requested_steps": 32000,
+  "batch_size": 8,
+  "eval_every": 4000,
+  "patience": 8,
+  "paired_presence_fraction": 0.5,
+  "paired_presence_groups": 16000,
+  "planned_paired_group_draws": 64000,
+  "balanced_states": true,
+  "length_normalized": true,
+  "label_smoothing": 0.1,
+  "optimizer_reset": true,
+  "promotable": false,
+  "note": "Planned draws are not empirical coverage or quality. Learned-state fusion remains experimental; no API integration or promotion until every gate and independent evaluation passes."
+}

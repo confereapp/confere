@@ -830,3 +830,10 @@ para requisito e texto da unidade, sem entradas exatamente iguais com rótulos
 conflitantes. Isso refuta essa hipótese específica; não prova qualidade
 semântica das anotações públicas nem generalização. Não foram usados exemplos
 de avaliação nessa auditoria. Evidência em document-label-consistency.
+
+BT encerrou 16000 passos, selecionando o passo 14000: 247/252, suporte novo
+31/36 e acerto integral nas demais famílias. Ainda precisa de pelo menos 33/36
+nessa família. BX continua a partir desse checkpoint salvo, com 32000 passos
+solicitados, avaliação a cada 4000 e os mesmos contrastes pareados. O otimizador
+reinicia. O pipeline permanece experimental e não está integrado à API.
+Os números do plano BX são planejados; não representam treino já concluído.

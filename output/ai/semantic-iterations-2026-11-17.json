@@ -1309,23 +1309,6 @@
       }
     },
     {
-      "run": "conversation-fusion-bt-2026-11-17",
-      "finished": false,
-      "promoted": false,
-      "captured_selection_step": 8000,
-      "correct": 244,
-      "total": 252,
-      "quality": [
-        false,
-        0,
-        0.8641975308641975,
-        0.9966877446552243,
-        0,
-        244
-      ],
-      "note": "Snapshot durante execução; não representa resultado final."
-    },
-    {
       "run": "evidence-calibrated-bw-2026-11-17",
       "finished": true,
       "promoted": false,
@@ -1348,6 +1331,200 @@
         "valid": 48,
         "local_correct": 106,
         "local_total": 116
+      }
+    },
+    {
+      "run": "conversation-fusion-bt-2026-11-17",
+      "finished": true,
+      "promoted": false,
+      "selected_step": 14000,
+      "correct": 247,
+      "total": 252,
+      "quality": [
+        false,
+        0,
+        0.9567901234567902,
+        0.9989461005721169,
+        0,
+        247
+      ],
+      "families": {
+        "conversation_repair": [
+          2,
+          2
+        ],
+        "conversation_definition": [
+          4,
+          4
+        ],
+        "conversation_capability": [
+          3,
+          3
+        ],
+        "conversation_memory": [
+          3,
+          3
+        ],
+        "conversation_repeat": [
+          4,
+          4
+        ],
+        "conversation_clarify": [
+          3,
+          3
+        ],
+        "conversation_wellbeing": [
+          2,
+          2
+        ],
+        "conversation_composed": [
+          2,
+          2
+        ],
+        "conversation_misunderstanding": [
+          1,
+          1
+        ],
+        "conversation_closure": [
+          1,
+          1
+        ],
+        "conversation_flow_greeting": [
+          2,
+          2
+        ],
+        "conversation_flow_acknowledgement": [
+          2,
+          2
+        ],
+        "conversation_flow_identity": [
+          3,
+          3
+        ],
+        "conversation_flow_negation": [
+          3,
+          3
+        ],
+        "conversation_flow_switch": [
+          3,
+          3
+        ],
+        "conversation_flow_closure": [
+          2,
+          2
+        ],
+        "conversation_flow_state": [
+          4,
+          4
+        ],
+        "conversation_flow_topic": [
+          4,
+          4
+        ],
+        "conversation_flow_repair": [
+          1,
+          1
+        ],
+        "conversation_insufficient": [
+          1,
+          1
+        ],
+        "conversation_identity": [
+          1,
+          1
+        ],
+        "conversation_slang_hello": [
+          3,
+          3
+        ],
+        "conversation_slang_identity": [
+          3,
+          3
+        ],
+        "conversation_slang_function": [
+          3,
+          3
+        ],
+        "conversation_slang_scope": [
+          3,
+          3
+        ],
+        "conversation_slang_praise": [
+          3,
+          3
+        ],
+        "conversation_slang_negation": [
+          3,
+          3
+        ],
+        "conversation_social_context": [
+          1,
+          1
+        ],
+        "conversation_social": [
+          1,
+          1
+        ],
+        "conversation_guidance": [
+          4,
+          4
+        ],
+        "conversation_context_answer_fact": [
+          24,
+          24
+        ],
+        "conversation_context_answer_missing": [
+          12,
+          12
+        ],
+        "conversation_context_answer_conflict": [
+          12,
+          12
+        ],
+        "conversation_context_answer_support": [
+          12,
+          12
+        ],
+        "conversation_context_answer_memory": [
+          36,
+          36
+        ],
+        "conversation_context_answer_natural": [
+          9,
+          9
+        ],
+        "conversation_context_answer_independent_support": [
+          31,
+          36
+        ],
+        "conversation_context_answer_independent_fact": [
+          12,
+          12
+        ],
+        "conversation_context_answer_independent_conflict": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_missing": [
+          6,
+          6
+        ],
+        "conversation_context_answer_independent_memory": [
+          12,
+          12
+        ]
+      },
+      "summary": {
+        "final_step": 16000,
+        "quality": [
+          false,
+          0,
+          0.9567901234567902,
+          0.9989461005721169,
+          0,
+          247
+        ],
+        "promotable": false
       }
     }
   ],
