@@ -3,12 +3,29 @@ from pathlib import Path
 import unittest
 import torch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
-from probe_conversation_routing import RoutedDecoder,FusionDecoder,presence_pools
+from probe_conversation_routing import RoutedDecoder,FusionDecoder,presence_pools,TypeSelectedDecoder
 from confere_ai.evidence_classifier import paired_indices
 from confere_ai.tokenizer import ByteBPE
 
 
 class ConversationRoutingTests(unittest.TestCase):
+    def test_learned_type_selects_factual_decoder_and_preserves_other_types(self):
+        state=[0]
+        def classifier(prompt,lengths):
+            result=torch.zeros(1,6);result[0,state[0]]=1;return result
+        class Adapter:
+            config=object();tokenizer=object()
+            def __init__(self,value):self.value=value;self.classifier=classifier
+            def generate(self,prompt,budget,eos):return self.value,budget,eos
+        factual,legacy=Adapter('factual'),Adapter('legacy')
+        model=TypeSelectedDecoder(factual,legacy);prompt=torch.tensor([[1,2]])
+        self.assertEqual(model.generate(prompt,16,3),('factual',16,3))
+        for i in range(1,6):
+            state[0]=i
+            self.assertEqual(model.generate(prompt,16,3),('legacy',16,3))
+        legacy.classifier=lambda *args:None
+        with self.assertRaises(ValueError):TypeSelectedDecoder(factual,legacy)
+
     def test_paired_sampling_changes_the_answer_for_the_same_training_body(self):
         rows=[dict(split='train',target=target,scenario=dict(paired_presence_group=group,text='body-'+group))
               for group in ['a','b'] for target in ['Sim.','Não.','Não tenho informação suficiente para responder.']]

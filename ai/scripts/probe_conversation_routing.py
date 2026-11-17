@@ -54,6 +54,21 @@ class RoutedDecoder:
         return self.decoder.generate(prompt,max_new_tokens,eos)
 
 
+class TypeSelectedDecoder:
+    """Preserva o decoder legado e usa o factual conforme o tipo aprendido."""
+    def __init__(self,factual,legacy):
+        if (factual.config!=legacy.config or factual.classifier is not legacy.classifier
+                or factual.tokenizer is not legacy.tokenizer):
+            raise ValueError('Componentes de roteamento incompatíveis.')
+        self.factual=factual;self.legacy=legacy;self.config=factual.config
+
+    @torch.no_grad()
+    def generate(self,prompt,max_new_tokens,eos):
+        logits=self.factual.classifier(prompt,torch.tensor([prompt.shape[1]],device=prompt.device))
+        decoder=self.factual if int(logits.argmax(-1).item())==0 else self.legacy
+        return decoder.generate(prompt,max_new_tokens,eos)
+
+
 class FusionDecoder(RoutedDecoder):
     @torch.no_grad()
     def generate(self,prompt,max_new_tokens,eos):
