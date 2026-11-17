@@ -21,6 +21,12 @@ FORMS=[
     ('O módulo de {} está funcionando.','O módulo de {} não foi implementado.'),
     ('O software fornece {}.','O software não fornece {}.'),
     ('Encontramos a funcionalidade de {} no produto.','Não encontramos a funcionalidade de {} no produto.'),
+    ('O relatório confirma que {} está disponível.','O relatório confirma que {} está indisponível.'),
+    ('O documento informa que {} está implementado.','O documento informa que {} não está implementado.'),
+    ('A revisão registra que {} está disponível.','A revisão registra que {} está indisponível.'),
+    ('Foi verificado que existe {}.','Foi verificado que não existe {}.'),
+    ('Consta na documentação que {} foi entregue.','Consta na documentação que {} não foi entregue.'),
+    ('A equipe comprovou que {} funciona.','A equipe comprovou que {} não funciona.'),
 ]
 
 

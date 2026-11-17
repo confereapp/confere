@@ -1,0 +1,7 @@
+{
+  "single_sentence_with_que": {
+    "nao_atendido": 400,
+    "atendido": 400
+  },
+  "note": "Training-only lexical association audit; excludes conflicting and irrelevant units. Not a quality metric."
+}
