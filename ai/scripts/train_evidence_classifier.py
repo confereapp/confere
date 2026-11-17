@@ -17,12 +17,14 @@ from confere_ai.tokenizer import ByteBPE
 
 
 @torch.no_grad()
-def training_errors(model, train, device):
+def training_errors(model, train, device, thresholds=(.5, .5)):
+    response([], [], thresholds)
+    cutoffs=torch.tensor(thresholds,device=device)
     model.eval(); errors=[]
     for offset in range(0,len(train),8):
         items=train[offset:offset+8]
         ids,lengths=unit_batch(items,device,model.backbone.config.block_size)
-        predicted=model.evidence_scores(model(ids,lengths))>=.5
+        predicted=model.evidence_scores(model(ids,lengths))>=cutoffs
         labels=torch.tensor([item['labels'] for item in items],device=device).bool()
         errors.extend(offset+i for i,bad in enumerate((predicted!=labels).any(-1).cpu().tolist()) if bad)
     return errors
@@ -88,7 +90,8 @@ def main():
         for i, item in enumerate(train): pools[item["source_key"]].append(i)
     paired_pools = list(pools.values())
     generator = torch.Generator().manual_seed(42)
-    hard = training_errors(model,train,args.device) if args.error_replay else []
+    error_thresholds=source['settings'].get('thresholds',[.5,.5])
+    hard = training_errors(model,train,args.device,error_thresholds) if args.error_replay else []
     if args.error_replay: print(json.dumps(dict(train_error_units=len(hard),train_units=len(train))),flush=True)
     optimizer = torch.optim.AdamW([dict(params=[p for p in model.backbone.parameters() if p.requires_grad], lr=args.encoder_learning_rate),
                                   dict(params=model.head.parameters(), lr=args.head_learning_rate)], weight_decay=.01)
@@ -97,6 +100,7 @@ def main():
                     checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", error_replay=args.error_replay, initial_train_errors=len(hard), loss="categorical_ce" if state_mode==STATE_MODES[1] else "unweighted_bce")
     settings['unit_segmentation']=source['settings'].get('unit_segmentation','whole_unit_v1')
     settings['thresholds']=source['settings'].get('thresholds',[.5,.5])
+    if args.error_replay:settings['training_error_thresholds']=list(error_thresholds)
     response([],[],settings['thresholds'])
     predictor=None
     if settings['unit_segmentation']=='sentences_v1':
