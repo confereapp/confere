@@ -1,0 +1,21 @@
+{
+  "source": "https://huggingface.co/datasets/eraldoluis/faquad",
+  "revision": "6ad978f20672bb41625b3b71fbe4a88b893d0a86",
+  "train_sha256": "33d32022638a4ad252420d44544585279903a83637a974c6fe6c2e53f1c7b294",
+  "license": "CC-BY-4.0",
+  "base_sha256": "f2fb6a177854360194a5a915c8d075a1e714e09869c0428b3005b1c9b41893f8",
+  "dataset_sha256": "0f6a029430a60c181ce997c41c0773e620fbc47507b9badcb41eb49d2425bfa4",
+  "counts": {
+    "public_train": 720,
+    "public_validation": 111,
+    "too_long": 4,
+    "duplicate": 2
+  },
+  "splits": {
+    "validation": 363,
+    "train": 9455
+  },
+  "official_validation_downloaded": false,
+  "external_weights_used": false,
+  "note": "Reserva por título dentro do treino oficial; contextos inteiros, sem truncamento. Replay autoral inclui conflitos e ausência; QA não vira rótulo de requisito atendido. Desenvolvimento, sem promoção."
+}

@@ -972,3 +972,20 @@ que predicados depois do nome do recurso contribuam à decisão. Encoder e
 cabeça de origem permanecem congelados. Atenção e módulo de contexto são
 treinados; uma nota inicial estreita foi corrigida no manifesto, sem alterar
 os pesos ou a receita executada. Todos esses artefatos são não promovíveis.
+
+
+## Leitura pública extrativa sem pesos externos — 17/11
+
+CP usa apenas o treino oficial do FaQuAD, com revisão e SHA fixos e licença
+CC BY 4.0 preservada. Autores e adaptações estão em data/licenses/FaQuAD-NOTICE.md.
+Nenhum modelo externo foi baixado e nenhum serviço pago foi utilizado.
+Foram retidos 720 exemplos públicos de treino e 111 reservados por título,
+sem contexto cruzando splits ou truncamento silencioso; quatro exemplos
+longos e duas duplicatas foram excluídos. A validação oficial não foi baixada.
+O replay autoral amostra até 300 casos por tarefa, preserva os históricos
+fornecidos como exemplos isolados e mantém as 252 avaliações anteriores.
+Conflitos e ausência vêm do replay; perguntas acadêmicas não são convertidas
+em evidência de requisito atendido. A origem própria BR permanece preservada.
+Piloto: 500 passos, taxa 1e-5, 25% de lotes públicos, ancoragem na própria
+origem e seleção por geração, incluindo a referência no passo zero.
+Suíte Python: 228 testes aprovados. Sem alterações na API ou promoção.
