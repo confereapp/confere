@@ -862,7 +862,7 @@ Uma comparação de decoders próprios sobre CA, já desenvolvimento, está
 em andamento para investigar erros de cópia de números e nomes.
 
 A comparação terminou: o decoder BR corrigiu os 12/12 fatos de CA, com
-classificador BX congelado. Ainda falham conflito (5/6) e memória (11/12);
+classificador BX congelado. Conflito (5/6) ainda falha; memória (11/12) passa;
 suporte permanece 34/36 e ausentes 6/6. A combinação precisa ser reavaliada
 nos 252 casos anteriores antes de qualquer adoção. CA já é desenvolvimento
 nessa comparação, e será necessário outro teste novo após o próximo congelamento.
@@ -888,3 +888,8 @@ desse componente não autoriza adoção: deve ser medido pelo roteamento complet
 CC iniciou um controle documental a partir de AU, retirando apenas os 8190
 pares públicos do corpus BS e preservando os 410 casos de validação. Não há
 conclusão causal antes do término. Ambos os treinos seguem em andamento.
+
+Correção da interpretação: 11/12 em memória equivale a 91,7% e passa o piso
+de 90%. Na combinação CE sobre CA, somente conflitos (5/6) bloqueiam a
+conversa. O ajuste CD de nomes busca melhoria adicional, não é condição
+necessária para satisfazer o piso de memória. Os resultados brutos não mudaram.
