@@ -1,0 +1,140 @@
+"""Ensaio offline de classificação aprendida e decoder próprio; sem promoção."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import torch
+from collections import defaultdict
+from confere_ai.chat import prepare_prompt
+from confere_ai.evidence_classifier import unit_batch
+from confere_ai.generative_selection import quality_key
+from confere_ai.instruct import load_instructions,score,conversation_indices
+from confere_ai.model import GPT,GPTConfig
+from confere_ai.semantic_auxiliary import semantic_class
+from confere_ai.tokenizer import ByteBPE
+
+STATES={1:'Não tenho informação suficiente para responder.',2:'Há informações conflitantes no texto.',3:'Sim.',4:'Não.'}
+
+
+class Classifier(torch.nn.Module):
+    def __init__(self,source,head):
+        super().__init__();self.encoder=GPT(GPTConfig(**source['config']))
+        self.encoder.load_state_dict(source['model']);self.encoder.head=torch.nn.Identity()
+        self.head=torch.nn.Linear(source['config']['width'],6);self.head.load_state_dict(head)
+    def forward(self,ids,lengths):
+        return self.head(self.encoder(ids)[torch.arange(len(ids),device=ids.device),lengths-1])
+
+
+class RoutedDecoder:
+    def __init__(self,decoder,classifier,tokenizer,threshold):
+        self.decoder=decoder;self.classifier=classifier;self.tokenizer=tokenizer
+        self.threshold=threshold;self.config=decoder.config
+    @torch.no_grad()
+    def generate(self,prompt,max_new_tokens,eos):
+        probabilities=self.classifier(prompt,torch.tensor([prompt.shape[1]],device=prompt.device)).softmax(-1)[0]
+        confidence,state=probabilities.max(0);state=int(state)
+        if state in STATES and confidence.item()>=self.threshold:
+            answer=self.tokenizer.encode(STATES[state])+[eos]
+            if len(answer)>max_new_tokens:raise ValueError('Verbalização excede o orçamento.')
+            return torch.cat([prompt,torch.tensor([answer],device=prompt.device)],-1)
+        return self.decoder.generate(prompt,max_new_tokens,eos)
+
+
+class FusionDecoder(RoutedDecoder):
+    @torch.no_grad()
+    def generate(self,prompt,max_new_tokens,eos):
+        probabilities=self.classifier(prompt,torch.tensor([prompt.shape[1]],device=prompt.device)).softmax(-1)[0]
+        native=self.decoder.generate(prompt,max_new_tokens,eos)
+        candidates=[native[0,prompt.shape[1]:].tolist()]+[self.tokenizer.encode(text)+[eos] for text in STATES.values()]
+        native_text=self.tokenizer.decode(candidates[0]).strip()
+        if probabilities[0]>.5 and native_text in STATES.values():
+            first=self.decoder(prompt)[0,-1].topk(8).indices.tolist()
+            for token in first:
+                if token in {self.tokenizer.BOS,self.tokenizer.EOS,self.tokenizer.PAD,self.tokenizer.SEP}:continue
+                prefix=torch.cat([prompt,torch.tensor([[token]],device=prompt.device)],-1)
+                alternative=self.decoder.generate(prefix,max_new_tokens-1,eos)
+                candidates.append(alternative[0,prompt.shape[1]:].tolist())
+        ranked=[]
+        for tokens in {tuple(c) for c in candidates}:
+            text=self.tokenizer.decode(list(tokens)).strip()
+            if not text or len(tokens)>max_new_tokens:continue
+            state=next((key for key,value in STATES.items() if value==text),None)
+            prior=probabilities[state] if state is not None else probabilities[0]+probabilities[5]
+            target=torch.tensor([tokens],device=prompt.device)
+            sequence=torch.cat([prompt,target],-1)
+            logits=self.decoder(sequence[:,:-1])[:,prompt.shape[1]-1:]
+            likelihood=logits.log_softmax(-1).gather(-1,target.unsqueeze(-1)).sum()
+            if getattr(self,'length_normalized',False):likelihood=likelihood/len(tokens)
+            value=likelihood+self.threshold*prior.clamp_min(1e-12).log()
+            if not torch.isfinite(value):raise ValueError('Escore de fusão não finito.')
+            ranked.append((value.item(),tokens))
+        if not ranked:raise ValueError('Nenhuma resposta candidata válida.')
+        selected=max(ranked,key=lambda pair:pair[0])[1]
+        return torch.cat([prompt,torch.tensor([selected],device=prompt.device)],-1)
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    for key in ['encoder','head','decoder','data','run-dir']:p.add_argument('--'+key,type=Path,required=True)
+    p.add_argument('--fusion',action='store_true')
+    p.add_argument('--balanced-states',action='store_true')
+    p.add_argument('--length-normalized',action='store_true')
+    a=p.parse_args()
+    if a.run_dir.exists():p.error('Saída deve ser nova.')
+    torch.set_num_threads(4);torch.manual_seed(42)
+    raw=a.encoder.read_bytes();source=torch.load(a.encoder,map_location='cpu',weights_only=True)
+    decoder_source=torch.load(a.decoder,map_location='cpu',weights_only=True)
+    if source['config']!=decoder_source['config'] or source['merges']!=decoder_source['merges']:p.error('Origens incompatíveis.')
+    head=torch.load(a.head,map_location='cpu',weights_only=True)['head'];classifier=Classifier(source,head).to('mps')
+    decoder=GPT(GPTConfig(**source['config'])).to('mps');decoder.load_state_dict(decoder_source['model']);decoder.eval().requires_grad_(False)
+    tokenizer=ByteBPE(source['merges']);rows,digest=load_instructions(a.data)
+    train=[r for r in rows if r['split']=='train'];validation=[r for r in rows if r['split']=='validation']
+    if any(not r['task'].startswith('conversation_') for r in rows):p.error('Somente conversa.')
+    encoded=[];pools={'legacy':{},'context':{}};state_pools=defaultdict(list)
+    for i,row in enumerate(train):
+        ids,dropped=prepare_prompt(row['history'],row['prompt'],tokenizer,1024,256,'conversation');assert not dropped
+        encoded.append(dict(ids=ids));category='context' if row['task'].startswith('conversation_context_answer_') else 'legacy'
+        pools[category].setdefault(row['task'],[]).append(i)
+        state_pools[semantic_class(row)].append(i)
+    if a.balanced_states and set(state_pools)!=set(range(6)):p.error('Todos os seis estados de treino são obrigatórios.')
+    optimizer=torch.optim.AdamW([dict(params=classifier.encoder.parameters(),lr=1e-6),dict(params=classifier.head.parameters(),lr=1e-4)],weight_decay=.01)
+    generator=torch.Generator().manual_seed(42);a.run_dir.mkdir(parents=True)
+    info=dict(method='experimental_lm_class_fusion' if a.fusion else 'experimental_learned_state_router',data=str(a.data),dataset_fingerprint=digest,encoder_sha256=hashlib.sha256(raw).hexdigest(),decoder_sha256=hashlib.sha256(a.decoder.read_bytes()).hexdigest(),head_sha256=hashlib.sha256(a.head.read_bytes()).hexdigest(),test_examples_used=0,promotable=False,note='Classificação aprendida e decoder próprio congelado. Fusão usa probabilidades dos dois modelos e candidatos gerados, sem extrair respostas do texto por regras. Avaliação por respostas completas com histórico gerado. Sem integração na API.')
+    (a.run_dir/'run.json').write_text(json.dumps(info,ensure_ascii=False,indent=2))
+    info['sampling']='uniform_semantic_class_per_example' if a.balanced_states else 'uniform_legacy_context_family'
+    info['training_class_counts']={key:len(value) for key,value in state_pools.items()}
+    info['length_normalized']=a.length_normalized
+    info['parameter_kind']='class_log_probability_weight' if a.fusion else 'confidence_threshold'
+    info.update(encoder=str(a.encoder),decoder=str(a.decoder),head=str(a.head))
+    (a.run_dir/'run.json').write_text(json.dumps(info,ensure_ascii=False,indent=2))
+    best=None;stale=0
+    for step in range(3001):
+        if step:
+            classifier.train()
+            if a.balanced_states:
+                indices=[state_pools[state][torch.randint(len(state_pools[state]),(),generator=generator).item()] for state in torch.randint(6,(8,),generator=generator).tolist()]
+            else:indices=conversation_indices(pools,8,generator)
+            ids,lengths=unit_batch([encoded[i] for i in indices],'mps',1024)
+            labels=torch.tensor([semantic_class(train[i]) for i in indices],device='mps')
+            loss=torch.nn.functional.cross_entropy(classifier(ids,lengths),labels)
+            if not torch.isfinite(loss):raise ValueError('Loss não finita.')
+            optimizer.zero_grad(set_to_none=True);loss.backward();torch.nn.utils.clip_grad_norm_(classifier.parameters(),1.,error_if_nonfinite=True);optimizer.step()
+        if step%500==0:
+            classifier.eval();results=[]
+            for threshold in ([.5,1.,2.] if a.fusion else [.5,.8,.95]):
+                adapter=FusionDecoder if a.fusion else RoutedDecoder
+                predictor=adapter(decoder,classifier,tokenizer,threshold);predictor.length_normalized=a.length_normalized
+                with torch.no_grad():result=score(predictor,tokenizer,validation,'mps',1024,256)
+                key=quality_key(result);results.append(dict(threshold=threshold,quality=key,result=result))
+                print(json.dumps(dict(step=step,threshold=threshold,correct=result['correct'],total=result['total'],quality=key)),flush=True)
+            selected=max(results,key=lambda r:r['quality']);(a.run_dir/f'evaluation-{step}.json').write_text(json.dumps(results,ensure_ascii=False))
+            if best is None or selected['quality']>best:
+                best=selected['quality'];stale=0
+                torch.save(dict(classifier={k:v.detach().cpu() for k,v in classifier.state_dict().items()},step=step,objective='experimental_conversation_router',threshold=selected['threshold'],promotable=False),a.run_dir/'probe.pt')
+                (a.run_dir/'evaluation.json').write_text(json.dumps(dict(selected=selected,step=step,promotable=False),ensure_ascii=False,indent=2))
+            else:stale+=1
+            if best[0] or stale>=6:break
+    (a.run_dir/'summary.json').write_text(json.dumps(dict(final_step=step,quality=best,promotable=False),indent=2))
+
+
+if __name__=='__main__':main()
