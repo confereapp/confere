@@ -30,6 +30,7 @@ def load_instructions(path):
         nli=row['provenance']['kind']=='public_reviewed_nli'
         qa=row['provenance']['kind']=='public_extractive_qa'
         if (row['provenance']['kind']=='synthetic_authored'
+                and row['task'].startswith('grounded_')
                 and isinstance(row.get('scenario'),dict)
                 and row['scenario'].get('criterion') in {'presence','absence','mention'}
                 and row['provenance'].get('annotation_scope')!='component_inclusion_v2'):
