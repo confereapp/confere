@@ -125,12 +125,15 @@ def main():
     for name in ('data','source','run-dir'):p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--device',choices=['cpu','mps'],default='mps')
     p.add_argument('--steps',type=int,default=3000)
+    p.add_argument('--paragraph-units',action='store_true',help='Ensaio explícito por parágrafo inteiro, sem rotular frases isoladas pelo alvo do parágrafo.')
     a=p.parse_args()
     if a.run_dir.exists() or a.steps<=0:p.error('Saída nova e passos positivos exigidos.')
     torch.set_num_threads(4);torch.manual_seed(42)
     rows,digest=load_instructions(a.data)
     if any(not r['task'].startswith('grounded_') for r in rows):p.error('Somente dados documentais.')
     source=torch.load(a.source,map_location='cpu',weights_only=True)
+    if a.paragraph_units:
+        source=dict(source,settings=dict(source['settings'],unit_segmentation='whole_unit_v1'))
     encoder=FrozenPairs(source,a.device)
     train=[r for r in rows if r['split']=='train'];validation=[r for r in rows if r['split']=='validation']
     lookup={(r['id'],u['id']):(r['requirement'],u['text']) for r in train for u in r['units']}
@@ -150,7 +153,7 @@ def main():
     (a.run_dir/'run.json').write_text(json.dumps(dict(data=str(a.data),dataset_fingerprint=digest,source=str(a.source),
         original_source_sha256=sha(a.source),source_sha256=frozen_hash,objective=OBJECTIVE,encoder_frozen=True,
         train_units=len(items),validation_rows=len(validation),normalization_from_train_only=True,
-        baseline_equivalence_verified=True,head_device='cpu',encoder_device=a.device,
+        baseline_equivalence_verified=True,head_device='cpu',encoder_device=a.device,paragraph_units=a.paragraph_units,
         sampling='paired_queries_uniform_unit_then_opposite_label',steps=a.steps,script_sha256=sha(Path(__file__)),
         promotable=False,note='Sonda residual treinada; sem interpretação por palavras-chave, sem pesos externos ou integração na API.'),indent=2))
     optimizer=torch.optim.AdamW(head.parameters(),lr=.001,weight_decay=.01)
