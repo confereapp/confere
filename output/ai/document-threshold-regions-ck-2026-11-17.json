@@ -1,0 +1,28 @@
+{
+  "data": "ai/data/private/document-control-cc-2026-11-17/examples.jsonl",
+  "dataset_fingerprint": "8b2077ee03c706d4017d98acb94eefb796d7adbcb21cd0666a2f15a7409225cc",
+  "source": "ai/runs/evidence-calibrated-ci-2026-11-17/best.pt",
+  "source_sha256": "be69550369939272b56cddcef4f7972fa41714c7c2c9921f1f79acbf727d9700",
+  "positive_regions": 227,
+  "negative_regions": 231,
+  "feasible_regions": 0,
+  "baseline_full": {
+    "original": [
+      36,
+      36
+    ],
+    "previous-extra": [
+      36,
+      36
+    ],
+    "new-development": [
+      46,
+      48
+    ]
+  },
+  "baseline_verified_per_requirement": true,
+  "training_steps": 0,
+  "test_examples_used": 0,
+  "adopted": false,
+  "note": "Two global thresholds only. Exhaustive score-induced development regions, including known complete documents. Must verify through actual pipeline and fresh independent cohort."
+}

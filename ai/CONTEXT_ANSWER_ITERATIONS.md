@@ -936,3 +936,25 @@ CC concluiu 20000 passos; o melhor snapshot e a calibração CI permanecem
 preservados. A conversa ainda precisa generalizar a relação entre a pergunta
 e os trechos relevantes, especialmente em recursos novos e valores próximos.
 Mais acertos nas coortes consultadas não substituem essa evidência nova.
+
+## Limites da calibração global e leitura por atenção — 17/11
+
+CC confirmou o encerramento em 20000 passos e seleção no passo 1000. CI
+permanece preservado. A auditoria de probabilidades mostra sobreposição entre
+escores de evidência verdadeira e falsa nos dois estados; não existe limiar
+que torne todos os bits locais corretos. Isso não é prova de erro nas anotações.
+
+CK enumerou 227 regiões de limiar positivo e 231 negativas. A consolidação
+foi conferida requisito por requisito contra as três avaliações completas
+reais de CI, além dos totais 36/36, 36/36 e 46/48. Nenhum par global satisfez
+simultaneamente os pisos locais, zero falsos positivos e todos os perfis
+completos conhecidos. Não foram usados testes novos nessa seleção. Nenhum
+checkpoint foi exportado por essa busca sem solução.
+
+CL iniciou um ensaio de atenção residual à consulta, com encoder e cabeça
+originais congelados. A projeção de saída começa zerada; o autoteste confirmou
+logits idênticos à origem, e a avaliação inicial reproduziu 407/410. Somente
+a atenção recebe gradientes, com preservação do professor próprio nos bits
+de treino em que ele acerta. O objetivo é experimentar uma leitura contextual
+mais flexível; o resultado não está garantido. O artefato é não promovível e
+o loader da API não foi alterado. Receitas e hashes foram preservados.
