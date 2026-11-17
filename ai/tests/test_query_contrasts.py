@@ -19,6 +19,10 @@ class QueryContrastTests(unittest.TestCase):
             self.assertEqual(numeric[1]['target'],numeric[2]['target'])
             self.assertEqual(numeric[3]['target'],'Há informações conflitantes no texto.')
             self.assertTrue(all(r['scenario']['noise']==numeric[0]['scenario']['noise'] for r in numeric))
+            for trio in [group[4:7],group[7:]]:
+                self.assertEqual(len({r['scenario']['paired_presence_group'] for r in trio}),1)
+                self.assertEqual(len({r['scenario']['text'] for r in trio}),1)
+                self.assertEqual(len({r['target'] for r in trio}),3)
             for a,b in zip(group[4:7],group[7:]):
                 self.assertEqual(a['scenario']['queried'],b['scenario']['queried'])
                 if a['target']!='Não tenho informação suficiente para responder.':self.assertNotEqual(a['target'],b['target'])

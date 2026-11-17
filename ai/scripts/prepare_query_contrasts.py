@@ -117,22 +117,35 @@ def scoped_conversations(count=4000):
                          prompt=prompt,target=target,history=[],turn_index=0,response_tokens=256,scenario=scenario,
                          provenance=dict(kind='synthetic_authored',note='Escopo da consulta com números distratores ou recursos compostos inéditos; somente treino.')))
     for i in range(count):
-        a,b=rng.sample(range(1,181),2)
-        noise=[rng.choice(['A equipe tem {} integrantes.','O relatório contém {} páginas.','Foram planejadas {} reuniões.','O código tem {} módulos.']).format(rng.randint(1,180)) for _ in range(rng.randint(1,4))]
+        def number():return rng.randint(1,20 if rng.random()<.5 else 180)
+        a=number();b=number()
+        while a==b:b=number()
+        noise=[rng.choice(['A equipe tem {} integrantes.','O relatório contém {} páginas.','Foram planejadas {} reuniões.','O código tem {} módulos.']).format(number()) for _ in range(rng.randint(1,4))]
+        extras=[rng.choice(STATEMENTS['linguagem']).format(rng.choice(['Ruby','Java','Python','Lua'])),
+                rng.choice(STATEMENTS['nome']).format(rng.choice(['Serra','Vale','Trilha'])),
+                rng.choice(STATEMENTS['responsavel']).format(rng.choice(NAMES))]
+        rng.shuffle(extras);noise+=extras[:rng.randrange(4)]
         form=rng.choice(STATEMENTS['prazo']+[FIELDS['prazo'][0]]);question=rng.choice(QUESTIONS['prazo']+FIELDS['prazo'][1]);separator=rng.choice([' ','\n'])
         for j,values in enumerate([[],[a],[a,a],[a,b]]):
             sentences=noise+[form.format(v) for v in values];rng.shuffle(sentences);facts=dict(prazo=values)
             add(f'numeric-scope-{i}-{j}',' '.join(sentences)+separator+question,answer(facts,'prazo'),dict(facts=facts,field='prazo',noise=list(noise)))
         left,right=[v.casefold() for v in names(rng)];x,y=[v.casefold() for v in names(rng)]
+        if i%3==0:
+            left,right=rng.sample(['cadastro','consulta','relatórios','pagamentos','filtros','alertas','edição','histórico','avaliações','reservas','gestão','controle','monitoramento','exportação','importação','sincronização'],2)
+            x,y=rng.sample(['clientes','produtos','compras','tarefas','mensagens','turmas','documentos','serviços','contas','agendamentos','matrículas','fornecedores'],2)
         features=[left+' de '+x,left+' de '+y,right+' de '+x];positive,negative,missing=rng.sample(features,3)
+        verb=rng.choice(['inclui','contém','tem','possui','fornece'])
+        questions=[rng.choice(['O projeto inclui {}?','Esse projeto tem {}?','Há {} no projeto?','O texto confirma a presença de {}?']).format(feature) for feature in features]
         for swap in range(2):
             yes,no=(positive,negative) if not swap else (negative,positive)
-            statements=[f'O projeto inclui {yes}.',f'O projeto não inclui {no}.'];rng.shuffle(statements)
+            statements=[f'O projeto {verb} {yes}.',f'O projeto não {verb} {no}.'];rng.shuffle(statements)
             text=' '.join(statements)
+            if i%3==0:text=f'O projeto {verb} {yes}, mas não {verb} {no}.'
+            if i%3==1:text=f'O projeto não {verb} {no}, mas {verb} {yes}.'
             if i%2:text+=f' A equipe discutiu {missing}, sem confirmar a implementação.'
             for j,feature in enumerate(features):
                 target='Sim.' if feature==yes else 'Não.' if feature==no else 'Não tenho informação suficiente para responder.'
-                add(f'open-scope-{i}-{swap}-{j}',text+separator+f'O projeto inclui {feature}?',target,dict(positive=yes,negative=no,queried=feature,missing=missing))
+                add(f'open-scope-{i}-{swap}-{j}',text+separator+questions[j],target,dict(positive=yes,negative=no,queried=feature,missing=missing,text=text,paired_presence_group=f'open-scope-{i}-{swap}'))
     return rows
 
 

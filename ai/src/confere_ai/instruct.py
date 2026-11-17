@@ -187,9 +187,10 @@ def run(args):
         if not family_sampling or args.batch_size % 2: raise ValueError("Foco pareado exige amostragem de conversa e lote par.")
         grouped = {}
         for i, row in enumerate(train):
-            text = row.get("scenario", {}).get("text", "")
-            if row["task"] == "conversation_context_answer_support" and text.startswith("O projeto não inclui") and ", mas " in text:
-                grouped.setdefault(text, []).append(i)
+            scenario=row.get('scenario',{});text=scenario.get('text','')
+            explicit_group=scenario.get('paired_presence_group')
+            if row['task']=='conversation_context_answer_support' and (explicit_group is not None or (text.startswith('O projeto não inclui') and ', mas ' in text)):
+                grouped.setdefault(('explicit',explicit_group) if explicit_group is not None else ('text',text), []).append(i)
         presence_pools = [pool for pool in grouped.values() if len({train[i]["target"] for i in pool}) > 1]
         if not presence_pools: raise ValueError("Currículo não contém consultas contrastivas sobre o mesmo texto.")
     comparison_pools=[]
@@ -278,6 +279,7 @@ def run(args):
     settings["human_sampling_policy"]="homogeneous_batches"
     settings["trainable_scope"] = "final_normalization_bias" if getattr(args, "train_norm_bias_only", False) else "selected_blocks" if last_blocks is not None else "all_parameters"
     settings["paired_presence_focus"] = bool(presence_pools)
+    if presence_pools:settings['paired_presence_groups']=len(presence_pools)
     settings['paired_facts_focus']=bool(comparison_pools)
     settings["training_loss_reduction"] = "example_mean" if family_sampling else "token_mean"
     settings['first_token_weight']=first_token_weight
