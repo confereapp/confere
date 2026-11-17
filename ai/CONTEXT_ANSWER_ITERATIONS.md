@@ -1114,3 +1114,17 @@ ensaiada com os mesmos dados CZ e pesos próprios CR; o melhor ponto foi
 DB ensaia a opção existente de quatro estados categóricos a partir de CZ;
 a decisão de conflito passa a ser uma classe conjunta. Sem pesos externos
 ou atualização dos padrões. Todos os ensaios permanecem desenvolvimento.
+
+Correção posterior: CU/CZ confundiam inclusão, implementação e disponibilidade;
+seus totais antigos não provam distinção semântica. Dados e histórico preservados.
+O novo escopo component_inclusion_v2 limita inclusão e tem controles de componente
+presente temporariamente indisponível. A amostragem pareada agora é uniforme pela
+primeira unidade, preservando o contraste na segunda. Suíte final: 245 testes.
+DD parte de CI e seleciona 2000: 464/590, seis falsas aprovações, reprovado.
+DE congela CI e aprende cabeça residual com representação explícita da consulta;
+normalização/âncora somente do treino, equivalência de base verificada. Seleciona
+750: 503/590, zero falsas aprovações nesse ponto, mas pisos reprovados e regressões.
+O controle conhecido de backup agora distingue inclusão, ausência e menção.
+Ambos mantêm 18 conflitos nos PDFs: 2/8 e 2/10 coincidências, sem promoção.
+Revisão de DA: R1/R4 têm suporte pertinente alternativo; R3 aprova sem explicar
+múltiplos clientes. Detalhes em research/document-correction-2026-11-17.md.

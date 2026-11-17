@@ -1,0 +1,291 @@
+{
+  "experiment": "DE",
+  "selected_step": 750,
+  "quality": [
+    false,
+    0,
+    0.4444444444444445,
+    0.9407407407407407,
+    0,
+    503
+  ],
+  "adopted": false,
+  "dataset_scope": "component_inclusion_v2",
+  "tests_passed": 245,
+  "http_verified": false,
+  "independent_human_review": false,
+  "baseline": {
+    "correct": 448,
+    "total": 590,
+    "profiles": {
+      "api_batch_atendido": {
+        "correct": 37,
+        "total": 40
+      },
+      "api_batch_conflict": {
+        "correct": 7,
+        "total": 7
+      },
+      "api_batch_evidencia_insuficiente": {
+        "correct": 118,
+        "total": 118
+      },
+      "api_batch_nao_atendido": {
+        "correct": 37,
+        "total": 37
+      },
+      "criterion_absence": {
+        "correct": 6,
+        "total": 60
+      },
+      "criterion_mention": {
+        "correct": 17,
+        "total": 60
+      },
+      "criterion_presence": {
+        "correct": 18,
+        "total": 60
+      },
+      "development_api_batch_atendido": {
+        "correct": 18,
+        "total": 18
+      },
+      "development_api_batch_conflict": {
+        "correct": 3,
+        "total": 3
+      },
+      "development_api_batch_evidencia_insuficiente": {
+        "correct": 52,
+        "total": 52
+      },
+      "development_api_batch_nao_atendido": {
+        "correct": 15,
+        "total": 15
+      },
+      "mention_only": {
+        "correct": 12,
+        "total": 12
+      },
+      "multiple_negative": {
+        "correct": 12,
+        "total": 12
+      },
+      "multiple_positive": {
+        "correct": 12,
+        "total": 12
+      },
+      "other_topic": {
+        "correct": 12,
+        "total": 12
+      },
+      "previous_multiple_evidence": {
+        "correct": 24,
+        "total": 24
+      },
+      "shared_conflict": {
+        "correct": 12,
+        "total": 12
+      },
+      "single_negative": {
+        "correct": 12,
+        "total": 12
+      },
+      "single_positive": {
+        "correct": 12,
+        "total": 12
+      },
+      "split_conflict": {
+        "correct": 12,
+        "total": 12
+      }
+    }
+  },
+  "selected": {
+    "correct": 503,
+    "total": 590,
+    "profiles": {
+      "api_batch_atendido": {
+        "correct": 34,
+        "total": 40
+      },
+      "api_batch_conflict": {
+        "correct": 7,
+        "total": 7
+      },
+      "api_batch_evidencia_insuficiente": {
+        "correct": 118,
+        "total": 118
+      },
+      "api_batch_nao_atendido": {
+        "correct": 35,
+        "total": 37
+      },
+      "criterion_absence": {
+        "correct": 49,
+        "total": 60
+      },
+      "criterion_mention": {
+        "correct": 28,
+        "total": 60
+      },
+      "criterion_presence": {
+        "correct": 24,
+        "total": 60
+      },
+      "development_api_batch_atendido": {
+        "correct": 18,
+        "total": 18
+      },
+      "development_api_batch_conflict": {
+        "correct": 3,
+        "total": 3
+      },
+      "development_api_batch_evidencia_insuficiente": {
+        "correct": 52,
+        "total": 52
+      },
+      "development_api_batch_nao_atendido": {
+        "correct": 15,
+        "total": 15
+      },
+      "mention_only": {
+        "correct": 12,
+        "total": 12
+      },
+      "multiple_negative": {
+        "correct": 12,
+        "total": 12
+      },
+      "multiple_positive": {
+        "correct": 12,
+        "total": 12
+      },
+      "other_topic": {
+        "correct": 12,
+        "total": 12
+      },
+      "previous_multiple_evidence": {
+        "correct": 24,
+        "total": 24
+      },
+      "shared_conflict": {
+        "correct": 12,
+        "total": 12
+      },
+      "single_negative": {
+        "correct": 12,
+        "total": 12
+      },
+      "single_positive": {
+        "correct": 12,
+        "total": 12
+      },
+      "split_conflict": {
+        "correct": 12,
+        "total": 12
+      }
+    }
+  },
+  "run": {
+    "data": "ai/data/private/document-inclusion-dd-expanded-2026-11-17/examples.jsonl",
+    "dataset_fingerprint": "8641dc7c5da51ae0a5f420bbb23334b8cca504a7749b70cf3ba3a289da0c9785",
+    "source": "ai/runs/evidence-calibrated-ci-2026-11-17/best.pt",
+    "original_source_sha256": "be69550369939272b56cddcef4f7972fa41714c7c2c9921f1f79acbf727d9700",
+    "source_sha256": "68f44a453895cbfe303eb9b903b1c95afdaf0a98e83117b76d1c835313388bc6",
+    "objective": "experimental_query_conditioned_evidence_v1",
+    "encoder_frozen": true,
+    "train_units": 26829,
+    "validation_rows": 590,
+    "normalization_from_train_only": true,
+    "baseline_equivalence_verified": true,
+    "head_device": "cpu",
+    "encoder_device": "mps",
+    "sampling": "paired_queries_uniform_unit_then_opposite_label",
+    "steps": 3000,
+    "script_sha256": "9fd00fd02481ea133ce67f2a6ab4ea67f1fe526e763eb07e3282e20fbde55c0f",
+    "promotable": false,
+    "note": "Sonda residual treinada; sem interpretação por palavras-chave, sem pesos externos ou integração na API."
+  },
+  "real_documents_dd": {
+    "source": "ai/data/private/real-documents-dd-2026-11-17/summary.json",
+    "projects": [
+      {
+        "project": "maua-2240",
+        "pages": 10,
+        "text_characters": 15201,
+        "requirements": 8,
+        "status_matches": 2,
+        "false_positive": 0,
+        "invalid_requirements": 0,
+        "conflicts": 8,
+        "blocked_by_missing_text": 0,
+        "batches": 128,
+        "elapsed_seconds": 5.735402459000003,
+        "contiguous_coverage_verified": true,
+        "literal_quotes_verified": true
+      },
+      {
+        "project": "maua-329",
+        "pages": 60,
+        "text_characters": 71630,
+        "requirements": 10,
+        "status_matches": 2,
+        "false_positive": 0,
+        "invalid_requirements": 0,
+        "conflicts": 10,
+        "blocked_by_missing_text": 10,
+        "batches": 758,
+        "elapsed_seconds": 23.887560541,
+        "contiguous_coverage_verified": true,
+        "literal_quotes_verified": true
+      }
+    ]
+  },
+  "real_documents_de": {
+    "source": "ai/data/private/real-documents-de-2026-11-17/summary.json",
+    "projects": [
+      {
+        "project": "maua-2240",
+        "pages": 10,
+        "text_characters": 15201,
+        "requirements": 8,
+        "status_matches": 2,
+        "false_positive": 0,
+        "invalid_requirements": 0,
+        "conflicts": 8,
+        "blocked_by_missing_text": 0,
+        "batches": 128,
+        "elapsed_seconds": 4.499566916000003,
+        "contiguous_coverage_verified": true,
+        "literal_quotes_verified": true
+      },
+      {
+        "project": "maua-329",
+        "pages": 60,
+        "text_characters": 71630,
+        "requirements": 10,
+        "status_matches": 2,
+        "false_positive": 0,
+        "invalid_requirements": 0,
+        "conflicts": 10,
+        "blocked_by_missing_text": 10,
+        "batches": 758,
+        "elapsed_seconds": 20.160321625,
+        "contiguous_coverage_verified": true,
+        "literal_quotes_verified": true
+      }
+    ]
+  },
+  "semantic_review_da": {
+    "review_kind": "editorial_development_not_independent",
+    "supported": [
+      "maua-2240-R1",
+      "maua-2240-R4"
+    ],
+    "unsupported": [
+      "maua-2240-R3"
+    ],
+    "other_predictions_semantically_reviewed": false
+  },
+  "conclusion": "Não resolveu os PDFs: 18 conflitos persistem. Protocolo experimental rejeitado para promoção; controle curto corrigido não implica generalização."
+}

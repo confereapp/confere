@@ -1,0 +1,53 @@
+{
+  "checkpoint_sha256": "227ff660efd56c24bb7656b50ae2ad1902650ca7674c2bf12d60686dc3034591",
+  "cohort": "known_development_control",
+  "independent": false,
+  "rows": [
+    {
+      "query": "O projeto deve incluir backup.",
+      "text": "O projeto não inclui backup.",
+      "expected": "nao_atendido",
+      "actual": {
+        "status": "nao_atendido",
+        "evidence": [
+          {
+            "status": "nao_atendido",
+            "unit": "page:1"
+          }
+        ]
+      },
+      "correct": true
+    },
+    {
+      "query": "O relatório deve registrar a ausência de backup.",
+      "text": "O projeto não inclui backup.",
+      "expected": "atendido",
+      "actual": {
+        "status": "atendido",
+        "evidence": [
+          {
+            "status": "atendido",
+            "unit": "page:1"
+          }
+        ]
+      },
+      "correct": true
+    },
+    {
+      "query": "O relatório deve mencionar backup.",
+      "text": "O projeto não inclui backup.",
+      "expected": "atendido",
+      "actual": {
+        "status": "atendido",
+        "evidence": [
+          {
+            "status": "atendido",
+            "unit": "page:1"
+          }
+        ]
+      },
+      "correct": true
+    }
+  ],
+  "adopted": false
+}
