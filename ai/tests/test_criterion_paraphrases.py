@@ -1,10 +1,16 @@
 import random
 import unittest
 from prepare_criterion_contrasts import criterion_rows
-from prepare_criterion_paraphrases import paraphrase
+from prepare_criterion_paraphrases import paraphrase, TEMPLATES
 
 
 class CriterionParaphraseTests(unittest.TestCase):
+    def test_inclusion_aliases_do_not_claim_availability_or_implementation(self):
+        for kind in ['presence','absence']:
+            for text in TEMPLATES[kind]:
+                self.assertNotIn('disponível',text)
+                self.assertNotIn('implementado',text)
+
     def test_preserves_facts_labels_and_reserved_rows(self):
         rng=random.Random(42)
         train=criterion_rows('train',5);reserved=criterion_rows('validation',5)

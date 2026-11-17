@@ -12,13 +12,27 @@ from confere_ai.evidence_classifier import examples
 from confere_ai.grounding import prompt_for, judge
 from confere_ai.instruct import load_instructions
 from confere_ai.tokenizer import ByteBPE
-from prepare_document_prose import TOPICS, FORMS, BACKGROUNDS
+from prepare_document_prose import TOPICS, BACKGROUNDS
+
+INCLUSION_FORMS={
+    'train':[
+        ('O projeto inclui {}','O projeto não inclui {}'),
+        ('A versão atual contém {}','A versão atual está sem {}'),
+        ('O recurso {} faz parte da entrega','O recurso {} não faz parte da entrega'),
+        ('A equipe registrou {} como componente presente no produto','A equipe registrou {} como componente ausente do produto'),
+        ('O produto inclui {}, embora o acesso a esse recurso esteja temporariamente indisponível',
+         'O produto não inclui {}, embora esse recurso exista em outra aplicação'),
+        ('O produto contém {}; sua implantação em produção será discutida depois',
+         'O produto está sem {}; uma eventual inclusão será discutida depois')],
+    'validation':[
+        ('A inspeção da versão atual constatou a presença de {} no produto',
+         'A inspeção da versão atual constatou a ausência de {} no produto')]}
 
 
 def criterion_rows(split,count):
     rng=random.Random(171150 if split=='train' else 171151);rows=[]
     for i in range(count):
-        a,b=rng.sample(TOPICS[split],2);pos,neg=rng.choice(FORMS[split]);mode=i%5
+        a,b=rng.sample(TOPICS[split],2);pos,neg=rng.choice(INCLUSION_FORMS[split]);mode=i%5
         facts=[(a,'atendido')] if mode==0 else [(a,'nao_atendido')] if mode==1 else (
             [(a,'atendido'),(a,'nao_atendido')] if mode==2 else [])
         parts=[dict(text=(pos if state=='atendido' else neg).format(topic)+'.',topic=topic,state=state)
@@ -30,8 +44,8 @@ def criterion_rows(split,count):
         templates=({'presence':'O registro deve confirmar a presença de {}.',
                     'absence':'O registro deve confirmar a ausência de {}.',
                     'mention':'O registro deve mencionar {}.'} if split=='train' else
-                   {'presence':'O documento precisa informar que {} está disponível.',
-                    'absence':'O documento precisa informar que {} está ausente.',
+                   {'presence':'O documento precisa informar que {} está presente na versão atual.',
+                    'absence':'O documento precisa informar que {} está ausente da versão atual.',
                     'mention':'O documento precisa conter uma menção a {}.'})
         for j,topic in enumerate([a,b]):
             for kind,template in templates.items():
@@ -49,7 +63,8 @@ def criterion_rows(split,count):
                     document=key+'.txt',units=copy.deepcopy(units),prompt=prompt_for(requirement,units,2),
                     target=json.dumps(dict(status=status,evidence=evidence),ensure_ascii=False),
                     scenario=dict(criterion=kind,topic=topic,parts=copy.deepcopy(parts)),
-                    provenance=dict(kind='synthetic_authored',note='Critério explícito com alvo derivado por construção; mencionar ausência não equivale a exigir presença. Sem texto dos TCCs.'))
+                    provenance=dict(kind='synthetic_authored',annotation_scope='component_inclusion_v2',
+                        note='Critério de inclusão de componente; não confunde presença com disponibilidade, conclusão de implementação ou produção. Sem texto dos TCCs.'))
                 assert judge(row['target'],row)['exact_match'];rows.append(row)
     return rows
 
@@ -68,7 +83,7 @@ def main():
     path.write_text(''.join(json.dumps(r,ensure_ascii=False)+'\n' for r in rows));load_instructions(path)
     manifest=dict(base_sha256=base_hash,dataset_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                   counts=dict(Counter(r['split'] for r in rows)),original_validation_unchanged=True,
-                  real_documents_used=False,external_weights_used=False,script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                  real_documents_used=False,external_weights_used=False,label_scope='component_inclusion_v2',script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   note='Contrastes de critério documental. Validação conhecida de desenvolvimento, não teste cego. Nenhum TCC usado como treino.')
     (a.output/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2));print(json.dumps(manifest),flush=True)
 

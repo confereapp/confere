@@ -29,6 +29,11 @@ def load_instructions(path):
         public=row["provenance"]["kind"]=="public_model_generated"
         nli=row['provenance']['kind']=='public_reviewed_nli'
         qa=row['provenance']['kind']=='public_extractive_qa'
+        if (row['provenance']['kind']=='synthetic_authored'
+                and isinstance(row.get('scenario'),dict)
+                and row['scenario'].get('criterion') in {'presence','absence','mention'}
+                and row['provenance'].get('annotation_scope')!='component_inclusion_v2'):
+            raise ValueError('Escopo de critério antigo ou não validado; regenere os contrastes de inclusão v2.')
         if qa:
             from .qa_source import validate_provenance
             validate_provenance(row)

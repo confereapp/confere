@@ -14,23 +14,23 @@ from confere_ai.tokenizer import ByteBPE
 
 TEMPLATES={
     'presence': ['O registro deve confirmar a presença de {}.',
-                 'A solução descrita deve ter {} disponível.',
-                 'É necessário que o produto ofereça suporte a {}.',
-                 'A implementação deve contar com {}.',
-                 'Deve ser possível utilizar {} na aplicação.',
-                 'O relatório precisa demonstrar que {} foi implementado.'],
+                 'O relatório deve registrar que {} faz parte da versão atual.',
+                 'É necessário que a versão atual contenha {}.',
+                 'A entrega descrita deve incluir {}.',
+                 'O texto precisa indicar que {} está presente no produto.',
+                 'A documentação precisa registrar {} como componente presente.'],
     'absence': ['O registro deve confirmar a ausência de {}.',
-                'O documento deve registrar que {} está ausente.',
-                'O relatório precisa declarar que o produto está sem {}.',
-                'Deve ficar documentado que {} não está disponível.',
-                'O escopo descrito precisa excluir {}.',
-                'O registro deve indicar que não há suporte para {}.'],
+                'O documento deve registrar que {} está ausente da versão atual.',
+                'O relatório precisa declarar que a versão atual está sem {}.',
+                'Deve ficar documentado que {} não faz parte da entrega.',
+                'O produto descrito não deve conter {}.',
+                'O registro deve indicar que a versão atual não inclui {}.'],
     'mention': ['O registro deve mencionar {}.',
                 'Deve haver uma menção a {} na documentação.',
-                'O texto deve apresentar uma referência a {}.',
+                'O relatório deve mencionar {}.',
                 'É necessário citar {} no relatório.',
-                'A documentação precisa fazer referência a {}.',
-                'O assunto {} deve aparecer no texto.']}
+                'O texto deve fazer referência a {}.',
+                'A documentação precisa conter uma menção a {}.']}
 
 
 def paraphrase(row,rng):
@@ -58,7 +58,7 @@ def main():
     manifest=dict(base_sha256=base_hash,dataset_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                   changed_train_queries=sum(x['prompt']!=y['prompt'] for x,y in zip(before,rows)),
                   validation_unchanged=True,targets_unchanged=True,source_texts_unchanged=True,
-                  real_documents_used=False,external_weights_used=False,
+                  real_documents_used=False,external_weights_used=False,label_scope='component_inclusion_v2',
                   note='Paráfrases autorais para expor os operadores semânticos no treino; avaliação já conhecida continua desenvolvimento.')
     (a.output/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2));print(json.dumps(manifest),flush=True)
 
