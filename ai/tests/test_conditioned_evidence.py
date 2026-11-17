@@ -46,5 +46,21 @@ class ConditionedEvidenceTests(unittest.TestCase):
             state['source_sha256']='0'*64;torch.save(state,path)
             with self.assertRaisesRegex(ValueError,'Origem congelada'):load_probe(path,'cpu')
 
+    def test_smaller_linear_head_zero_start_roundtrip_and_unknown_kind_rejection(self):
+        source,encoder,mlp=self.fixture()
+        head=ConditionalHead(torch.zeros(98),torch.ones(98),'linear_residual_v1')
+        self.assertLess(sum(p.numel() for p in head.parameters()),sum(p.numel() for p in mlp.parameters()))
+        x=torch.randn(2,98);base=torch.randn(2,2)
+        self.assertTrue(torch.equal(head(x,base),base))
+        with torch.no_grad():head.net.weight.fill_(.02);head.net.bias.fill_(-.03)
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);torch.save(source,root/'source.pt')
+            state=dict(settings=dict(objective=OBJECTIVE,head_kind='linear_residual_v1'),head=head.state_dict(),
+                       source_sha256=hashlib.sha256((root/'source.pt').read_bytes()).hexdigest())
+            torch.save(state,root/'probe.pt');loaded=load_probe(root/'probe.pt','cpu')
+            self.assertTrue(torch.equal(head(x,base),loaded.head(x,base)))
+            state['settings']['head_kind']='unknown';torch.save(state,root/'probe.pt')
+            with self.assertRaisesRegex(ValueError,'Cabeça residual'):load_probe(root/'probe.pt','cpu')
+
 
 if __name__=='__main__':unittest.main()

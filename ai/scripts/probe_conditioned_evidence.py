@@ -14,10 +14,16 @@ from confere_ai.project_review import review_extracted
 from train_evidence_classifier import score
 
 OBJECTIVE='experimental_query_conditioned_evidence_v1'
+HEAD_KINDS=('mlp_residual_v1','linear_residual_v1')
 
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def sampling_view(items,lookup,pair_by_query):
+    if not pair_by_query:return items
+    return [dict(item,source_key=hashlib.sha256(lookup[item['row_id'],item['unit']][0].encode()).hexdigest()) for item in items]
 
 
 class FrozenPairs:
@@ -63,14 +69,17 @@ class FrozenPairs:
 
 
 class ConditionalHead(nn.Module):
-    def __init__(self,mean,scale):
+    def __init__(self,mean,scale,kind=HEAD_KINDS[0]):
         super().__init__()
         if mean.ndim!=1 or mean.shape!=scale.shape or not torch.isfinite(mean).all() or not torch.isfinite(scale).all() or not (scale>0).all():
             raise ValueError('Normalização inválida.')
         self.register_buffer('mean',mean.detach().float())
         self.register_buffer('scale',scale.detach().float())
-        self.net=nn.Sequential(nn.Linear(len(mean),128),nn.GELU(),nn.Linear(128,2))
-        nn.init.zeros_(self.net[-1].weight);nn.init.zeros_(self.net[-1].bias)
+        if kind not in HEAD_KINDS:raise ValueError('Cabeça residual não suportada.')
+        self.net=(nn.Linear(len(mean),2) if kind==HEAD_KINDS[1]
+                  else nn.Sequential(nn.Linear(len(mean),128),nn.GELU(),nn.Linear(128,2)))
+        last=self.net if kind==HEAD_KINDS[1] else self.net[-1]
+        nn.init.zeros_(last.weight);nn.init.zeros_(last.bias)
 
     def forward(self,x,base_logits):
         return base_logits+self.net((x-self.mean)/self.scale)
@@ -103,7 +112,7 @@ def load_probe(path,device='mps'):
     if sha(source_path)!=state['source_sha256']:raise ValueError('Origem congelada foi alterada.')
     encoder=FrozenPairs(torch.load(source_path,map_location='cpu',weights_only=True),device)
     dimension=6*encoder.base.config.width+2
-    head=ConditionalHead(torch.zeros(dimension),torch.ones(dimension))
+    head=ConditionalHead(torch.zeros(dimension),torch.ones(dimension),state['settings'].get('head_kind',HEAD_KINDS[0]))
     head.load_state_dict(state['head']);head.eval()
     return ConditionedPredictor(encoder,head)
 
@@ -126,6 +135,8 @@ def main():
     p.add_argument('--device',choices=['cpu','mps'],default='mps')
     p.add_argument('--steps',type=int,default=3000)
     p.add_argument('--paragraph-units',action='store_true',help='Ensaio explícito por parágrafo inteiro, sem rotular frases isoladas pelo alvo do parágrafo.')
+    p.add_argument('--pair-by-query',action='store_true',help='Parear a mesma consulta com trechos de rótulos diferentes.')
+    p.add_argument('--linear-head',action='store_true',help='Controle de menor capacidade sobre as mesmas representações congeladas.')
     a=p.parse_args()
     if a.run_dir.exists() or a.steps<=0:p.error('Saída nova e passos positivos exigidos.')
     torch.set_num_threads(4);torch.manual_seed(42)
@@ -139,7 +150,8 @@ def main():
     lookup={(r['id'],u['id']):(r['requirement'],u['text']) for r in train for u in r['units']}
     items=examples(train,encoder.base.tokenizer,encoder.base.config.block_size,readout=encoder.base.readout)
     x,b=encoder.features([lookup[i['row_id'],i['unit']] for i in items]);labels=torch.tensor([i['labels'] for i in items])
-    head=ConditionalHead(x.mean(0),x.std(0,unbiased=False).clamp_min(.001))
+    head_kind=HEAD_KINDS[1] if a.linear_head else HEAD_KINDS[0]
+    head=ConditionalHead(x.mean(0),x.std(0,unbiased=False).clamp_min(.001),head_kind)
     predictor=ConditionedPredictor(encoder,head)
     pairs=[(r['requirement'],part) for r in validation for u in r['units']
            for part in (sentence_parts(u['text']) if encoder.base.segmentation=='sentences_v1' else [u['text']])]
@@ -154,15 +166,17 @@ def main():
         original_source_sha256=sha(a.source),source_sha256=frozen_hash,objective=OBJECTIVE,encoder_frozen=True,
         train_units=len(items),validation_rows=len(validation),normalization_from_train_only=True,
         baseline_equivalence_verified=True,head_device='cpu',encoder_device=a.device,paragraph_units=a.paragraph_units,
-        sampling='paired_queries_uniform_unit_then_opposite_label',steps=a.steps,script_sha256=sha(Path(__file__)),
+        head_kind=head_kind,trainable_head_parameters=sum(p.numel() for p in head.parameters()),
+        sampling='paired_units_uniform_then_same_query_other_label' if a.pair_by_query else 'paired_queries_uniform_unit_then_opposite_label',steps=a.steps,script_sha256=sha(Path(__file__)),
         promotable=False,note='Sonda residual treinada; sem interpretação por palavras-chave, sem pesos externos ou integração na API.'),indent=2))
     optimizer=torch.optim.AdamW(head.parameters(),lr=.001,weight_decay=.01)
-    generator=torch.Generator().manual_seed(42);pools=unit_weighted_query_pools(items)
+    sampling_items = sampling_view(items,lookup,a.pair_by_query)
+    generator=torch.Generator().manual_seed(42);pools=unit_weighted_query_pools(sampling_items)
     teacher=b.sigmoid();good=((teacher>=torch.tensor(encoder.base.thresholds))==labels.bool()).float()
     best=None;selected=None;selected_step=None
     for step in range(a.steps+1):
         if step:
-            head.train();indices=paired_indices(items,pools,128,generator)
+            head.train();indices=paired_indices(sampling_items,pools,128,generator)
             logits=head(x[indices],b[indices])
             anchor=(F.binary_cross_entropy_with_logits(logits,teacher[indices],reduction='none')*good[indices]).sum()/good[indices].sum().clamp_min(1)
             loss=F.binary_cross_entropy_with_logits(logits,labels[indices])+anchor
@@ -173,7 +187,7 @@ def main():
             result=baseline if step==0 else score(head,[],validation,'cpu',encoder.base.thresholds,predict_units=predictor.predict_units)
             key=quality_key(result)
             (a.run_dir/f'evaluation-{step}.json').write_text(json.dumps(dict(quality=key,result=result),ensure_ascii=False))
-            state=dict(settings=dict(objective=OBJECTIVE,promotable=False),head=head.state_dict(),
+            state=dict(settings=dict(objective=OBJECTIVE,promotable=False,head_kind=head_kind),head=head.state_dict(),
                        source_sha256=frozen_hash,dataset_fingerprint=digest,step=step)
             temporary=a.run_dir/'last.pt.tmp';torch.save(state,temporary);temporary.replace(a.run_dir/'last.pt')
             if best is None or key>best:
@@ -182,8 +196,10 @@ def main():
             print(json.dumps(dict(step=step,correct=result['correct'],total=result['total'],quality=key)),flush=True)
             if result['correct']==result['total']:break
     assert all(p.grad is None for p in encoder.base.model.parameters())
+    retention=all(not old['exact_match'] or new['exact_match'] for old,new in zip(baseline['samples'],selected['samples']))
     (a.run_dir/'evaluation.json').write_text(json.dumps(dict(selected_step=selected_step,quality=best,
-        baseline=baseline,selected=selected,adopted=False),ensure_ascii=False))
+        baseline=baseline,selected=selected,validation_no_case_regression=retention,
+        heldout_eligible=bool(best[0]) and retention,test_examples_used=0,adopted=False),ensure_ascii=False))
 
 
 if __name__=='__main__':main()
