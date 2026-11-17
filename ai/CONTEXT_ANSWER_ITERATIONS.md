@@ -1061,3 +1061,19 @@ ambas satisfazem uma exigência de mera menção. Os alvos são derivados desse
 critério explícito, sem copiar textos dos TCCs. Há 6000 exemplos novos mais
 4000 de replay; as 570 avaliações anteriores são preservadas e 180 controles
 novos usam tópicos e redações reservados. O ajuste parte de CR; sem promoção.
+
+CU encerrou 3000 passos sem superar sua origem pelo critério por família;
+o melhor permaneceu no passo zero. O último ponto marcou 538/750, e o
+controle livre sobre mencionar backup continuou errado. CU não foi promovido.
+
+CV ensaiou a leitura suffix_query_decision_prefix_v1, mas a investigação
+identificou um bug no treinador: a avaliação por frases criava seu preditor
+com a leitura da origem, ignorando a selecionada para codificar o treino.
+O teste reproduziu IDs de validação diferentes dos IDs esperados; após a
+correção, os protocolos antigo e novo passaram, sem mutar o checkpoint de
+origem. Vinte e cinco testes próximos passaram. CV foi interrompido após
+1000 passos avaliados; suas métricas não servem para comparar a nova leitura.
+O outro ensaio antigo S não é afetado: sua validação por unidade inteira
+usava diretamente os exemplos codificados na leitura selecionada.
+CW repete o mesmo controle com a avaliação corrigida. Pesos e API padrão
+continuam intactos. As tentativas rejeitadas não foram apagadas.

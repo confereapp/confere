@@ -1,0 +1,15 @@
+{
+  "run": "ai/runs/evidence-query-cv-2026-11-17",
+  "valid_evaluation": false,
+  "promotable": false,
+  "training_readout": "suffix_query_decision_prefix_v1",
+  "actual_validation_readout": "shared_json_decision_prefix_v1",
+  "cause": "Sentence validation predictor inherited source protocol instead of selected training readout.",
+  "action": "Interrupted; evidence preserved. Repeated in CW after regression-tested fix.",
+  "fix_commit": "b8e9009",
+  "historical_audit": {
+    "other_suffix_run": "evidence-classifier-s-2026-11-16",
+    "affected": false,
+    "reason": "Whole-unit validation used selected pre-encoded inputs, not sentence predictor."
+  }
+}
