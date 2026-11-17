@@ -99,6 +99,13 @@ def examples(rows, tokenizer, context_size, *, readout=READOUTS[0]):
 
 
 
+def unit_weighted_query_pools(items):
+    groups={}
+    for i,item in enumerate(items):groups.setdefault(item['source_key'],[]).append(i)
+    # A primeira unidade continua uniforme mesmo quando várias consultas compartilham o texto.
+    return [groups[item['source_key']] for item in items]
+
+
 def paired_indices(items, pools, batch_size, generator, *, label_key="labels"):
     if batch_size <= 0 or batch_size % 2: raise ValueError("Lote pareado exige tamanho positivo e par.")
     if not pools: raise ValueError("Fontes pareadas vazias.")

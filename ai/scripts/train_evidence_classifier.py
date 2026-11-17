@@ -1,13 +1,12 @@
 """Ajusta o encoder próprio para relevância/estado por unidade, sem decoder JSON."""
 import argparse
-from collections import defaultdict
 import hashlib
 import json
 import math
 from pathlib import Path
 import time
 import torch
-from confere_ai.evidence_classifier import EvidenceClassifier, examples, unit_batch, response, READOUTS, paired_indices, STATE_MODES, ATTENTION_MODES, load_binary_as_categorical
+from confere_ai.evidence_classifier import EvidenceClassifier, examples, unit_batch, response, READOUTS, paired_indices, unit_weighted_query_pools, STATE_MODES, ATTENTION_MODES, load_binary_as_categorical
 from confere_ai.finetuning import configure_trainable
 from confere_ai.generative_selection import quality_key
 from confere_ai.grounding import judge
@@ -62,7 +61,7 @@ def main():
     parser.add_argument("--steps", type=int, default=8000)
     parser.add_argument("--categorical-states", action="store_true")
     parser.add_argument("--require-perfect-validation", action="store_true")
-    parser.add_argument("--paired-queries", action="store_true")
+    parser.add_argument("--paired-queries", action="store_true", help="Primeira unidade uniforme; segunda consulta da mesma fonte com rótulo diferente quando disponível.")
     parser.add_argument('--bidirectional-encoder',action='store_true')
     parser.add_argument('--train-embeddings',action='store_true')
     parser.add_argument("--error-replay", action="store_true", help="Metade de cada lote revisita erros medidos somente no treino inicial.")
@@ -95,10 +94,7 @@ def main():
     train = examples([r for r in rows if r["split"] == "train"], tokenizer, backbone.config.block_size, readout=readout)
     validation = [r for r in rows if r["split"] == "validation"]
     val = examples(validation, tokenizer, backbone.config.block_size, readout=readout)
-    pools = defaultdict(list)
-    if args.paired_queries:
-        for i, item in enumerate(train): pools[item["source_key"]].append(i)
-    paired_pools = list(pools.values())
+    paired_pools = unit_weighted_query_pools(train) if args.paired_queries else []
     generator = torch.Generator().manual_seed(42)
     error_thresholds=source['settings'].get('thresholds',[.5,.5])
     hard = training_errors(model,train,args.device,error_thresholds) if args.error_replay else []
@@ -107,7 +103,7 @@ def main():
                                   dict(params=model.head.parameters(), lr=args.head_learning_rate)], weight_decay=.01)
     settings = dict(objective="document_classifier", state_mode=state_mode, readout=readout, frozen_embeddings=not args.train_embeddings, require_perfect_validation=args.require_perfect_validation,
                     encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5, eval_every=args.eval_every,
-                    checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", error_replay=args.error_replay, initial_train_errors=len(hard), loss="categorical_ce" if state_mode==STATE_MODES[1] else "unweighted_bce")
+                    checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_unit_then_opposite_label" if args.paired_queries else "uniform_units", error_replay=args.error_replay, initial_train_errors=len(hard), loss="categorical_ce" if state_mode==STATE_MODES[1] else "unweighted_bce")
     settings['unit_segmentation']=source['settings'].get('unit_segmentation','whole_unit_v1')
     settings['attention_mode']=attention_mode
     settings['thresholds']=source['settings'].get('thresholds',[.5,.5])

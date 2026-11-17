@@ -11,6 +11,20 @@ from confere_ai.tokenizer import ByteBPE
 
 
 class EvidenceClassifierTests(unittest.TestCase):
+    def test_paired_pools_preserve_uniform_first_unit_probability(self):
+        from confere_ai.evidence_classifier import unit_weighted_query_pools, paired_indices
+        items=[dict(source_key='a',labels=v) for v in [[1.,0.],[0.,1.],[1.,0.]]]+[dict(source_key='b',labels=[0.,0.])]
+        pools=unit_weighted_query_pools(items)
+        for i in range(len(items)):
+            probability=sum(1/len(pools)/len(pool) for pool in pools if i in pool)
+            self.assertAlmostEqual(probability,1/len(items))
+        generator=torch.Generator().manual_seed(42)
+        for _ in range(20):
+            indices=paired_indices(items,pools,8,generator)
+            for a,b in zip(indices[::2],indices[1::2]):
+                self.assertEqual(items[a]['source_key'],items[b]['source_key'])
+                if items[a]['source_key']=='a':self.assertNotEqual(items[a]['labels'],items[b]['labels'])
+
     def test_bidirectional_reads_future_tokens_and_ignores_padding(self):
         torch.manual_seed(42)
         backbone=GPT(GPTConfig(vocab_size=260,block_size=32,width=16,layers=2,heads=2)).eval()
