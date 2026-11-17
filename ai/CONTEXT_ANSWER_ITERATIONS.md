@@ -1096,3 +1096,21 @@ CY repete CU a partir dos mesmos pesos CR, com o mesmo corpus, taxas e
 3000 passos, usando a amostragem uniforme por unidade já disponível, sem
 amostragem por fonte. Isso isola a alimentação do treino. Nenhuma regra de
 resposta ou filtro lexical foi integrado à API. Suíte completa: 235 testes.
+
+CY encerrou 3000 passos, selecionando 1000 (581/750), mas não corrigiu o
+controle de menção/ausência de backup. CZ ampliou somente as consultas de
+treino: 4971 redações foram alteradas, mantendo integralmente texto, alvo e
+os 750 casos de validação. O melhor por família foi o passo 2000 (609/750,
+8 falsos positivos), embora o passo 1000 tivesse soma maior (622/750).
+A avaliação dos PDFs de CZ manteve os 18 conflitos e 2/8 + 2/10 coincidências.
+
+DA introduz atenção bidirecional versionada só na classificação documental,
+com máscara explícita para chaves de padding. Modelos causais e checkpoints
+antigos mantêm o caminho original. Testes verificam acesso a tokens futuros
+no modo novo, invariância a padding, gradientes finitos e restauração do modo
+no loader. A suíte completa passou com 238 testes. A nova arquitetura foi
+ensaiada com os mesmos dados CZ e pesos próprios CR; o melhor ponto foi
+2000 (518/750), com reprovação por família. Não foi promovida.
+DB ensaia a opção existente de quatro estados categóricos a partir de CZ;
+a decisão de conflito passa a ser uma classe conjunta. Sem pesos externos
+ou atualização dos padrões. Todos os ensaios permanecem desenvolvimento.

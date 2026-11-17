@@ -1,0 +1,196 @@
+{
+  "runs": [
+    {
+      "run": "evidence-criteria-cu-2026-11-17",
+      "selected_step": 0,
+      "quality": [
+        false,
+        0,
+        0.22222222222222224,
+        0.8537659087659086,
+        -45,
+        560
+      ],
+      "accepted": false,
+      "source_sha256": "21eec6b995646392b59793e8adff644c80c06796968142738a11a0a814d5a3e1",
+      "dataset_sha256": "f5ff98549616f923a417b6f6a2ffaf65b49e69523a583aece85a7b916339e766",
+      "settings": {
+        "objective": "document_classifier",
+        "state_mode": "independent_binary",
+        "readout": "shared_json_decision_prefix_v1",
+        "frozen_embeddings": true,
+        "require_perfect_validation": true,
+        "encoder_learning_rate": 1e-05,
+        "head_learning_rate": 0.0001,
+        "selection_patience": 4,
+        "batch_size": 8,
+        "threshold": 0.5,
+        "eval_every": 1000,
+        "checkpoint_selection": "generated_family_quality",
+        "sampling": "paired_queries_uniform_source",
+        "error_replay": false,
+        "initial_train_errors": 0,
+        "loss": "unweighted_bce",
+        "unit_segmentation": "sentences_v1",
+        "thresholds": [
+          0.3,
+          0.5
+        ]
+      }
+    },
+    {
+      "run": "evidence-query-cw-2026-11-17",
+      "selected_step": 1000,
+      "quality": [
+        false,
+        0,
+        0.2037037037037037,
+        0.6372653605986938,
+        -57,
+        458
+      ],
+      "accepted": false,
+      "source_sha256": "21eec6b995646392b59793e8adff644c80c06796968142738a11a0a814d5a3e1",
+      "dataset_sha256": "f5ff98549616f923a417b6f6a2ffaf65b49e69523a583aece85a7b916339e766",
+      "settings": {
+        "objective": "document_classifier",
+        "state_mode": "independent_binary",
+        "readout": "suffix_query_decision_prefix_v1",
+        "frozen_embeddings": true,
+        "require_perfect_validation": true,
+        "encoder_learning_rate": 1e-05,
+        "head_learning_rate": 0.0001,
+        "selection_patience": 5,
+        "batch_size": 8,
+        "threshold": 0.5,
+        "eval_every": 500,
+        "checkpoint_selection": "generated_family_quality",
+        "sampling": "paired_queries_uniform_source",
+        "error_replay": false,
+        "initial_train_errors": 0,
+        "loss": "unweighted_bce",
+        "unit_segmentation": "sentences_v1",
+        "thresholds": [
+          0.3,
+          0.5
+        ]
+      }
+    },
+    {
+      "run": "evidence-criteria-cy-2026-11-17",
+      "selected_step": 1000,
+      "quality": [
+        false,
+        0,
+        0.22222222222222224,
+        0.8827448877448877,
+        -42,
+        581
+      ],
+      "accepted": false,
+      "source_sha256": "21eec6b995646392b59793e8adff644c80c06796968142738a11a0a814d5a3e1",
+      "dataset_sha256": "f5ff98549616f923a417b6f6a2ffaf65b49e69523a583aece85a7b916339e766",
+      "settings": {
+        "objective": "document_classifier",
+        "state_mode": "independent_binary",
+        "readout": "shared_json_decision_prefix_v1",
+        "frozen_embeddings": true,
+        "require_perfect_validation": true,
+        "encoder_learning_rate": 1e-05,
+        "head_learning_rate": 0.0001,
+        "selection_patience": 4,
+        "batch_size": 8,
+        "threshold": 0.5,
+        "eval_every": 1000,
+        "checkpoint_selection": "generated_family_quality",
+        "sampling": "uniform_units",
+        "error_replay": false,
+        "initial_train_errors": 0,
+        "loss": "unweighted_bce",
+        "unit_segmentation": "sentences_v1",
+        "thresholds": [
+          0.3,
+          0.5
+        ]
+      }
+    },
+    {
+      "run": "evidence-paraphrases-cz-2026-11-17",
+      "selected_step": 2000,
+      "quality": [
+        false,
+        0,
+        0.4074074074074074,
+        0.9013484913484912,
+        -8,
+        609
+      ],
+      "accepted": false,
+      "source_sha256": "21eec6b995646392b59793e8adff644c80c06796968142738a11a0a814d5a3e1",
+      "dataset_sha256": "9c1c321221c817a03fbbb6a21d2872f500150846166a40b82184a9cfe57e043b",
+      "settings": {
+        "objective": "document_classifier",
+        "state_mode": "independent_binary",
+        "readout": "shared_json_decision_prefix_v1",
+        "frozen_embeddings": true,
+        "require_perfect_validation": true,
+        "encoder_learning_rate": 1e-05,
+        "head_learning_rate": 0.0001,
+        "selection_patience": 4,
+        "batch_size": 8,
+        "threshold": 0.5,
+        "eval_every": 1000,
+        "checkpoint_selection": "generated_family_quality",
+        "sampling": "uniform_units",
+        "error_replay": false,
+        "initial_train_errors": 0,
+        "loss": "unweighted_bce",
+        "unit_segmentation": "sentences_v1",
+        "thresholds": [
+          0.3,
+          0.5
+        ]
+      }
+    },
+    {
+      "run": "evidence-bidirectional-da-2026-11-17",
+      "selected_step": 2000,
+      "quality": [
+        false,
+        0,
+        0.0,
+        0.7759484484484485,
+        -20,
+        518
+      ],
+      "accepted": false,
+      "source_sha256": "21eec6b995646392b59793e8adff644c80c06796968142738a11a0a814d5a3e1",
+      "dataset_sha256": "9c1c321221c817a03fbbb6a21d2872f500150846166a40b82184a9cfe57e043b",
+      "settings": {
+        "objective": "document_classifier",
+        "state_mode": "independent_binary",
+        "readout": "shared_json_decision_prefix_v1",
+        "frozen_embeddings": true,
+        "require_perfect_validation": true,
+        "encoder_learning_rate": 1e-05,
+        "head_learning_rate": 0.0001,
+        "selection_patience": 4,
+        "batch_size": 8,
+        "threshold": 0.5,
+        "eval_every": 1000,
+        "checkpoint_selection": "generated_family_quality",
+        "sampling": "uniform_units",
+        "error_replay": false,
+        "initial_train_errors": 0,
+        "loss": "unweighted_bce",
+        "unit_segmentation": "sentences_v1",
+        "attention_mode": "bidirectional_padding_mask_v1",
+        "thresholds": [
+          0.3,
+          0.5
+        ]
+      }
+    }
+  ],
+  "adopted": false
+}

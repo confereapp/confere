@@ -1,0 +1,11 @@
+{
+  "base_sha256": "f5ff98549616f923a417b6f6a2ffaf65b49e69523a583aece85a7b916339e766",
+  "dataset_sha256": "9c1c321221c817a03fbbb6a21d2872f500150846166a40b82184a9cfe57e043b",
+  "changed_train_queries": 4971,
+  "validation_unchanged": true,
+  "targets_unchanged": true,
+  "source_texts_unchanged": true,
+  "real_documents_used": false,
+  "external_weights_used": false,
+  "note": "Paráfrases autorais para expor os operadores semânticos no treino; avaliação já conhecida continua desenvolvimento."
+}
