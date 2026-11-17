@@ -1,0 +1,47 @@
+{
+  "method": "training_only_frozen_encoder_linear_probe",
+  "source_step": 4000,
+  "train": 6000,
+  "validation": 252,
+  "correct": 219,
+  "classes": {
+    "0": [
+      38,
+      42
+    ],
+    "1": [
+      20,
+      35
+    ],
+    "2": [
+      18,
+      19
+    ],
+    "3": [
+      9,
+      17
+    ],
+    "4": [
+      12,
+      16
+    ],
+    "5": [
+      122,
+      123
+    ]
+  },
+  "dataset_fingerprint": "40ee63651cf8eb04ad76a9455d0ccc74ec9f65276a96df367da13d7918bcccc1",
+  "promotable": false,
+  "note": "Teacher-provided history; classification only, not generated response quality or API adoption.",
+  "source_sha256": "058bf4e46c370c698033a96b30ecfd9554cf07c51a58a3fc7fd830ea7d0e5151",
+  "classes_legend": {
+    "0": "fact",
+    "1": "missing",
+    "2": "conflict",
+    "3": "yes",
+    "4": "no",
+    "5": "legacy_or_memory"
+  },
+  "sampling": "up_to_1000_per_class_train_only_seed43",
+  "fit": "linear_384_to_6_lbfgs100_cross_entropy_plus_0.001_weight_mean_square"
+}
