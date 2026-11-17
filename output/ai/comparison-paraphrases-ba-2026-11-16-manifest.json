@@ -1,0 +1,9 @@
+{
+  "source_sha256": "46d74692d36f3313143f2edb4b5679ca06bf8c305bb05ac2219a6160ad6dd762",
+  "dataset_sha256": "40ee63651cf8eb04ad76a9455d0ccc74ec9f65276a96df367da13d7918bcccc1",
+  "replaced_train": 24000,
+  "added_train": 48000,
+  "train": 152843,
+  "validation": 252,
+  "note": "Parafrases conhecidas agora entram no treino; pedidos completos de avaliacao continuam excluidos. Nao mede generalizacao a frases ineditas. Novo teste independente obrigatorio."
+}

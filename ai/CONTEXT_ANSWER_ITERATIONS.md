@@ -681,3 +681,37 @@ necessárias depois do congelamento dos próximos candidatos.
 Evidências: `output/ai/independent-checks-al-aq-2026-11-16.json` e os manifestos
 AO/AR em `output/ai/`. A meta conjunta permanece pendente; pesos padrão da API
 não foram alterados.
+
+## Contrastes corrigidos e limite observado — continuação de 16/11
+
+A calibração AU preservou os pesos de AS/500 e selecionou limiares 0,3/0,1:
+403/410 casos locais, zero falsos positivos. No fluxo completo ampliado,
+41/48 requisitos foram corretos, contra 30/48 na primeira avaliação dessa
+coorte. Ainda há perfis abaixo de 90%; nenhum candidato foi promovido.
+As calibrações posteriores AY e AZ não superaram AU.
+
+O gerador de conflitos usava valores alternativos fixos, incluindo 200 dias,
+Mar e Pascal. Esses valores permitiam atalhos. Os novos contrastes sorteiam
+ambos os valores da mesma distribuição e incluem o mesmo valor isolado,
+repetido e contraposto a outro. Os testes verificam a diversidade dos valores
+e a equivalência semântica dos alvos. Apenas o treino foi substituído;
+os corpora anteriores permanecem no disco.
+
+AX melhorou uma amostra de treino de comparação de 16/24 para 23/24 no passo
+3500, mas selecionou somente 218/252 na validação ampliada e não atingiu os
+limiares. O segundo valor variável resolveu uma correlação indevida, sem
+demonstrar generalização suficiente. As paráfrases de comparação também eram
+restritas. BA amplia essas paráfrases conhecidas, mantendo os 252 pedidos
+completos de avaliação separados. Não é teste de frases inéditas.
+
+BB libera os embeddings no ajuste documental, antes congelados, para investigar
+o aprendizado de disponibilidade e indisponibilidade. BA e BB estão em execução.
+Os testes de código passaram em 212 casos Python; a suíte TypeScript passou
+com nove testes e um teste opcional omitido; a checagem de tipos passou.
+O teste opcional real pelo adaptador HTTP também passou com AU e AQ, incluindo
+decisões positivas, negativas, conflitantes e offsets Unicode. Usou sessão
+sintética, sem provar login real ou qualidade geral.
+
+Os relatórios de encerramento identificam a interrupção deliberada de AV e AO.
+Nenhuma medição incompleta foi usada para selecionar pesos. Evidências compactas
+em `output/ai/comparison-iterations-2026-11-16.json` e manifestos correspondentes.

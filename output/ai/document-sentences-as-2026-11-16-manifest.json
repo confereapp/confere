@@ -1,0 +1,8 @@
+{
+  "source_sha256": "74e5c7c543d97d94f263b76a4f1036865c921ba00845c4a9b41b30b2d3945c86",
+  "dataset_sha256": "5c322d67fe1f75ff15ba86f04e7f5b1aad58b9a940643f4bbe0aaab9d2b8d5ea",
+  "added_train": 24000,
+  "train": 83459,
+  "validation": 410,
+  "note": "Uma anotação semântica por frase. O ruído é separado e não herda os estados de outras frases. Avaliação 410 preservada."
+}

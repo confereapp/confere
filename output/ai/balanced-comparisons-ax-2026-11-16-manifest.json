@@ -1,0 +1,9 @@
+{
+  "source_sha256": "9f913f86902f6d924c53ec6252b701cb3c5a118c25100bb8ab34f19068c86b72",
+  "dataset_sha256": "46d74692d36f3313143f2edb4b5679ca06bf8c305bb05ac2219a6160ad6dd762",
+  "replaced_training_queries": 24000,
+  "added_train": 48000,
+  "train": 128843,
+  "validation": 252,
+  "note": "Valores de conflito sorteados da mesma distribuicao. Repeticao identica como controle. Nenhum pedido completo de avaliacao no treino. Corpus anterior preservado."
+}
