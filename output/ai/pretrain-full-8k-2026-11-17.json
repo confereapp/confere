@@ -1,0 +1,81 @@
+{
+  "run": "pt-full-8k-2026-11-17",
+  "corpus_sha256": "c6e003b0c61cda71e7e0d7faec29801d1d989b949725179a8f162ca676400bf8",
+  "settings": {
+    "seed": 42,
+    "batch_size": 16,
+    "learning_rate": 0.0006,
+    "block_size": 1024,
+    "vocab_size": 8192,
+    "tokenizer_chars": 20000000,
+    "eval_blocks": 64,
+    "objective": "causal_lm",
+    "tokenizer_kind": "words",
+    "pack": true,
+    "schedule": "cosine",
+    "warmup_steps": 500
+  },
+  "config": {
+    "vocab_size": 8192,
+    "block_size": 1024,
+    "width": 384,
+    "layers": 6,
+    "heads": 6
+  },
+  "parameters": 17332224,
+  "train_tokens": 304296098,
+  "document_splits": {
+    "train": 421992,
+    "validation": 23224,
+    "test": 23679
+  },
+  "summary": {
+    "start_step": 0,
+    "final_step": 18500,
+    "stop_reason": "steps",
+    "elapsed_seconds": 9929.171044542001,
+    "tokens_processed": 303103138,
+    "best_validation_loss_in_this_run": 3.166175212711096,
+    "mps_allocated_bytes_max_observed": 1447134976,
+    "process_peak_rss_bytes": 9550741504,
+    "initial": {
+      "step": 0,
+      "train_loss": 9.087680771946907,
+      "validation_loss": 9.088839590549469,
+      "elapsed_seconds": 1.5772541670000066
+    },
+    "final": {
+      "step": 18500,
+      "train_loss": 3.042795338667929,
+      "validation_loss": 3.166175212711096,
+      "elapsed_seconds": 9928.454753167
+    }
+  },
+  "bits_per_char": {
+    "evaluation": "primeiros 150 artigos de validação de wikipedia-pt-10k",
+    "foundation-1024-2026-11-02": 1.656,
+    "foundation-continue-n-2026-11-16": 1.466,
+    "pt-full-8k-2026-11-17": 1.26
+  },
+  "samples": [
+    {
+      "prompt": "A ciência é ",
+      "continuation": " uma ciência que se concentra na ciência.\n\nA ciência é uma ciência que se concentra na ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência, ciência,",
+      "decoding": "greedy",
+      "max_new_tokens": 96
+    },
+    {
+      "prompt": "Um projeto de software deve ",
+      "continuation": "rigorosamente a um sistema de arquivos de código aberto que permite a um sistema de arquivos de código aberto.\n\nO projeto foi criado em 1988, com o objetivo de criar um sistema de arquivos de código aberto que permite a um sistema de arquivos de código aberto.\n\nO projeto foi criado em 1989, com o objetivo de criar um sistema de arquivos de código aberto que permite a um sistema de arquivos de código aberto.\n\nO projeto foi criado",
+      "decoding": "greedy",
+      "max_new_tokens": 96
+    },
+    {
+      "prompt": "O Brasil é ",
+      "continuation": " um dos principais países do mundo e é o país que tem como objetivo a promoção de um país de origem, a cultura e a cultura.\n\nO Brasil é o país que tem como objetivo a promoção de um país de origem, a cultura e a cultura.\n\nO Brasil é o país que tem como objetivo a promoção de um país de origem, a cultura e a cultura.\n\nO Brasil é o país que tem como objetivo a promoção de um país de origem, a cultura",
+      "decoding": "greedy",
+      "max_new_tokens": 96
+    }
+  ],
+  "promoted": false
+}

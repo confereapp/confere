@@ -1,5 +1,68 @@
 # Pré-treinamento de português
 
+## Base completa em 17/11
+
+`pt-full-8k-2026-11-17` é uma base nova, de pesos aleatórios, sem pesos externos.
+Motivo: as bases anteriores viram cerca de 25 milhões de tokens em orçamentos de
+minutos, muito abaixo do necessário para 11–17 milhões de parâmetros, e os
+classificadores construídos sobre elas não distinguiam suporte de contradição.
+
+Corpus `wikipedia-pt-full-2026-11-17`: parquets completos de `20231101.pt`, do
+mesmo dataset já usado, com a mesma limpeza, deduplicação exata e splits 90/5/5
+pelo hash do ID; os splits dos corpora anteriores são preservados pela mesma regra.
+725.625 artigos aceitos; amostra pelo hash do ID até 1,2 bilhão de caracteres:
+468.895 artigos (421.992 treino, 23.224 validação, 23.679 teste), até 8.000
+caracteres por artigo. SHA-256 do snapshot:
+`c6e003b0c61cda71e7e0d7faec29801d1d989b949725179a8f162ca676400bf8`.
+
+Mudanças de treino, todas opcionais e fora das configurações antigas:
+
+- `--tokenizer-kind words`: BPE por trechos " palavra", treinado em 20 milhões
+  de caracteres, vocabulário de 8.192 (3,7 caracteres por token na validação,
+  contra cerca de 2,5 antes). Sem fusões entre palavras, a codificação por trecho
+  com cache é idêntica à do texto inteiro (teste de paridade).
+- `--pack`: artigos concatenados em janelas cheias, separados por BOS/EOS. Sem
+  isso, cerca de 45% das posições eram padding no corpus completo.
+- `--schedule cosine`: 500 passos de aquecimento e decaimento até 10% da taxa.
+
+Configuração: seis blocos, largura 384, seis cabeças, contexto 1.024,
+17.332.224 parâmetros (o vocabulário maior acrescenta embeddings). Batch 16,
+taxa máxima 0,0006, 18.500 passos em 9.929 s no MPS, 303 milhões de tokens-alvo
+(uma época). Perda de validação em 64 janelas fixas: 9,09 no início e 3,17 no fim,
+ainda caindo.
+
+Perdas de vocabulários diferentes não são comparáveis por token. A comparação
+usa bits por caractere nos primeiros 150 artigos de validação de
+`wikipedia-pt-10k`, fora do treino de todas as bases:
+
+| Base | Vocabulário | Bits por caractere |
+| --- | ---: | ---: |
+| `foundation-1024-2026-11-02` | 1.024 | 1,656 |
+| `foundation-continue-n-2026-11-16` | 1.024 | 1,466 |
+| `pt-full-8k-2026-11-17` | 8.192 | 1,260 |
+
+Amostras greedy têm gramática e vocabulário mais naturais, mas continuam
+repetitivas ("A ciência é uma ciência que se concentra na ciência..."). A melhora
+é de modelagem de linguagem; não comprova compreensão nem conversa. O vocabulário
+novo torna a base incompatível com os checkpoints supervisionados anteriores:
+classificadores precisam ser retreinados sobre ela. Nada foi promovido.
+
+```sh
+ai/.venv/bin/python ai/scripts/prepare_portuguese.py \
+  ai/data/private/wikipedia-pt-full-2026-11-17 \
+  --parquet-dir ai/data/private/wikipedia-pt-parquet --max-chars 8000
+
+PYTHONPATH=ai/src ai/.venv/bin/python -m confere_ai.pretrain \
+  --data ai/data/private/wikipedia-pt-full-2026-11-17/articles.jsonl \
+  --run-dir ai/runs/pt-full-8k-2026-11-17 --device mps --steps 18500 \
+  --max-seconds 14400 --batch-size 16 --block-size 1024 --vocab-size 8192 \
+  --tokenizer-kind words --tokenizer-chars 20000000 --pack --schedule cosine \
+  --warmup-steps 500 --learning-rate 0.0006 --eval-every 1000 --eval-blocks 64
+```
+
+Resumo: `output/ai/pretrain-full-8k-2026-11-17.json`; relatório:
+`output/pdf/training/pt-full-8k-2026-11-17.pdf`.
+
 ## Expansão de base e contexto em 02/11
 
 `foundation-1024-2026-11-02` inicializou dos pesos próprios do passo 10.000,
