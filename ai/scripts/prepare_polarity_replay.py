@@ -27,6 +27,10 @@ FORMS=[
     ('Foi verificado que existe {}.','Foi verificado que não existe {}.'),
     ('Consta na documentação que {} foi entregue.','Consta na documentação que {} não foi entregue.'),
     ('A equipe comprovou que {} funciona.','A equipe comprovou que {} não funciona.'),
+    ('A comissão atesta o funcionamento de {}.','A comissão atesta a ausência de {}.'),
+    ('A documentação atesta que existe {}.','A documentação atesta que não existe {}.'),
+    ('O texto atesta que {} funciona.','O texto atesta que {} não funciona.'),
+    ('O relatório atesta a disponibilidade de {}.','O relatório atesta a indisponibilidade de {}.'),
 ]
 
 

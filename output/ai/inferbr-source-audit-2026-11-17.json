@@ -6,12 +6,14 @@
   "source": "https://huggingface.co/datasets/hapaxlegomenon/InferBR/resolve/304b2ca358c4f315a908b69d3d0c607ee101176d/README.md",
   "paper": "https://aclanthology.org/2024.lrec-main.793/",
   "training_files_downloaded": true,
-  "note": "Semiautomatic and automatic generation, manually revised according to the publication. Not human-authored dialogue. No integration or training yet.",
+  "note": "Semiautomatic and automatic generation, manually revised according to the publication. Not human-authored dialogue. used_in_training describes the source audit stage; subsequent training is recorded separately.",
   "used_in_training": false,
   "train_sha256": "49af0412e6e199c8b340dd2c596e7480afb89c60dedd7d982fbb278c23338ce6",
   "train_rows": 8190,
   "license_upstream_revision": "b6c5e0b27e52477bbc5433d130b0a0e825cf74dc",
   "license_sha256": "b1cd6172bf8061abcbd7917e9246ddeded210339482e802e3413b74cc7e0de38",
   "test_downloaded": false,
-  "validation_downloaded": false
+  "validation_downloaded": false,
+  "audit_stage": "source_download_before_training",
+  "subsequent_training_run": "ai/runs/evidence-classifier-bp-2026-11-17"
 }

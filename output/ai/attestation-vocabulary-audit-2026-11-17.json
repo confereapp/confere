@@ -1,0 +1,12 @@
+{
+  "source_dataset_sha256": "4f6e4f440f591c25b4ffb1950a60772a0a6f21bcb367a0fbbd3cb32a8445338e",
+  "unit_occurrences": {
+    "train": {},
+    "validation": {
+      "confirmamos": 32,
+      "atesta": 20
+    }
+  },
+  "hypothesis": "Unseen attestation vocabulary may contribute to failures. Counts alone do not establish causation.",
+  "next_dataset": "document-attestation-bs-2026-11-17"
+}
