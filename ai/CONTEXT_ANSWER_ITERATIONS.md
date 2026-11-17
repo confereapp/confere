@@ -1158,3 +1158,11 @@ foi bloqueada, sem criar pasta de resultados. Métrica de resumo corrigida para
 exigir também evidências; DF tinha 521/861 acertos completos NLI, não523/861
 coincidências de status. A seleção antiga já era estrita. 260 testes passaram.
 Detalhes em research/paragraph-matrix-dg-dh-2026-11-17.md. Nenhuma promoção/API.
+
+DI/DJ ajustam encoder e cabeça nativa sobre a mesma matriz, mantendo embeddings
+congelados. Treinador admite parágrafos integrais e duplas por consulta; padrões
+preservados. 1000 passos cada, seed42, mesma origem CI. DI seleciona250, DJ0.
+DJ usa replay inicial apenas do treino (139 erros,72 acadêmicos). DI sobe em
+inconclusivos (3/34 ->24/34), mas piora suporte (4/9 ->2/9) e contradição
+(2/8 ->1/8). Ambos reprovados. Não há inferência nos54 pares reservados nem
+alteração na API. 260 testes passaram. Detalhes em research/matrix-encoder-di-dj-2026-11-17.md.

@@ -1,0 +1,1175 @@
+{
+  "experiments": {
+    "evidence-matrix-encoder-di": {
+      "selected_step": 250,
+      "quality": [
+        false,
+        0,
+        0.1388888888888889,
+        0.8981883494138397,
+        -11,
+        423
+      ],
+      "points": [
+        {
+          "step": 0,
+          "quality": [
+            false,
+            0,
+            0.09803921568627451,
+            0.8878730270887132,
+            -19,
+            405
+          ],
+          "profiles": {
+            "academic_paragraph_atendido": {
+              "correct": 4,
+              "total": 9,
+              "false_approvals": 0
+            },
+            "academic_paragraph_evidencia_insuficiente": {
+              "correct": 3,
+              "total": 34,
+              "false_approvals": 12
+            },
+            "academic_paragraph_nao_atendido": {
+              "correct": 2,
+              "total": 8,
+              "false_approvals": 4
+            },
+            "previous_multiple_evidence": {
+              "correct": 24,
+              "total": 24,
+              "false_approvals": 0
+            },
+            "single_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "single_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "mention_only": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "split_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "shared_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "other_topic": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "api_batch_atendido": {
+              "correct": 34,
+              "total": 40,
+              "false_approvals": 0
+            },
+            "api_batch_nao_atendido": {
+              "correct": 33,
+              "total": 37,
+              "false_approvals": 2
+            },
+            "api_batch_evidencia_insuficiente": {
+              "correct": 117,
+              "total": 118,
+              "false_approvals": 1
+            },
+            "api_batch_conflict": {
+              "correct": 6,
+              "total": 7,
+              "false_approvals": 0
+            },
+            "development_api_batch_atendido": {
+              "correct": 18,
+              "total": 18,
+              "false_approvals": 0
+            },
+            "development_api_batch_nao_atendido": {
+              "correct": 14,
+              "total": 15,
+              "false_approvals": 0
+            },
+            "development_api_batch_evidencia_insuficiente": {
+              "correct": 51,
+              "total": 52,
+              "false_approvals": 0
+            },
+            "development_api_batch_conflict": {
+              "correct": 3,
+              "total": 3,
+              "false_approvals": 0
+            }
+          }
+        },
+        {
+          "step": 250,
+          "quality": [
+            false,
+            0,
+            0.1388888888888889,
+            0.8981883494138397,
+            -11,
+            423
+          ],
+          "profiles": {
+            "academic_paragraph_atendido": {
+              "correct": 2,
+              "total": 9,
+              "false_approvals": 0
+            },
+            "academic_paragraph_evidencia_insuficiente": {
+              "correct": 24,
+              "total": 34,
+              "false_approvals": 5
+            },
+            "academic_paragraph_nao_atendido": {
+              "correct": 1,
+              "total": 8,
+              "false_approvals": 3
+            },
+            "previous_multiple_evidence": {
+              "correct": 24,
+              "total": 24,
+              "false_approvals": 0
+            },
+            "single_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "single_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "mention_only": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "split_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "shared_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "other_topic": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "api_batch_atendido": {
+              "correct": 36,
+              "total": 40,
+              "false_approvals": 0
+            },
+            "api_batch_nao_atendido": {
+              "correct": 34,
+              "total": 37,
+              "false_approvals": 0
+            },
+            "api_batch_evidencia_insuficiente": {
+              "correct": 115,
+              "total": 118,
+              "false_approvals": 3
+            },
+            "api_batch_conflict": {
+              "correct": 5,
+              "total": 7,
+              "false_approvals": 0
+            },
+            "development_api_batch_atendido": {
+              "correct": 17,
+              "total": 18,
+              "false_approvals": 0
+            },
+            "development_api_batch_nao_atendido": {
+              "correct": 15,
+              "total": 15,
+              "false_approvals": 0
+            },
+            "development_api_batch_evidencia_insuficiente": {
+              "correct": 51,
+              "total": 52,
+              "false_approvals": 0
+            },
+            "development_api_batch_conflict": {
+              "correct": 3,
+              "total": 3,
+              "false_approvals": 0
+            }
+          }
+        },
+        {
+          "step": 500,
+          "quality": [
+            false,
+            0,
+            0.0,
+            0.9248246846286061,
+            -21,
+            426
+          ],
+          "profiles": {
+            "academic_paragraph_atendido": {
+              "correct": 7,
+              "total": 9,
+              "false_approvals": 0
+            },
+            "academic_paragraph_evidencia_insuficiente": {
+              "correct": 22,
+              "total": 34,
+              "false_approvals": 12
+            },
+            "academic_paragraph_nao_atendido": {
+              "correct": 0,
+              "total": 8,
+              "false_approvals": 5
+            },
+            "previous_multiple_evidence": {
+              "correct": 24,
+              "total": 24,
+              "false_approvals": 0
+            },
+            "single_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "single_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "mention_only": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "split_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "shared_conflict": {
+              "correct": 11,
+              "total": 12,
+              "false_approvals": 1
+            },
+            "other_topic": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "api_batch_atendido": {
+              "correct": 38,
+              "total": 40,
+              "false_approvals": 0
+            },
+            "api_batch_nao_atendido": {
+              "correct": 32,
+              "total": 37,
+              "false_approvals": 0
+            },
+            "api_batch_evidencia_insuficiente": {
+              "correct": 115,
+              "total": 118,
+              "false_approvals": 3
+            },
+            "api_batch_conflict": {
+              "correct": 6,
+              "total": 7,
+              "false_approvals": 0
+            },
+            "development_api_batch_atendido": {
+              "correct": 17,
+              "total": 18,
+              "false_approvals": 0
+            },
+            "development_api_batch_nao_atendido": {
+              "correct": 15,
+              "total": 15,
+              "false_approvals": 0
+            },
+            "development_api_batch_evidencia_insuficiente": {
+              "correct": 52,
+              "total": 52,
+              "false_approvals": 0
+            },
+            "development_api_batch_conflict": {
+              "correct": 3,
+              "total": 3,
+              "false_approvals": 0
+            }
+          }
+        },
+        {
+          "step": 750,
+          "quality": [
+            false,
+            0,
+            0.0,
+            0.8916070131756406,
+            -7,
+            426
+          ],
+          "profiles": {
+            "academic_paragraph_atendido": {
+              "correct": 1,
+              "total": 9,
+              "false_approvals": 0
+            },
+            "academic_paragraph_evidencia_insuficiente": {
+              "correct": 28,
+              "total": 34,
+              "false_approvals": 3
+            },
+            "academic_paragraph_nao_atendido": {
+              "correct": 0,
+              "total": 8,
+              "false_approvals": 2
+            },
+            "previous_multiple_evidence": {
+              "correct": 24,
+              "total": 24,
+              "false_approvals": 0
+            },
+            "single_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "single_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "mention_only": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "split_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "shared_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "other_topic": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "api_batch_atendido": {
+              "correct": 36,
+              "total": 40,
+              "false_approvals": 0
+            },
+            "api_batch_nao_atendido": {
+              "correct": 34,
+              "total": 37,
+              "false_approvals": 0
+            },
+            "api_batch_evidencia_insuficiente": {
+              "correct": 116,
+              "total": 118,
+              "false_approvals": 2
+            },
+            "api_batch_conflict": {
+              "correct": 5,
+              "total": 7,
+              "false_approvals": 0
+            },
+            "development_api_batch_atendido": {
+              "correct": 17,
+              "total": 18,
+              "false_approvals": 0
+            },
+            "development_api_batch_nao_atendido": {
+              "correct": 15,
+              "total": 15,
+              "false_approvals": 0
+            },
+            "development_api_batch_evidencia_insuficiente": {
+              "correct": 51,
+              "total": 52,
+              "false_approvals": 0
+            },
+            "development_api_batch_conflict": {
+              "correct": 3,
+              "total": 3,
+              "false_approvals": 0
+            }
+          }
+        },
+        {
+          "step": 1000,
+          "quality": [
+            false,
+            0,
+            0.0,
+            0.8983245149911816,
+            -8,
+            431
+          ],
+          "profiles": {
+            "academic_paragraph_atendido": {
+              "correct": 2,
+              "total": 9,
+              "false_approvals": 0
+            },
+            "academic_paragraph_evidencia_insuficiente": {
+              "correct": 31,
+              "total": 34,
+              "false_approvals": 3
+            },
+            "academic_paragraph_nao_atendido": {
+              "correct": 0,
+              "total": 8,
+              "false_approvals": 3
+            },
+            "previous_multiple_evidence": {
+              "correct": 24,
+              "total": 24,
+              "false_approvals": 0
+            },
+            "single_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "single_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "mention_only": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "split_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "shared_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "other_topic": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "api_batch_atendido": {
+              "correct": 38,
+              "total": 40,
+              "false_approvals": 0
+            },
+            "api_batch_nao_atendido": {
+              "correct": 35,
+              "total": 37,
+              "false_approvals": 0
+            },
+            "api_batch_evidencia_insuficiente": {
+              "correct": 116,
+              "total": 118,
+              "false_approvals": 2
+            },
+            "api_batch_conflict": {
+              "correct": 5,
+              "total": 7,
+              "false_approvals": 0
+            },
+            "development_api_batch_atendido": {
+              "correct": 15,
+              "total": 18,
+              "false_approvals": 0
+            },
+            "development_api_batch_nao_atendido": {
+              "correct": 15,
+              "total": 15,
+              "false_approvals": 0
+            },
+            "development_api_batch_evidencia_insuficiente": {
+              "correct": 51,
+              "total": 52,
+              "false_approvals": 0
+            },
+            "development_api_batch_conflict": {
+              "correct": 3,
+              "total": 3,
+              "false_approvals": 0
+            }
+          }
+        }
+      ],
+      "case_regressions": 9,
+      "case_improvements": 27,
+      "source_sha256": "be69550369939272b56cddcef4f7972fa41714c7c2c9921f1f79acbf727d9700"
+    },
+    "evidence-matrix-errors-dj": {
+      "selected_step": 0,
+      "quality": [
+        false,
+        0,
+        0.09803921568627451,
+        0.8878730270887132,
+        -19,
+        405
+      ],
+      "points": [
+        {
+          "step": 0,
+          "quality": [
+            false,
+            0,
+            0.09803921568627451,
+            0.8878730270887132,
+            -19,
+            405
+          ],
+          "profiles": {
+            "academic_paragraph_atendido": {
+              "correct": 4,
+              "total": 9,
+              "false_approvals": 0
+            },
+            "academic_paragraph_evidencia_insuficiente": {
+              "correct": 3,
+              "total": 34,
+              "false_approvals": 12
+            },
+            "academic_paragraph_nao_atendido": {
+              "correct": 2,
+              "total": 8,
+              "false_approvals": 4
+            },
+            "previous_multiple_evidence": {
+              "correct": 24,
+              "total": 24,
+              "false_approvals": 0
+            },
+            "single_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "single_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "mention_only": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "split_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "shared_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "other_topic": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "api_batch_atendido": {
+              "correct": 34,
+              "total": 40,
+              "false_approvals": 0
+            },
+            "api_batch_nao_atendido": {
+              "correct": 33,
+              "total": 37,
+              "false_approvals": 2
+            },
+            "api_batch_evidencia_insuficiente": {
+              "correct": 117,
+              "total": 118,
+              "false_approvals": 1
+            },
+            "api_batch_conflict": {
+              "correct": 6,
+              "total": 7,
+              "false_approvals": 0
+            },
+            "development_api_batch_atendido": {
+              "correct": 18,
+              "total": 18,
+              "false_approvals": 0
+            },
+            "development_api_batch_nao_atendido": {
+              "correct": 14,
+              "total": 15,
+              "false_approvals": 0
+            },
+            "development_api_batch_evidencia_insuficiente": {
+              "correct": 51,
+              "total": 52,
+              "false_approvals": 0
+            },
+            "development_api_batch_conflict": {
+              "correct": 3,
+              "total": 3,
+              "false_approvals": 0
+            }
+          }
+        },
+        {
+          "step": 250,
+          "quality": [
+            false,
+            0,
+            0.0,
+            0.877708801238213,
+            -9,
+            425
+          ],
+          "profiles": {
+            "academic_paragraph_atendido": {
+              "correct": 1,
+              "total": 9,
+              "false_approvals": 0
+            },
+            "academic_paragraph_evidencia_insuficiente": {
+              "correct": 29,
+              "total": 34,
+              "false_approvals": 5
+            },
+            "academic_paragraph_nao_atendido": {
+              "correct": 0,
+              "total": 8,
+              "false_approvals": 3
+            },
+            "previous_multiple_evidence": {
+              "correct": 24,
+              "total": 24,
+              "false_approvals": 0
+            },
+            "single_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "single_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "mention_only": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "split_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "shared_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "other_topic": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "api_batch_atendido": {
+              "correct": 36,
+              "total": 40,
+              "false_approvals": 0
+            },
+            "api_batch_nao_atendido": {
+              "correct": 32,
+              "total": 37,
+              "false_approvals": 0
+            },
+            "api_batch_evidencia_insuficiente": {
+              "correct": 117,
+              "total": 118,
+              "false_approvals": 1
+            },
+            "api_batch_conflict": {
+              "correct": 5,
+              "total": 7,
+              "false_approvals": 0
+            },
+            "development_api_batch_atendido": {
+              "correct": 16,
+              "total": 18,
+              "false_approvals": 0
+            },
+            "development_api_batch_nao_atendido": {
+              "correct": 15,
+              "total": 15,
+              "false_approvals": 0
+            },
+            "development_api_batch_evidencia_insuficiente": {
+              "correct": 52,
+              "total": 52,
+              "false_approvals": 0
+            },
+            "development_api_batch_conflict": {
+              "correct": 2,
+              "total": 3,
+              "false_approvals": 0
+            }
+          }
+        },
+        {
+          "step": 500,
+          "quality": [
+            false,
+            0,
+            0.0,
+            0.8730374632335416,
+            -10,
+            423
+          ],
+          "profiles": {
+            "academic_paragraph_atendido": {
+              "correct": 1,
+              "total": 9,
+              "false_approvals": 0
+            },
+            "academic_paragraph_evidencia_insuficiente": {
+              "correct": 29,
+              "total": 34,
+              "false_approvals": 5
+            },
+            "academic_paragraph_nao_atendido": {
+              "correct": 0,
+              "total": 8,
+              "false_approvals": 3
+            },
+            "previous_multiple_evidence": {
+              "correct": 24,
+              "total": 24,
+              "false_approvals": 0
+            },
+            "single_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "single_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "mention_only": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "split_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "shared_conflict": {
+              "correct": 11,
+              "total": 12,
+              "false_approvals": 1
+            },
+            "other_topic": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "api_batch_atendido": {
+              "correct": 36,
+              "total": 40,
+              "false_approvals": 0
+            },
+            "api_batch_nao_atendido": {
+              "correct": 33,
+              "total": 37,
+              "false_approvals": 0
+            },
+            "api_batch_evidencia_insuficiente": {
+              "correct": 117,
+              "total": 118,
+              "false_approvals": 1
+            },
+            "api_batch_conflict": {
+              "correct": 5,
+              "total": 7,
+              "false_approvals": 0
+            },
+            "development_api_batch_atendido": {
+              "correct": 14,
+              "total": 18,
+              "false_approvals": 0
+            },
+            "development_api_batch_nao_atendido": {
+              "correct": 15,
+              "total": 15,
+              "false_approvals": 0
+            },
+            "development_api_batch_evidencia_insuficiente": {
+              "correct": 52,
+              "total": 52,
+              "false_approvals": 0
+            },
+            "development_api_batch_conflict": {
+              "correct": 2,
+              "total": 3,
+              "false_approvals": 0
+            }
+          }
+        },
+        {
+          "step": 750,
+          "quality": [
+            false,
+            0,
+            0.0,
+            0.896145865753709,
+            -13,
+            424
+          ],
+          "profiles": {
+            "academic_paragraph_atendido": {
+              "correct": 2,
+              "total": 9,
+              "false_approvals": 0
+            },
+            "academic_paragraph_evidencia_insuficiente": {
+              "correct": 27,
+              "total": 34,
+              "false_approvals": 6
+            },
+            "academic_paragraph_nao_atendido": {
+              "correct": 0,
+              "total": 8,
+              "false_approvals": 3
+            },
+            "previous_multiple_evidence": {
+              "correct": 24,
+              "total": 24,
+              "false_approvals": 0
+            },
+            "single_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "single_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "mention_only": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "split_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "shared_conflict": {
+              "correct": 11,
+              "total": 12,
+              "false_approvals": 1
+            },
+            "other_topic": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "api_batch_atendido": {
+              "correct": 36,
+              "total": 40,
+              "false_approvals": 0
+            },
+            "api_batch_nao_atendido": {
+              "correct": 34,
+              "total": 37,
+              "false_approvals": 0
+            },
+            "api_batch_evidencia_insuficiente": {
+              "correct": 115,
+              "total": 118,
+              "false_approvals": 3
+            },
+            "api_batch_conflict": {
+              "correct": 5,
+              "total": 7,
+              "false_approvals": 0
+            },
+            "development_api_batch_atendido": {
+              "correct": 17,
+              "total": 18,
+              "false_approvals": 0
+            },
+            "development_api_batch_nao_atendido": {
+              "correct": 15,
+              "total": 15,
+              "false_approvals": 0
+            },
+            "development_api_batch_evidencia_insuficiente": {
+              "correct": 51,
+              "total": 52,
+              "false_approvals": 0
+            },
+            "development_api_batch_conflict": {
+              "correct": 3,
+              "total": 3,
+              "false_approvals": 0
+            }
+          }
+        },
+        {
+          "step": 1000,
+          "quality": [
+            false,
+            0,
+            0.0,
+            0.9124554526515312,
+            -12,
+            427
+          ],
+          "profiles": {
+            "academic_paragraph_atendido": {
+              "correct": 3,
+              "total": 9,
+              "false_approvals": 0
+            },
+            "academic_paragraph_evidencia_insuficiente": {
+              "correct": 29,
+              "total": 34,
+              "false_approvals": 5
+            },
+            "academic_paragraph_nao_atendido": {
+              "correct": 0,
+              "total": 8,
+              "false_approvals": 4
+            },
+            "previous_multiple_evidence": {
+              "correct": 24,
+              "total": 24,
+              "false_approvals": 0
+            },
+            "single_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "single_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "mention_only": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_positive": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "multiple_negative": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "split_conflict": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "shared_conflict": {
+              "correct": 11,
+              "total": 12,
+              "false_approvals": 1
+            },
+            "other_topic": {
+              "correct": 12,
+              "total": 12,
+              "false_approvals": 0
+            },
+            "api_batch_atendido": {
+              "correct": 36,
+              "total": 40,
+              "false_approvals": 0
+            },
+            "api_batch_nao_atendido": {
+              "correct": 33,
+              "total": 37,
+              "false_approvals": 0
+            },
+            "api_batch_evidencia_insuficiente": {
+              "correct": 116,
+              "total": 118,
+              "false_approvals": 2
+            },
+            "api_batch_conflict": {
+              "correct": 6,
+              "total": 7,
+              "false_approvals": 0
+            },
+            "development_api_batch_atendido": {
+              "correct": 16,
+              "total": 18,
+              "false_approvals": 0
+            },
+            "development_api_batch_nao_atendido": {
+              "correct": 15,
+              "total": 15,
+              "false_approvals": 0
+            },
+            "development_api_batch_evidencia_insuficiente": {
+              "correct": 51,
+              "total": 52,
+              "false_approvals": 0
+            },
+            "development_api_batch_conflict": {
+              "correct": 3,
+              "total": 3,
+              "false_approvals": 0
+            }
+          }
+        }
+      ],
+      "case_regressions": 0,
+      "case_improvements": 0,
+      "source_sha256": "be69550369939272b56cddcef4f7972fa41714c7c2c9921f1f79acbf727d9700"
+    }
+  },
+  "tests_passed": 260,
+  "reserved_test_predictions_executed": false,
+  "adopted": false,
+  "default_api_changed": false,
+  "error_replay": {
+    "train_error_units": 139,
+    "academic_error_units": 72,
+    "validation_used": false
+  }
+}
