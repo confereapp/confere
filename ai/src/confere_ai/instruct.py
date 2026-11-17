@@ -169,6 +169,8 @@ def run(args):
     train = [row for row in rows if row["split"] == "train"]
     validation = [row for row in rows if row["split"] == "validation"]
     family_sampling = getattr(args, "balanced_conversation_sampling", False)
+    semantic_auxiliary=getattr(args,'semantic_auxiliary',False)
+    if semantic_auxiliary and not family_sampling:raise ValueError('Supervisão semântica exige conversa equilibrada.')
     first_token_weight=getattr(args,'first_token_weight',1.)
     if not math.isfinite(first_token_weight) or first_token_weight<1 or (first_token_weight>1 and not family_sampling):
         raise ValueError('Peso inicial finito >= 1 exige amostragem equilibrada de conversa.')
@@ -279,6 +281,10 @@ def run(args):
     settings['paired_facts_focus']=bool(comparison_pools)
     settings["training_loss_reduction"] = "example_mean" if family_sampling else "token_mean"
     settings['first_token_weight']=first_token_weight
+    settings['semantic_auxiliary']=semantic_auxiliary
+    if semantic_auxiliary:
+        settings['semantic_auxiliary_initialization']='random_new_training_only_head'
+        settings['semantic_auxiliary_weight']=.1
     if anchor_from:
         settings["anchor_checkpoint"] = str(anchor_from)
         settings["anchor_sha256"] = hashlib.sha256(Path(anchor_from).read_bytes()).hexdigest()
@@ -314,8 +320,18 @@ def run(args):
     info["mps_batch_padding_multiple"] = 128 if device == "mps" else None
     info["mps_generation_padding_multiple"] = 128 if device == "mps" else None
     (args.run_dir/"run.json").write_text(json.dumps(info, ensure_ascii=False, indent=2))
-    optimizer = torch.optim.AdamW((p for p in model.parameters() if p.requires_grad), lr=args.learning_rate, weight_decay=.01)
+    semantic_head=torch.nn.Linear(model.config.width,6).to(device) if semantic_auxiliary else None
+    parameters=[p for p in model.parameters() if p.requires_grad]+(list(semantic_head.parameters()) if semantic_head is not None else [])
+    optimizer = torch.optim.AdamW(parameters, lr=args.learning_rate, weight_decay=.01)
     generator = torch.Generator().manual_seed(42)
+    def checkpoint(filename,step):
+        path=args.run_dir/filename
+        save_checkpoint(path,model,optimizer,tokenizer,generator,step,fingerprint,settings)
+        if semantic_head is not None:
+            target=path.with_suffix('.auxiliary.pt');temporary=target.with_suffix('.tmp')
+            torch.save(dict(step=step,head={k:v.detach().cpu() for k,v in semantic_head.state_dict().items()},
+                            checkpoint_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),training_only=True),temporary)
+            temporary.replace(target)
     humans=[i for i,r in enumerate(train) if r["task"]=="human_dialogue"]
     public=[i for i,r in enumerate(train) if r["task"]=="public_dialogue"]
     documents=[i for i,r in enumerate(train) if r["task"].startswith("grounded_")]
@@ -349,7 +365,7 @@ def run(args):
         metrics.append(item)
         with (args.run_dir/"metrics.jsonl").open("a") as f: f.write(json.dumps(item)+"\n")
         print(json.dumps(item), flush=True)
-        save_checkpoint(args.run_dir/"last.pt", model, optimizer, tokenizer, generator, step, fingerprint, settings)
+        checkpoint('last.pt',step)
         if step == 0 and skip_initial_generation:
             print("Base inicial não avaliada por geração e excluída da seleção; referência comparativa medida separadamente.", flush=True)
             return
@@ -363,14 +379,14 @@ def run(args):
             if best_quality is None or quality > best_quality:
                 best_quality, best_generation = quality, generation
                 stale_evaluations = 0
-                save_checkpoint(args.run_dir/"best.pt", model, optimizer, tokenizer, generator, step, fingerprint, settings)
+                checkpoint('best.pt',step)
             else:
                 stale_evaluations += 1
             return
         selection_loss = item.get("selection_loss", item["validation_loss"])
         if selection_loss < best:
             best = selection_loss
-            save_checkpoint(args.run_dir/"best.pt", model, optimizer, tokenizer, generator, step, fingerprint, settings)
+            checkpoint('best.pt',step)
     record(0)
     for step in range(1, args.steps+1):
         model.train()
@@ -382,15 +398,20 @@ def run(args):
                      training_indices(len(train),humans,synthetic,args.batch_size,human_fraction,generator,public,public_fraction,documents,document_fraction))
         x,y = batch(encoded_train,indices,device,model.config.block_size)
         optimizer.zero_grad(set_to_none=True)
-        logits = model(x)
+        if semantic_head is not None:
+            from .semantic_auxiliary import semantic_class,semantic_forward
+            classes=torch.tensor([semantic_class(train[i]) for i in indices],device=device)
+            logits,semantic_loss=semantic_forward(model,x,y,semantic_head,classes)
+        else:logits = model(x)
         loss = (weighted_loss(logits, y, weight_batch(train_weights, indices, y.shape, device))
                 if train_weights is not None else example_mean_loss(logits, y,first_token_weight) if family_sampling else F.cross_entropy(logits.flatten(0,1), y.flatten(), ignore_index=-100))
+        if semantic_head is not None:loss=loss+.1*semantic_loss
         if anchor is not None:
             from .distillation import correct_teacher_kl
             with torch.no_grad(): anchor_logits = anchor(x)
             loss = loss + correct_teacher_kl(logits, anchor_logits, y)
         if not torch.isfinite(loss).item(): raise ValueError("Loss não finita; checkpoint anterior preservado.")
-        loss.backward(); torch.nn.utils.clip_grad_norm_(model.parameters(), 1., error_if_nonfinite=True); optimizer.step()
+        loss.backward(); torch.nn.utils.clip_grad_norm_(parameters, 1., error_if_nonfinite=True); optimizer.step()
         processed += (y != -100).sum().item()
         human_examples_processed+=sum(train[i]["task"]=="human_dialogue" for i in indices)
         for j,i in enumerate(indices):
@@ -455,6 +476,7 @@ def main():
     parser.add_argument('--paired-facts-focus',action='store_true',help='Metade dos lotes compara repetição e contradição dos mesmos valores de treino; restante usa replay equilibrado.')
     parser.add_argument("--balanced-conversation-sampling", action="store_true", help="Lotes com 50% de famílias legadas e 50% contextuais; famílias equiprováveis em cada grupo.")
     parser.add_argument('--first-token-weight',type=float,default=1.,help='Peso inicial por resposta no treino equilibrado; avaliação completa continua sem pesos.')
+    parser.add_argument('--semantic-auxiliary',action='store_true',help='Classificar o tipo de resposta no treino; cabeça auxiliar não participa da inferência.')
     parser.add_argument("--skip-initial-generation", action="store_true", help="Excluir a base causal não ajustada da seleção; exige referência externa e seleção gerativa.")
     parser.add_argument("--human-fraction",type=float,default=0.)
     parser.add_argument("--public-fraction",type=float,default=0.)
