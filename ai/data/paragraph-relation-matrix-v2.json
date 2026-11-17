@@ -1,0 +1,1068 @@
+{
+  "annotation_kind": "local_editorial",
+  "independent_human_review": false,
+  "scope": "Afirmações factuais contra parágrafos integrais. Não são rubricas oficiais. Matriz editorial, sem geração aleatória de negativos.",
+  "previously_examined_titles": [
+    "COMPUTADOR",
+    "ESTAGIO_PROFISSIONAL",
+    "EXERCICIOS_DOMICILIARES",
+    "MONITORIA_DE_ENSINO",
+    "MONOGRAFIA",
+    "POSCOMP",
+    "TCC",
+    "UFMS"
+  ],
+  "new_test_titles": [
+    "FAPDF",
+    "PESQUISA",
+    "RES_APROVEITAMENTO_DE_ESTUDOS"
+  ],
+  "documents": [
+    {
+      "title": "UFMS",
+      "split": "train",
+      "paragraph_indices": [
+        0,
+        1,
+        2
+      ],
+      "claims": [
+        {
+          "text": "A UFMS é uma instituição pública federal sediada em Campo Grande.",
+          "labels": [
+            1,
+            2,
+            2
+          ],
+          "id": "q1",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A UFMS é uma instituição privada.",
+          "labels": [
+            0,
+            2,
+            0
+          ],
+          "id": "q2",
+          "rationales": [
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        },
+        {
+          "text": "A instituição participa da preservação de recursos naturais do Pantanal.",
+          "labels": [
+            2,
+            1,
+            2
+          ],
+          "id": "q3",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A instituição não participa da preservação dos recursos naturais.",
+          "labels": [
+            2,
+            0,
+            2
+          ],
+          "id": "q4",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A origem da UFMS remonta à criação de uma faculdade em 1962.",
+          "labels": [
+            2,
+            2,
+            1
+          ],
+          "id": "q5",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "A UFMS se originou de uma faculdade criada em 1992.",
+          "labels": [
+            2,
+            2,
+            0
+          ],
+          "id": "q6",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "POSCOMP",
+      "split": "train",
+      "paragraph_indices": [
+        0,
+        1,
+        2
+      ],
+      "claims": [
+        {
+          "text": "O POSCOMP avalia conhecimentos de candidatos à pós-graduação em Computação.",
+          "labels": [
+            1,
+            2,
+            2
+          ],
+          "id": "q1",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O POSCOMP não avalia conhecimentos na área de Computação.",
+          "labels": [
+            0,
+            2,
+            2
+          ],
+          "id": "q2",
+          "rationales": [
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O candidato pode concorrer em vários programas sem ir à sede de cada um.",
+          "labels": [
+            2,
+            1,
+            2
+          ],
+          "id": "q3",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O candidato precisa viajar até a sede de cada programa para realizar a prova.",
+          "labels": [
+            2,
+            0,
+            2
+          ],
+          "id": "q4",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O exame é independente da inscrição em um programa específico.",
+          "labels": [
+            2,
+            2,
+            1
+          ],
+          "id": "q5",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "A realização do exame depende da inscrição em um programa específico.",
+          "labels": [
+            2,
+            2,
+            0
+          ],
+          "id": "q6",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "TCC",
+      "split": "train",
+      "paragraph_indices": [
+        0,
+        1,
+        2
+      ],
+      "claims": [
+        {
+          "text": "O trabalho de conclusão de curso é utilizado na avaliação final dos estudantes.",
+          "labels": [
+            1,
+            1,
+            2
+          ],
+          "id": "q1",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O trabalho de conclusão de curso nunca é utilizado para avaliar estudantes.",
+          "labels": [
+            0,
+            0,
+            2
+          ],
+          "id": "q2",
+          "rationales": [
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O formato do TCC varia entre cursos e instituições.",
+          "labels": [
+            2,
+            1,
+            2
+          ],
+          "id": "q3",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O formato do TCC é idêntico em todos os cursos e instituições.",
+          "labels": [
+            2,
+            0,
+            2
+          ],
+          "id": "q4",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "É recomendado escolher um tema pelo qual o aluno tenha afinidade.",
+          "labels": [
+            2,
+            2,
+            1
+          ],
+          "id": "q5",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "Os orientadores recomendam escolher um tema sem afinidade com o aluno.",
+          "labels": [
+            2,
+            2,
+            0
+          ],
+          "id": "q6",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "MONOGRAFIA",
+      "split": "train",
+      "paragraph_indices": [
+        0,
+        1,
+        2
+      ],
+      "claims": [
+        {
+          "text": "Uma monografia aborda um tema único e bem delimitado.",
+          "labels": [
+            1,
+            2,
+            1
+          ],
+          "id": "q1",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "Uma monografia necessariamente trata de temas sem relação entre si.",
+          "labels": [
+            0,
+            2,
+            0
+          ],
+          "id": "q2",
+          "rationales": [
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        },
+        {
+          "text": "A monografia normalmente tem base bibliográfica.",
+          "labels": [
+            2,
+            1,
+            2
+          ],
+          "id": "q3",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A monografia sempre depende de pesquisa experimental original.",
+          "labels": [
+            2,
+            0,
+            2
+          ],
+          "id": "q4",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A monografia deve fundamentar o assunto em bibliografias ou resultados de pesquisa.",
+          "labels": [
+            2,
+            2,
+            1
+          ],
+          "id": "q5",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "A monografia dispensa qualquer fundamentação bibliográfica ou resultado de pesquisa.",
+          "labels": [
+            2,
+            0,
+            0
+          ],
+          "id": "q6",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ESTAGIO_PROFISSIONAL",
+      "split": "train",
+      "paragraph_indices": [
+        0,
+        1,
+        2
+      ],
+      "claims": [
+        {
+          "text": "O estágio possibilita contato prático com conhecimentos teóricos.",
+          "labels": [
+            1,
+            2,
+            2
+          ],
+          "id": "q1",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O estágio não oferece contato prático com a área de estudo.",
+          "labels": [
+            0,
+            2,
+            2
+          ],
+          "id": "q2",
+          "rationales": [
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "Segundo a regulamentação descrita, o estágio de estudantes não configura relação de emprego.",
+          "labels": [
+            2,
+            1,
+            1
+          ],
+          "id": "q3",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "Segundo a regulamentação descrita, todo estágio de estudantes configura relação de emprego.",
+          "labels": [
+            2,
+            0,
+            0
+          ],
+          "id": "q4",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        },
+        {
+          "text": "O estágio busca complementar a formação educacional em cursos superiores e técnicos.",
+          "labels": [
+            1,
+            2,
+            1
+          ],
+          "id": "q5",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "O estágio não tem finalidade de formação educacional.",
+          "labels": [
+            0,
+            2,
+            0
+          ],
+          "id": "q6",
+          "rationales": [
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "EXERCICIOS_DOMICILIARES",
+      "split": "validation",
+      "paragraph_indices": [
+        0,
+        1,
+        2
+      ],
+      "claims": [
+        {
+          "text": "O regime substitui aulas não frequentadas por atividades domiciliares ou hospitalares.",
+          "labels": [
+            1,
+            2,
+            2
+          ],
+          "id": "q1",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O regime exige que todas as atividades ocorram presencialmente na sala de aula.",
+          "labels": [
+            0,
+            0,
+            0
+          ],
+          "id": "q2",
+          "rationales": [
+            "O regime é domiciliar, incompatível com exigência de todas as atividades em sala de aula.",
+            "O regime é domiciliar, incompatível com exigência de todas as atividades em sala de aula.",
+            "O regime é domiciliar, incompatível com exigência de todas as atividades em sala de aula."
+          ],
+          "exclusion_reason": "Todos os parágrafos contradizem esta consulta; excluída do conjunto balanceado, sem alterar rótulos para fabricar contraste."
+        },
+        {
+          "text": "A gestante pode receber o regime a partir do oitavo mês de gestação.",
+          "labels": [
+            2,
+            1,
+            2
+          ],
+          "id": "q3",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A gestante somente pode solicitar o regime depois do parto.",
+          "labels": [
+            2,
+            0,
+            2
+          ],
+          "id": "q4",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O regime para portadores de afecções exige afastamento superior a sete dias consecutivos.",
+          "labels": [
+            2,
+            2,
+            1
+          ],
+          "id": "q5",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "O regime para portadores de afecções é garantido por qualquer afastamento de um dia.",
+          "labels": [
+            2,
+            2,
+            0
+          ],
+          "id": "q6",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "MONITORIA_DE_ENSINO",
+      "split": "validation",
+      "paragraph_indices": [
+        0,
+        1,
+        2
+      ],
+      "claims": [
+        {
+          "text": "O programa de monitoria busca melhorar o ensino na graduação.",
+          "labels": [
+            1,
+            2,
+            2
+          ],
+          "id": "q1",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A finalidade pedagógica do programa é reduzir a qualidade do ensino.",
+          "labels": [
+            0,
+            2,
+            2
+          ],
+          "id": "q2",
+          "rationales": [
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A bolsa institucional descrita tem valor mensal de quatrocentos reais.",
+          "labels": [
+            2,
+            1,
+            2
+          ],
+          "id": "q3",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A bolsa institucional descrita tem valor mensal de oitocentos reais.",
+          "labels": [
+            2,
+            0,
+            2
+          ],
+          "id": "q4",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A unidade de lotação da disciplina é responsável pelo processo seletivo.",
+          "labels": [
+            2,
+            2,
+            1
+          ],
+          "id": "q5",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "O processo seletivo é de responsabilidade exclusiva de uma empresa externa.",
+          "labels": [
+            2,
+            2,
+            0
+          ],
+          "id": "q6",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "COMPUTADOR",
+      "split": "validation",
+      "paragraph_indices": [
+        0,
+        1,
+        2
+      ],
+      "claims": [
+        {
+          "text": "Um computador pode processar dados e armazenar informações.",
+          "labels": [
+            1,
+            2,
+            2
+          ],
+          "id": "q1",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "Um computador não pode armazenar dados.",
+          "labels": [
+            0,
+            2,
+            2
+          ],
+          "id": "q2",
+          "rationales": [
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A máquina de Pascal foi criada para ajudar seu pai a calcular impostos.",
+          "labels": [
+            2,
+            1,
+            2
+          ],
+          "id": "q3",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A máquina de Pascal foi criada exclusivamente para produzir tecidos.",
+          "labels": [
+            2,
+            0,
+            2
+          ],
+          "id": "q4",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "Jacquard inventou um tear mecânico com leitora automática de cartões.",
+          "labels": [
+            2,
+            2,
+            1
+          ],
+          "id": "q5",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "O tear de Jacquard funcionava sem qualquer leitura de cartões.",
+          "labels": [
+            2,
+            2,
+            0
+          ],
+          "id": "q6",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "FAPDF",
+      "split": "test",
+      "paragraph_indices": [
+        0,
+        1,
+        2
+      ],
+      "claims": [
+        {
+          "text": "A FAPDF visa estimular o desenvolvimento científico e tecnológico do Distrito Federal.",
+          "labels": [
+            1,
+            2,
+            2
+          ],
+          "id": "q1",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A finalidade da FAPDF exclui o desenvolvimento científico e tecnológico.",
+          "labels": [
+            0,
+            2,
+            2
+          ],
+          "id": "q2",
+          "rationales": [
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A lei de criação da FAPDF data de 1992.",
+          "labels": [
+            2,
+            1,
+            2
+          ],
+          "id": "q3",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A lei de criação da FAPDF data de 1982.",
+          "labels": [
+            2,
+            0,
+            2
+          ],
+          "id": "q4",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O ICT/DF foi incorporado à FAPDF no ano de 2000.",
+          "labels": [
+            2,
+            2,
+            1
+          ],
+          "id": "q5",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "O ICT/DF foi incorporado à FAPDF no ano de 2010.",
+          "labels": [
+            2,
+            2,
+            0
+          ],
+          "id": "q6",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "RES_APROVEITAMENTO_DE_ESTUDOS",
+      "split": "test",
+      "paragraph_indices": [
+        0,
+        1,
+        2
+      ],
+      "claims": [
+        {
+          "text": "O aproveitamento de estudos pode ser solicitado uma única vez durante o curso.",
+          "labels": [
+            1,
+            2,
+            2
+          ],
+          "id": "q1",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O aproveitamento de estudos pode ser solicitado mais de uma vez durante o curso.",
+          "labels": [
+            0,
+            2,
+            2
+          ],
+          "id": "q2",
+          "rationales": [
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A resolução do Colegiado de Curso aprova o Plano de Estudos.",
+          "labels": [
+            2,
+            1,
+            2
+          ],
+          "id": "q3",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "O Plano de Estudos é aprovado exclusivamente por uma comissão estudantil.",
+          "labels": [
+            2,
+            0,
+            2
+          ],
+          "id": "q4",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "No aproveitamento de estudos, a carga horária é convertida em hora-aula de sessenta minutos.",
+          "labels": [
+            2,
+            2,
+            1
+          ],
+          "id": "q5",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "No aproveitamento de estudos, a carga horária é convertida em hora-aula de trinta minutos.",
+          "labels": [
+            2,
+            2,
+            0
+          ],
+          "id": "q6",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "PESQUISA",
+      "split": "test",
+      "paragraph_indices": [
+        0,
+        1,
+        2
+      ],
+      "claims": [
+        {
+          "text": "A pesquisa pode ampliar conhecimentos preexistentes.",
+          "labels": [
+            1,
+            1,
+            2
+          ],
+          "id": "q1",
+          "rationales": [
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A pesquisa jamais amplia conhecimentos já existentes.",
+          "labels": [
+            0,
+            0,
+            2
+          ],
+          "id": "q2",
+          "rationales": [
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A pesquisa pode replicar elementos de projetos anteriores para testar sua validade.",
+          "labels": [
+            2,
+            1,
+            2
+          ],
+          "id": "q3",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A pesquisa não pode replicar elementos de projetos anteriores.",
+          "labels": [
+            2,
+            0,
+            2
+          ],
+          "id": "q4",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam."
+          ]
+        },
+        {
+          "text": "A pesquisa bibliográfica abrange leitura e análise de livros e periódicos.",
+          "labels": [
+            2,
+            2,
+            1
+          ],
+          "id": "q5",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O fato é afirmado no parágrafo, inclusive quando há suporte em mais de um parágrafo."
+          ]
+        },
+        {
+          "text": "A pesquisa bibliográfica exclui a leitura de livros e periódicos.",
+          "labels": [
+            2,
+            2,
+            0
+          ],
+          "id": "q6",
+          "rationales": [
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "O parágrafo não afirma nem nega o fato completo solicitado. Assunto em comum e conhecimento externo não bastam.",
+            "Há afirmação explícita incompatível com a consulta; a anotação não depende apenas de omissão."
+          ]
+        }
+      ]
+    }
+  ]
+}

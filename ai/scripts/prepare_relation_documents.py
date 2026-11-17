@@ -32,7 +32,7 @@ def paragraph_rows(source, annotations):
         anchor = item['anchor']; start = text.index(anchor)
         for claim in item['claims']:
             label = claim['label']; status = STATES[label]
-            key = f'paragraph-{title}-{index}-{label}'
+            key = f"paragraph-{title}-{index}-{claim.get('id',label)}"
             units = [dict(id='page:1', text=text)]
             evidence = [] if label == 2 else [dict(status=status, unit='page:1')]
             rows.append(dict(id=key, project_id='paragraph-'+title, source_document='faquad:'+title,
