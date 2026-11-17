@@ -10,6 +10,7 @@ from .model import GPT, GPTConfig
 
 STATE_MODES = ("independent_binary", "categorical_four_state")
 READOUTS = ("shared_json_decision_prefix_v1", "suffix_query_decision_prefix_v1")
+ATTENTION_MODES = ('causal','bidirectional_padding_mask_v1')
 
 
 def sentence_parts(text):
@@ -21,17 +22,20 @@ def sentence_parts(text):
 
 
 class EvidenceClassifier(nn.Module):
-    def __init__(self, backbone, state_mode=STATE_MODES[0]):
+    def __init__(self, backbone, state_mode=STATE_MODES[0], attention_mode=ATTENTION_MODES[0]):
         super().__init__()
         if state_mode not in STATE_MODES: raise ValueError("Modo de estados não suportado.")
+        if attention_mode not in ATTENTION_MODES: raise ValueError('Modo de atenção não suportado.')
         self.state_mode = state_mode
+        self.attention_mode = attention_mode
         backbone.head = nn.Identity()
         self.backbone = backbone
         self.head = nn.Linear(backbone.config.width, 4 if state_mode == STATE_MODES[1] else 2)
         backbone.initialize(self.head)
 
     def features(self, ids, lengths):
-        hidden = self.backbone(ids)
+        hidden = (self.backbone(ids,bidirectional_lengths=lengths) if self.attention_mode==ATTENTION_MODES[1]
+                  else self.backbone(ids))
         return hidden[torch.arange(len(ids), device=ids.device), lengths - 1]
 
     def forward(self, ids, lengths):
@@ -154,7 +158,8 @@ class EvidencePredictor:
         self.tokenizer = ByteBPE(checkpoint["merges"])
         self.config = GPTConfig(**checkpoint["config"])
         if self.tokenizer.vocab_size != self.config.vocab_size: raise ValueError("Tokenizer incompatível.")
-        self.model = EvidenceClassifier(GPT(self.config), settings.get("state_mode", STATE_MODES[0]))
+        self.model = EvidenceClassifier(GPT(self.config), settings.get("state_mode", STATE_MODES[0]),
+                                        settings.get('attention_mode',ATTENTION_MODES[0]))
         self.model.load_state_dict(checkpoint["classifier"])
         self.device = device; self.model.to(device).eval()
 

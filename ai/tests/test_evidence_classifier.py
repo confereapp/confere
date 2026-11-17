@@ -11,6 +11,35 @@ from confere_ai.tokenizer import ByteBPE
 
 
 class EvidenceClassifierTests(unittest.TestCase):
+    def test_bidirectional_reads_future_tokens_and_ignores_padding(self):
+        torch.manual_seed(42)
+        backbone=GPT(GPTConfig(vocab_size=260,block_size=32,width=16,layers=2,heads=2)).eval()
+        ids=torch.tensor([[10,11,12]])
+        changed=torch.tensor([[10,11,13]])
+        lengths=torch.tensor([3])
+        torch.testing.assert_close(backbone(ids)[:,0],backbone(changed)[:,0],rtol=0,atol=0)
+        self.assertFalse(torch.allclose(backbone(ids,bidirectional_lengths=lengths)[:,0],
+                                        backbone(changed,bidirectional_lengths=lengths)[:,0]))
+        padded=torch.tensor([[10,11,12,259,259]])
+        torch.testing.assert_close(backbone(ids,bidirectional_lengths=lengths),
+                                   backbone(padded,bidirectional_lengths=lengths)[:,:3],rtol=1e-5,atol=1e-6)
+        for bad in [torch.tensor([0]),torch.tensor([4]),torch.tensor([2,3]),torch.tensor([2.5])]:
+            with self.assertRaises(ValueError):backbone(ids,bidirectional_lengths=bad)
+
+    def test_bidirectional_classifier_roundtrip_preserves_masked_predictions(self):
+        from dataclasses import asdict
+        config=GPTConfig(vocab_size=260,block_size=512,width=16,layers=1,heads=2)
+        model=EvidenceClassifier(GPT(config),attention_mode='bidirectional_padding_mask_v1').eval()
+        source=dict(config=asdict(config),merges=[],classifier=model.state_dict(),settings=dict(
+            objective='document_classifier',readout='shared_json_decision_prefix_v1',
+            attention_mode='bidirectional_padding_mask_v1'))
+        predictor=EvidencePredictor(source,'cpu')
+        ids=torch.tensor([[10,11,12]]);lengths=torch.tensor([3])
+        torch.testing.assert_close(model(ids,lengths),predictor.model(ids,lengths))
+        model(ids,lengths).sum().backward()
+        self.assertTrue(all(torch.isfinite(p.grad).all() for p in model.parameters() if p.grad is not None))
+        with self.assertRaises(ValueError):EvidencePredictor(dict(source,settings=dict(source['settings'],attention_mode='unknown')),'cpu')
+
     def test_validation_uses_selected_readout_when_source_uses_another_protocol(self):
         from dataclasses import asdict
         from train_evidence_classifier import validation_predictor

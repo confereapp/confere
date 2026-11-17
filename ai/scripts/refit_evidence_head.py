@@ -25,7 +25,8 @@ def main():
     validation = [r for r in rows if r["split"] == "validation"]
     cache = torch.load(args.source / "features.pt", map_location="cpu", weights_only=True)
     checkpoint = torch.load(args.source / "best.pt", map_location="cpu", weights_only=True)
-    model = EvidenceClassifier(GPT(GPTConfig(**checkpoint["config"])))
+    model = EvidenceClassifier(GPT(GPTConfig(**checkpoint["config"])),
+                               attention_mode=checkpoint['settings'].get('attention_mode','causal'))
     model.load_state_dict(checkpoint["classifier"]); model.eval()
     for parameter in model.parameters(): parameter.requires_grad_(False)
     x = cache["train"].double(); y = cache["labels"].double(); raw_val = cache["validation"]

@@ -7,7 +7,7 @@ import math
 from pathlib import Path
 import time
 import torch
-from confere_ai.evidence_classifier import EvidenceClassifier, examples, unit_batch, response, READOUTS, paired_indices, STATE_MODES, load_binary_as_categorical
+from confere_ai.evidence_classifier import EvidenceClassifier, examples, unit_batch, response, READOUTS, paired_indices, STATE_MODES, ATTENTION_MODES, load_binary_as_categorical
 from confere_ai.finetuning import configure_trainable
 from confere_ai.generative_selection import quality_key
 from confere_ai.grounding import judge
@@ -63,6 +63,7 @@ def main():
     parser.add_argument("--categorical-states", action="store_true")
     parser.add_argument("--require-perfect-validation", action="store_true")
     parser.add_argument("--paired-queries", action="store_true")
+    parser.add_argument('--bidirectional-encoder',action='store_true')
     parser.add_argument('--train-embeddings',action='store_true')
     parser.add_argument("--error-replay", action="store_true", help="Metade de cada lote revisita erros medidos somente no treino inicial.")
     parser.add_argument("--readout", choices=READOUTS)
@@ -81,7 +82,8 @@ def main():
     if "classifier" not in source: backbone.load_state_dict(source["model"])
     source_mode = source["settings"].get("state_mode", STATE_MODES[0])
     state_mode = STATE_MODES[1] if args.categorical_states else source_mode
-    model = EvidenceClassifier(backbone, state_mode)
+    attention_mode=ATTENTION_MODES[1] if args.bidirectional_encoder else source['settings'].get('attention_mode',ATTENTION_MODES[0])
+    model = EvidenceClassifier(backbone, state_mode, attention_mode)
     if "classifier" in source:
         if source["settings"].get("readout") not in READOUTS: parser.error("Representação incompatível.")
         if source_mode == STATE_MODES[0] and state_mode == STATE_MODES[1]: load_binary_as_categorical(model, source["classifier"])
@@ -107,6 +109,7 @@ def main():
                     encoder_learning_rate=args.encoder_learning_rate, head_learning_rate=args.head_learning_rate, selection_patience=args.selection_patience, batch_size=8, threshold=.5, eval_every=args.eval_every,
                     checkpoint_selection="generated_family_quality", sampling="paired_queries_uniform_source" if args.paired_queries else "uniform_units", error_replay=args.error_replay, initial_train_errors=len(hard), loss="categorical_ce" if state_mode==STATE_MODES[1] else "unweighted_bce")
     settings['unit_segmentation']=source['settings'].get('unit_segmentation','whole_unit_v1')
+    settings['attention_mode']=attention_mode
     settings['thresholds']=source['settings'].get('thresholds',[.5,.5])
     if args.error_replay:settings['training_error_thresholds']=list(error_thresholds)
     response([],[],settings['thresholds'])

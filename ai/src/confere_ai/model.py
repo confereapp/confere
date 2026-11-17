@@ -30,10 +30,11 @@ class Block(nn.Module):
         self.norm2 = nn.LayerNorm(config.width)
         self.mlp = nn.Sequential(nn.Linear(config.width, 4 * config.width), nn.GELU(), nn.Linear(4 * config.width, config.width))
 
-    def forward(self, x):
+    def forward(self, x, attention_mask=None):
         batch, length, width = x.shape
         q, k, v = [item.view(batch, length, self.heads, width // self.heads).transpose(1, 2) for item in self.qkv(self.norm1(x)).chunk(3, dim=-1)]
-        attended = F.scaled_dot_product_attention(q, k, v, is_causal=True, dropout_p=0.0)
+        attended = F.scaled_dot_product_attention(q, k, v, attn_mask=attention_mask,
+                                                 is_causal=attention_mask is None, dropout_p=0.0)
         x = x + self.projection(attended.transpose(1, 2).contiguous().view(batch, length, width))
         return x + self.mlp(self.norm2(x))
 
@@ -56,12 +57,21 @@ class GPT(nn.Module):
             if isinstance(module, nn.Linear) and module.bias is not None:
                 nn.init.zeros_(module.bias)
 
-    def forward(self, ids):
+    def forward(self, ids, *, bidirectional_lengths=None):
         if ids.ndim != 2 or not 0 < ids.shape[1] <= self.config.block_size:
             raise ValueError("Sequência vazia ou maior que a janela de contexto.")
         positions = torch.arange(ids.shape[1], device=ids.device)
         x = self.token_embedding(ids) + self.position_embedding(positions)
-        return self.head(self.norm(self.blocks(x)))
+        if bidirectional_lengths is None:
+            x = self.blocks(x)
+        else:
+            lengths=bidirectional_lengths
+            if (lengths.shape!=(ids.shape[0],) or lengths.dtype not in (torch.int32,torch.int64)
+                    or torch.any(lengths<=0) or torch.any(lengths>ids.shape[1])):
+                raise ValueError('Comprimentos bidirecionais inválidos.')
+            mask=(positions[None,:]<lengths[:,None])[:,None,None,:]
+            for block in self.blocks:x=block(x,mask)
+        return self.head(self.norm(x))
 
     def load_local_checkpoint(self, checkpoint, extend_context=False):
         source=GPTConfig(**checkpoint["config"])
