@@ -16,7 +16,8 @@ def load_corpus(path):
     fingerprint = hashlib.sha256(path.read_bytes()).hexdigest()
     if fingerprint != manifest["snapshot_sha256"]:
         raise ValueError("O corpus não corresponde ao hash do manifesto.")
-    rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+    # split("\n"), não splitlines(): U+2028 e afins aparecem crus dentro do JSON dos artigos.
+    rows = [json.loads(line) for line in path.read_text().split("\n") if line.strip()]
     ids, text_splits = set(), {}
     for row in rows:
         if row["id"] in ids or row["split"] not in {"train", "validation", "test"}:
