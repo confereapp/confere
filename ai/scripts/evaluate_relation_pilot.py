@@ -16,10 +16,15 @@ from train_evidence_classifier import score
 STATES = ['atendido', 'nao_atendido', 'evidencia_insuficiente']
 
 
-def require_validation_gate(rows,run_summary):
+def require_validation_gate(rows,run_summary,probe_state=None,dataset_sha256=None):
     if any(r['provenance'].get('relation_matrix_version')==2 for r in rows):
-        if run_summary.get('heldout_eligible') is not True:
+        if (run_summary.get('heldout_eligible') is not True
+                or not run_summary.get('quality',[False])[0]
+                or run_summary.get('validation_no_case_regression') is not True):
             raise ValueError('Reserva da matriz preservada: candidato não passou a validação e retenção.')
+        if (probe_state is None or probe_state.get('step')!=run_summary.get('selected_step')
+                or probe_state.get('dataset_fingerprint')!=dataset_sha256 or not dataset_sha256):
+            raise ValueError('Reserva da matriz preservada: checkpoint não corresponde à seleção ou ao corpus.')
 
 
 def shortcut_baseline(train, test, side):
@@ -73,7 +78,8 @@ def main():
     freeze = {str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in [a.data,a.probe,a.legacy_data,a.probe.parent/'source.pt']}
     rows,_=load_instructions(a.data);train=[r for r in rows if r['split']=='train'];test=[r for r in rows if r['split']=='test']
     run_summary=json.loads((a.probe.parent/'evaluation.json').read_text())
-    require_validation_gate(rows,run_summary)
+    probe_state=torch.load(a.probe,map_location='cpu',weights_only=True)
+    require_validation_gate(rows,run_summary,probe_state,freeze[str(a.data)])
     a.output.mkdir(parents=True)
     (a.output/'freeze.json').write_text(json.dumps(freeze,indent=2))
     predictor=load_probe(a.probe,a.device)

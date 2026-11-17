@@ -8,7 +8,12 @@ class ShortcutControlTests(unittest.TestCase):
         rows=[dict(provenance=dict(relation_matrix_version=2))]
         for summary in [{},dict(heldout_eligible=False),dict(heldout_eligible=1)]:
             with self.assertRaisesRegex(ValueError,'Reserva da matriz preservada'):require_validation_gate(rows,summary)
-        require_validation_gate(rows,dict(heldout_eligible=True))
+        valid=dict(heldout_eligible=True,quality=[True],validation_no_case_regression=True,selected_step=250)
+        state=dict(step=250,dataset_fingerprint='dataset')
+        require_validation_gate(rows,valid,state,'dataset')
+        for bad in [dict(step=1000,dataset_fingerprint='dataset'),dict(step=250,dataset_fingerprint='other')]:
+            with self.assertRaisesRegex(ValueError,'checkpoint não corresponde'):require_validation_gate(rows,valid,bad,'dataset')
+        with self.assertRaises(ValueError):require_validation_gate(rows,dict(valid,quality=[False]),state,'dataset')
         require_validation_gate([dict(provenance={})],{})
 
     def test_query_control_ignores_body_and_does_not_fit_test(self):
