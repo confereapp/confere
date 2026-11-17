@@ -115,7 +115,7 @@ def scoped_conversations(count=4000):
         else:kind='fact'
         rows.append(dict(id=group,project_id=group,split='train',task='conversation_context_answer_'+kind,
                          prompt=prompt,target=target,history=[],turn_index=0,response_tokens=256,scenario=scenario,
-                         provenance=dict(kind='synthetic_authored',note='Escopo da consulta com números distratores ou recursos compostos inéditos; somente treino.')))
+                         provenance=dict(kind='synthetic_authored',note='Escopo da consulta com números distratores ou recursos compostos variados; somente treino de desenvolvimento.')))
     for i in range(count):
         def number():return rng.randint(1,20 if rng.random()<.5 else 180)
         a=number();b=number()
@@ -132,8 +132,9 @@ def scoped_conversations(count=4000):
         left,right=[v.casefold() for v in names(rng)];x,y=[v.casefold() for v in names(rng)]
         if i%3==0:
             left,right=rng.sample(['cadastro','consulta','relatórios','pagamentos','filtros','alertas','edição','histórico','avaliações','reservas','gestão','controle','monitoramento','exportação','importação','sincronização'],2)
-            x,y=rng.sample(['clientes','produtos','compras','tarefas','mensagens','turmas','documentos','serviços','contas','agendamentos','matrículas','fornecedores'],2)
-        features=[left+' de '+x,left+' de '+y,right+' de '+x];positive,negative,missing=rng.sample(features,3)
+            x,y=rng.sample(['clientes','produtos','compras','tarefas','mensagem','turmas','documentos','serviços','contas','agendamentos','matrículas','fornecedores','cartão','busca','acessos','comentários','salas','lote','nuvem','planilhas'],2)
+        prepositions=[rng.choice(['de','por','para','com','em']) for _ in range(3)]
+        features=[left+' '+prepositions[0]+' '+x,left+' '+prepositions[1]+' '+y,right+' '+prepositions[2]+' '+x];positive,negative,missing=rng.sample(features,3)
         verb=rng.choice(['inclui','contém','tem','possui','fornece'])
         questions=[rng.choice(['O projeto inclui {}?','Esse projeto tem {}?','Há {} no projeto?','O texto confirma a presença de {}?']).format(feature) for feature in features]
         for swap in range(2):
@@ -145,7 +146,7 @@ def scoped_conversations(count=4000):
             if i%2:text+=f' A equipe discutiu {missing}, sem confirmar a implementação.'
             for j,feature in enumerate(features):
                 target='Sim.' if feature==yes else 'Não.' if feature==no else 'Não tenho informação suficiente para responder.'
-                add(f'open-scope-{i}-{swap}-{j}',text+separator+questions[j],target,dict(positive=yes,negative=no,queried=feature,missing=missing,text=text,paired_presence_group=f'open-scope-{i}-{swap}'))
+                add(f'open-scope-{i}-{swap}-{j}',text+separator+questions[j],target,dict(positive=yes,negative=no,queried=feature,missing=missing,text=text,prepositions=prepositions,paired_presence_group=f'open-scope-{i}-{swap}'))
     return rows
 
 

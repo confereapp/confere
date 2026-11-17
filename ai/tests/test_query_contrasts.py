@@ -11,6 +11,21 @@ from prepare_lexical_binding import expected
 
 
 class QueryContrastTests(unittest.TestCase):
+    def test_qualifiers_vary_without_determining_presence_or_absence(self):
+        targets={word:set() for word in ['de','por','para','com','em']}
+        mixed=False
+        for row in scoped_conversations(200):
+            scene=row['scenario']
+            if 'positive' not in scene:continue
+            mixed=mixed or len(set(scene['prepositions']))>1
+            for word in targets:
+                if ' '+word+' ' in scene['queried']:targets[word].add(row['target'])
+            expected=('Sim.' if scene['queried']==scene['positive'] else 'Não.' if scene['queried']==scene['negative']
+                      else 'Não tenho informação suficiente para responder.')
+            self.assertEqual(row['target'],expected)
+        self.assertTrue(mixed)
+        self.assertTrue(all(values=={'Sim.','Não.','Não tenho informação suficiente para responder.'} for values in targets.values()))
+
     def test_numeric_noise_does_not_supply_a_missing_deadline_and_membership_can_reverse(self):
         rows=scoped_conversations(10)
         for offset in range(0,len(rows),10):
