@@ -1,0 +1,154 @@
+{
+  "run": {
+    "data": "ai/data/private/evidence-mix-ek-2026-11-17/examples.jsonl",
+    "dataset_fingerprint": "b4caf96d6ff7696228338168dec46251fba79a75614490ce5133652f8221655c",
+    "source": "ai/runs/pt-full-8k-2026-11-17/best.pt",
+    "source_sha256": "c411fb78ad0057baf6da098fe95c49059072cbe6bb3bac8155fc49229d7e8de4",
+    "device": "mps",
+    "train_units": 41138,
+    "validation_units": 660,
+    "settings": {
+      "objective": "document_classifier",
+      "state_mode": "independent_binary",
+      "readout": "shared_json_decision_prefix_v1",
+      "frozen_embeddings": false,
+      "require_perfect_validation": false,
+      "encoder_learning_rate": 0.0001,
+      "head_learning_rate": 0.001,
+      "selection_patience": 8,
+      "batch_size": 8,
+      "threshold": 0.5,
+      "eval_every": 1000,
+      "checkpoint_selection": "generated_family_quality",
+      "sampling": "uniform_units",
+      "error_replay": false,
+      "initial_train_errors": 0,
+      "loss": "unweighted_bce",
+      "unit_segmentation": "whole_unit_v1",
+      "attention_mode": "causal",
+      "thresholds": [
+        0.5,
+        0.5
+      ]
+    },
+    "optimizer_reset": true,
+    "test_examples_used": 0,
+    "note": "Predição semântica por unidade; JSON/referências por construção. Validação de desenvolvimento, sem teste cego; sem integração na API."
+  },
+  "summary": {
+    "final_step": 23000,
+    "selected_step": 15000,
+    "stop_reason": "selection_plateau",
+    "elapsed_seconds": 1377.213355208,
+    "test_examples_used": 0
+  },
+  "acceptance": {
+    "passed": false,
+    "profiles": {
+      "academic_paragraph_atendido": [
+        4,
+        9
+      ],
+      "academic_paragraph_evidencia_insuficiente": [
+        16,
+        34
+      ],
+      "academic_paragraph_nao_atendido": [
+        3,
+        8
+      ],
+      "previous_multiple_evidence": [
+        24,
+        24
+      ],
+      "single_positive": [
+        9,
+        12
+      ],
+      "single_negative": [
+        10,
+        12
+      ],
+      "mention_only": [
+        11,
+        12
+      ],
+      "multiple_positive": [
+        11,
+        12
+      ],
+      "multiple_negative": [
+        11,
+        12
+      ],
+      "split_conflict": [
+        12,
+        12
+      ],
+      "shared_conflict": [
+        9,
+        12
+      ],
+      "other_topic": [
+        7,
+        12
+      ],
+      "api_batch_atendido": [
+        29,
+        40
+      ],
+      "api_batch_nao_atendido": [
+        28,
+        37
+      ],
+      "api_batch_evidencia_insuficiente": [
+        88,
+        118
+      ],
+      "api_batch_conflict": [
+        7,
+        7
+      ],
+      "development_api_batch_atendido": [
+        15,
+        18
+      ],
+      "development_api_batch_nao_atendido": [
+        13,
+        15
+      ],
+      "development_api_batch_evidencia_insuficiente": [
+        37,
+        52
+      ],
+      "development_api_batch_conflict": [
+        3,
+        3
+      ]
+    },
+    "description": "Piloto documental: 100% de formato/referências válidos e ao menos 90% de status e evidências corretos em cada perfil.",
+    "scope": "Templates sintéticos; não comprova confiabilidade geral."
+  },
+  "df_public_test": {
+    "ci_origin": 322,
+    "df_candidate": 521,
+    "ek": 583,
+    "query_only_control": 586,
+    "total": 861
+  },
+  "real_documents_bm25_k8": {
+    "ci": {
+      "status_matches": 8,
+      "false_positive": 3,
+      "double_marked": 67,
+      "units": 144
+    },
+    "ek": {
+      "status_matches": 11,
+      "false_positive": 5,
+      "double_marked": 25,
+      "units": 144
+    }
+  },
+  "adopted": false
+}
