@@ -79,6 +79,7 @@ function render() {
   const head = document.createElement('div'); head.className = 'card';
   head.innerHTML = `<div class="small muted">${title(item.document)} · ${item.criterion}</div><div class="req"></div>`;
   head.querySelector('.req').textContent = item.requirement;
+  if (item.guide) { const g = document.createElement('p'); g.className = 'small'; g.style.whiteSpace = 'pre-wrap'; g.textContent = item.guide; head.appendChild(g); }
   main.appendChild(head);
   const status = document.createElement('div'); status.className = 'status';
   Object.entries(STATUS).forEach(([value, label], n) => {

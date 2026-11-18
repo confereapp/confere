@@ -21,6 +21,14 @@ trabalhos diferentes, o texto do requisito sozinho não decide.
    "Ver página" abre a imagem original para conferir o OCR.
 4. Exporte o JSON ao terminar. O progresso fica salvo no navegador.
 
+O que "atende" exige em cada critério está em `criterios-v1.md`: o TCC
+precisa fazer ou descrever o item, não só citar a palavra.
+
+Divergências entre anotadores vão para adjudicação: um arquivo de tarefas só
+com os itens divergentes, cada um mostrando a regra do critério e as duas
+anotações (`ai/data/private/annotation-adjudication-v1.json`). A decisão da
+adjudicação substitui os rótulos desses itens.
+
 Anote sem consultar saídas do modelo. Para medir concordância, uma segunda
 pessoa anota ao menos parte dos itens de forma independente.
 
