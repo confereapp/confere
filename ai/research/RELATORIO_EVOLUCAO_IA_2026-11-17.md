@@ -14,6 +14,8 @@ Há resultados positivos em tarefas curtas e controladas. Entretanto, o sistema 
 
 **O avanço mais consistente até agora está na infraestrutura e no diagnóstico das falhas. Não há evidência para apresentar o modelo como um avaliador acadêmico autônomo confiável.** Os últimos candidatos foram reprovados e não substituíram os padrões da API.
 
+**Atualização da segunda rodada (seção 5.6):** uma base nova treinada em 303 milhões de tokens, recuperação por BM25 e contrastes sem atalho produziram o primeiro classificador que supera os controles que leem só a consulta ou só o trecho nos testes públicos. A transferência para os TCCs reais continua sem ganho distinguível; nada foi promovido.
+
 ## 2. Objetivos e restrições adotadas
 
 Os objetivos iniciais incluíram continuar o treinamento do modelo próprio, oferecer conversa contextual e integrar a análise de texto à API. Após os resultados nos PDFs, a investigação recente concentrou-se na relação entre requisito e evidência.
@@ -26,9 +28,11 @@ As alterações foram feitas incrementalmente, com commits pequenos e sem atribu
 
 ### Modelo e treinamento
 
-A configuração própria usada como referência nas etapas recentes tem aproximadamente **11,8 milhões de parâmetros**, seis camadas, largura 384, seis cabeças de atenção, vocabulário BPE de 1024 tokens e contexto de 1024 tokens. O treinamento local utiliza PyTorch e aceleração MPS.
+Até a primeira rodada, a configuração própria usada como referência tinha aproximadamente **11,8 milhões de parâmetros**, seis camadas, largura 384, seis cabeças de atenção, vocabulário BPE de 1024 tokens e contexto de 1024 tokens. O treinamento local utiliza PyTorch e aceleração MPS.
 
 Foram explorados treinamento de linguagem e instruções, tarefas de conversa com histórico, classificadores documentais, ajustes somente da camada de decisão e ajustes dos blocos do encoder. Também foram ensaiadas diferentes leituras da consulta, atenção bidirecional com máscara de padding e classificação conjunta em quatro estados. Essas variantes foram experimentais; nenhuma melhora pontual foi tratada como aprovação geral.
+
+Na segunda rodada, uma base nova da mesma arquitetura, com vocabulário de 8.192 tokens (**17,3 milhões de parâmetros**), foi treinada do zero em 303 milhões de tokens da Wikipédia em português (seção 5.6).
 
 ### Pipeline documental
 
@@ -130,6 +134,43 @@ Depois, DI ajustou também os blocos do encoder próprio. DJ repetiu o ajuste co
 
 O ganho agregado veio principalmente de inconclusivos, com piora nas classes que sustentam uma decisão. Destravar o encoder e repetir erros não se confirmaram como solução suficiente.
 
+### 5.6 Segunda rodada: base completa, recuperação e contrastes sem atalho
+
+**Recuperação por BM25.** O pipeline passou a classificar só os k trechos mais parecidos com cada requisito e a decidir por maioria estrita; página sem texto virou aviso em vez de veto. Antes, um único lote espúrio entre centenas, ou uma página vazia, tornava qualquer requisito inconclusivo. Com k=8, 21 das 22 citações anotadas estão entre os trechos recuperados e o custo cai de 886 para 136 lotes. Sem `top_k`, o comportamento anterior é preservado.
+
+**Base nova.** As bases anteriores viram cerca de 25 milhões de tokens em orçamentos de minutos. A nova usa o dump completo da Wikipédia em português (1,2 bilhão de caracteres), tokenizer por palavras com 8.192 tokens, janelas empacotadas e agenda cosseno: 18.500 passos em 2 h 45 min no MPS. Nos mesmos artigos de validação, fora do treino de todas as bases:
+
+| Base | Bits por caractere |
+| --- | ---: |
+| `foundation-1024-2026-11-02` | 1,656 |
+| `foundation-continue-n-2026-11-16` (melhor anterior) | 1,466 |
+| `pt-full-8k-2026-11-17` | 1,260 |
+
+As amostras continuam repetitivas; a melhora é de modelagem de linguagem, não de conversa.
+
+**Atalho da consulta.** No InferBR, cada hipótese aparece com uma única premissa, e palavras de negação quase sempre indicam contradição (869 contradições, 157 implicações e 5 neutras). Por isso a consulta prevê o rótulo. Os contrastes novos acrescentam, para cada par, a negação da hipótese com rótulo invertido e premissas vizinhas por BM25 sem relação. No teste de contrastes, ler só a consulta (2.115/3.262) ou só o trecho (2.019) fica abaixo da classe majoritária (2.166).
+
+| Classificador | Contrastes (3.262) | DF público (861; só consulta: 586) | Casos antigos | Acadêmico S / C / I | Falsas aprov. acadêmicas |
+| --- | ---: | ---: | ---: | --- | ---: |
+| Origem CI | — | 322 | 407/410 | 4/9 · 2/8 · 3/34 | 16 |
+| EK (base nova, dados antigos) | 1.328 | 583 | 324/410 | 4/9 · 3/8 · 16/34 | 12 |
+| **EL (base nova, contrastes)** | **2.657** | **609** | 398/410 | 4/9 · 4/8 · 21/34 | 6 |
+
+EL é o primeiro classificador que supera os dois controles de atalho nos testes públicos: há evidência de que lê o trecho, ao menos em frases curtas.
+
+**Requisitos no formato de checklist.** EM continuou de EL com 1.668 pares derivados das perguntas FaQuAD ("O texto deve informar ..."), parágrafo com a resposta contra parágrafo vizinho sem ela. A validação desses requisitos subiu de 168 para 284 de 392, e suporte e insuficiência acadêmicos melhoraram (até 7/9 e 32/34). A contradição caiu para 1–2/8, porque essa fonte não tem casos de `nao_atendido`. A seleção, fixada antes, manteve EL.
+
+**TCCs reais (BM25, k=8).**
+
+| Classificador | Status coincidentes | Falsas aprovações | Trechos marcados nos dois sentidos |
+| --- | ---: | ---: | ---: |
+| CI | 8/18 | 3 | 67/144 |
+| EK | 11/18 | 5 | 25/144 |
+| EL por página / por frase | 6/18 · 11/18 | 4 · 7 | — |
+| EM último por página / por frase | 10/18 · 11/18 | 7 · 5 | — |
+
+O classificador ficou mais discriminativo, mas não há ganho distinguível nos TCCs: com 18 critérios conhecidos, diferenças de 1 a 3 acertos estão dentro do ruído, e as falsas aprovações persistem.
+
 ## 6. Principais falhas identificadas
 
 1. **Generalização fraca:** bom desempenho em templates não se sustenta em documentos ou formulações novas.
@@ -152,21 +193,23 @@ Os resultados também expuseram falhas do processo de desenvolvimento, não apen
 - Foram preservados conjuntos conhecidos, ensaios rejeitados, hashes e diferenças entre versões dos dados.
 - A avaliação evoluiu para exigir resposta e evidências corretas, desempenho por família e retenção, além de controles que ignoram uma das entradas.
 - A reserva nova permanece sem inferência. O avaliador bloqueia seu uso sem validação e retenção aprovadas e vincula a autorização ao checkpoint e ao corpus corretos.
-- A última execução da suíte Python registrada passou com **260 testes**. Isso verifica o software, não a competência semântica do modelo.
+- A última execução da suíte Python registrada passou com **263 testes**. Isso verifica o software, não a competência semântica do modelo.
 
 ## 8. Situação atual e próximos passos
 
-**A meta de qualidade não foi atingida.** A base de software e de auditoria está mais madura que o desempenho do modelo. Não há suporte para uso autônomo na avaliação de trabalhos ou aprovação de requisitos acadêmicos.
+**A meta de qualidade não foi atingida.** A base de software e de auditoria está mais madura que o desempenho do modelo. A segunda rodada removeu dois gargalos técnicos (base subtreinada e atalho da consulta nos dados públicos) e mostrou leitura da evidência em frases curtas, sem transferência demonstrada para documentos reais. Não há suporte para uso autônomo na avaliação de trabalhos ou aprovação de requisitos acadêmicos.
 
 A hipótese mais sustentada pelos resultados é uma combinação de supervisão insuficiente e pouco diversa, diferença entre os dados controlados e o uso real, e limitações da representação aprendida. A contribuição exata de cada fator ainda não foi isolada de forma conclusiva.
 
 A prioridade recomendada é ampliar relações revisadas em mais documentos, incluindo critérios que exigem explicar mecanismos, manter a mesma consulta com evidências de relações diferentes e obter uma segunda revisão das anotações. A avaliação deve continuar por documento, classe e grupo completo de consultas, com comparação a baselines simples e revisão semântica das citações.
 
+Os gargalos restantes não se resolvem com código ou mais treino: faltam supervisão de `nao_atendido` no formato de requisito e uma avaliação real maior que 18 critérios. O próximo passo concreto é anotar de 5 a 10 TCCs, cerca de 100 critérios com os três rótulos, e usá-los como treino e avaliação separados por documento.
+
 Mais passos ou mais variantes sobre os mesmos 90 pares não têm justificativa nos resultados atuais. Para uma entrega acadêmica, o sistema pode ser apresentado honestamente como protótipo experimental com análise de falhas e apoio à revisão humana; não como solução pronta cuja confiabilidade foi demonstrada.
 
 ## 9. Evidências e limites deste relatório
 
-Este documento consolida artefatos existentes; não executa novos treinos, não reavalia pesos nem repete testes de API. Os 260 testes citados correspondem à última suíte registrada, não a uma execução feita só para redigir este texto. Não existe uma revisão humana independente completa dos rótulos nem um benchmark amplo de conversa aberta.
+Este documento consolida artefatos existentes; a seção 5.6 resume treinos e avaliações da segunda rodada, registrados nos arquivos citados abaixo. Não repete testes de API. Os 263 testes citados correspondem à suíte executada ao final da segunda rodada. Não existe uma revisão humana independente completa dos rótulos nem um benchmark amplo de conversa aberta.
 
 Registros principais no repositório:
 
@@ -179,5 +222,7 @@ Registros principais no repositório:
 - `ai/research/paragraph-matrix-dg-dh-2026-11-17.md`: memorização e reserva.
 - `ai/research/matrix-encoder-di-dj-2026-11-17.md`: ajuste do encoder por classe.
 - `output/ai/relation-df-metric-correction-2026-11-17.json`: correção do resumo histórico.
+- `ai/PRETRAINING.md` e `output/ai/pretrain-full-8k-2026-11-17.json`: base completa.
+- `ai/research/new-base-ek-2026-11-17.md`, `output/ai/evidence-mix-ek-2026-11-17.json` e `output/ai/evidence-mix-el-2026-11-17.json`: classificadores EK, EL e EM.
 
 As fontes públicas e atribuições de dados permanecem registradas em `ai/data/licenses/`. Os textos integrais dos TCCs e os rastros privados não são reproduzidos neste relatório.
