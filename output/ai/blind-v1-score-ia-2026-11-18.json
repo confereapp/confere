@@ -1,0 +1,113 @@
+{
+ "labels": {
+  "atendido": 75,
+  "evidencia_insuficiente": 49,
+  "nao_atendido": 4
+ },
+ "items": 128,
+ "always_approve": {
+  "approved": 128,
+  "correct": 75,
+  "precision": 0.586,
+  "ci95": [
+   0.499,
+   0.668
+  ],
+  "recall": 1.0
+ },
+ "query_only": {
+  "approved": 84,
+  "correct": 68,
+  "precision": 0.81,
+  "ci95": [
+   0.713,
+   0.879
+  ],
+  "recall": 0.907
+ },
+ "bm25_only": {
+  "approved": 105,
+  "correct": 65,
+  "precision": 0.619,
+  "ci95": [
+   0.524,
+   0.706
+  ],
+  "recall": 0.867
+ },
+ "blind-v1-el": {
+  "approved": 57,
+  "correct": 27,
+  "precision": 0.474,
+  "ci95": [
+   0.35,
+   0.601
+  ],
+  "recall": 0.36,
+  "evidence_correct": 19,
+  "evidence_rate": 0.704,
+  "status_accuracy": 0.273,
+  "items": 128,
+  "actual": {
+   "nao_atendido": 46,
+   "atendido": 57,
+   "evidencia_insuficiente": 25
+  }
+ },
+ "blind-v1-ek": {
+  "approved": 81,
+  "correct": 51,
+  "precision": 0.63,
+  "ci95": [
+   0.521,
+   0.727
+  ],
+  "recall": 0.68,
+  "evidence_correct": 39,
+  "evidence_rate": 0.765,
+  "status_accuracy": 0.5,
+  "items": 128,
+  "actual": {
+   "atendido": 81,
+   "evidencia_insuficiente": 21,
+   "nao_atendido": 26
+  }
+ },
+ "blind-v1-em": {
+  "approved": 111,
+  "correct": 66,
+  "precision": 0.595,
+  "ci95": [
+   0.502,
+   0.681
+  ],
+  "recall": 0.88,
+  "evidence_correct": 31,
+  "evidence_rate": 0.47,
+  "status_accuracy": 0.57,
+  "items": 128,
+  "actual": {
+   "atendido": 111,
+   "evidencia_insuficiente": 17
+  }
+ },
+ "blind-v1-ci": {
+  "approved": 81,
+  "correct": 47,
+  "precision": 0.58,
+  "ci95": [
+   0.472,
+   0.682
+  ],
+  "recall": 0.627,
+  "evidence_correct": 38,
+  "evidence_rate": 0.809,
+  "status_accuracy": 0.477,
+  "items": 128,
+  "actual": {
+   "atendido": 81,
+   "nao_atendido": 15,
+   "evidencia_insuficiente": 32
+  }
+ }
+}

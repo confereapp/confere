@@ -16,6 +16,8 @@ Há resultados positivos em tarefas curtas e controladas. Entretanto, o sistema 
 
 **Atualização da segunda rodada (seção 5.6):** uma base nova treinada em 303 milhões de tokens, recuperação por BM25 e contrastes sem atalho produziram o primeiro classificador que supera os controles que leem só a consulta ou só o trecho nos testes públicos. A transferência para os TCCs reais continua sem ganho distinguível; nada foi promovido.
 
+**Teste cego em 8 TCCs novos (seção 5.7, 18/11/2026):** nenhum classificador atingiu o critério fixado antes do teste. O melhor (EK) aprova com precisão de 74% (IC95% 64–82%) e perde para o controle que lê só a consulta (86%). O modelo continua experimental.
+
 ## 2. Objetivos e restrições adotadas
 
 Os objetivos iniciais incluíram continuar o treinamento do modelo próprio, oferecer conversa contextual e integrar a análise de texto à API. Após os resultados nos PDFs, a investigação recente concentrou-se na relação entre requisito e evidência.
@@ -171,6 +173,26 @@ EL é o primeiro classificador que supera os dois controles de atalho nos testes
 
 O classificador ficou mais discriminativo, mas não há ganho distinguível nos TCCs: com 18 critérios conhecidos, diferenças de 1 a 3 acertos estão dentro do ruído, e as falsas aprovações persistem.
 
+### 5.7 Teste cego em 8 TCCs novos
+
+Oito TCCs de computação da Mauá de 2025 (handles 2231, 2232, 2234, 2236, 2239, 2241, 2242 e 2244), nunca usados em treino ou seleção, com OCR local e checklist genérico de 16 critérios (`ai/annotation/checklist-v1.txt`), somam 128 decisões. O critério de aprovação foi fixado antes de qualquer inferência: precisão de "atendido" de pelo menos 90% com intervalo de confiança, evidência correta em pelo menos 90% das aprovações e desempenho acima de BM25 sozinho e do controle que lê só a consulta.
+
+**Rótulos.** Os 128 itens foram anotados de forma independente pela IA, sem ver saídas dos modelos. Uma pessoa anotou às cegas 2 TCCs (32 itens). Outra pessoa revisou as 62 aprovações e contradições da IA nos 6 TCCs restantes; mudou 1 status e acrescentou trechos em 18 itens. Os 34 itens "não encontrado" desses 6 TCCs não tiveram revisão humana. A concordância entre a anotação humana cega e a da IA foi baixa: 56% e kappa 0,18. Em 11 das 14 divergências, a pessoa marcou "atende" quando o tema aparecia no texto (por exemplo, "ausência inicial de testes automatizados" para o critério de testes automatizados), e a IA exigiu que o trabalho descrevesse o item. A interpretação do critério ainda não está padronizada, por isso os resultados são dados com os dois conjuntos de rótulos.
+
+| Sistema (top-8, maioria) | Aprovações | Precisão (IC95%), rótulos revisados | Precisão (IC95%), rótulos só da IA | Evidência correta nas aprovações certas |
+| --- | ---: | ---: | ---: | ---: |
+| Sempre aprovar | 128 | 66% (57–73) | 59% (50–67) | — |
+| BM25 sozinho (limiar entre documentos) | 119 · 105 | 66% (57–74) | 62% (52–71) | — |
+| Só a consulta (maioria do critério nos outros TCCs) | 88 · 84 | **86% (78–92)** | **81% (71–88)** | — |
+| CI | 81 | 67% (56–76) | 58% (47–68) | 83% · 81% |
+| EK | 81 | 74% (64–82) | 63% (52–73) | 80% · 76% |
+| EL | 57 | 61% (48–73) | 47% (35–60) | 80% · 70% |
+| EM (último) | 111 | 68% (58–76) | 60% (50–68) | 56% · 47% |
+
+Quando há dois números separados por "·", o primeiro usa os rótulos revisados e o segundo os rótulos só da IA. "Evidência correta" quer dizer que alguma citação do modelo coincide com um trecho anotado, ou cobre pelo menos 60% dos termos dele. O cálculo está em `ai/scripts/score_blind.py`.
+
+**Leitura.** Nenhum candidato chega perto de 90%. Nenhum supera o controle que só lê a consulta: nesse checklist, saber qual critério está em jogo prevê melhor do que ler o TCC. O EL, que era o melhor nos contrastes públicos, foi o pior aqui. O resultado não muda com o conjunto de rótulos, porque a ordem dos sistemas é a mesma. A conclusão é que o classificador ainda não transfere a leitura de evidência para documentos reais, e o modelo permanece experimental.
+
 ## 6. Principais falhas identificadas
 
 1. **Generalização fraca:** bom desempenho em templates não se sustenta em documentos ou formulações novas.
@@ -203,13 +225,13 @@ A hipótese mais sustentada pelos resultados é uma combinação de supervisão 
 
 A prioridade recomendada é ampliar relações revisadas em mais documentos, incluindo critérios que exigem explicar mecanismos, manter a mesma consulta com evidências de relações diferentes e obter uma segunda revisão das anotações. A avaliação deve continuar por documento, classe e grupo completo de consultas, com comparação a baselines simples e revisão semântica das citações.
 
-Os gargalos restantes não se resolvem com código ou mais treino: faltam supervisão de `nao_atendido` no formato de requisito e uma avaliação real maior que 18 critérios. O próximo passo concreto é anotar de 5 a 10 TCCs, cerca de 100 critérios com os três rótulos, e usá-los como treino e avaliação separados por documento.
+Os gargalos restantes não se resolvem com código ou mais treino: faltam supervisão de `nao_atendido` no formato de requisito e uma avaliação real maior que 18 critérios. A anotação de 8 TCCs (128 critérios, seção 5.7) foi feita e confirmou o diagnóstico: nenhum modelo supera o controle da consulta. Antes de ampliar a anotação, falta padronizar o critério de “atende” (mencionar o tema ou descrever o item), porque o kappa entre pessoa e IA foi 0,18. Os 8 TCCs agora são o conjunto fixo de teste; dados de treino reais precisam vir de outros documentos.
 
 Mais passos ou mais variantes sobre os mesmos 90 pares não têm justificativa nos resultados atuais. Para uma entrega acadêmica, o sistema pode ser apresentado honestamente como protótipo experimental com análise de falhas e apoio à revisão humana; não como solução pronta cuja confiabilidade foi demonstrada.
 
 ## 9. Evidências e limites deste relatório
 
-Este documento consolida artefatos existentes; a seção 5.6 resume treinos e avaliações da segunda rodada, registrados nos arquivos citados abaixo. Não repete testes de API. Os 263 testes citados correspondem à suíte executada ao final da segunda rodada. Não existe uma revisão humana independente completa dos rótulos nem um benchmark amplo de conversa aberta.
+Este documento consolida artefatos existentes; a seção 5.6 resume treinos e avaliações da segunda rodada, registrados nos arquivos citados abaixo. Não repete testes de API. Os 263 testes citados correspondem à suíte executada ao final da segunda rodada. A revisão humana dos rótulos dos TCCs é parcial (seção 5.7); não existe revisão independente completa dos rótulos nem um benchmark amplo de conversa aberta.
 
 Registros principais no repositório:
 
@@ -223,6 +245,7 @@ Registros principais no repositório:
 - `ai/research/matrix-encoder-di-dj-2026-11-17.md`: ajuste do encoder por classe.
 - `output/ai/relation-df-metric-correction-2026-11-17.json`: correção do resumo histórico.
 - `ai/PRETRAINING.md` e `output/ai/pretrain-full-8k-2026-11-17.json`: base completa.
+- `ai/annotation/`, `ai/scripts/score_blind.py`, `output/ai/blind-v1-score-revisado-2026-11-18.json` e `blind-v1-score-ia-2026-11-18.json`: teste cego em 8 TCCs.
 - `ai/research/new-base-ek-2026-11-17.md`, `output/ai/evidence-mix-ek-2026-11-17.json` e `output/ai/evidence-mix-el-2026-11-17.json`: classificadores EK, EL e EM.
 
 As fontes públicas e atribuições de dados permanecem registradas em `ai/data/licenses/`. Os textos integrais dos TCCs e os rastros privados não são reproduzidos neste relatório.
