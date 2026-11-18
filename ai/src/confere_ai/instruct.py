@@ -30,6 +30,9 @@ def load_instructions(path):
         nli=row['provenance']['kind']=='public_reviewed_nli'
         qa=row['provenance']['kind']=='public_extractive_qa'
         paragraph=row['provenance']['kind']=='public_paragraph_criterion'
+        if row['provenance']['kind']=='public_qa_requirement':
+            from .qa_source import validate_requirement_provenance
+            validate_requirement_provenance(row)
         if paragraph:
             from .paragraph_source import validate_provenance
             validate_provenance(row)
@@ -49,7 +52,7 @@ def load_instructions(path):
             raise ValueError("Proveniência pública não rastreável.")
         if human and (row["provenance"].get("source") not in {"https://huggingface.co/datasets/OpenAssistant/oasst1","https://huggingface.co/datasets/OpenAssistant/oasst2"} or row["provenance"].get("license")!="Apache-2.0" or not row["provenance"].get("revision")):
             raise ValueError("Proveniência humana não rastreável.")
-        if row["split"] not in {"train", "validation", "test"} or row["provenance"]["kind"] not in {"synthetic_authored","human_openassistant","public_model_generated","public_reviewed_nli","public_extractive_qa","public_paragraph_criterion"}:
+        if row["split"] not in {"train", "validation", "test"} or row["provenance"]["kind"] not in {"synthetic_authored","human_openassistant","public_model_generated","public_reviewed_nli","public_extractive_qa","public_paragraph_criterion","public_qa_requirement"}:
             raise ValueError("Split ou proveniência inválida.")
         conversational = "history" in row
         if conversational:

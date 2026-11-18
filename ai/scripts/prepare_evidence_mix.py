@@ -20,9 +20,10 @@ def rows_of(path):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--control", type=Path, required=True)
-    p.add_argument("--relations", type=Path, required=True)
+    p.add_argument("--relations", type=Path, nargs="+", required=True)
     p.add_argument("--matrix", type=Path, required=True)
     p.add_argument("--control-rows", type=int, default=15000)
+    p.add_argument("--relation-rows", type=int, help="Limite por arquivo de relações (amostra com seed); padrão: todas.")
     p.add_argument("--output", type=Path, required=True)
     a = p.parse_args()
     if a.output.exists(): p.error("Saída deve ser nova.")
@@ -31,8 +32,11 @@ def main():
     control = [r for r in rows_of(a.control) if r["split"] == "train"
                and r["id"] not in taken and r["prompt"].strip().casefold() not in taken]
     random.Random(42).shuffle(control)
-    relations = [r for r in rows_of(a.relations) if r["split"] == "train"
-                 and r["id"] not in taken and r["prompt"].strip().casefold() not in taken]
+    relations = []
+    for path in a.relations:
+        rows = [r for r in rows_of(path) if r["split"] == "train"
+                and r["id"] not in taken and r["prompt"].strip().casefold() not in taken]
+        random.Random(42).shuffle(rows); relations += rows[:a.relation_rows]
     rows = [r for r in matrix if r["split"] in {"train", "validation"}] + control[:a.control_rows] + relations
     # DF já reaproveita casos do controle: mantém a primeira ocorrência de cada ID/prompt.
     seen, unique = set(), []
@@ -45,7 +49,7 @@ def main():
     target.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows))
     load_instructions(target)  # mesmas validações de split, duplicatas, alvos e partição usadas no treino
     sources = {name: hashlib.sha256(path.read_bytes()).hexdigest()
-               for name, path in [("control", a.control), ("relations", a.relations), ("matrix", a.matrix)]}
+               for name, path in [("control", a.control), ("matrix", a.matrix)] + [(f"relations:{x.parent.name}", x) for x in a.relations]}
     manifest = dict(dataset_sha256=hashlib.sha256(target.read_bytes()).hexdigest(), sources=sources,
                     control_rows=min(a.control_rows, len(control)), relation_rows=len(relations), duplicates_dropped=dropped, seed=42,
                     counts=dict(Counter(f"{r['split']}:{r.get('evaluation_profile', r['task'])}" for r in rows)),

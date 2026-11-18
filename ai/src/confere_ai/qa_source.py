@@ -14,3 +14,16 @@ def validate_provenance(row):
             or context[start:start+len(answer)] != answer or not answer.strip()
             or row['prompt'] != f"Contexto: {context}\nPergunta: {p.get('question')}\nResponda usando apenas o texto."):
         raise ValueError('Resposta extrativa desalinhada ou contexto alterado.')
+
+
+def validate_requirement_provenance(row):
+    """Requisito derivado automaticamente de pergunta FaQuAD; parágrafo íntegro e split por documento."""
+    import hashlib
+    from .relation_partition import PROTOCOL
+    p, text = row['provenance'], row['units'][0]['text'] if len(row['units']) == 1 else None
+    if (p.get('source') != SOURCE or p.get('revision') != REVISION or p.get('train_sha256') != TRAIN_SHA256
+            or p.get('license') != 'CC-BY-4.0' or p.get('partition_protocol') != PROTOCOL
+            or not row.get('source_document') or text is None or not p.get('question') or not p.get('answer')
+            or hashlib.sha256(text.encode()).hexdigest() != p.get('paragraph_sha256')
+            or (row['task'] == 'grounded_atendido') != (p['answer'] in text)):
+        raise ValueError('Requisito derivado de pergunta pública sem proveniência válida.')
