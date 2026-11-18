@@ -1,0 +1,149 @@
+{
+ "labels": {
+  "atendido": 74,
+  "evidencia_insuficiente": 52,
+  "nao_atendido": 2
+ },
+ "items": 128,
+ "always_approve": {
+  "approved": 128,
+  "correct": 74,
+  "precision": 0.578,
+  "ci95": [
+   0.492,
+   0.66
+  ],
+  "recall": 1.0
+ },
+ "query_only": {
+  "approved": 84,
+  "correct": 68,
+  "precision": 0.81,
+  "ci95": [
+   0.713,
+   0.879
+  ],
+  "recall": 0.919
+ },
+ "bm25_only": {
+  "approved": 105,
+  "correct": 64,
+  "precision": 0.61,
+  "ci95": [
+   0.514,
+   0.697
+  ],
+  "recall": 0.865
+ },
+ "blind-v1-el": {
+  "approved": 57,
+  "correct": 26,
+  "precision": 0.456,
+  "ci95": [
+   0.334,
+   0.584
+  ],
+  "recall": 0.351,
+  "evidence_correct": 18,
+  "evidence_rate": 0.692,
+  "status_accuracy": 0.266,
+  "items": 128,
+  "actual": {
+   "nao_atendido": 46,
+   "atendido": 57,
+   "evidencia_insuficiente": 25
+  }
+ },
+ "blind-v1-ek": {
+  "approved": 81,
+  "correct": 51,
+  "precision": 0.63,
+  "ci95": [
+   0.521,
+   0.727
+  ],
+  "recall": 0.689,
+  "evidence_correct": 39,
+  "evidence_rate": 0.765,
+  "status_accuracy": 0.508,
+  "items": 128,
+  "actual": {
+   "atendido": 81,
+   "evidencia_insuficiente": 21,
+   "nao_atendido": 26
+  }
+ },
+ "blind-v1-en-best": {
+  "approved": 63,
+  "correct": 48,
+  "precision": 0.762,
+  "ci95": [
+   0.644,
+   0.85
+  ],
+  "recall": 0.649,
+  "evidence_correct": 28,
+  "evidence_rate": 0.583,
+  "status_accuracy": 0.664,
+  "items": 128,
+  "actual": {
+   "atendido": 63,
+   "evidencia_insuficiente": 65
+  }
+ },
+ "blind-v1-en-last": {
+  "approved": 66,
+  "correct": 51,
+  "precision": 0.773,
+  "ci95": [
+   0.658,
+   0.857
+  ],
+  "recall": 0.689,
+  "evidence_correct": 27,
+  "evidence_rate": 0.529,
+  "status_accuracy": 0.688,
+  "items": 128,
+  "actual": {
+   "evidencia_insuficiente": 62,
+   "atendido": 66
+  }
+ },
+ "blind-v1-eo-best": {
+  "approved": 57,
+  "correct": 26,
+  "precision": 0.456,
+  "ci95": [
+   0.334,
+   0.584
+  ],
+  "recall": 0.351,
+  "evidence_correct": 18,
+  "evidence_rate": 0.692,
+  "status_accuracy": 0.266,
+  "items": 128,
+  "actual": {
+   "nao_atendido": 46,
+   "atendido": 57,
+   "evidencia_insuficiente": 25
+  }
+ },
+ "blind-v1-eo-last": {
+  "approved": 126,
+  "correct": 74,
+  "precision": 0.587,
+  "ci95": [
+   0.5,
+   0.669
+  ],
+  "recall": 1.0,
+  "evidence_correct": 54,
+  "evidence_rate": 0.73,
+  "status_accuracy": 0.594,
+  "items": 128,
+  "actual": {
+   "atendido": 126,
+   "evidencia_insuficiente": 2
+  }
+ }
+}

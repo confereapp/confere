@@ -33,6 +33,13 @@ def load_instructions(path):
         if row['provenance']['kind']=='public_qa_requirement':
             from .qa_source import validate_requirement_provenance
             validate_requirement_provenance(row)
+        if row['provenance']['kind']=='ai_annotated_requirement':
+            # Artigo CC-BY rotulado por duas anotações de IA independentes; só entra o que ambas concordam.
+            p=row['provenance']
+            if (not str(p.get('license','')).startswith('CC-BY') or p.get('agreement')!='two_independent_ai_annotations'
+                    or p.get('independent_human_review') is not False or row['split']=='test' or len(row['units'])!=1
+                    or hashlib.sha256(row['units'][0]['text'].encode()).hexdigest()!=p.get('paragraph_sha256')):
+                raise ValueError('Requisito anotado por IA sem proveniência válida.')
         if paragraph:
             from .paragraph_source import validate_provenance
             validate_provenance(row)
@@ -52,7 +59,7 @@ def load_instructions(path):
             raise ValueError("Proveniência pública não rastreável.")
         if human and (row["provenance"].get("source") not in {"https://huggingface.co/datasets/OpenAssistant/oasst1","https://huggingface.co/datasets/OpenAssistant/oasst2"} or row["provenance"].get("license")!="Apache-2.0" or not row["provenance"].get("revision")):
             raise ValueError("Proveniência humana não rastreável.")
-        if row["split"] not in {"train", "validation", "test"} or row["provenance"]["kind"] not in {"synthetic_authored","human_openassistant","public_model_generated","public_reviewed_nli","public_extractive_qa","public_paragraph_criterion","public_qa_requirement"}:
+        if row["split"] not in {"train", "validation", "test"} or row["provenance"]["kind"] not in {"synthetic_authored","human_openassistant","public_model_generated","public_reviewed_nli","public_extractive_qa","public_paragraph_criterion","public_qa_requirement","ai_annotated_requirement"}:
             raise ValueError("Split ou proveniência inválida.")
         conversational = "history" in row
         if conversational:

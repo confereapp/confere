@@ -1,0 +1,30 @@
+{
+  "dataset_sha256": "592e880fec2c8fec73f8fcc145c4cb2b6d73e6d410e01fe96cfe84c3305b99fe",
+  "items": 368,
+  "agreed": 354,
+  "agreement": 0.962,
+  "kappa": 0.923,
+  "agreed_status": {
+    "atende": 158,
+    "nao_encontrado": 196
+  },
+  "counts": {
+    "train:checklist_atendido": 136,
+    "train:checklist_evidencia_insuficiente": 437,
+    "validation:checklist_atendido": 13,
+    "validation:checklist_evidencia_insuficiente": 68
+  },
+  "validation_documents": [
+    "scielo-S0104-530X2018000100107",
+    "scielo-S1413-99362017000300003",
+    "scielo-S1678-86212018000200217"
+  ],
+  "skipped": {
+    "no_shared_passage": 45
+  },
+  "limitations": [
+    "Rótulos de IA sem revisão humana.",
+    "Artigos científicos, não TCCs.",
+    "Trecho não marcado pode sustentar o critério com outras palavras."
+  ]
+}

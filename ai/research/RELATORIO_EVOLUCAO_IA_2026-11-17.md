@@ -18,6 +18,8 @@ Há resultados positivos em tarefas curtas e controladas. Entretanto, o sistema 
 
 **Teste cego em 8 TCCs novos (seção 5.7, 18/11/2026):** nenhum classificador atingiu o critério fixado antes do teste. O melhor (EK) aprova com precisão de 63% (IC95% 52–73%) e perde para o controle que lê só a consulta (81%). O modelo continua experimental.
 
+**Treino com artigos CC-BY anotados por IA (seção 5.8):** o classificador EN chegou a 76% de precisão, mas esse ganho vem de ter decorado com que frequência cada critério aparece. Com os dados equilibrados por critério (EO), o modelo passa a aprovar quase tudo. O gargalo é a leitura, não a quantidade de rótulos.
+
 ## 2. Objetivos e restrições adotadas
 
 Os objetivos iniciais incluíram continuar o treinamento do modelo próprio, oferecer conversa contextual e integrar a análise de texto à API. Após os resultados nos PDFs, a investigação recente concentrou-se na relação entre requisito e evidência.
@@ -193,6 +195,24 @@ Oito TCCs de computação da Mauá de 2025 (handles 2231, 2232, 2234, 2236, 2239
 
 **Leitura.** Nenhum candidato chega perto de 90%. Nenhum supera o controle que só lê a consulta: nesse checklist, saber qual critério está em jogo prevê melhor do que ler o TCC. O EL, que era o melhor nos contrastes públicos, foi o pior aqui. A conclusão é que o classificador ainda não transfere a leitura de evidência para documentos reais, e o modelo permanece experimental.
 
+### 5.8 Treino com artigos SciELO anotados por IA
+
+Os TCCs da Mauá não têm licença de treino confirmada, então os dados novos vieram de 23 artigos em português do SciELO Brasil, de seis periódicos, com licença CC BY conferida em cada artigo (`ai/scripts/fetch_scielo.py`, `ai/data/licenses/SciELO-NOTICE.md`). Foram 368 itens (artigo × critério do mesmo checklist), anotados por duas instâncias de IA independentes seguindo `criterios-v1.md`, sem revisão humana. A concordância foi de 96% (kappa 0,92), mas as duas anotações vêm do mesmo modelo e não são independentes no sentido estatístico. Entraram no treino só os 354 itens em que as duas concordaram (`ai/scripts/prepare_checklist_training.py`). Não houve nenhum "contradiz".
+
+- **EN**: continua de EL, com 573 linhas de checklist em uma mistura de 7.268 (configuração do EM), e 3 artigos ficaram para validação.
+- **EO**: igual, mas com atendido e insuficiente equilibrados por critério (256 linhas). Os critérios sem nenhum positivo nos artigos saem.
+
+| Sistema | Aprovações | Precisão (IC95%) | Concordância com a regra da frequência nos artigos |
+| --- | ---: | ---: | ---: |
+| Só a consulta (TCCs) | 84 | 81% (71–88) | — |
+| Regra "aprova se o critério é atendido na maioria dos artigos" | 72 | 82% | — |
+| EL (ponto de partida) | 57 | 46% (33–58) | — |
+| EN selecionado (passo 4.000) | 63 | 76% (64–85) | 97/128 |
+| EN último | 66 | 77% (66–86) | 96/128 |
+| EO selecionado (= EL) / último | 57 · 126 | 46% · 59% | — |
+
+Com rótulos finais e top-8 por maioria, o EN subiu 30 pontos sobre o EL, mas reproduz em 3/4 dos itens uma regra que nem lê o texto: aprova os critérios que costumam ser atendidos em artigos (objetivo, motivação, metodologia, dados) e reprova os que nunca são (testes com usuários, testes automatizados, custos). Essa regra sozinha tem 82% de precisão. A evidência correta nas aprovações certas também caiu (58% contra 69% do EL). Quando o atalho é retirado (EO), a seleção fica no passo 0 e o último passo aprova 126 de 128 itens. O modelo próprio não aprende a separar trecho que cumpre de trecho que só menciona o tema, nem com rótulos de checklist no formato real. O limite está na capacidade de leitura do modelo, não na falta de rótulos.
+
 ## 6. Principais falhas identificadas
 
 1. **Generalização fraca:** bom desempenho em templates não se sustenta em documentos ou formulações novas.
@@ -215,7 +235,7 @@ Os resultados também expuseram falhas do processo de desenvolvimento, não apen
 - Foram preservados conjuntos conhecidos, ensaios rejeitados, hashes e diferenças entre versões dos dados.
 - A avaliação evoluiu para exigir resposta e evidências corretas, desempenho por família e retenção, além de controles que ignoram uma das entradas.
 - A reserva nova permanece sem inferência. O avaliador bloqueia seu uso sem validação e retenção aprovadas e vincula a autorização ao checkpoint e ao corpus corretos.
-- A última execução da suíte Python registrada passou com **263 testes**. Isso verifica o software, não a competência semântica do modelo.
+- A última execução da suíte Python registrada passou com **265 testes**. Isso verifica o software, não a competência semântica do modelo.
 
 ## 8. Situação atual e próximos passos
 
@@ -225,13 +245,13 @@ A hipótese mais sustentada pelos resultados é uma combinação de supervisão 
 
 A prioridade recomendada é ampliar relações revisadas em mais documentos, incluindo critérios que exigem explicar mecanismos, manter a mesma consulta com evidências de relações diferentes e obter uma segunda revisão das anotações. A avaliação deve continuar por documento, classe e grupo completo de consultas, com comparação a baselines simples e revisão semântica das citações.
 
-Os gargalos restantes não se resolvem com código ou mais treino: faltam supervisão de `nao_atendido` no formato de requisito e uma avaliação real maior que 18 critérios. A anotação de 8 TCCs (128 critérios, seção 5.7) foi feita e confirmou o diagnóstico: nenhum modelo supera o controle da consulta. O critério de “atende” foi padronizado em `ai/annotation/criterios-v1.md` depois de um kappa de 0,18 entre pessoa e IA, e as divergências foram adjudicadas. Os 8 TCCs agora são o conjunto fixo de teste; dados de treino reais precisam vir de outros documentos.
+Os gargalos restantes não se resolvem com código ou mais treino: faltam supervisão de `nao_atendido` no formato de requisito e uma avaliação real maior que 18 critérios. A anotação de 8 TCCs (128 critérios, seção 5.7) foi feita e confirmou o diagnóstico: nenhum modelo supera o controle da consulta. O critério de “atende” foi padronizado em `ai/annotation/criterios-v1.md` depois de um kappa de 0,18 entre pessoa e IA, e as divergências foram adjudicadas. Os 8 TCCs agora são o conjunto fixo de teste. Treinar com 354 itens de artigos CC BY anotados por IA (seção 5.8) só ensinou a frequência de cada critério. Mais rótulos do mesmo tipo não devem resolver: o modelo precisa de mais capacidade de leitura, seja com uma base maior, seja com pré-treino mais longo, antes de novos ajustes de classificação.
 
 Mais passos ou mais variantes sobre os mesmos 90 pares não têm justificativa nos resultados atuais. Para uma entrega acadêmica, o sistema pode ser apresentado honestamente como protótipo experimental com análise de falhas e apoio à revisão humana; não como solução pronta cuja confiabilidade foi demonstrada.
 
 ## 9. Evidências e limites deste relatório
 
-Este documento consolida artefatos existentes; a seção 5.6 resume treinos e avaliações da segunda rodada, registrados nos arquivos citados abaixo. Não repete testes de API. Os 263 testes citados correspondem à suíte executada ao final da segunda rodada. A revisão humana dos rótulos dos TCCs é parcial (seção 5.7); não existe revisão independente completa dos rótulos nem um benchmark amplo de conversa aberta.
+Este documento consolida artefatos existentes; a seção 5.6 resume treinos e avaliações da segunda rodada, registrados nos arquivos citados abaixo. Não repete testes de API. Os 265 testes citados correspondem à suíte executada ao final da segunda rodada. A revisão humana dos rótulos dos TCCs é parcial (seção 5.7); não existe revisão independente completa dos rótulos nem um benchmark amplo de conversa aberta.
 
 Registros principais no repositório:
 
@@ -246,6 +266,7 @@ Registros principais no repositório:
 - `output/ai/relation-df-metric-correction-2026-11-17.json`: correção do resumo histórico.
 - `ai/PRETRAINING.md` e `output/ai/pretrain-full-8k-2026-11-17.json`: base completa.
 - `ai/annotation/`, `ai/scripts/score_blind.py`, `output/ai/blind-v1-score-final-2026-11-18.json` e `blind-v1-score-ia-2026-11-18.json`: teste cego em 8 TCCs.
+- `ai/scripts/fetch_scielo.py`, `ai/scripts/prepare_checklist_training.py`, `ai/data/licenses/SciELO-NOTICE.md`, `output/ai/checklist-scielo-en-2026-11-18.json`, `checklist-scielo-eo-2026-11-18.json` e `blind-v1-score-en-eo-2026-11-18.json`: EN e EO.
 - `ai/research/new-base-ek-2026-11-17.md`, `output/ai/evidence-mix-ek-2026-11-17.json` e `output/ai/evidence-mix-el-2026-11-17.json`: classificadores EK, EL e EM.
 
 As fontes públicas e atribuições de dados permanecem registradas em `ai/data/licenses/`. Os textos integrais dos TCCs e os rastros privados não são reproduzidos neste relatório.

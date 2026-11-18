@@ -23,6 +23,7 @@ def main():
     p.add_argument("--relations", type=Path, nargs="+", required=True)
     p.add_argument("--matrix", type=Path, required=True)
     p.add_argument("--control-rows", type=int, default=15000)
+    p.add_argument("--relation-validation", type=Path, nargs="*", default=[], help="Arquivos de relações cuja validação também entra.")
     p.add_argument("--relation-rows", type=int, help="Limite por arquivo de relações (amostra com seed); padrão: todas.")
     p.add_argument("--output", type=Path, required=True)
     a = p.parse_args()
@@ -37,6 +38,7 @@ def main():
         rows = [r for r in rows_of(path) if r["split"] == "train"
                 and r["id"] not in taken and r["prompt"].strip().casefold() not in taken]
         random.Random(42).shuffle(rows); relations += rows[:a.relation_rows]
+        if path in a.relation_validation: relations += [r for r in rows_of(path) if r["split"] == "validation"]
     rows = [r for r in matrix if r["split"] in {"train", "validation"}] + control[:a.control_rows] + relations
     # DF já reaproveita casos do controle: mantém a primeira ocorrência de cada ID/prompt.
     seen, unique = set(), []
