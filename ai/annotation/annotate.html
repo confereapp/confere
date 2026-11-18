@@ -53,7 +53,7 @@ const STATUS = {atende:'Atende', contradiz:'Contradiz', nao_encontrado:'Não enc
 let tasks = null, answers = {}, index = 0;
 const $ = id => document.getElementById(id);
 const key = item => item.document + '|' + item.criterion;
-const storeKey = () => 'confere-annotation-' + (tasks ? tasks.checklist_sha256 : '');
+const storeKey = () => 'confere-annotation-' + (tasks ? (tasks.name || tasks.checklist_sha256) : '');
 
 function save() { try { localStorage.setItem(storeKey(), JSON.stringify({answers, annotator:$('annotator').value})); } catch (e) {} }
 function load() {
