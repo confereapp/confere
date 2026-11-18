@@ -81,3 +81,34 @@ são normativos ("O relatório deve identificar...") e as unidades são páginas
 enquanto a supervisão forte é de frases declarativas curtas. A matriz acadêmica,
 única supervisão nesse formato, tem 90 pares. EL reprovado; não promovido.
 Rastros: `output/ai/evidence-mix-el-2026-11-17.json`.
+
+## EM: requisitos derivados do FaQuAD
+
+`prepare_qa_requirements.py` transforma as 837 perguntas FaQuAD em requisitos
+de checklist ("O texto deve informar onde é sediada a UFMS") sobre parágrafos
+íntegros: o parágrafo com a resposta é `atendido`; o mais parecido do mesmo
+documento sem a resposta, `evidencia_insuficiente`. 1.668 pares; splits pelos
+documentos da matriz DG (138 linhas movidas de treino para validação por
+semelhança); reserva fora do treino. Não há `nao_atendido`.
+
+EM continua de EL numa mistura menor (DG, 3 mil de controle, 5 mil contrastes,
+1.104 requisitos FaQuAD), taxas 2e-5/2e-4. A seleção, fixada antes, prioriza o
+perfil mais fraco e manteve o passo 0 (= EL): a contradição acadêmica caiu de 4/8
+para 1–2/8, efeito esperado de dados sem `nao_atendido`.
+
+| Passo de EM | Suporte acad. | Contradição acad. | Insuficiente acad. | Antigos | Falsas aprov. |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 0 (EL) | 4/9 | 4/8 | 21/34 | 398/410 | 11 |
+| 4.000 | 7/9 | 2/8 | 32/34 | 403/410 | 4 |
+| 8.000 (último) | 7/9 | 1/8 | 31/34 | 399/410 | 7 |
+
+Validação dos requisitos FaQuAD (392): EL 168, EM último 284. Contrastes e DF do
+selecionado iguais a EL (2.657 e 609).
+
+TCCs com BM25 k=8, EM último: 10/18 com 7 falsas aprovações por página; 11/18
+com 5 por frase. Sem ganho claro sobre EK/EL. Com 18 casos conhecidos, diferenças
+de 1–3 acertos não são distinguíveis de ruído.
+
+Gargalos restantes: supervisão de `nao_atendido` no formato de requisito,
+falsas aprovações nos documentos reais e uma avaliação real pequena demais para
+decidir entre candidatos. Nada promovido.
