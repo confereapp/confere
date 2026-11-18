@@ -112,6 +112,10 @@ def main():
                      conflicts=sum(r['conflict'] for r in judgments),
                      blocked_by_missing_text=sum(bool(r['missing_text_units']) for r in judgments),
                      batches=sum(r['batches'] for r in judgments),elapsed_seconds=time.perf_counter()-started,
+                     # Visão binária "atendido" contra "não encontrado": a precisão das aprovações é o critério principal.
+                     approved=sum(r['actual']=='atendido' for r in judgments),
+                     approved_correct=sum(r['actual']=='atendido' and r['expected']=='atendido' for r in judgments),
+                     expected_atendido=sum(r['expected']=='atendido' for r in judgments),
                      contiguous_coverage_verified=a.top_k is None,top_k=a.top_k,
                      annotated_quotes_retrieved=sum(r['annotated_quotes_retrieved'] for r in judgments),
                      annotated_quotes=sum(r['annotated_quotes'] for r in judgments),literal_quotes_verified=True,
