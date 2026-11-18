@@ -68,7 +68,7 @@ def run(args):
         indices = torch.randperm(len(examples), generator=evaluation_generator).tolist()[:args.eval_blocks]
         return [examples[index] for index in indices]
     train_eval, validation_eval = subset(train_examples), subset(validation_examples)
-    config = GPTConfig(tokenizer.vocab_size, args.block_size, 384, 6, 6)
+    config = GPTConfig(tokenizer.vocab_size, args.block_size, args.width, args.layers, args.heads)
     model = GPT(config).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=0.01)
     generator = torch.Generator().manual_seed(args.seed)
@@ -177,6 +177,9 @@ def main():
     parser.add_argument("--eval-blocks", type=int, default=32)
     parser.add_argument("--learning-rate", type=float, default=0.0003)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--width", type=int, default=384)
+    parser.add_argument("--layers", type=int, default=6)
+    parser.add_argument("--heads", type=int, default=6)
     parser.add_argument("--device", choices=["auto", "cpu", "mps"], default="auto")
     args = parser.parse_args()
     try:

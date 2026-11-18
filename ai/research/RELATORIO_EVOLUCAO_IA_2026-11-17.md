@@ -213,6 +213,18 @@ Os TCCs da Mauá não têm licença de treino confirmada, então os dados novos 
 
 Com rótulos finais e top-8 por maioria, o EN subiu 30 pontos sobre o EL, mas reproduz em 3/4 dos itens uma regra que nem lê o texto: aprova os critérios que costumam ser atendidos em artigos (objetivo, motivação, metodologia, dados) e reprova os que nunca são (testes com usuários, testes automatizados, custos). Essa regra sozinha tem 82% de precisão. A evidência correta nas aprovações certas também caiu (58% contra 69% do EL). Quando o atalho é retirado (EO), a seleção fica no passo 0 e o último passo aprova 126 de 128 itens. O modelo próprio não aprende a separar trecho que cumpre de trecho que só menciona o tema, nem com rótulos de checklist no formato real. O limite está na capacidade de leitura do modelo, não na falta de rótulos.
 
+### 5.9 Abstenção por confiança
+
+Teste: o modelo decide só quando muitos dos 8 trechos concordam e manda o resto para "revisar" (`ai/scripts/abstention_blind.py`). Escore do item = fração dos 8 trechos com P(atendido) ≥ 0,5. Os limiares foram escolhidos deixando um TCC de fora: alvo de 90% de precisão nos outros 7, aplicado no oitavo.
+
+| Modelo | Aprovações | Precisão (IC95%) | Itens decididos | Acerto nos decididos |
+| --- | ---: | ---: | ---: | ---: |
+| EK, unanimidade (no próprio conjunto) | 9 | 100% (70–100) | 22% | 93% |
+| EK, limiar fora da amostra | 11 | 82% (52–95) | 23% | 87% (70–95) |
+| EN | nenhum limiar atinge 90% nos outros TCCs | — | — | — |
+
+A confiança separa pouco: no EK, subir o limiar leva a precisão de 68% a 83% só quando restam 18 aprovações. Fora da amostra, a abstenção não chega a 90%, e ela decide menos de um quarto dos itens. Abstenção não substitui um modelo que leia melhor; ela pode ser somada a uma base mais forte.
+
 ## 6. Principais falhas identificadas
 
 1. **Generalização fraca:** bom desempenho em templates não se sustenta em documentos ou formulações novas.
@@ -245,7 +257,7 @@ A hipótese mais sustentada pelos resultados é uma combinação de supervisão 
 
 A prioridade recomendada é ampliar relações revisadas em mais documentos, incluindo critérios que exigem explicar mecanismos, manter a mesma consulta com evidências de relações diferentes e obter uma segunda revisão das anotações. A avaliação deve continuar por documento, classe e grupo completo de consultas, com comparação a baselines simples e revisão semântica das citações.
 
-Os gargalos restantes não se resolvem com código ou mais treino: faltam supervisão de `nao_atendido` no formato de requisito e uma avaliação real maior que 18 critérios. A anotação de 8 TCCs (128 critérios, seção 5.7) foi feita e confirmou o diagnóstico: nenhum modelo supera o controle da consulta. O critério de “atende” foi padronizado em `ai/annotation/criterios-v1.md` depois de um kappa de 0,18 entre pessoa e IA, e as divergências foram adjudicadas. Os 8 TCCs agora são o conjunto fixo de teste. Treinar com 354 itens de artigos CC BY anotados por IA (seção 5.8) só ensinou a frequência de cada critério. Mais rótulos do mesmo tipo não devem resolver: o modelo precisa de mais capacidade de leitura, seja com uma base maior, seja com pré-treino mais longo, antes de novos ajustes de classificação.
+Os gargalos restantes não se resolvem com código ou mais treino: faltam supervisão de `nao_atendido` no formato de requisito e uma avaliação real maior que 18 critérios. A anotação de 8 TCCs (128 critérios, seção 5.7) foi feita e confirmou o diagnóstico: nenhum modelo supera o controle da consulta. O critério de “atende” foi padronizado em `ai/annotation/criterios-v1.md` depois de um kappa de 0,18 entre pessoa e IA, e as divergências foram adjudicadas. Os 8 TCCs agora são o conjunto fixo de teste. Treinar com 354 itens de artigos CC BY anotados por IA (seção 5.8) só ensinou a frequência de cada critério. Mais rótulos do mesmo tipo não devem resolver: o modelo precisa de mais capacidade de leitura, seja com uma base maior, seja com pré-treino mais longo, antes de novos ajustes de classificação. A abstenção por confiança (seção 5.9) também não chega a 90% fora da amostra. Por exigência do curso (modelo próprio, treinado do zero), o próximo passo é uma base própria maior: 54 milhões de parâmetros (largura 640, 10 camadas), pré-treinada na mesma Wikipédia em português com cerca de 1 bilhão de tokens.
 
 Mais passos ou mais variantes sobre os mesmos 90 pares não têm justificativa nos resultados atuais. Para uma entrega acadêmica, o sistema pode ser apresentado honestamente como protótipo experimental com análise de falhas e apoio à revisão humana; não como solução pronta cuja confiabilidade foi demonstrada.
 
