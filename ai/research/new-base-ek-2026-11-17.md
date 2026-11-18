@@ -48,3 +48,36 @@ contradição e neutralidade (InferBR permite agrupar por premissa), para que o
 atalho deixe de funcionar, e taxa menor para estabilizar a seleção.
 
 Rastros: `output/ai/evidence-mix-ek-2026-11-17.json`.
+
+## EL: contrastes sem atalho
+
+`prepare_relation_contrasts.py` deriva de cada par InferBR do DF, no mesmo
+split, a negação da hipótese com rótulo invertido e premissas vizinhas por BM25
+sem relação (insuficiente). 617 derivados quase iguais a frases de outro split
+foram removidos. No teste de contrastes (3.262), ler só a consulta acerta 2.115
+e só o trecho 2.019, abaixo da classe majoritária (2.166).
+
+EL usa a mesma mistura de EK trocando DF pelos contrastes (41.429 linhas de
+treino) e taxas menores (3e-5 encoder, 3e-4 cabeça). Curva estável; platô no
+passo 32.000, selecionado o 22.000.
+
+| Medida | EK | EL |
+| --- | ---: | ---: |
+| Teste de contrastes (majoritária 2.166) | 1.328 | **2.657** |
+| — suporte / contradição / insuficiente | 195/537 · 439/559 · 694/2.166 | 349/537 · 388/559 · 1.920/2.166 |
+| Teste DF público (só consulta: 586) | 583 | **609** |
+| Validação total (461) | 347 | 427 |
+| Acadêmico suporte / contradição / insuficiente | 4/9 · 3/8 · 16/34 | 4/9 · 4/8 · 21/34 |
+| Falsas aprovações acadêmicas | 12 | 6 |
+| Casos antigos | 324/410 | 398/410 |
+
+É o primeiro classificador que supera os controles de atalho nos dois testes
+públicos: há evidência de leitura do trecho, ao menos em frases curtas.
+
+TCCs com BM25 k=8: 6/18 status coincidentes e 4 falsas aprovações (EK: 11 e 5;
+CI: 8 e 3). Classificando frase a frase (sem retreino), 11/18 com 7 falsas
+aprovações. A transferência para documentos reais não acompanhou: os requisitos
+são normativos ("O relatório deve identificar...") e as unidades são páginas,
+enquanto a supervisão forte é de frases declarativas curtas. A matriz acadêmica,
+única supervisão nesse formato, tem 90 pares. EL reprovado; não promovido.
+Rastros: `output/ai/evidence-mix-el-2026-11-17.json`.
