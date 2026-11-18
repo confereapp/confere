@@ -36,6 +36,7 @@ def run(args):
     # Opções novas só entram nas configurações quando usadas: retomadas antigas continuam comparáveis.
     if args.tokenizer_kind != "bytes": settings["tokenizer_kind"] = args.tokenizer_kind
     if args.pack: settings["pack"] = True
+    if args.accumulate != 1: settings["accumulate"] = args.accumulate
     if args.schedule != "constant": settings.update(schedule=args.schedule, warmup_steps=args.warmup_steps)
     source_path=args.resume or init_from
     checkpoint = torch.load(source_path, map_location="cpu", weights_only=True) if source_path else None
@@ -118,21 +119,22 @@ def run(args):
     record(start_step)
     for step in range(start_step + 1, args.steps + 1):
         model.train()
-        indices = torch.randint(len(train_examples), (args.batch_size,), generator=generator).tolist()
-        x, y = batch(train_examples, indices, device, model.config.block_size)
         optimizer.zero_grad(set_to_none=True)
         if args.schedule == "cosine":
             # Aquecimento linear e decaimento cosseno até 10% da taxa no último passo planejado.
             ratio = step/args.warmup_steps if step < args.warmup_steps else \
                 .1 + .45*(1+math.cos(math.pi*(step-args.warmup_steps)/max(1, args.steps-args.warmup_steps)))
             for group in optimizer.param_groups: group["lr"] = args.learning_rate*ratio
-        loss = F.cross_entropy(model(x).flatten(0, 1), y.flatten(), ignore_index=-100)
-        if not torch.isfinite(loss).item():
-            raise ValueError("Loss não finita; último checkpoint preservado.")
-        loss.backward()
+        for _ in range(args.accumulate):  # lote efetivo = batch_size × accumulate, com memória de um micro-lote
+            indices = torch.randint(len(train_examples), (args.batch_size,), generator=generator).tolist()
+            x, y = batch(train_examples, indices, device, model.config.block_size)
+            loss = F.cross_entropy(model(x).flatten(0, 1), y.flatten(), ignore_index=-100)
+            if not torch.isfinite(loss).item():
+                raise ValueError("Loss não finita; último checkpoint preservado.")
+            (loss / args.accumulate).backward()
+            processed += (y != -100).sum().item()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0, error_if_nonfinite=True)
         optimizer.step()
-        processed += (y != -100).sum().item()
         if device == "mps":
             observed_memory = max(observed_memory, torch.mps.current_allocated_memory())
         timed_out = time.perf_counter() - started >= args.max_seconds
@@ -180,6 +182,7 @@ def main():
     parser.add_argument("--width", type=int, default=384)
     parser.add_argument("--layers", type=int, default=6)
     parser.add_argument("--heads", type=int, default=6)
+    parser.add_argument("--accumulate", type=int, default=1, help="Micro-lotes por passo do otimizador.")
     parser.add_argument("--device", choices=["auto", "cpu", "mps"], default="auto")
     args = parser.parse_args()
     try:
