@@ -116,6 +116,7 @@ def run(args):
             best_loss = item["validation_loss"]
             save_checkpoint(args.run_dir / "best.pt", model, optimizer, tokenizer, generator, step, fingerprint, settings)
 
+    scaler = torch.amp.GradScaler("cuda", enabled=device == "cuda")
     record(start_step)
     for step in range(start_step + 1, args.steps + 1):
         model.train()
@@ -128,13 +129,16 @@ def run(args):
         for _ in range(args.accumulate):  # lote efetivo = batch_size × accumulate, com memória de um micro-lote
             indices = torch.randint(len(train_examples), (args.batch_size,), generator=generator).tolist()
             x, y = batch(train_examples, indices, device, model.config.block_size)
-            loss = F.cross_entropy(model(x).flatten(0, 1), y.flatten(), ignore_index=-100)
+            with torch.autocast("cuda", torch.float16, enabled=device == "cuda"):  # T4: fp16 com escala de gradiente
+                loss = F.cross_entropy(model(x).flatten(0, 1).float(), y.flatten(), ignore_index=-100)
             if not torch.isfinite(loss).item():
                 raise ValueError("Loss não finita; último checkpoint preservado.")
-            (loss / args.accumulate).backward()
+            scaler.scale(loss / args.accumulate).backward()
             processed += (y != -100).sum().item()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0, error_if_nonfinite=True)
-        optimizer.step()
+        scaler.unscale_(optimizer)
+        # Com fp16, gradiente infinito é estouro da escala: o scaler pula o passo e reduz a escala.
+        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0, error_if_nonfinite=device != "cuda")
+        scaler.step(optimizer); scaler.update()
         if device == "mps":
             observed_memory = max(observed_memory, torch.mps.current_allocated_memory())
         timed_out = time.perf_counter() - started >= args.max_seconds
@@ -183,7 +187,7 @@ def main():
     parser.add_argument("--layers", type=int, default=6)
     parser.add_argument("--heads", type=int, default=6)
     parser.add_argument("--accumulate", type=int, default=1, help="Micro-lotes por passo do otimizador.")
-    parser.add_argument("--device", choices=["auto", "cpu", "mps"], default="auto")
+    parser.add_argument("--device", choices=["auto", "cpu", "mps", "cuda"], default="auto")
     args = parser.parse_args()
     try:
         run(args)

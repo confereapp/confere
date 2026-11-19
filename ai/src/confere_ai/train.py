@@ -47,7 +47,9 @@ def evaluate(model, examples, device):
 
 def choose_device(name):
     if name == "auto":
-        return "mps" if torch.backends.mps.is_available() else "cpu"
+        return "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+    if name == "cuda" and not torch.cuda.is_available():
+        raise ValueError("CUDA indisponível.")
     if name == "mps" and not torch.backends.mps.is_available():
         raise ValueError("MPS indisponível; escolha CPU explicitamente.")
     return name
