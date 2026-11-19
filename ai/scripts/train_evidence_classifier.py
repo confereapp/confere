@@ -76,7 +76,8 @@ def main():
     parser.add_argument("--encoder-learning-rate", type=float, default=1e-5)
     parser.add_argument("--head-learning-rate", type=float, default=1e-4)
     parser.add_argument("--selection-patience", type=int, default=6)
-    parser.add_argument("--device", choices=["cpu", "mps"], default="mps")
+    parser.add_argument("--device", choices=["cpu", "mps", "cuda"], default="mps")
+    parser.add_argument("--max-seconds", type=float, help="Para por tempo (sessões com limite, como o Kaggle); avalia antes de parar.")
     args = parser.parse_args()
     if (args.run_dir.exists() or args.steps <= 0 or args.selection_patience <= 0 or args.eval_every <= 0
             or any(not math.isfinite(v) or v <= 0 for v in [args.encoder_learning_rate, args.head_learning_rate])): parser.error("Saída nova e passos positivos são obrigatórios.")
@@ -151,7 +152,8 @@ def main():
             if not torch.isfinite(loss): raise ValueError("Loss não finita; checkpoint anterior preservado.")
             optimizer.zero_grad(set_to_none=True); loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1., error_if_nonfinite=True); optimizer.step()
-        if step % args.eval_every == 0 or step == args.steps:
+        timed_out = args.max_seconds is not None and time.perf_counter() - started >= args.max_seconds
+        if step % args.eval_every == 0 or step == args.steps or timed_out:
             checkpoint(step, "last.pt")
             result = score(model, val, validation, args.device,settings['thresholds'],predict_units=predictor.predict_units if predictor else None); key = quality_key(result)
             if baseline is None: baseline = result
@@ -165,6 +167,7 @@ def main():
             if key[0] and (not args.require_perfect_validation or result["correct"] == result["total"]):
                 stop = "controlled_acceptance"; break
             if stale >= args.selection_patience: stop = "selection_plateau"; break
+            if timed_out: stop = "time"; break
     (args.run_dir / "evaluation.json").write_text(json.dumps(dict(baseline=baseline, selected=selected, selected_step=selected_step,
         quality=best, acceptance=acceptance(selected), adopted=False), ensure_ascii=False, indent=2))
     (args.run_dir / "summary.json").write_text(json.dumps(dict(final_step=step, selected_step=selected_step, stop_reason=stop,
