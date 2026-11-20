@@ -2,7 +2,7 @@
 
 **Data de referência:** 17 de novembro de 2026
 
-**Situação:** experimental; meta de qualidade ainda não atingida.
+**Situação:** experimental. Na terceira rodada (19/11/2026) o classificador FN passou de 90% de precisão no teste cego, com amostra pequena (seção 5.10).
 
 **Escopo:** treinamento local, conversa contextual, análise de requisitos e integração com a API.
 
@@ -19,6 +19,8 @@ Há resultados positivos em tarefas curtas e controladas. Entretanto, o sistema 
 **Teste cego em 8 TCCs novos (seção 5.7, 18/11/2026):** nenhum classificador atingiu o critério fixado antes do teste. O melhor (EK) aprova com precisão de 63% (IC95% 52–73%) e perde para o controle que lê só a consulta (81%). O modelo continua experimental.
 
 **Treino com artigos CC-BY anotados por IA (seção 5.8):** o classificador EN chegou a 76% de precisão, mas esse ganho vem de ter decorado com que frequência cada critério aparece. Com os dados equilibrados por critério (EO), o modelo passa a aprovar quase tudo. O gargalo é a leitura, não a quantidade de rótulos.
+
+**Base maior e classificador FN (seção 5.10, 19/11/2026):** uma base própria de 60 milhões de parâmetros, treinada do zero em 983 milhões de tokens, levou o classificador FN a 93% de precisão no teste cego (42 de 45 aprovações certas, IC95% 82–98%). É o primeiro candidato acima do controle da consulta (81%). O FN também separa TCCs dentro do mesmo critério. O limite: aprova pouco mais da metade dos critérios atendidos, e a amostra é de 8 TCCs.
 
 ## 2. Objetivos e restrições adotadas
 
@@ -225,6 +227,38 @@ Teste: o modelo decide só quando muitos dos 8 trechos concordam e manda o resto
 
 A confiança separa pouco: no EK, subir o limiar leva a precisão de 68% a 83% só quando restam 18 aprovações. Fora da amostra, a abstenção não chega a 90%, e ela decide menos de um quarto dos itens. Abstenção não substitui um modelo que leia melhor; ela pode ser somada a uma base mais forte.
 
+### 5.10 Terceira rodada: base de 60 milhões de parâmetros e classificadores FL e FN
+
+**Base.** Largura 640, 10 camadas, 10 cabeças e janela de 1.024 tokens, num total de 60,4 milhões de parâmetros. Foi treinada do zero na mesma Wikipédia em português, com o mesmo tokenizador de 8.192 tokens. O treino rodou numa GPU T4 gratuita do Kaggle: 60.000 passos, 983 milhões de tokens, 8,7 horas. A perda de validação caiu de 3,17 para 2,68, ou seja, a perplexidade passou de 23,7 para 14,6. Nenhum TCC da Mauá foi enviado ao Kaggle. Os dados de ajuste são os mesmos de EL e EN (públicos ou autorais), e o teste cego rodou localmente.
+
+**Classificadores.** Mesma receita da rodada anterior sobre a base nova:
+- **FL** = EL com a base nova: contrastes, parou por platô no passo 32.000 e escolheu o 22.000.
+- **FN** = EN a partir do FL: checklist de artigos SciELO, escolheu o passo 2.000 pela validação.
+
+Nenhuma escolha usou o teste cego.
+
+| Sistema (128 itens, 74 atendidos) | Aprovações | Precisão (IC95%) | Cobertura dos atendidos | Evidência correta |
+| --- | ---: | ---: | ---: | ---: |
+| Sempre aprovar | 128 | 58% (49–66) | 100% | — |
+| Só a consulta | 84 | 81% (71–88) | 92% | — |
+| EN (base antiga) | 63 | 76% (64–85) | 65% | 58% |
+| FL | 9 | 56% (27–81) | 7% | 60% |
+| **FN** | **45** | **93% (82–98)** | 57% | 67% |
+| FN, aprova ou revisa (limiar fora da amostra) | 41 | 98% (87–100) | 54% | — |
+
+**O FN não está só repetindo a frequência do critério.** O EN aprovava os critérios que costumam ser atendidos e errava 15 vezes. O FN erra 3. Dos 84 itens que o controle da consulta aprovaria (81% certos), o FN aprova 44, com 42 certos, e recusa 40, dos quais só 26 eram atendidos (teste exato de Fisher, p < 0,001). Nos 8 critérios em que ele aprova uns TCCs e recusa outros, acerta 26 de 29 aprovações. Entre os recusados desses critérios, só 18 de 35 eram atendidos (p ≈ 0,001). Em dois critérios (C5 e C12) não há separação. Ou seja, o modelo lê o documento, ao menos em parte.
+
+**Abstenção.** A regra da seção 5.9 exige acerto também nos "não atende". O FN não atinge isso porque recusa muitos itens atendidos, então nenhum limiar passou. A versão "aprova ou manda revisar" funciona: o FN nunca reprova sozinho, e o limiar é escolhido nos outros 7 TCCs. Nos 8 TCCs, ela escolhe sempre "ao menos 1 dos 8 trechos com P ≥ 0,5" e acerta 40 de 41. Essa variante foi definida depois de ver o resultado da seção 5.9. Com a mesma regra, o EK fica em 82% (11 aprovações) e o EN em 2 de 4.
+
+**Limites.**
+- **Amostra:** são 8 TCCs de um único curso, rotulados por uma pessoa com adjudicação, e o IC inferior fica em 82%.
+- **Seleção sobre o mesmo teste:** este conjunto já avaliou mais de oito candidatos, e escolher o melhor entre eles infla o resultado.
+- **Recusas:** o FN aprova 57% dos critérios atendidos e manda o resto para "não encontrado".
+- **Evidência:** em 1/3 das aprovações certas, a citação não coincide com o trecho anotado.
+- **FL:** sozinho, quase não aprova (9 itens), apesar de acertar 445 de 461 itens na validação (só 5 falsas aprovações). O ganho veio da etapa com rótulos de checklist.
+
+Um conjunto cego novo, com outros cursos, é o que confirmaria o resultado.
+
 ## 6. Principais falhas identificadas
 
 1. **Generalização fraca:** bom desempenho em templates não se sustenta em documentos ou formulações novas.
@@ -257,7 +291,7 @@ A hipótese mais sustentada pelos resultados é uma combinação de supervisão 
 
 A prioridade recomendada é ampliar relações revisadas em mais documentos, incluindo critérios que exigem explicar mecanismos, manter a mesma consulta com evidências de relações diferentes e obter uma segunda revisão das anotações. A avaliação deve continuar por documento, classe e grupo completo de consultas, com comparação a baselines simples e revisão semântica das citações.
 
-Os gargalos restantes não se resolvem com código ou mais treino: faltam supervisão de `nao_atendido` no formato de requisito e uma avaliação real maior que 18 critérios. A anotação de 8 TCCs (128 critérios, seção 5.7) foi feita e confirmou o diagnóstico: nenhum modelo supera o controle da consulta. O critério de “atende” foi padronizado em `ai/annotation/criterios-v1.md` depois de um kappa de 0,18 entre pessoa e IA, e as divergências foram adjudicadas. Os 8 TCCs agora são o conjunto fixo de teste. Treinar com 354 itens de artigos CC BY anotados por IA (seção 5.8) só ensinou a frequência de cada critério. Mais rótulos do mesmo tipo não devem resolver: o modelo precisa de mais capacidade de leitura, seja com uma base maior, seja com pré-treino mais longo, antes de novos ajustes de classificação. A abstenção por confiança (seção 5.9) também não chega a 90% fora da amostra. Por exigência do curso (modelo próprio, treinado do zero), o próximo passo é uma base própria maior: 54 milhões de parâmetros (largura 640, 10 camadas), pré-treinada na mesma Wikipédia em português com cerca de 1 bilhão de tokens.
+Os gargalos restantes não se resolvem com código ou mais treino: faltam supervisão de `nao_atendido` no formato de requisito e uma avaliação real maior que 18 critérios. A anotação de 8 TCCs (128 critérios, seção 5.7) foi feita e confirmou o diagnóstico: nenhum modelo supera o controle da consulta. O critério de “atende” foi padronizado em `ai/annotation/criterios-v1.md` depois de um kappa de 0,18 entre pessoa e IA, e as divergências foram adjudicadas. Os 8 TCCs agora são o conjunto fixo de teste. Treinar com 354 itens de artigos CC BY anotados por IA (seção 5.8) só ensinou a frequência de cada critério. Mais rótulos do mesmo tipo não devem resolver: o modelo precisa de mais capacidade de leitura, seja com uma base maior, seja com pré-treino mais longo, antes de novos ajustes de classificação. A abstenção por confiança (seção 5.9) também não chega a 90% fora da amostra. Por exigência do curso (modelo próprio, treinado do zero), o passo seguinte foi uma base própria maior: 60,4 milhões de parâmetros (largura 640, 10 camadas), pré-treinada na mesma Wikipédia em português com 983 milhões de tokens (seção 5.10). Com ela, o FN chegou a 93% de precisão no teste cego e passou o controle da consulta. É o primeiro resultado do projeto nessa direção, mas aprova só metade do que é atendido e foi medido em 8 TCCs. O uso recomendado é "aprova ou manda revisar", com revisão humana dos demais critérios. O próximo passo é um teste cego novo, com TCCs de outros cursos, antes de qualquer promoção na API.
 
 Mais passos ou mais variantes sobre os mesmos 90 pares não têm justificativa nos resultados atuais. Para uma entrega acadêmica, o sistema pode ser apresentado honestamente como protótipo experimental com análise de falhas e apoio à revisão humana; não como solução pronta cuja confiabilidade foi demonstrada.
 
@@ -279,6 +313,7 @@ Registros principais no repositório:
 - `ai/PRETRAINING.md` e `output/ai/pretrain-full-8k-2026-11-17.json`: base completa.
 - `ai/annotation/`, `ai/scripts/score_blind.py`, `output/ai/blind-v1-score-final-2026-11-18.json` e `blind-v1-score-ia-2026-11-18.json`: teste cego em 8 TCCs.
 - `ai/scripts/fetch_scielo.py`, `ai/scripts/prepare_checklist_training.py`, `ai/data/licenses/SciELO-NOTICE.md`, `output/ai/checklist-scielo-en-2026-11-18.json`, `checklist-scielo-eo-2026-11-18.json` e `blind-v1-score-en-eo-2026-11-18.json`: EN e EO.
+- `output/ai/classifier-w640-2026-11-19.json`, `ai/scripts/abstention_blind.py` e o notebook do Kaggle (fora do repositório): base de 60 milhões de parâmetros, FL e FN.
 - `ai/research/new-base-ek-2026-11-17.md`, `output/ai/evidence-mix-ek-2026-11-17.json` e `output/ai/evidence-mix-el-2026-11-17.json`: classificadores EK, EL e EM.
 
 As fontes públicas e atribuições de dados permanecem registradas em `ai/data/licenses/`. Os textos integrais dos TCCs e os rastros privados não são reproduzidos neste relatório.
