@@ -113,7 +113,7 @@ describe.skipIf(process.env.CONFERE_AI_LIVE_TEST !== "1")(
       expect((await invokeChat(context, "GET")).status).toBe(405);
       const first = await invokeChat(context);
       expect(first.status).toBe(200);
-      const firstRaw = await first.json();
+      const firstRaw = (await first.json()) as { result: { data: unknown } };
       const result = chatResult.parse(firstRaw.result.data);
       expect(result.response.trim().length).toBeGreaterThan(0);
       expect(result.dropped_turns).toBe(0);
@@ -122,7 +122,9 @@ describe.skipIf(process.env.CONFERE_AI_LIVE_TEST !== "1")(
         { message: "Olá", response: result.response },
       ]);
       expect(next.status).toBe(200);
-      chatResult.parse((await next.json()).result.data);
+      chatResult.parse(
+        ((await next.json()) as { result: { data: unknown } }).result.data,
+      );
     }, 120000);
   },
 );

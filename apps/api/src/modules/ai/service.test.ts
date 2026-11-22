@@ -122,13 +122,13 @@ describe("local chat boundary", () => {
       return { stdin: { on: vi.fn(), end: vi.fn() } };
     });
     await chat({ message: "oi", history: [] });
-    expect(mocks.execFile.mock.calls[0][1][3]).toMatch(
+    expect(mocks.execFile.mock.calls[0]?.[1][3]).toMatch(
       /ai\/runs\/candidate\/best.pt$/,
     );
     mocks.env.AI_CHAT_CHECKPOINT = "ai/runs/conversation/best.pt";
     mocks.env.AI_CHECKPOINT = undefined;
     await chat({ message: "oi", history: [] });
-    expect(mocks.execFile.mock.calls[1][1][3]).toMatch(
+    expect(mocks.execFile.mock.calls[1]?.[1][3]).toMatch(
       /ai\/runs\/conversation\/best.pt$/,
     );
     await expect(reviewText(input)).rejects.toMatchObject({
