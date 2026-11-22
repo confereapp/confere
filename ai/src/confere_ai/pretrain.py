@@ -33,6 +33,11 @@ def run(args):
     rows, fingerprint = load_corpus(args.data)
     settings = {key: getattr(args, key) for key in ("seed", "batch_size", "learning_rate", "block_size", "vocab_size", "tokenizer_chars", "eval_blocks")}
     settings["objective"] = "causal_lm"
+    # Opções novas só entram nas configurações quando usadas: retomadas antigas continuam comparáveis.
+    if args.tokenizer_kind != "bytes": settings["tokenizer_kind"] = args.tokenizer_kind
+    if args.pack: settings["pack"] = True
+    if args.accumulate != 1: settings["accumulate"] = args.accumulate
+    if args.schedule != "constant": settings.update(schedule=args.schedule, warmup_steps=args.warmup_steps)
     source_path=args.resume or init_from
     checkpoint = torch.load(source_path, map_location="cpu", weights_only=True) if source_path else None
     previous_fingerprint = None
@@ -53,10 +58,10 @@ def run(args):
         if init_from and args.vocab_size!=tokenizer.vocab_size: raise ValueError("Inicialização preserva o vocabulário do checkpoint.")
     else:
         print("Treinando BPE somente na amostra de artigos de treino...", flush=True)
-        tokenizer = fit_language_tokenizer(rows, args.vocab_size, args.tokenizer_chars, args.seed)
+        tokenizer = fit_language_tokenizer(rows, args.vocab_size, args.tokenizer_chars, args.seed, args.tokenizer_kind)
     print("Tokenizando treino e validação; artigos de teste ficam fora...", flush=True)
-    train_examples = language_windows(rows, tokenizer, args.block_size, "train")
-    validation_examples = language_windows(rows, tokenizer, args.block_size, "validation")
+    train_examples = language_windows(rows, tokenizer, args.block_size, "train", args.pack)
+    validation_examples = language_windows(rows, tokenizer, args.block_size, "validation", args.pack)
     if not train_examples or not validation_examples:
         raise ValueError("Não há janelas suficientes para treino e validação.")
     evaluation_generator = torch.Generator().manual_seed(args.seed + 1)
@@ -64,7 +69,7 @@ def run(args):
         indices = torch.randperm(len(examples), generator=evaluation_generator).tolist()[:args.eval_blocks]
         return [examples[index] for index in indices]
     train_eval, validation_eval = subset(train_examples), subset(validation_examples)
-    config = GPTConfig(tokenizer.vocab_size, args.block_size, 384, 6, 6)
+    config = GPTConfig(tokenizer.vocab_size, args.block_size, args.width, args.layers, args.heads)
     model = GPT(config).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=0.01)
     generator = torch.Generator().manual_seed(args.seed)
@@ -93,6 +98,7 @@ def run(args):
             "preparation_seconds": time.perf_counter() - preparation_started, "device": device,
             "torch": str(torch.__version__), "python": platform.python_version(),
             "note": "Métricas em amostras fixas de janelas; não são acurácia, diálogo nem avaliação de TCC."}
+    info["mps_batch_padding_multiple"] = 128 if device == "mps" else None
     (args.run_dir / "run.json").write_text(json.dumps(info, ensure_ascii=False, indent=2))
     (args.run_dir / "tokenizer.json").write_text(json.dumps({"merges": tokenizer.merges}))
     started, best_loss = time.perf_counter(), float("inf")
@@ -110,19 +116,29 @@ def run(args):
             best_loss = item["validation_loss"]
             save_checkpoint(args.run_dir / "best.pt", model, optimizer, tokenizer, generator, step, fingerprint, settings)
 
+    scaler = torch.amp.GradScaler("cuda", enabled=device == "cuda")
     record(start_step)
     for step in range(start_step + 1, args.steps + 1):
         model.train()
-        indices = torch.randint(len(train_examples), (args.batch_size,), generator=generator).tolist()
-        x, y = batch(train_examples, indices, device)
         optimizer.zero_grad(set_to_none=True)
-        loss = F.cross_entropy(model(x).flatten(0, 1), y.flatten(), ignore_index=-100)
-        if not torch.isfinite(loss).item():
-            raise ValueError("Loss não finita; último checkpoint preservado.")
-        loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0, error_if_nonfinite=True)
-        optimizer.step()
-        processed += (y != -100).sum().item()
+        if args.schedule == "cosine":
+            # Aquecimento linear e decaimento cosseno até 10% da taxa no último passo planejado.
+            ratio = step/args.warmup_steps if step < args.warmup_steps else \
+                .1 + .45*(1+math.cos(math.pi*(step-args.warmup_steps)/max(1, args.steps-args.warmup_steps)))
+            for group in optimizer.param_groups: group["lr"] = args.learning_rate*ratio
+        for _ in range(args.accumulate):  # lote efetivo = batch_size × accumulate, com memória de um micro-lote
+            indices = torch.randint(len(train_examples), (args.batch_size,), generator=generator).tolist()
+            x, y = batch(train_examples, indices, device, model.config.block_size)
+            with torch.autocast("cuda", torch.float16, enabled=device == "cuda"):  # T4: fp16 com escala de gradiente
+                loss = F.cross_entropy(model(x).flatten(0, 1).float(), y.flatten(), ignore_index=-100)
+            if not torch.isfinite(loss).item():
+                raise ValueError("Loss não finita; último checkpoint preservado.")
+            scaler.scale(loss / args.accumulate).backward()
+            processed += (y != -100).sum().item()
+        scaler.unscale_(optimizer)
+        # Com fp16, gradiente infinito é estouro da escala: o scaler pula o passo e reduz a escala.
+        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0, error_if_nonfinite=device != "cuda")
+        scaler.step(optimizer); scaler.update()
         if device == "mps":
             observed_memory = max(observed_memory, torch.mps.current_allocated_memory())
         timed_out = time.perf_counter() - started >= args.max_seconds
@@ -158,11 +174,20 @@ def main():
     parser.add_argument("--block-size", type=int, default=256)
     parser.add_argument("--vocab-size", type=int, default=1024)
     parser.add_argument("--tokenizer-chars", type=int, default=128000)
+    parser.add_argument("--tokenizer-kind", choices=["bytes", "words"], default="bytes",
+                        help="words: BPE por palavras, sem fusões entre palavras; adequado a vocabulários grandes.")
+    parser.add_argument("--pack", action="store_true", help="Concatenar artigos em janelas cheias; janelas cruzam artigos.")
+    parser.add_argument("--schedule", choices=["constant", "cosine"], default="constant")
+    parser.add_argument("--warmup-steps", type=int, default=500)
     parser.add_argument("--eval-every", type=int, default=200)
     parser.add_argument("--eval-blocks", type=int, default=32)
     parser.add_argument("--learning-rate", type=float, default=0.0003)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--device", choices=["auto", "cpu", "mps"], default="auto")
+    parser.add_argument("--width", type=int, default=384)
+    parser.add_argument("--layers", type=int, default=6)
+    parser.add_argument("--heads", type=int, default=6)
+    parser.add_argument("--accumulate", type=int, default=1, help="Micro-lotes por passo do otimizador.")
+    parser.add_argument("--device", choices=["auto", "cpu", "mps", "cuda"], default="auto")
     args = parser.parse_args()
     try:
         run(args)

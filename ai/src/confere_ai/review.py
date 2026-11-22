@@ -28,18 +28,20 @@ def main():
             units = [u for u in units if u["id"] in args.unit]
         if not any(u["text"].strip() for u in units): raise ValueError("Contexto sem texto utilizável.")
         checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=True)
-        if checkpoint["settings"].get("objective") != "document_grounding": raise ValueError("Use um checkpoint de conferência documental.")
+        if checkpoint["settings"].get("objective") not in {"document_grounding", "conversation"}: raise ValueError("Use um checkpoint de conferência documental.")
+        schema_version = checkpoint["settings"].get("grounding_schema", 1)
+        response_tokens = checkpoint["settings"].get("generation_budget", 192) if schema_version == 2 else 64
         tokenizer = ByteBPE(checkpoint["merges"])
-        ids = [tokenizer.BOS]+tokenizer.encode(prompt_for(args.requirement, units))+[tokenizer.SEP]
+        ids = [tokenizer.BOS]+tokenizer.encode(prompt_for(args.requirement, units, schema_version))+[tokenizer.SEP]
         config = GPTConfig(**checkpoint["config"])
-        if len(ids)+64 > config.block_size:
+        if len(ids)+response_tokens > config.block_size:
             raise ValueError("Documento/trecho excede o contexto experimental. Selecione unidades menores; nada foi truncado ou avaliado parcialmente em silêncio.")
         device = choose_device(args.device)
         model = GPT(config).to(device)
         model.load_state_dict(checkpoint["model"]); model.eval()
-        generated = model.generate(torch.tensor([ids], device=device), 64, tokenizer.EOS)
+        generated = model.generate(torch.tensor([ids], device=device), response_tokens, tokenizer.EOS)
         raw = tokenizer.decode(generated[0,len(ids):].tolist())
-        result = resolve(raw, document["name"], units)
+        result = resolve(raw, document["name"], units, schema_version)
         print(json.dumps({"source_sha256": document["sha256"], "selected_units": [u["id"] for u in units], "warnings": document["warnings"],
                           "coverage": "selected_units_only" if args.unit else "all_extracted_text",
                           "scope_note": "Resultado restrito ao contexto selecionado; referência válida não garante interpretação correta.",

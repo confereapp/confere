@@ -17,9 +17,15 @@ from .tokenizer import ByteBPE
 from .training_data import encode_sample, load_authored
 
 
-def batch(examples, indices, device):
+def batch(examples, indices, device, context_size=None):
     selected = [examples[index] for index in indices]
     length = max(len(ids) for ids, _ in selected)
+    if context_size is not None:
+        if length > context_size:
+            raise ValueError("O lote excede o contexto; nenhum token foi truncado.")
+        # MPS retém grafos por comprimento; poucas faixas evitam crescimento por lote.
+        if torch.device(device).type == "mps":
+            length = min(context_size, ((length + 127) // 128) * 128)
     x = torch.full((len(selected), length), ByteBPE.PAD, dtype=torch.long)
     y = torch.full_like(x, -100)
     for index, (ids, labels) in enumerate(selected):
@@ -33,7 +39,7 @@ def evaluate(model, examples, device):
     model.eval()
     total_loss, total_tokens = 0.0, 0
     for index in range(len(examples)):
-        x, y = batch(examples, [index], device)
+        x, y = batch(examples, [index], device, model.config.block_size)
         total_loss += F.cross_entropy(model(x).flatten(0, 1), y.flatten(), ignore_index=-100, reduction="sum").item()
         total_tokens += (y != -100).sum().item()
     return total_loss / total_tokens if total_tokens else None
@@ -41,7 +47,9 @@ def evaluate(model, examples, device):
 
 def choose_device(name):
     if name == "auto":
-        return "mps" if torch.backends.mps.is_available() else "cpu"
+        return "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+    if name == "cuda" and not torch.cuda.is_available():
+        raise ValueError("CUDA indisponível.")
     if name == "mps" and not torch.backends.mps.is_available():
         raise ValueError("MPS indisponível; escolha CPU explicitamente.")
     return name
@@ -105,7 +113,7 @@ def run(args):
         "dataset_fingerprint": fingerprint, "data": str(args.data),
         "train_ids": [sample["id"] for sample in train_samples],
         "validation_ids": [sample["id"] for sample in validation_samples],
-        "test_examples_used": 0, "device": device, "torch": torch.__version__,
+        "test_examples_used": 0, "device": device, "mps_batch_padding_multiple": 128 if device == "mps" else None, "torch": torch.__version__,
         "python": platform.python_version(), "platform": platform.platform(),
         "max_train_sequence": max(len(ids) for ids, _ in train_examples),
         "max_validation_sequence": max((len(ids) for ids, _ in validation_examples), default=0),
@@ -127,7 +135,7 @@ def run(args):
     for step in range(start_step + 1, args.steps + 1):
         model.train()
         indices = torch.randint(len(train_examples), (args.batch_size,), generator=generator).tolist()
-        x, y = batch(train_examples, indices, device)
+        x, y = batch(train_examples, indices, device, model.config.block_size)
         optimizer.zero_grad(set_to_none=True)
         loss = F.cross_entropy(model(x).flatten(0, 1), y.flatten(), ignore_index=-100)
         if not torch.isfinite(loss).item():

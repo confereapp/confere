@@ -1,7 +1,11 @@
 """BPE didático sobre bytes UTF-8, treinado somente nos textos de treino."""
 
-from collections import Counter
+from collections import Counter, defaultdict
 import heapq
+import re
+
+WHITESPACE = frozenset(b" \t\n\r\f\v")
+CHUNKS = re.compile(r"[ \t\n\r\f\v]?[^ \t\n\r\f\v]*")
 
 
 class ByteBPE:
@@ -13,6 +17,10 @@ class ByteBPE:
         for token, (left, right) in enumerate(self.merges, 260):
             self.vocab[token] = self.vocab[left] + self.vocab[right]
         self.ranks = {pair: token for token, pair in enumerate(self.merges, 260)}
+        # Se nenhum token tem espaço ASCII fora da primeira posição, nenhuma fusão cruza o início de um
+        # trecho " palavra"; codificar trecho a trecho (com cache) dá o mesmo resultado que o texto inteiro.
+        self.chunked = all(not WHITESPACE.intersection(self.vocab[t][1:]) for t in range(260, self.vocab_size))
+        self.cache = {}
 
     @property
     def vocab_size(self):
@@ -48,7 +56,57 @@ class ByteBPE:
             merges.append(pair)
         return cls(merges)
 
+    @classmethod
+    def train_words(cls, texts, vocab_size=8192):
+        """BPE por trechos " palavra" com contagem incremental; escala para milhões de caracteres."""
+        if vocab_size < 260:
+            raise ValueError("Vocabulário precisa reservar 256 bytes e quatro tokens especiais.")
+        frequency = Counter(chunk for text in texts for chunk in CHUNKS.findall(text) if chunk)
+        words = [list(chunk.encode("utf-8")) for chunk in frequency]
+        counts = list(frequency.values())
+        pairs, where = Counter(), defaultdict(set)
+        for index, (ids, count) in enumerate(zip(words, counts)):
+            for pair in zip(ids, ids[1:]):
+                pairs[pair] += count; where[pair].add(index)
+        heap = [(-count, pair) for pair, count in pairs.items()]
+        heapq.heapify(heap)
+        merges = []
+        while len(merges) + 260 < vocab_size and heap:
+            negative, pair = heapq.heappop(heap)
+            if pairs.get(pair, 0) != -negative:
+                continue  # entrada desatualizada
+            if -negative < 2:
+                break
+            token = 260 + len(merges); merges.append(pair)
+            for index in where.pop(pair, ()):
+                ids, count = words[index], counts[index]
+                for old in zip(ids, ids[1:]):
+                    pairs[old] -= count
+                merged = cls.merge(ids, pair, token); words[index] = merged
+                for new in zip(merged, merged[1:]):
+                    pairs[new] += count; where[new].add(index)
+                touched = set(zip(ids, ids[1:])) | set(zip(merged, merged[1:]))
+                for changed in touched:
+                    if pairs[changed] > 0 and changed != pair:
+                        heapq.heappush(heap, (-pairs[changed], changed))
+            pairs.pop(pair, None)
+        # ponytail: empates resolvidos pela ordem do heap, não por (contagem, par) como em `train`.
+        return cls(merges)
+
     def encode(self, text):
+        if self.chunked and self.merges:
+            result = []
+            for chunk in CHUNKS.findall(text):
+                if chunk:
+                    ids = self.cache.get(chunk)
+                    if ids is None:
+                        ids = self.encode_whole(chunk)
+                        if len(self.cache) < 1_000_000: self.cache[chunk] = ids
+                    result.extend(ids)
+            return result
+        return self.encode_whole(text)
+
+    def encode_whole(self, text):
         ids = list(text.encode("utf-8"))
         if not ids:
             return []
