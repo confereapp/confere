@@ -29,6 +29,8 @@ export default function ReviewRequirementsScreen() {
   const [rubricDraft, setRubricDraft] = useState("");
   const [isAddingReq, setIsAddingReq] = useState(false);
   const [newTitle, setNewTitle] = useState("");
+  const [proposal, setProposal] = useState<string[] | null>(null);
+  const [isExtracting, setIsExtracting] = useState(false);
 
   const {
     data: project,
@@ -99,6 +101,26 @@ export default function ReviewRequirementsScreen() {
     }),
   );
 
+  const addManyMutation = useMutation(
+    trpc.project.addRequirements.mutationOptions({
+      onSuccess: (created) => {
+        refreshProject();
+        setProposal(null);
+        toast.show({
+          id: "reqs-added",
+          label: `${created.length} requisito(s) adicionado(s)!`,
+        });
+      },
+      onError: (err) => {
+        toast.show({
+          id: "req-error",
+          variant: "danger",
+          label: err.message || "Erro ao salvar requisitos",
+        });
+      },
+    }),
+  );
+
   if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center bg-canvas">
@@ -145,6 +167,44 @@ export default function ReviewRequirementsScreen() {
       return;
     }
     updateRubricMutation.mutate({ projectId, rawRubric: trimmed });
+  }
+
+  async function extractRequirements() {
+    if (!projectId) return;
+    setIsExtracting(true);
+    try {
+      const { items } = await queryClient.fetchQuery(
+        trpc.project.extractRequirements.queryOptions(
+          { projectId },
+          { staleTime: 0 },
+        ),
+      );
+      if (items.length === 0) {
+        toast.show({
+          id: "extract-empty",
+          label:
+            "Nenhum item identificado. Separe os requisitos em linhas ou adicione manualmente.",
+        });
+        return;
+      }
+      setIsEditingRubric(false);
+      setProposal(items);
+    } catch (err) {
+      toast.show({
+        id: "extract-error",
+        variant: "danger",
+        label:
+          err instanceof Error ? err.message : "Erro ao extrair requisitos",
+      });
+    } finally {
+      setIsExtracting(false);
+    }
+  }
+
+  function saveProposal() {
+    const titles = (proposal ?? []).map((t) => t.trim()).filter(Boolean);
+    if (!projectId || titles.length === 0) return;
+    addManyMutation.mutate({ projectId, titles });
   }
 
   function addRequirement() {
@@ -221,20 +281,20 @@ export default function ReviewRequirementsScreen() {
               </Text>
 
               <Pressable
-                onPress={() =>
-                  toast.show({
-                    id: "extract-pending",
-                    label: "Extração automática em breve.",
-                  })
-                }
+                onPress={extractRequirements}
+                disabled={isExtracting}
                 className="mt-3.5 h-[42px] flex-row items-center justify-center gap-2 rounded-full bg-brand/10 active:opacity-80"
               >
-                <Icon
-                  name="arrow.clockwise"
-                  fallback="refresh"
-                  size={14}
-                  color="#2F6BFF"
-                />
+                {isExtracting ? (
+                  <ActivityIndicator color="#2F6BFF" size="small" />
+                ) : (
+                  <Icon
+                    name="arrow.clockwise"
+                    fallback="refresh"
+                    size={14}
+                    color="#2F6BFF"
+                  />
+                )}
                 <Text className="font-semibold text-[13.5px] text-brand">
                   Extrair requisitos da rubrica
                 </Text>
@@ -242,6 +302,75 @@ export default function ReviewRequirementsScreen() {
             </>
           )}
         </View>
+
+        {proposal && (
+          <View className="gap-3 rounded-3xl border border-line-glass bg-glass p-4 shadow-sm">
+            <View className="flex-row items-center justify-between">
+              <Text className="font-semibold text-[15px] text-ink">
+                Itens encontrados ({proposal.length})
+              </Text>
+              <Pressable onPress={() => setProposal(null)} hitSlop={8}>
+                <Text className="font-semibold text-[13px] text-brand">
+                  Descartar
+                </Text>
+              </Pressable>
+            </View>
+            <Text className="text-[13px] text-ink3 leading-[18px]">
+              Separados pela formatação da rubrica. Revise, edite ou remova
+              antes de salvar.
+            </Text>
+
+            {proposal.map((title, idx) => (
+              <View
+                // biome-ignore lint/suspicious/noArrayIndexKey: lista editável sem id estável
+                key={idx}
+                className="flex-row items-center gap-2"
+              >
+                <TextInput
+                  value={title}
+                  onChangeText={(text) =>
+                    setProposal((prev) =>
+                      prev ? prev.map((t, i) => (i === idx ? text : t)) : prev,
+                    )
+                  }
+                  multiline
+                  className="flex-1 rounded-2xl border border-line-glass bg-card/70 px-3.5 py-2.5 text-[14px] text-ink leading-[20px] web:outline-none"
+                />
+                <Pressable
+                  hitSlop={8}
+                  onPress={() =>
+                    setProposal((prev) => {
+                      const next = prev?.filter((_, i) => i !== idx) ?? [];
+                      return next.length > 0 ? next : null;
+                    })
+                  }
+                  className="p-1 active:opacity-60"
+                >
+                  <Icon
+                    name="trash"
+                    fallback="trash-outline"
+                    size={16}
+                    color="#94A3B8"
+                  />
+                </Pressable>
+              </View>
+            ))}
+
+            <Pressable
+              onPress={saveProposal}
+              disabled={addManyMutation.isPending}
+              className="h-[44px] items-center justify-center rounded-full bg-brand active:opacity-85"
+            >
+              {addManyMutation.isPending ? (
+                <ActivityIndicator color="#fff" size="small" />
+              ) : (
+                <Text className="font-semibold text-[14px] text-white">
+                  Salvar requisitos
+                </Text>
+              )}
+            </Pressable>
+          </View>
+        )}
 
         {isAddingReq && (
           <View className="gap-3 rounded-3xl border border-line-glass bg-glass p-4 shadow-sm">
