@@ -7,6 +7,9 @@
     "./server": "./src/server.ts",
     "./native": "./src/native.ts"
   },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
   "dependencies": {
     "dotenv": "catalog:",
     "zod": "catalog:",
