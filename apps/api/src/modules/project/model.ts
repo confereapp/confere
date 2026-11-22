@@ -29,6 +29,15 @@ export namespace ProjectModel {
     description: z.string().optional(),
   });
 
+  export const extractRequirementsInput = z.object({
+    projectId: z.string().min(1),
+  });
+
+  export const addRequirementsInput = z.object({
+    projectId: z.string().min(1),
+    titles: z.array(z.string().trim().min(1)).min(1).max(200),
+  });
+
   export const toggleRequirementInput = z.object({
     requirementId: z.string().min(1),
     checked: z.boolean(),

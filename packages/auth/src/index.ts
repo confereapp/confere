@@ -5,6 +5,7 @@ import { env } from "@confere/env/server";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { resetPasswordEmail, sendEmail } from "./send-email";
+import { socialProviders } from "./social-providers";
 
 export function createAuth() {
   const db = createDb();
@@ -39,6 +40,8 @@ export function createAuth() {
         );
       },
     },
+    // Login social (Google só com GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET)
+    socialProviders: socialProviders(env),
     // Chave e URL do servidor
     secret: env.BETTER_AUTH_SECRET,
     baseURL: env.BETTER_AUTH_URL,

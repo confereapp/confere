@@ -38,6 +38,18 @@ export const projectRouter = router({
       ProjectService.addRequirement(ctx.session.user.id, input),
     ),
 
+  extractRequirements: protectedProcedure
+    .input(ProjectModel.extractRequirementsInput)
+    .query(({ ctx, input }) =>
+      ProjectService.extractRequirements(ctx.session.user.id, input),
+    ),
+
+  addRequirements: protectedProcedure
+    .input(ProjectModel.addRequirementsInput)
+    .mutation(({ ctx, input }) =>
+      ProjectService.addRequirements(ctx.session.user.id, input),
+    ),
+
   toggleRequirement: protectedProcedure
     .input(ProjectModel.toggleRequirementInput)
     .mutation(({ ctx, input }) =>

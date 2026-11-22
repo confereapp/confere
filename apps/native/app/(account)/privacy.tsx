@@ -35,8 +35,7 @@ export default function PrivacyScreen() {
               podem ser utilizados de forma anonimizada para alimentar, treinar
               e refinar o modelo próprio de inteligência artificial do sistema
             </Text>
-            , visando melhorar a precisão na extração de requisitos e na análise
-            de entregas acadêmicas.
+            , visando melhorar a precisão na análise de entregas acadêmicas.
           </Text>
         </View>
 

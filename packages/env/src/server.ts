@@ -27,6 +27,8 @@ export const env = createEnv({
 
     GMAIL_USER: z.email().optional(),
     GMAIL_APP_PASSWORD: z.string().min(1).optional(),
+    GOOGLE_CLIENT_ID: z.string().min(1).optional(),
+    GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
