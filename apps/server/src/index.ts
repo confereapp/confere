@@ -1,4 +1,5 @@
 import { createContext } from "@confere/api/context";
+import { resumePendingAnalyses } from "@confere/api/modules/ai/analysis";
 import { appRouter } from "@confere/api/routers/index";
 import { auth } from "@confere/auth";
 import { env } from "@confere/env/server";
@@ -109,4 +110,7 @@ new Elysia()
   .get("/", () => "OK")
   .listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
+    resumePendingAnalyses().catch((error) =>
+      console.error("[ai] não foi possível retomar análises pendentes", error),
+    );
   });

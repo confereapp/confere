@@ -11,7 +11,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Blob } from "@/components/ui/blob";
 import { Icon } from "@/components/ui/icon";
 import { ScreenHeader } from "@/components/ui/screen-header";
-import { formatShortDate, getCoverageColor } from "@/lib/format";
+import {
+  ANALYSIS_POLL_INTERVAL,
+  formatShortDate,
+  getCoverageColor,
+  isAnalysisPending,
+} from "@/lib/format";
 import { trpc } from "@/lib/trpc";
 
 const STATUS_LABELS: Record<string, string> = {
@@ -33,7 +38,13 @@ export default function ProjectDetailsScreen() {
   } = useQuery(
     trpc.project.getById.queryOptions(
       { id: projectId ?? "" },
-      { enabled: Boolean(projectId) },
+      {
+        enabled: Boolean(projectId),
+        refetchInterval: (query) =>
+          query.state.data?.submissions.some(isAnalysisPending)
+            ? ANALYSIS_POLL_INTERVAL
+            : false,
+      },
     ),
   );
 
@@ -242,6 +253,16 @@ export default function ProjectDetailsScreen() {
                         >
                           {formatShortDate(sub.createdAt)} · {statusText}
                         </Text>
+                        {sub.analysisMessage ? (
+                          <Text
+                            numberOfLines={2}
+                            className={`mt-0.5 text-[11.5px] ${
+                              sub.status === "erro" ? "text-err" : "text-ink3"
+                            }`}
+                          >
+                            {sub.analysisMessage}
+                          </Text>
+                        ) : null}
                       </View>
                     </View>
 

@@ -18,7 +18,7 @@ function buildSubmissionKey(projectId: string, filename: string): string {
 }
 
 // Em dev sem S3 configurado, retorna null para permitir fallback local em getUploadUrl.
-async function getOptionalS3Bucket() {
+export async function getOptionalS3Bucket() {
   const s3Bucket = process.env.S3_BUCKET?.trim();
   if (!s3Bucket) {
     if (process.env.NODE_ENV === "production") {

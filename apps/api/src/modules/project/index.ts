@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { protectedProcedure, router } from "../../index";
+import { enqueueAnalysis } from "../ai/analysis";
 import { ProjectModel } from "./model";
 import { ProjectService } from "./service";
 
@@ -16,9 +17,14 @@ export const projectRouter = router({
 
   create: protectedProcedure
     .input(ProjectModel.createInput)
-    .mutation(({ ctx, input }) =>
-      ProjectService.createProject(ctx.session.user.id, input),
-    ),
+    .mutation(async ({ ctx, input }) => {
+      const created = await ProjectService.createProject(
+        ctx.session.user.id,
+        input,
+      );
+      if (created.submission) enqueueAnalysis(created.submission.id);
+      return created;
+    }),
 
   updateRubric: protectedProcedure
     .input(ProjectModel.updateRubricInput)
@@ -64,7 +70,12 @@ export const projectRouter = router({
 
   addSubmission: protectedProcedure
     .input(ProjectModel.addSubmissionInput)
-    .mutation(({ ctx, input }) =>
-      ProjectService.addSubmission(ctx.session.user.id, input),
-    ),
+    .mutation(async ({ ctx, input }) => {
+      const sub = await ProjectService.addSubmission(
+        ctx.session.user.id,
+        input,
+      );
+      if (sub) enqueueAnalysis(sub.id);
+      return sub;
+    }),
 });
