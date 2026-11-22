@@ -46,3 +46,10 @@ Artefatos: [JSON e anotações](../output/ai/evidence-context-diagnostic-2026-11
 e [relatório](../output/pdf/evaluation/evidence-context-diagnostic-2026-11-05.pdf).
 O comando `ai/scripts/diagnose_evidence_context.py --help` informa os parâmetros;
 saídas existentes são recusadas para preservar os resultados.
+
+## Continuação em 11/11/2026
+
+O contrato de múltiplas evidências foi implementado com compatibilidade para
+checkpoints antigos. Dois ajustes locais e a ponte textual da API estão
+registrados em [MULTIPLE_EVIDENCE.md](MULTIPLE_EVIDENCE.md). O candidato
+ainda reprova os critérios documentais e não substitui o padrão do chat.
