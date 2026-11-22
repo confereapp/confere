@@ -16,7 +16,15 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "passThroughEnv": [
+        "AI_CHECKPOINT",
+        "AI_CHAT_CHECKPOINT",
+        "AI_PYTHON",
+        "AI_DEVICE",
+        "PYTORCH_MPS_HIGH_WATERMARK_RATIO",
+        "PYTORCH_MPS_LOW_WATERMARK_RATIO"
+      ]
     },
     "db:push": {
       "cache": false

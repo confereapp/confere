@@ -20,6 +20,11 @@ export const env = createEnv({
 
     CORS_ORIGIN: z.url(),
 
+    AI_CHECKPOINT: z.string().min(1).optional(),
+    AI_CHAT_CHECKPOINT: z.string().min(1).optional(),
+    AI_PYTHON: z.string().min(1).optional(),
+    AI_DEVICE: z.enum(["auto", "cpu", "mps"]).default("auto"),
+
     GMAIL_USER: z.email().optional(),
     GMAIL_APP_PASSWORD: z.string().min(1).optional(),
     NODE_ENV: z
