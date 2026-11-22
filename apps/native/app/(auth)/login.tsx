@@ -152,13 +152,7 @@ export default function Login() {
           </Pressable>
         </View>
 
-        <View className="flex-row items-center gap-3">
-          <View className="h-px flex-1 bg-hair" />
-          <Text className="font-instrument text-ink3 text-xs">ou</Text>
-          <View className="h-px flex-1 bg-hair" />
-        </View>
-
-        <SocialButtons onPress={() => toast.show({ label: "Em breve" })} />
+        <SocialButtons />
 
         <Text className="mt-auto text-center font-instrument text-[13px] text-ink2">
           Novo por aqui?{" "}

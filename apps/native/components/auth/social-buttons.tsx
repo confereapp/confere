@@ -1,49 +1,82 @@
-import { Pressable, Text, View } from "react-native";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
+import { useToast } from "heroui-native";
+import { useState } from "react";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import { authClient } from "@/lib/auth/client";
+import { NETWORK_ERROR_MESSAGE } from "@/lib/auth/error-messages";
+import { trpc } from "@/lib/trpc";
 
 const GOOGLE_COLORS = ["#EA4335", "#4285F4", "#FBBC05", "#34A853"];
 
-const BUTTON_CLASS =
-  "flex-row items-center justify-center gap-2.5 rounded-[26px] border-[0.5px] border-glass-bd bg-glass shadow-glass backdrop-blur-[18px] backdrop-saturate-[180%] active:opacity-80";
+// Só aparece quando o servidor tem GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET.
+export function SocialButtons() {
+  const router = useRouter();
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data } = useQuery(trpc.authProviders.queryOptions());
 
-interface SocialButtonsProps {
-  onPress: () => void;
-  compact?: boolean;
-}
+  if (!data?.google) return null;
 
-export function SocialButtons({ onPress, compact }: SocialButtonsProps) {
-  const prefix = compact ? "" : "Continuar com ";
-  const size = compact ? "h-[50px] flex-1" : "h-[52px]";
+  async function signInWithGoogle() {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    try {
+      // "/" vira o deep link confere:// e a tela inicial redireciona conforme a sessão.
+      const { error } = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+      if (error) {
+        toast.show({
+          variant: "danger",
+          label: "Não foi possível entrar com Google. Tente novamente.",
+        });
+        return;
+      }
+      // Navegador fechado sem login não gera erro: só segue se a sessão existir.
+      const session = await authClient.getSession();
+      if (session.data) router.replace("/(tabs)");
+    } catch {
+      toast.show({ variant: "danger", label: NETWORK_ERROR_MESSAGE });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
-    <View className={compact ? "flex-row gap-2.5" : "gap-2.5"}>
+    <>
+      <View className="flex-row items-center gap-3">
+        <View className="h-px flex-1 bg-hair" />
+        <Text className="font-instrument text-ink3 text-xs">ou</Text>
+        <View className="h-px flex-1 bg-hair" />
+      </View>
+
       <Pressable
-        className={`${BUTTON_CLASS} ${size}`}
+        className="h-[52px] flex-row items-center justify-center gap-2.5 rounded-[26px] border-[0.5px] border-glass-bd bg-glass shadow-glass backdrop-blur-[18px] backdrop-saturate-[180%] active:opacity-80"
         accessibilityRole="button"
-        onPress={onPress}
+        disabled={isSubmitting}
+        onPress={signInWithGoogle}
       >
-        <View className="size-[18px] rounded-full bg-ink" />
-        <Text className="font-instrument-semibold text-ink text-sm">
-          {prefix}Apple
-        </Text>
+        {isSubmitting ? (
+          <ActivityIndicator />
+        ) : (
+          <>
+            <View className="size-[18px] flex-row flex-wrap overflow-hidden rounded-full">
+              {GOOGLE_COLORS.map((color) => (
+                <View
+                  key={color}
+                  className="size-[9px]"
+                  style={{ backgroundColor: color }}
+                />
+              ))}
+            </View>
+            <Text className="font-instrument-semibold text-ink text-sm">
+              Continuar com Google
+            </Text>
+          </>
+        )}
       </Pressable>
-      <Pressable
-        className={`${BUTTON_CLASS} ${size}`}
-        accessibilityRole="button"
-        onPress={onPress}
-      >
-        <View className="size-[18px] flex-row flex-wrap overflow-hidden rounded-full">
-          {GOOGLE_COLORS.map((color) => (
-            <View
-              key={color}
-              className="size-[9px]"
-              style={{ backgroundColor: color }}
-            />
-          ))}
-        </View>
-        <Text className="font-instrument-semibold text-ink text-sm">
-          {prefix}Google
-        </Text>
-      </Pressable>
-    </View>
+    </>
   );
 }

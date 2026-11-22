@@ -179,6 +179,27 @@ Se desejar rodar o backend localmente com hot-reload ativo durante o desenvolvim
 
 ---
 
+### Login com Google (opcional)
+
+O botao "Continuar com Google" so aparece no app quando o servidor tem `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` configurados. Sem essas variaveis o login por e-mail e senha continua funcionando normalmente.
+
+1. No [Google Cloud Console](https://console.cloud.google.com/), crie (ou selecione) um projeto.
+2. Em **APIs e servicos > Tela de permissao OAuth**, configure o app (tipo **Externo**) e adicione seu e-mail como usuario de teste enquanto o app estiver em modo de teste.
+3. Em **APIs e servicos > Credenciais > Criar credenciais > ID do cliente OAuth**, escolha o tipo **Aplicativo da Web**.
+4. Em **URIs de redirecionamento autorizados**, cadastre `<BETTER_AUTH_URL>/api/auth/callback/google` para cada ambiente, por exemplo:
+   - `http://localhost:3000/api/auth/callback/google` (desenvolvimento)
+   - `https://api.seudominio.com/api/auth/callback/google` (producao)
+5. Copie o ID e a chave secreta do cliente para `apps/server/.env`:
+   ```bash
+   GOOGLE_CLIENT_ID=xxxxxxxx.apps.googleusercontent.com
+   GOOGLE_CLIENT_SECRET=xxxxxxxx
+   ```
+6. Reinicie o servidor.
+
+O app abre o navegador para o login e volta pelo deep link `confere://` (no Expo Go, `exp://`). O Google nao aceita IP privado como redirect URI: para testar no celular, use um `BETTER_AUTH_URL` publico (ex.: tunel HTTPS) e cadastre o callback desse endereco.
+
+---
+
 ## Comandos Uteis
 
 | Comando | Descricao |
