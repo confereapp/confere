@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anotação Confere</title>
+<style>
+:root { --bg:#fafaf9; --fg:#1c1917; --muted:#78716c; --line:#e7e5e4; --card:#fff; --accent:#2563eb; --ok:#15803d; --bad:#b91c1c; --warn:#a16207; --on-accent:#fff; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1c1917; --fg:#f5f5f4; --muted:#a8a29e; --line:#44403c; --card:#292524; --accent:#60a5fa; --ok:#4ade80; --bad:#f87171; --warn:#facc15; --on-accent:#1c1917; } }
+* { box-sizing:border-box }
+body { margin:0; font:15px/1.5 system-ui, sans-serif; background:var(--bg); color:var(--fg) }
+header { position:sticky; top:0; background:var(--bg); border-bottom:1px solid var(--line); padding:10px 16px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; z-index:1 }
+main { max-width:900px; margin:0 auto; padding:16px }
+.muted { color:var(--muted) } .small { font-size:13px }
+.card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px; margin:10px 0 }
+.req { font-size:18px; font-weight:600 }
+.passage { display:flex; gap:10px; align-items:flex-start }
+.passage p { margin:0; white-space:pre-wrap }
+.status { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 }
+.status label { border:1px solid var(--line); border-radius:6px; padding:6px 10px; cursor:pointer }
+.status input:checked + span { font-weight:700 }
+button, select, input[type=text], textarea { font:inherit; color:inherit; background:var(--card); border:1px solid var(--line); border-radius:6px; padding:6px 10px }
+textarea { width:100%; min-height:56px }
+button.primary { background:var(--accent); color:var(--on-accent); border-color:var(--accent) }
+.done { color:var(--ok) } .err { color:var(--bad) }
+a { color:var(--accent) }
+kbd { border:1px solid var(--line); border-radius:4px; padding:0 4px; font-size:12px }
+</style>
+</head>
+<body>
+<header>
+  <strong>Anotação Confere</strong>
+  <label class="small">Tarefas <input type="file" id="tasksFile" accept=".json"></label>
+  <label class="small">Continuar de <input type="file" id="resumeFile" accept=".json"></label>
+  <input type="text" id="annotator" placeholder="Seu nome" size="12">
+  <select id="jump"></select>
+  <span id="progress" class="small muted"></span>
+  <button id="export" class="primary">Exportar anotações</button>
+</header>
+<main id="main">
+  <div class="card">
+    <p>1. Escolha o arquivo de tarefas (<code>ai/data/private/annotation-tasks-v1.json</code>). 2. Escreva seu nome. 3. Para cada critério, leia os trechos e marque a decisão.</p>
+    <ul class="small">
+      <li><b>Atende</b>: algum trecho mostra que o trabalho cumpre o critério. Marque os trechos que sustentam.</li>
+      <li><b>Contradiz</b>: o texto afirma o oposto (ex.: "a solução ainda não foi implantada"). Marque o trecho.</li>
+      <li><b>Não encontrado</b>: nenhum trecho mostra o critério. Se achar a evidência fora dos candidatos, use "Evidência fora da lista".</li>
+    </ul>
+    <p class="small muted">Atalhos: <kbd>1</kbd> atende, <kbd>2</kbd> contradiz, <kbd>3</kbd> não encontrado, <kbd>n</kbd>/<kbd>p</kbd> próximo/anterior. O progresso fica salvo neste navegador; exporte ao terminar.</p>
+  </div>
+</main>
+<script>
+const STATUS = {atende:'Atende', contradiz:'Contradiz', nao_encontrado:'Não encontrado'};
+let tasks = null, answers = {}, index = 0;
+const $ = id => document.getElementById(id);
+const key = item => item.document + '|' + item.criterion;
+const storeKey = () => 'confere-annotation-' + (tasks ? (tasks.name || tasks.checklist_sha256) : '');
+
+function save() { try { localStorage.setItem(storeKey(), JSON.stringify({answers, annotator:$('annotator').value})); } catch (e) {} }
+function load() {
+  try { const saved = JSON.parse(localStorage.getItem(storeKey()) || 'null');
+        if (saved) { answers = saved.answers || {}; $('annotator').value = saved.annotator || ''; } } catch (e) {}
+}
+function title(id) { return (tasks.documents.find(d => d.id === id) || {}).title || id; }
+function folder(id) { return (tasks.documents.find(d => d.id === id) || {}).folder || ''; }
+
+function problems(item) {
+  const a = answers[key(item)];
+  if (!a || !a.status) return 'sem decisão';
+  if (a.status !== 'nao_encontrado' && !(a.passages || []).length && !(a.extra_quote || '').trim()) return 'marque um trecho';
+  return '';
+}
+
+function render() {
+  const item = tasks.items[index], a = answers[key(item)] || (answers[key(item)] = {passages:[]});
+  const done = tasks.items.filter(i => !problems(i)).length;
+  $('progress').textContent = `${index + 1}/${tasks.items.length} · ${done} completos`;
+  $('jump').value = index;
+  const main = $('main'); main.innerHTML = '';
+  const head = document.createElement('div'); head.className = 'card';
+  head.innerHTML = `<div class="small muted">${title(item.document)} · ${item.criterion}</div><div class="req"></div>`;
+  head.querySelector('.req').textContent = item.requirement;
+  if (item.guide) { const g = document.createElement('p'); g.className = 'small'; g.style.whiteSpace = 'pre-wrap'; g.textContent = item.guide; head.appendChild(g); }
+  main.appendChild(head);
+  const status = document.createElement('div'); status.className = 'status';
+  Object.entries(STATUS).forEach(([value, label], n) => {
+    const l = document.createElement('label');
+    l.innerHTML = `<input type="radio" name="status" value="${value}"> <span>${n + 1}. ${label}</span>`;
+    const input = l.querySelector('input'); input.checked = a.status === value;
+    input.onchange = () => { a.status = value; save(); render(); };
+    status.appendChild(l);
+  });
+  main.appendChild(status);
+  item.passages.forEach(p => {
+    const card = document.createElement('div'); card.className = 'card passage';
+    const id = `${p.unit}:${p.start}-${p.end}`;
+    const box = document.createElement('input'); box.type = 'checkbox';
+    box.checked = (a.passages || []).includes(id);
+    box.onchange = () => { a.passages = (a.passages || []).filter(x => x !== id); if (box.checked) a.passages.push(id); save(); render(); };
+    const page = p.unit.replace('page:', '');
+    const body = document.createElement('div');
+    body.innerHTML = `<div class="small muted">#${p.rank} · página ${page} · <a target="_blank" href="../../${folder(item.document)}/ocr-v1/page-${page}.png">ver página</a></div><p></p>`;
+    body.querySelector('p').textContent = p.text;
+    card.append(box, body); main.appendChild(card);
+  });
+  const extra = document.createElement('div'); extra.className = 'card';
+  extra.innerHTML = `<div class="small"><b>Evidência fora da lista</b> (cole o trecho exato e a página)</div>
+    <textarea id="extraQuote"></textarea><input type="text" id="extraPage" placeholder="página" size="6">
+    <div class="small" style="margin-top:8px"><b>Observação</b></div><textarea id="note"></textarea>`;
+  main.appendChild(extra);
+  $('extraQuote').value = a.extra_quote || ''; $('extraPage').value = a.extra_page || ''; $('note').value = a.note || '';
+  $('extraQuote').oninput = e => { a.extra_quote = e.target.value; save(); };
+  $('extraPage').oninput = e => { a.extra_page = e.target.value; save(); };
+  $('note').oninput = e => { a.note = e.target.value; save(); };
+  const nav = document.createElement('div'); nav.className = 'status';
+  const issue = problems(item);
+  nav.innerHTML = `<button id="prev">← Anterior</button><button id="next" class="primary">Próximo →</button>
+    <span class="${issue ? 'err' : 'done'} small">${issue || 'completo'}</span>`;
+  main.appendChild(nav);
+  $('prev').onclick = () => go(index - 1); $('next').onclick = () => go(index + 1);
+}
+
+function go(n) { index = Math.max(0, Math.min(tasks.items.length - 1, n)); render(); window.scrollTo(0, 0); }
+
+$('tasksFile').onchange = async e => {
+  tasks = JSON.parse(await e.target.files[0].text()); load();
+  $('jump').innerHTML = tasks.items.map((it, n) => `<option value="${n}">${it.document} ${it.criterion}</option>`).join('');
+  $('jump').onchange = ev => go(+ev.target.value);
+  go(0);
+};
+$('resumeFile').onchange = async e => {
+  if (!tasks) { alert('Carregue as tarefas primeiro.'); return; }
+  const data = JSON.parse(await e.target.files[0].text());
+  data.items.forEach(it => { answers[it.document + '|' + it.criterion] = {status: it.status, passages: it.passages.map(p => `${p.unit}:${p.start}-${p.end}`), extra_quote: it.extra_quote, extra_page: it.extra_page, note: it.note}; });
+  $('annotator').value = data.annotator || $('annotator').value; save(); render();
+};
+$('annotator').oninput = save;
+$('export').onclick = () => {
+  if (!tasks) return;
+  if (!$('annotator').value.trim()) { alert('Escreva seu nome antes de exportar.'); return; }
+  const pending = tasks.items.filter(problems).length;
+  if (pending && !confirm(`${pending} itens incompletos. Exportar mesmo assim?`)) return;
+  const items = tasks.items.filter(i => answers[key(i)] && answers[key(i)].status).map(i => {
+    const a = answers[key(i)];
+    return {document: i.document, criterion: i.criterion, requirement: i.requirement, status: a.status,
+            passages: (a.passages || []).map(id => { const [unit, page, range] = id.split(':'); const [start, end] = range.split('-').map(Number); return {unit: unit + ':' + page, start, end}; }),
+            extra_quote: a.extra_quote || '', extra_page: a.extra_page || '', note: a.note || ''};
+  });
+  const blob = new Blob([JSON.stringify({schema_version: 1, annotator: $('annotator').value.trim(), exported: new Date().toISOString(),
+                                         checklist_sha256: tasks.checklist_sha256, items}, null, 1)], {type: 'application/json'});
+  const link = document.createElement('a'); link.href = URL.createObjectURL(blob);
+  link.download = `anotacoes-${$('annotator').value.trim().replace(/\s+/g, '-')}.json`; link.click();
+};
+document.addEventListener('keydown', e => {
+  if (!tasks || ['TEXTAREA', 'INPUT'].includes(e.target.tagName) && e.target.type !== 'radio' && e.target.type !== 'checkbox') return;
+  const item = tasks.items[index], a = answers[key(item)];
+  if (e.key in {'1':1, '2':1, '3':1}) { a.status = Object.keys(STATUS)[+e.key - 1]; save(); render(); }
+  if (e.key === 'n') go(index + 1);
+  if (e.key === 'p') go(index - 1);
+});
+</script>
+</body>
+</html>
