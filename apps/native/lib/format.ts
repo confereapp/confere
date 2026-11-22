@@ -81,3 +81,16 @@ export function getResultStatusStyle(status: string) {
     }
   );
 }
+
+// Ainda vale consultar o servidor: análise na fila ou rodando, sem aviso de pendência permanente.
+export function isAnalysisPending(submission: {
+  status: string;
+  analysisMessage: string | null;
+}): boolean {
+  return (
+    submission.status === "processando" ||
+    (submission.status === "aguardando_analise" && !submission.analysisMessage)
+  );
+}
+
+export const ANALYSIS_POLL_INTERVAL = 4000;

@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useToast } from "heroui-native";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -13,7 +12,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Blob } from "@/components/ui/blob";
 import { Icon } from "@/components/ui/icon";
 import { ScreenHeader } from "@/components/ui/screen-header";
-import { getResultStatusStyle } from "@/lib/format";
+import {
+  ANALYSIS_POLL_INTERVAL,
+  getResultStatusStyle,
+  isAnalysisPending,
+} from "@/lib/format";
 import { trpc } from "@/lib/trpc";
 
 type FilterTab = "todos" | "pendentes" | "atendidos";
@@ -21,7 +24,6 @@ type FilterTab = "todos" | "pendentes" | "atendidos";
 export default function ConferenceResultScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { toast } = useToast();
   const { projectId, submissionId } = useLocalSearchParams<{
     projectId: string;
     submissionId: string;
@@ -35,7 +37,18 @@ export default function ConferenceResultScreen() {
   } = useQuery(
     trpc.project.getById.queryOptions(
       { id: projectId ?? "" },
-      { enabled: Boolean(projectId) },
+      {
+        enabled: Boolean(projectId),
+        refetchInterval: (query) => {
+          const subs = query.state.data?.submissions ?? [];
+          const current = submissionId
+            ? subs.find((s) => s.id === submissionId)
+            : subs[0];
+          return current && isAnalysisPending(current)
+            ? ANALYSIS_POLL_INTERVAL
+            : false;
+        },
+      },
     ),
   );
 
@@ -107,6 +120,34 @@ export default function ConferenceResultScreen() {
     { key: "atendidos", label: `Atendidos ${atendidosCount}` },
   ];
 
+  const emptyState =
+    submission.status === "erro"
+      ? {
+          title: "Erro na análise",
+          body:
+            submission.analysisMessage ??
+            "Não foi possível analisar esta entrega.",
+        }
+      : submission.status === "processando"
+        ? {
+            title: "Analisando entrega",
+            body: "A IA está conferindo os requisitos selecionados. Isso pode levar alguns minutos.",
+          }
+        : submission.status === "aguardando_analise"
+          ? submission.analysisMessage
+            ? {
+                title: "Análise indisponível",
+                body: submission.analysisMessage,
+              }
+            : {
+                title: "Na fila de análise",
+                body: "A conferência começa em instantes.",
+              }
+          : {
+              title: "Nenhum resultado",
+              body: "A análise terminou sem resultados para esta entrega.",
+            };
+
   const filtered = results.filter((item) => {
     if (tab === "pendentes") return item.status !== "atendido";
     if (tab === "atendidos") return item.status === "atendido";
@@ -166,34 +207,24 @@ export default function ConferenceResultScreen() {
 
         {results.length === 0 ? (
           <View className="items-center rounded-3xl border border-line-glass bg-glass px-6 py-8 shadow-sm">
-            <View className="mb-3 size-12 items-center justify-center rounded-2xl bg-brand/10">
-              <Icon
-                name="checkmark.seal"
-                fallback="checkmark-circle-outline"
-                size={22}
-                color="#2F6BFF"
-              />
-            </View>
+            {isAnalysisPending(submission) ? (
+              <ActivityIndicator className="mb-3" color="#2F6BFF" />
+            ) : (
+              <View className="mb-3 size-12 items-center justify-center rounded-2xl bg-brand/10">
+                <Icon
+                  name="checkmark.seal"
+                  fallback="checkmark-circle-outline"
+                  size={22}
+                  color="#2F6BFF"
+                />
+              </View>
+            )}
             <Text className="font-semibold text-[16px] text-ink">
-              Aguardando conferência
+              {emptyState.title}
             </Text>
             <Text className="mt-1 text-center text-[13px] text-ink3 leading-[19px]">
-              Inicie a análise para comparar esta entrega com os{" "}
-              {project.requirements.length} requisitos da rubrica.
+              {emptyState.body}
             </Text>
-            <Pressable
-              onPress={() =>
-                toast.show({
-                  id: "check-pending",
-                  label: "Análise automática em breve.",
-                })
-              }
-              className="mt-5 h-[46px] items-center justify-center rounded-full bg-brand px-6 shadow-brand-button active:opacity-85"
-            >
-              <Text className="font-semibold text-[14px] text-white">
-                Iniciar conferência
-              </Text>
-            </Pressable>
           </View>
         ) : (
           <>
