@@ -97,3 +97,21 @@ export const chatResult = z.object({
   experimental: z.literal(true),
   dropped_turns: z.number().int().nonnegative(),
 });
+
+export const submissionReviewResult = z.object({
+  requirements: z.array(
+    z.object({
+      id: z.string(),
+      status,
+      evidence: z.array(
+        z.object({
+          source_unit: z.string(),
+          quote: z.string(),
+          model_status: status,
+        }),
+      ),
+    }),
+  ),
+  warnings: z.array(z.string()),
+  model: z.object({ sha256: z.string(), step: z.number().int() }),
+});
