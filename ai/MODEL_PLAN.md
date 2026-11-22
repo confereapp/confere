@@ -1,3 +1,10 @@
+# Ciclo atual
+
+O primeiro ciclo foi integrado à `main`. A continuação acontece em
+`ai/treinamento-integracao-api`: [múltiplas evidências](MULTIPLE_EVIDENCE.md)
+e [ponte textual da API](API.md). O candidato ainda não foi promovido.
+O plano abaixo registra a direção definida no primeiro ciclo.
+
 # Plano de modelos e versões
 
 `ai/primeiro-modelo` é a branch de desenvolvimento do primeiro sistema de IA do

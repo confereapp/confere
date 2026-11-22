@@ -1,0 +1,16 @@
+O trabalho deve declarar o objetivo geral do projeto.
+O trabalho deve descrever o problema ou a motivação que justifica o projeto.
+O trabalho deve comparar a solução com trabalhos relacionados ou soluções existentes.
+O trabalho deve identificar as tecnologias ou ferramentas utilizadas na implementação.
+O trabalho deve descrever a arquitetura da solução.
+O trabalho deve descrever a metodologia de desenvolvimento ou de pesquisa adotada.
+O trabalho deve apresentar resultados quantitativos, como métricas, medições ou números de desempenho.
+O trabalho deve descrever testes realizados com usuários reais.
+O trabalho deve descrever testes automatizados de software, como unitários, de integração ou ponta a ponta.
+O trabalho deve descrever medidas de segurança ou de proteção de dados.
+O trabalho deve discutir limitações da solução ou dos resultados.
+O trabalho deve propor trabalhos futuros.
+O trabalho deve informar que a solução foi implantada em ambiente de produção.
+O trabalho deve apresentar estimativa de custos ou viabilidade financeira.
+O trabalho deve tratar de acessibilidade.
+O trabalho deve descrever o conjunto de dados utilizado.

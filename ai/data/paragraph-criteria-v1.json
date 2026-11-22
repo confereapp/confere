@@ -1,0 +1,559 @@
+{
+  "annotation_kind": "local_editorial",
+  "independent_human_review": false,
+  "scope": "Proposições factuais sobre parágrafos acadêmicos públicos; não são rubricas oficiais.",
+  "documents": [
+    {
+      "title": "UFMS",
+      "paragraph_index": 0,
+      "split": "train",
+      "anchor": "é uma instituição de ensino superior pública federal brasileira",
+      "claims": [
+        {
+          "text": "A UFMS é uma instituição pública federal sediada em Campo Grande.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "A UFMS é uma instituição privada.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "A UFMS cobra uma mensalidade de mil reais.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "UFMS",
+      "paragraph_index": 1,
+      "split": "train",
+      "anchor": "preservação dos recursos naturais do meio ambiente",
+      "claims": [
+        {
+          "text": "A instituição participa da preservação de recursos naturais do Pantanal.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "A instituição não participa da preservação dos recursos naturais.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "As pesquisas do Pantanal recebem financiamento de empresas estrangeiras.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "UFMS",
+      "paragraph_index": 2,
+      "split": "train",
+      "anchor": "teve sua origem em 1962",
+      "claims": [
+        {
+          "text": "A origem da UFMS remonta à criação de uma faculdade em 1962.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "A UFMS se originou de uma faculdade criada em 1992.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "O primeiro reitor da UFMS era professor de matemática.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "POSCOMP",
+      "paragraph_index": 0,
+      "split": "train",
+      "anchor": "tem como objetivo específico avaliar os conhecimentos",
+      "claims": [
+        {
+          "text": "O POSCOMP avalia conhecimentos de candidatos à pós-graduação em Computação.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "O POSCOMP não avalia conhecimentos na área de Computação.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "O POSCOMP exige nota mínima de setenta pontos para aprovação.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "POSCOMP",
+      "paragraph_index": 1,
+      "split": "train",
+      "anchor": "sem a necessidade de deslocamento para a sede de cada um dos Programas",
+      "claims": [
+        {
+          "text": "O candidato pode concorrer em vários programas sem ir à sede de cada um.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "O candidato precisa viajar até a sede de cada programa para realizar a prova.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "O resultado do POSCOMP é enviado aos programas por correio eletrônico.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "POSCOMP",
+      "paragraph_index": 2,
+      "split": "train",
+      "anchor": "a realização do exame não está vinculada à inscrição em algum Programa específico",
+      "claims": [
+        {
+          "text": "O exame é independente da inscrição em um programa específico.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "A realização do exame depende da inscrição em um programa específico.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "A inscrição no POSCOMP exige pagamento de uma taxa de cem reais.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "TCC",
+      "paragraph_index": 0,
+      "split": "train",
+      "anchor": "como forma de efetuar uma avaliação final dos estudantes",
+      "claims": [
+        {
+          "text": "O trabalho de conclusão de curso é utilizado na avaliação final dos estudantes.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "O trabalho de conclusão de curso nunca é utilizado para avaliar estudantes.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "O trabalho de conclusão de curso deve ter pelo menos oitenta páginas.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "TCC",
+      "paragraph_index": 1,
+      "split": "train",
+      "anchor": "O escopo e o formato do TCC",
+      "claims": [
+        {
+          "text": "O formato do TCC varia entre cursos e instituições.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "O formato do TCC é idêntico em todos os cursos e instituições.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "A apresentação do TCC dura obrigatoriamente quarenta minutos.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "TCC",
+      "paragraph_index": 2,
+      "split": "train",
+      "anchor": "o tema escolhido seja um assunto com o qual o aluno possua afinidade",
+      "claims": [
+        {
+          "text": "É recomendado escolher um tema pelo qual o aluno tenha afinidade.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "Os orientadores recomendam escolher um tema sem afinidade com o aluno.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "O orientador deve aprovar o tema em uma reunião mensal.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "MONOGRAFIA",
+      "paragraph_index": 0,
+      "split": "train",
+      "anchor": "tema único e bem delimitado",
+      "claims": [
+        {
+          "text": "Uma monografia aborda um tema único e bem delimitado.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "Uma monografia necessariamente trata de temas sem relação entre si.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "A monografia deve ser entregue em três exemplares impressos.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "MONOGRAFIA",
+      "paragraph_index": 1,
+      "split": "train",
+      "anchor": "normalmente é estudo recapitulativo, de base bibliográfica",
+      "claims": [
+        {
+          "text": "A monografia normalmente tem base bibliográfica.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "A monografia sempre depende de pesquisa experimental original.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "A monografia precisa incluir dez referências em língua estrangeira.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "MONOGRAFIA",
+      "paragraph_index": 2,
+      "split": "train",
+      "anchor": "embasamento existente em bibliografias",
+      "claims": [
+        {
+          "text": "A monografia deve fundamentar o assunto em bibliografias ou resultados de pesquisa.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "A monografia dispensa qualquer fundamentação bibliográfica ou resultado de pesquisa.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "As referências bibliográficas da monografia devem ser publicadas após 2020.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "ESTAGIO_PROFISSIONAL",
+      "paragraph_index": 0,
+      "split": "train",
+      "anchor": "um contato empírico com as matérias teóricas",
+      "claims": [
+        {
+          "text": "O estágio possibilita contato prático com conhecimentos teóricos.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "O estágio não oferece contato prático com a área de estudo.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "O estágio obrigatório deve durar exatamente seis meses.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "ESTAGIO_PROFISSIONAL",
+      "paragraph_index": 1,
+      "split": "train",
+      "anchor": "não configura relação de emprego",
+      "claims": [
+        {
+          "text": "A lei mencionada estabelece que o estágio não configura relação de emprego.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "Todo estágio de estudantes configura relação de emprego pela lei mencionada.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "A lei de estágio fixa uma bolsa mínima de dois salários mínimos.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "ESTAGIO_PROFISSIONAL",
+      "paragraph_index": 2,
+      "split": "train",
+      "anchor": "O estágio busca a complementação educacional em cursos superiores e técnicos",
+      "claims": [
+        {
+          "text": "O estágio busca complementar a formação educacional em cursos superiores e técnicos.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "O estágio não tem finalidade de formação educacional.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "A instituição deve visitar o local de estágio uma vez por semana.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "EXERCICIOS_DOMICILIARES",
+      "paragraph_index": 0,
+      "split": "validation",
+      "anchor": "atividades realizadas em ambiente domiciliar ou hospitalar",
+      "claims": [
+        {
+          "text": "O regime substitui aulas não frequentadas por atividades domiciliares ou hospitalares.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "O regime exige que todas as atividades ocorram presencialmente na sala de aula.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "O regime exige reuniões virtuais diárias com cada professor.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "EXERCICIOS_DOMICILIARES",
+      "paragraph_index": 1,
+      "split": "validation",
+      "anchor": "A partir do oitavo mês de gestação",
+      "claims": [
+        {
+          "text": "A gestante pode receber o regime a partir do oitavo mês de gestação.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "A gestante somente pode solicitar o regime depois do parto.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "A gestante recebe uma bolsa mensal durante o regime domiciliar.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "EXERCICIOS_DOMICILIARES",
+      "paragraph_index": 2,
+      "split": "validation",
+      "anchor": "Somente será concedido o regime de exercícios domiciliares nos afastamentos superiores a sete dias consecutivos",
+      "claims": [
+        {
+          "text": "Para as condições médicas descritas, o afastamento deve superar sete dias consecutivos.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "Para as condições médicas descritas, qualquer afastamento de um dia garante o regime.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "A análise médica do pedido deve ser concluída em quarenta e oito horas.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "MONITORIA_DE_ENSINO",
+      "paragraph_index": 0,
+      "split": "validation",
+      "anchor": "instrumento para a melhoria do ensino nos cursos de graduação",
+      "claims": [
+        {
+          "text": "O programa de monitoria busca melhorar o ensino na graduação.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "O programa é destinado exclusivamente a cursos de doutorado.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "O programa de monitoria exige média acadêmica mínima de oito pontos.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "MONITORIA_DE_ENSINO",
+      "paragraph_index": 1,
+      "split": "validation",
+      "anchor": "valor de R$ 400,00",
+      "claims": [
+        {
+          "text": "A bolsa institucional descrita tem valor mensal de quatrocentos reais.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "A bolsa institucional descrita tem valor mensal de oitocentos reais.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "O pagamento da bolsa ocorre no quinto dia útil do mês.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "MONITORIA_DE_ENSINO",
+      "paragraph_index": 2,
+      "split": "validation",
+      "anchor": "será de responsabilidade da Unidade da Administração Setorial",
+      "claims": [
+        {
+          "text": "A unidade de lotação da disciplina é responsável pelo processo seletivo.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "O processo seletivo é de responsabilidade exclusiva de uma empresa externa.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "A comissão deve ter exatamente cinco membros titulares.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "COMPUTADOR",
+      "paragraph_index": 0,
+      "split": "test",
+      "anchor": "armazenamento de dados, processamento de dados",
+      "claims": [
+        {
+          "text": "Um computador pode processar dados e armazenar informações.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "Um computador não pode armazenar dados.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "Todo computador pessoal atual contém oito núcleos de processamento.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "COMPUTADOR",
+      "paragraph_index": 1,
+      "split": "test",
+      "anchor": "ajudar seu pai a computar os impostos",
+      "claims": [
+        {
+          "text": "A máquina de Pascal foi criada para ajudar seu pai a calcular impostos.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "A máquina de Pascal foi criada exclusivamente para produzir tecidos.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "A máquina de Pascal tinha dimensões de cinquenta centímetros por trinta.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    },
+    {
+      "title": "COMPUTADOR",
+      "paragraph_index": 2,
+      "split": "test",
+      "anchor": "uma leitora automática de cartões",
+      "claims": [
+        {
+          "text": "Jacquard inventou um tear mecânico com leitora automática de cartões.",
+          "label": 1,
+          "rationale": "O parágrafo afirma a proposição; âncora literal indicada."
+        },
+        {
+          "text": "O tear de Jacquard funcionava sem qualquer leitura de cartões.",
+          "label": 0,
+          "rationale": "A proposição é incompatível com o fato explicitado no parágrafo; não é apenas omissão."
+        },
+        {
+          "text": "O tear de Jacquard produzia cem metros de tecido por hora.",
+          "label": 2,
+          "rationale": "O assunto é relacionado, mas o detalhe solicitado não é afirmado nem negado no parágrafo."
+        }
+      ]
+    }
+  ]
+}

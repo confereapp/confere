@@ -87,6 +87,11 @@ def create_report(run_dir, output=None):
     p("CONFERE | Treinamento local", "Title")
     p(run_dir.name, "Heading2")
     p("Relatório gerado em " + datetime.now(timezone.utc).strftime("%d/%m/%Y %H:%M UTC") + ". Fonte: artefatos da execução, sem inferência de resultados ausentes.")
+    termination = read_json(run_dir/"termination.json")
+    if termination:
+        assert summary["stop_reason"].startswith("interrupted_")
+        p("EXECUÇÃO ENCERRADA ANTECIPADAMENTE. " + termination["reason"])
+        p(termination["scope"])
     failure=read_json(run_dir/"failure.json")
     if failure:
         p("EXECUÇÃO INTERROMPIDA. " + failure["scope"])
@@ -106,6 +111,23 @@ def create_report(run_dir, output=None):
         ("RSS máximo do processo", f'{summary["process_peak_rss_bytes"] / 1e6:.1f} MB' if summary.get("process_peak_rss_bytes") else "Não registrado"),
     ])
     p("SHA-256 dos dados: " + info.get("dataset_fingerprint", "Não registrado"))
+    if info.get("trainable_parameters") is not None:
+        if info.get("settings", {}).get("trainable_scope") == "final_normalization_bias":
+            p("Parâmetros treináveis: " + str(info["trainable_parameters"]) + "; somente viés da normalização final. Demais parâmetros congelados.")
+        else:
+            p("Parâmetros treináveis: " + str(info["trainable_parameters"]) + "; últimos blocos explicitamente selecionados: " + str(info.get("settings", {}).get("train_last_blocks")) + " (None indica rede inteira).")
+    if info.get("settings", {}).get("document_decision_weight", 1) > 1:
+        p("Treino: peso " + str(info["settings"]["document_decision_weight"]) + " nos valores documentais status/unit; demais tokens-alvo com peso 1. Avaliação e seleção por loss continuam sem pesos.")
+    if info.get('settings',{}).get('first_token_weight',1)>1:
+        p('Treino: peso '+str(info['settings']['first_token_weight'])+' no primeiro token de cada resposta, normalizado por exemplo. Loss de avaliação e respostas completas continuam sem pesos.')
+    if info.get('settings',{}).get('semantic_auxiliary'):
+        p('Treino com cabeça auxiliar de seis tipos de resposta sobre o contexto anterior à resposta. Loss auxiliar somada com peso 0,1; cabeça salva separadamente e ausente da inferência. Avaliação continua por geração completa sem regras auxiliares.')
+    if info.get("settings", {}).get("checkpoint_selection") == "objective_mean":
+        p("Seleção: média das losses de conversa e documentos, 50% para cada objetivo. A curva de validação continua mostrando a média por token. Gates gerativos separados continuam obrigatórios.")
+    if info.get("settings", {}).get("checkpoint_selection") == "generated_family_quality":
+        p("Seleção por respostas geradas em cada avaliação: prioriza formato válido e a pior família relativa ao limiar, depois as demais famílias. Loss não escolhe os pesos. Validação repetidamente consultada, sem teste cego; os gates finais continuam obrigatórios.")
+    if info.get("settings", {}).get("initial_candidate_generation_measured") is False:
+        p("A geração da base causal inicial não foi medida e essa base foi excluída da seleção. A referência comparativa foi avaliada separadamente; apenas candidatos ajustados e medidos podem ser selecionados.")
     if info.get("context_note"):
         p("Adaptação de contexto: " + str(info.get("source_context")) + " para " + str(config.get("block_size")) + " tokens; passo de origem " + str(info.get("source_step")) + ". " + info["context_note"])
     if info.get("previous_dataset_fingerprint"):
@@ -213,6 +235,8 @@ def create_report(run_dir, output=None):
         current = next((item for item in comparison["results"] if Path(item["checkpoint"]).parent == run_dir), None)
         if current:
             samples = current["samples"]
+    if samples and not social_report:
+        story.append(PageBreak())
     for sample in ([] if social_report else samples[:3]):
         sample_start = len(story)
         label = sample.get("prompt", sample.get("prefix", "Não registrada"))

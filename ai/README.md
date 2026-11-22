@@ -2,7 +2,8 @@
 
 Esta pasta contém preparação de dados, tokenizer BPE e Transformer causal com
 treinamento experimental do zero em PyTorch. Há checkpoints locais e geração de
-texto experimental, sem integração com o app. O conjunto autoral é mínimo e não
+texto experimental, sem integração com o app. Uma [ponte local autenticada
+com a API](API.md) permite experimentar análise textual com checkpoint explícito. O conjunto autoral é mínimo e não
 comprova qualidade de análise de projetos reais.
 
 Para treinar, retomar e gerar respostas, veja [o guia de treinamento](TRAINING.md).
@@ -10,6 +11,11 @@ O [plano de modelos e versões](MODEL_PLAN.md) explica a relação entre a branc
 as várias execuções e o checkpoint principal do aplicativo.
 O [pré-treino de linguagem em português](PRETRAINING.md) usa um snapshot da
 Wikipédia com proveniência e splits por artigo; ainda não é um chat validado.
+A base mais recente, `pt-full-8k-2026-11-17`, usa o dump completo e vocabulário
+de 8.192 tokens; ainda precisa de classificadores retreinados sobre ela.
+As [iterações de respostas contextuais](CONTEXT_ANSWER_ITERATIONS.md) registram
+os currículos, checkpoints avaliados e regressões, com critérios separados para
+conversa e documentos. Ganhos parciais não promovem automaticamente um checkpoint.
 
 ## Executar
 
@@ -149,8 +155,9 @@ uma avaliação realista antes de afirmar qualidade fora do conjunto autoral.
    Queda de loss ou memorização dos fixtures não demonstram interpretação geral.
 5. Desenvolver busca de trechos, tratamento de contexto extenso e consolidação
    entre anexos; validar cobertura antes de resumir documentos completos.
-6. Integrar o processo Python ao backend e às telas somente após existir inferência
-   real e um contrato de resultado verificado. OCR entra antes de declarar suporte
+6. A ponte Python ao backend já executa inferência textual experimental; veja
+   [uso e limites](API.md). Integração nas telas e resultados persistidos exigem
+   revisão de qualidade do modelo. OCR entra antes de declarar suporte
    a PDFs escaneados.
 
 Avaliação futura: cobertura da extração e dos requisitos, macro-F1 dos três
@@ -159,6 +166,14 @@ por requisito. Medir tempo por documento e pico de memória com o simulador aber
 Definir metas numéricas após o primeiro benchmark. O teste final terá documentos
 novos e rótulos revisados, separados por projeto e preferencialmente por enunciado.
 
-Branch desta etapa: `ai/primeiro-modelo`. Dados privados, ambientes, checkpoints
+O primeiro ciclo de `ai/primeiro-modelo` foi integrado à `main`. O ciclo atual
+está em `ai/treinamento-integracao-api`; veja [treinos e resultados](MULTIPLE_EVIDENCE.md)
+e o [ciclo de evidências difíceis com replay de conversa](EVIDENCE_ROBUSTNESS.md).
+O [ciclo intensivo posterior](INTENSIVE_TRAINING.md) registra 10.000 passos,
+avaliação dos checkpoints e as falhas ainda pendentes antes de promover pesos. Dados privados, ambientes, checkpoints
 e execuções não entram no Git. Commits sem `Co-Authored-By`; PRs sem `Generated with`.
 Merge na `main` fica para a integração revisada.
+
+A [etapa com lotes efetivos da API](API_BATCH_TRAINING.md) registra o currículo
+anotado por intervalos, avaliação de documentos completos e as falhas que ainda
+impedem promover os novos pesos.
