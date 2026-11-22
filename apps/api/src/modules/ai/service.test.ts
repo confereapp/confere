@@ -60,6 +60,7 @@ describe("local AI boundary", () => {
     mocks.execFile.mockImplementation((_file, _args, options, callback) => {
       expect(options.timeout).toBe(120000);
       expect(options.killSignal).toBe("SIGKILL");
+      expect(options.env.PYTHONPATH).toMatch(/ai\/src$/);
       finish = callback;
       return { stdin: { on: vi.fn(), end } };
     });

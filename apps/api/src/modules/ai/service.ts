@@ -40,15 +40,15 @@ export async function chat(input: typeof chatInput._output) {
       }
       return chatResult.parse(value);
     },
-    env.AI_CHAT_CHECKPOINT ?? env.AI_CHECKPOINT,
+    { checkpoint: env.AI_CHAT_CHECKPOINT ?? env.AI_CHECKPOINT },
   );
 }
 
-async function runInference<T>(
+export async function runInference<T>(
   module: string,
   request: unknown,
   parse: (value: unknown) => T,
-  checkpoint = env.AI_CHECKPOINT,
+  { checkpoint = env.AI_CHECKPOINT, timeout = 120000 } = {},
 ): Promise<T> {
   if (!checkpoint) {
     throw new TRPCError({
@@ -77,11 +77,15 @@ async function runInference<T>(
         ],
         {
           cwd: root,
-          timeout: 120000,
+          env: { ...process.env, PYTHONPATH: resolve(root, "ai/src") },
+          timeout,
           maxBuffer: 4 * 1024 * 1024,
           killSignal: "SIGKILL",
         },
-        (error, stdout) => (error ? reject(error) : accept(stdout)),
+        (error, stdout, stderr) =>
+          error
+            ? reject(Object.assign(error, { stderr: String(stderr) }))
+            : accept(stdout),
       );
       child.stdin?.on("error", () => child.kill("SIGKILL"));
       child.stdin?.end(JSON.stringify(request));
@@ -93,6 +97,7 @@ async function runInference<T>(
       code: "INTERNAL_SERVER_ERROR",
       message:
         "A inferência local não foi concluída. Nenhum resultado foi salvo.",
+      cause: error,
     });
   } finally {
     running = false;
