@@ -39,3 +39,47 @@ class GroundingTests(unittest.TestCase):
     def test_prompt_retains_unit_identity_and_text(self):
         prompt=prompt_for("Incluir testes",self.units)
         self.assertIn("[page:1] O projeto inclui testes.",prompt)
+
+
+class MultipleEvidenceTests(unittest.TestCase):
+    def setUp(self):
+        self.units = [{"id": "page:1", "text": "Inclui testes."},
+                      {"id": "page:2", "text": "Não inclui testes."}]
+        self.value = dict(status="evidencia_insuficiente", evidence=[
+            dict(status="atendido", unit="page:1"), dict(status="nao_atendido", unit="page:2")])
+
+    def test_conflict_keeps_both_source_quotes_and_statuses(self):
+        result = resolve(json.dumps(self.value), "entrega", self.units)
+        self.assertTrue(result["reference_valid"])
+        self.assertEqual([e["quote"] for e in result["result"]["evidence"]], [u["text"] for u in self.units])
+        row = dict(document="entrega", units=self.units, target=json.dumps(self.value))
+        reordered = dict(self.value, evidence=list(reversed(self.value["evidence"])))
+        self.assertTrue(judge(json.dumps(reordered), row)["exact_match"])
+        missing = dict(status="atendido", evidence=self.value["evidence"][:1])
+        self.assertFalse(judge(json.dumps(missing), row)["exact_match"])
+        row["grounding_schema"] = 2
+        legacy = json.dumps(dict(status="evidencia_insuficiente", unit=None))
+        self.assertFalse(judge(legacy, row)["valid_format"])
+
+    def test_malformed_conflicts_duplicates_and_unknown_sources_fail_closed(self):
+        bad = [dict(self.value, status="atendido"), dict(status="atendido", evidence=[]),
+               dict(self.value, evidence=self.value["evidence"] * 2),
+               dict(status="atendido", evidence=[dict(status="atendido", unit="page:9")]),
+               dict(status="atendido", evidence=[dict(status="atendido", unit="page:1", quote="fake")])]
+        for value in bad:
+            result = resolve(json.dumps(value), "entrega", self.units)
+            self.assertFalse(result["valid_format"] and result["reference_valid"])
+            self.assertEqual(result["result"]["evidence"], [])
+
+    def test_same_batch_conflict_is_inconclusive_with_exact_offsets(self):
+        from confere_ai.project_review import review_extracted
+        from confere_ai.tokenizer import ByteBPE
+        doc = dict(name="entrega", sha256="a", format="text", warnings=[], units=self.units)
+        result = review_extracted([doc], ["Testes"], ByteBPE([]), 1024,
+                                  lambda ids: json.dumps(self.value), schema_version=2, response_tokens=192)
+        row = result["requirements"][0]
+        self.assertTrue(row["conflicting_evidence"])
+        self.assertTrue(row["model_outputs_valid"])
+        self.assertEqual(row["status"], "evidencia_insuficiente")
+        self.assertEqual(len(row["evidence"]), 2)
+        self.assertEqual({e["model_status"] for e in row["evidence"]}, {"atendido", "nao_atendido"})

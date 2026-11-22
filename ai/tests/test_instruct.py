@@ -16,6 +16,11 @@ spec.loader.exec_module(builder)
 
 @unittest.skipIf(load_instructions is None, "Instale as dependências de treino")
 class InstructionTests(unittest.TestCase):
+    def test_document_scope_guard_preserves_unrelated_scenario_metadata(self):
+        rows=builder.build()
+        next(r for r in rows if not r['task'].startswith('grounded_'))['scenario']={'criterion':'presence'}
+        self.assertEqual(len(self.load_rows(rows)[0]),len(rows))
+
     def test_grounded_fixture_has_separate_projects_and_valid_targets(self):
         spec3 = importlib.util.spec_from_file_location("build_grounding", Path(__file__).resolve().parents[1]/"scripts/build_grounding.py")
         module = importlib.util.module_from_spec(spec3)

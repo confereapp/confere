@@ -11,6 +11,71 @@ from confere_ai.tokenizer import ByteBPE
 
 
 class ProjectReviewTests(unittest.TestCase):
+    def test_unit_predictor_preserves_coverage_quotes_and_conflicts(self):
+        doc = self.doc("Há testes. Não há testes.")
+        seen = []
+        def predict(requirement, units):
+            from confere_ai.evidence_classifier import response
+            seen.append((requirement, units))
+            return response(units, [[.9, .9] for _ in units])
+        result = review_extracted([doc], ["Testes"], ByteBPE([]), 512, None, 2, 64, predict_units=predict)["requirements"][0]
+        self.assertTrue(result["conflicting_evidence"])
+        self.assertEqual(result["status"], "evidencia_insuficiente")
+        self.assertEqual(seen[0][0], "Testes")
+        self.assertEqual(seen[0][1][0]["text"], doc["units"][0]["text"])
+        self.assertTrue(all(e["quote"] == doc["units"][0]["text"] for e in result["evidence"]))
+        self.assertEqual(result["coverage"]["processed_characters"], len(doc["units"][0]["text"]))
+        self.assertEqual(result["calls"][0]["inference_kind"], "unit_classifier")
+        self.assertNotIn("input_tokens", result["calls"][0])
+        with self.assertRaises(ValueError):
+            review_extracted([doc], ["Testes"], ByteBPE([]), 512, lambda ids:"", 2, 64, predict_units=predict)
+
+    def test_top_k_retrieval_ignores_irrelevant_pages_and_missing_text(self):
+        from confere_ai.evidence_classifier import response
+        doc = dict(name="a.pdf", sha256="x", format="pdf", warnings=[], units=[
+            dict(id="page:1", text="Folha de rosto da universidade."),
+            dict(id="page:2", text="O sistema usa autenticação de dois fatores."),
+            dict(id="page:3", text=""),
+            dict(id="page:4", text="Sumário e agradecimentos.")])
+        seen = []
+        def predict(requirement, units):
+            seen.extend(u["text"] for u in units)
+            # Classificador ruidoso: marca oposto em tudo que não cita autenticação.
+            return response(units, [[.9, .1] if "autentica" in u["text"] else [.1, .9] for u in units])
+        row = review_extracted([doc], ["Autenticação de dois fatores"], ByteBPE([]), 512, None, 2, 64,
+                               predict_units=predict, top_k=1)["requirements"][0]
+        self.assertEqual(seen, ["O sistema usa autenticação de dois fatores."])
+        self.assertEqual(row["status"], "atendido")
+        self.assertEqual(row["coverage"]["units_without_text"], [dict(document_id="doc:1", unit="page:3")])
+        self.assertFalse(row["coverage"]["all_extracted_text_processed"])
+        tie = review_extracted([doc], ["Autenticação de dois fatores"], ByteBPE([]), 512, None, 2, 64,
+                               predict_units=predict, top_k=2)["requirements"][0]
+        self.assertEqual(tie["status"], "evidencia_insuficiente")
+        self.assertTrue(tie["conflicting_evidence"])
+
+    def test_checkpoint_loader_accepts_classifier_without_decoder_and_records_real_kind(self):
+        from dataclasses import asdict
+        from unittest.mock import patch
+        import torch
+        from confere_ai.evidence_classifier import EvidenceClassifier
+        from confere_ai.model import GPT, GPTConfig
+        from confere_ai.project_review import review_documents
+        config = GPTConfig(vocab_size=260, block_size=512, width=16, layers=1, heads=2)
+        model = EvidenceClassifier(GPT(config))
+        with torch.no_grad():
+            model.head.weight.zero_(); model.head.bias.copy_(torch.tensor([9., -9.]))
+        checkpoint = dict(config=asdict(config), merges=[], classifier=model.state_dict(), step=7,
+                          settings=dict(objective="document_classifier", readout="shared_json_decision_prefix_v1"))
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)/"classifier.pt"; torch.save(checkpoint, path)
+            with patch.object(GPT, "generate", side_effect=AssertionError("Classifier cannot generate")):
+                result = review_documents([self.doc("Há testes.")], ["Testes"], path, "cpu")
+        self.assertEqual(result["requirements"][0]["status"], "atendido")
+        self.assertEqual(result["schema_version"], 2)
+        self.assertEqual(result["model"]["inference_kind"], "unit_classifier")
+        self.assertNotIn("response_tokens", result["model"])
+        self.assertEqual(result["model"]["fragment_token_reserve"], 256)
+
     def test_pilot_audit_rejects_coverage_holes_and_modified_quotes(self):
         spec=importlib.util.spec_from_file_location("full_files",Path(__file__).parents[1]/"scripts/evaluate_full_files.py")
         module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
