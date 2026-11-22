@@ -2,10 +2,15 @@ import { and, db, desc, eq } from "@confere/db";
 import { project, requirement, submission } from "@confere/db/schema/project";
 import { TRPCError } from "@trpc/server";
 import type { ProjectModel } from "./model";
+import { splitRubric } from "./rubric";
 
 function generateId(): string {
   return crypto.randomUUID();
 }
+
+// Texto gravado pelo app quando a rubrica vem só como arquivo (sem conteúdo).
+const RUBRIC_FILE_PLACEHOLDER =
+  /^Rubrica (?:enviada por arquivo|em anexo):.*$/im;
 
 function buildSubmissionKey(projectId: string, filename: string): string {
   const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, "_");
@@ -272,6 +277,65 @@ export const ProjectService = {
       .returning();
 
     return deleted;
+  },
+
+  async extractRequirements(
+    userId: string,
+    input: typeof ProjectModel.extractRequirementsInput._output,
+  ) {
+    const proj = await db.query.project.findFirst({
+      where: and(eq(project.id, input.projectId), eq(project.userId, userId)),
+    });
+
+    if (!proj) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Projeto não encontrado",
+      });
+    }
+
+    const text = proj.rawRubric.replace(RUBRIC_FILE_PLACEHOLDER, "").trim();
+    if (!text) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message:
+          "A rubrica foi enviada como arquivo e o texto dela não está disponível. Toque em Editar e cole o texto da rubrica para extrair os requisitos.",
+      });
+    }
+
+    return { items: splitRubric(text) };
+  },
+
+  async addRequirements(
+    userId: string,
+    input: typeof ProjectModel.addRequirementsInput._output,
+  ) {
+    const proj = await db.query.project.findFirst({
+      where: and(eq(project.id, input.projectId), eq(project.userId, userId)),
+      with: { requirements: { columns: { order: true } } },
+    });
+
+    if (!proj) {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "Projeto não pertence ao usuário",
+      });
+    }
+
+    const start = Math.max(-1, ...proj.requirements.map((r) => r.order)) + 1;
+
+    return db
+      .insert(requirement)
+      .values(
+        input.titles.map((title, index) => ({
+          id: generateId(),
+          projectId: input.projectId,
+          title,
+          order: start + index,
+          checked: true,
+        })),
+      )
+      .returning();
   },
 
   async getUploadUrl(
