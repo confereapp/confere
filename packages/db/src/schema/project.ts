@@ -57,6 +57,8 @@ export const submission = pgTable(
     totalPages: integer("total_pages"),
     status: text("status").default("processando").notNull(), // aguardando_analise, processando, concluido, erro
     coverage: integer("coverage"),
+    // Motivo do erro ou aviso de análise pendente, exibido no app.
+    analysisMessage: text("analysis_message"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (table) => [index("submission_projectId_idx").on(table.projectId)],
